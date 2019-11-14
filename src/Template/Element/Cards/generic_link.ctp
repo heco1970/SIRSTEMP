@@ -1,0 +1,17 @@
+<div class="<?=$size?> mb-4">
+  <a href="<?=$url?>">
+  <div class="card border-left-<?=$sideColor?> shadow h-100 py-2">
+    <div class="card-body">
+      <div class="row no-gutters align-items-center">
+        <div class="col mr-2">
+          <div class="text-xs font-weight-bold text-<?=$titleColor?> text-uppercase mb-1"><?=$title?></div>
+          <div class="mb-0 font-weight-bold text-gray-800"><?=$subTitle?></div>
+        </div>
+        <div class="col-auto">
+          <i class="<?=$classIcon?> fa-2x text-gray-300"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  </a>
+</div>
