@@ -4,19 +4,14 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * Units Controller
+ * Processos Controller
  *
- * @property \App\Model\Table\UnitsTable $Units
+ * @property \App\Model\Table\ProcessosTable $Processos
  *
- * @method \App\Model\Entity\Unit[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Processo[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class UnitsController extends AppController
+class ProcessosController extends AppController
 {
-
-    public function initialize() {
-        parent::initialize();
-        //$this->Auth->allow();
-    }
 
     /**
      * Index method
@@ -26,19 +21,21 @@ class UnitsController extends AppController
     public function index()
     {
         if ($this->request->is('ajax')) {
-            $model = 'Units';
+            $model = 'Processos';
             $this->loadComponent('Dynatables');
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'designacao','created','modified'];
+            $validOps = ['id', 'entjudicial','created','modified'];
             $convArray = ['id' => $model.'.id',
-                'designacao' => $model.'.designacao',
+                'entjudicial' => $model.'.entjudicial',
+                'natureza' => $model.'.natureza',
+                'nip' => $model.'.nip',
                 'created' => $model.'.created',
                 'modified' => $model.'.modified'];
-            $strings = ['designacao'];
+            $strings = ['entjudicial'];
 
-           // $contain = ['Types'];
+            // $contain = ['Types'];
             $totalRecordsCount = $this->$model->find('all')->count();
             $conditions = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
             $queryRecordsCount = $this->$model->find('all')->count();
@@ -46,25 +43,25 @@ class UnitsController extends AppController
             $records = $this->$model->find('all')->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
-           //$types = $this->Users->Types->find('list', ['limit' => 200]);
-           //$this->set(compact('types'));
+            //$types = $this->Users->Types->find('list', ['limit' => 200]);
+            //$this->set(compact('types'));
         }
     }
 
     /**
      * View method
      *
-     * @param string|null $id Unit id.
+     * @param string|null $id Processo id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $unit = $this->Units->get($id, [
-            'contain' => []
+        $processo = $this->Processos->get($id, [
+            'contain' => ['Units', 'States']
         ]);
 
-        $this->set('unit', $unit);
+        $this->set('processo', $processo);
     }
 
     /**
@@ -74,58 +71,65 @@ class UnitsController extends AppController
      */
     public function add()
     {
-        $unit = $this->Units->newEntity();
+        $processo = $this->Processos->newEntity();
         if ($this->request->is('post')) {
-            $unit = $this->Units->patchEntity($unit, $this->request->getData());
-            if ($this->Units->save($unit)) {
-                $this->Flash->success(__('The unit has been saved.'));
+            $processo = $this->Processos->patchEntity($processo, $this->request->getData());
+            if ($this->Processos->save($processo)) {
+                $this->Flash->success(__('The processo has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The unit could not be saved. Please, try again.'));
+            $this->Flash->error(__('The processo could not be saved. Please, try again.'));
         }
-        $this->set(compact('unit'));
+
+
+        $this->set('units', $this->Processos->Units->find('all'));
+        $this->set('states', $this->Processos->States->find('all'));
+       // $states = $this->Processos->States->find('list', ['limit' => 200]);
+        $this->set(compact('processo'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Unit id.
+     * @param string|null $id Processo id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $unit = $this->Units->get($id, [
+        $processo = $this->Processos->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $unit = $this->Units->patchEntity($unit, $this->request->getData());
-            if ($this->Units->save($unit)) {
-                $this->Flash->success(__('The unit has been saved.'));
+            $processo = $this->Processos->patchEntity($processo, $this->request->getData());
+            if ($this->Processos->save($processo)) {
+                $this->Flash->success(__('The processo has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The unit could not be saved. Please, try again.'));
+            $this->Flash->error(__('The processo could not be saved. Please, try again.'));
         }
-        $this->set(compact('unit'));
+        $units = $this->Processos->Units->find('list', ['limit' => 200]);
+        $states = $this->Processos->States->find('list', ['limit' => 200]);
+        $this->set(compact('processo', 'units', 'states'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Unit id.
+     * @param string|null $id Processo id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $unit = $this->Units->get($id);
-        if ($this->Units->delete($unit)) {
-            $this->Flash->success(__('The unit has been deleted.'));
+        $processo = $this->Processos->get($id);
+        if ($this->Processos->delete($processo)) {
+            $this->Flash->success(__('The processo has been deleted.'));
         } else {
-            $this->Flash->error(__('The unit could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The processo could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

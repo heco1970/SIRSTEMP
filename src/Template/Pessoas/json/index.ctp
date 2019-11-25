@@ -4,7 +4,7 @@ foreach ($records as $record) {
   $data[] = [
     'created' => $record->created->i18nFormat('yyyy-MM-dd HH:mm:ss'),
     'modified' => $record->modified->i18nFormat('yyyy-MM-dd HH:mm:ss'),
-    'designacao' => $record->designacao,
+    'nome' => $record->nome,
    'id' => $record->id,
   ];
 }

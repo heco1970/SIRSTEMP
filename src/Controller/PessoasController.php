@@ -4,19 +4,14 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * Units Controller
+ * Pessoas Controller
  *
- * @property \App\Model\Table\UnitsTable $Units
+ * @property \App\Model\Table\PessoasTable $Pessoas
  *
- * @method \App\Model\Entity\Unit[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Pessoa[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class UnitsController extends AppController
+class PessoasController extends AppController
 {
-
-    public function initialize() {
-        parent::initialize();
-        //$this->Auth->allow();
-    }
 
     /**
      * Index method
@@ -26,19 +21,19 @@ class UnitsController extends AppController
     public function index()
     {
         if ($this->request->is('ajax')) {
-            $model = 'Units';
+            $model = 'Pessoas';
             $this->loadComponent('Dynatables');
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'designacao','created','modified'];
+            $validOps = ['id', 'nome','created','modified'];
             $convArray = ['id' => $model.'.id',
-                'designacao' => $model.'.designacao',
+                'nome' => $model.'.nome',
                 'created' => $model.'.created',
                 'modified' => $model.'.modified'];
-            $strings = ['designacao'];
+            $strings = ['nome'];
 
-           // $contain = ['Types'];
+            // $contain = ['Types'];
             $totalRecordsCount = $this->$model->find('all')->count();
             $conditions = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
             $queryRecordsCount = $this->$model->find('all')->count();
@@ -46,25 +41,25 @@ class UnitsController extends AppController
             $records = $this->$model->find('all')->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
-           //$types = $this->Users->Types->find('list', ['limit' => 200]);
-           //$this->set(compact('types'));
+            //$types = $this->Users->Types->find('list', ['limit' => 200]);
+            //$this->set(compact('types'));
         }
     }
 
     /**
      * View method
      *
-     * @param string|null $id Unit id.
+     * @param string|null $id Pessoa id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $unit = $this->Units->get($id, [
-            'contain' => []
+        $pessoa = $this->Pessoas->get($id, [
+            'contain' => ['Pais']
         ]);
 
-        $this->set('unit', $unit);
+        $this->set('pessoa', $pessoa);
     }
 
     /**
@@ -74,58 +69,64 @@ class UnitsController extends AppController
      */
     public function add()
     {
-        $unit = $this->Units->newEntity();
+        $pessoa = $this->Pessoas->newEntity();
         if ($this->request->is('post')) {
-            $unit = $this->Units->patchEntity($unit, $this->request->getData());
-            if ($this->Units->save($unit)) {
-                $this->Flash->success(__('The unit has been saved.'));
+            $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
+
+            if ($this->Pessoas->save($pessoa)) {
+                $this->Flash->success(__('The pessoa has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The unit could not be saved. Please, try again.'));
+            $this->Flash->error(__('The pessoa could not be saved. Please, try again.'));
         }
-        $this->set(compact('unit'));
+     //   $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
+        $this->set('pais', $this->Pessoas->Pais->find('all'));
+
+        $this->set(compact('pessoa'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Unit id.
+     * @param string|null $id Pessoa id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $unit = $this->Units->get($id, [
+        $pessoa = $this->Pessoas->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $unit = $this->Units->patchEntity($unit, $this->request->getData());
-            if ($this->Units->save($unit)) {
-                $this->Flash->success(__('The unit has been saved.'));
+            $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
+            if ($this->Pessoas->save($pessoa)) {
+                $this->Flash->success(__('The pessoa has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The unit could not be saved. Please, try again.'));
+            $this->Flash->error(__('The pessoa could not be saved. Please, try again.'));
         }
-        $this->set(compact('unit'));
+
+        $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
+        $this->set(compact('pessoa', 'pais'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Unit id.
+     * @param string|null $id Pessoa id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $unit = $this->Units->get($id);
-        if ($this->Units->delete($unit)) {
-            $this->Flash->success(__('The unit has been deleted.'));
+        $pessoa = $this->Pessoas->get($id);
+        if ($this->Pessoas->delete($pessoa)) {
+            $this->Flash->success(__('The pessoa has been deleted.'));
         } else {
-            $this->Flash->error(__('The unit could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The pessoa could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
