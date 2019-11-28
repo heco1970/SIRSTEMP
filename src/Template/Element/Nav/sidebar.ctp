@@ -27,8 +27,8 @@ $active = $show = '';
         <a class="nav-link" href="/">
     <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-user-friends"></i> <span>' . __('Pessoas') . '</span>', '/pessoas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-balance-scale-left"></i> <span>' . __('Processos') . '</span>', '/processos', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
-    <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book"></i> <span>' . __('Pedidos') . '</span>', '/pessoas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
-    <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book-open"></i> <span>' . __('Verbetes') . '</span>', '/pessoas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
+    <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book"></i> <span>' . __('Pedidos') . '</span>', '/pedidos/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
+    <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book-open"></i> <span>' . __('Verbetes') . '</span>', '/verbetes/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
 
     </a>
 
@@ -82,6 +82,7 @@ $active = $show = '';
             }
             $acesses = $this->Acl->link(__('Accesses'), '/accesses/admin', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);
             $aclManager = $this->Acl->link(__('Acl Manager'), '/AclManager', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
+            $users = $this->Acl->link(__('Utilizadores'), '/users', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
             ?>
             <li class="nav-item <?= $active ?>">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdminMenu"
@@ -94,6 +95,7 @@ $active = $show = '';
                     <div class="bg-white py-2 collapse-inner rounded">
                         <?= $acesses ?>
                         <?= $aclManager ?>
+                        <?= $users ?>
                     </div>
                 </div>
             </li>

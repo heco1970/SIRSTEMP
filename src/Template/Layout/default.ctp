@@ -1,5 +1,5 @@
 <?php
-$title = 'SB Admin 2';
+$title = 'Direção-Geral de Reinserção e Serviços Prisionais ';
 ?>
 
 <!DOCTYPE html>

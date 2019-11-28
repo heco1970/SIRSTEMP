@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Pessoa $pessoa
  */
 ?>
-<div class="alert alert-primary" role="alert">
+<div class="alert alert-success" role="alert">
     Novo Registo de Pessoa
 </div>
 <?= $this->Form->create(Null, ['type' => 'POST', 'id' => 'formulario']) ?>
