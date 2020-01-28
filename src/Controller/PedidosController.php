@@ -78,9 +78,20 @@ class PedidosController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The pedido could not be saved. Please, try again.'));
+        } else if ($this->request->is('ajax')) {
+            $this->autoRender = false;   
+            if (!empty($this->request->query['term'])) {
+              $term = h($this->request->query['term']);
+              $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome', 'conditions' => ['nome LIKE' => '%' . $term . '%' ],'limit' => 20]);
+              $result = [];
+              foreach ($pessoas as $id => $name) {
+                $result[] = ['text' => $name, 'id' => $id];
+              }
+              echo json_encode(['results' => $result]);
+              return;
+            }
         }
         $processos = $this->Pedidos->Processos->find('list', ['limit' => 200]);
-        $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome'])->toArray();
 
 
 

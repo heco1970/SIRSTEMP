@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="name"><h4><?=__('Pessoa')?></h4></label>
-                        <?= $this->Form->control('pessoa_id', ['class' => 'form-control', 'options' => $pessoas, 'label' => false]);?>
+                        <?= $this->Form->control('pessoa_id', ['class' => 'form-control select2', 'label' => false]);?>
                     </div>
                 </div>
             </div>
@@ -129,14 +129,24 @@
     <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success']) ?>
     <?= $this->Form->end() ?>
 </div>
-<?=$this->Html->script('/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js', ['block' => true]);?>
 <?=$this->Html->css('/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css', ['block' => true]);?>
+<?=$this->Html->css('/vendor/select2/select2.min', ['block' => true]);?>
+<?=$this->Html->css('/vendor/select2/select2-bootstrap4.min', ['block' => true]);?>
+<?=$this->Html->script('/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js', ['block' => true]);?>
+<?=$this->Html->script('/vendor/select2/select2.min', ['block' => true]);?>
 
 
 <?php $this->start('scriptBottom') ?>
     <script>
         $(document).ready(function() {
             $('.datepicker').datepicker();
+            $('.select2').select2({
+                theme: 'bootstrap4',
+                ajax: {
+                    url: '/pedidos/add',
+                    dataType: 'json'
+                }
+            });
         });
     </script>
 <?php $this->end(); ?>
