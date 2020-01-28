@@ -36,9 +36,9 @@ class PessoasController extends AppController
             // $contain = ['Types'];
             $totalRecordsCount = $this->$model->find('all')->count();
             $conditions = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
-            $queryRecordsCount = $this->$model->find('all')->count();
+            $queryRecordsCount = $this->$model->find('all')->where($conditions)->count();
             $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
-            $records = $this->$model->find('all')->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+            $records = $this->$model->find('all')->where($conditions)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
             //$types = $this->Users->Types->find('list', ['limit' => 200]);
