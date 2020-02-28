@@ -146,24 +146,30 @@ class PessoasController extends AppController
 
         
         $sheet->setCellValue('A1', 'Id');
-        $sheet->setCellValue('B1', 'Nome');;
-        $sheet->setCellValue('C1', 'Data de criação');
+        $sheet->setCellValue('B1', 'Nome');
+        $sheet->setCellValue('C1', 'CC');
+        $sheet->setCellValue('D1', 'NIF');
+        $sheet->setCellValue('E1', 'Data de nascimento');
+        $sheet->setCellValue('F1', 'Data de criação');
         
         $linha = 2;
         foreach ($pessoas as $row) {
             //$row = $this->Pedidos->formatDates($row);
             $sheet->setCellValue('A' . $linha, $row->id);
             $sheet->setCellValue('B' . $linha, $row->nome);
-            $sheet->setCellValue('C' . $linha, $row->created);    
+            $sheet->setCellValue('C' . $linha, $row->cc);
+            $sheet->setCellValue('D' . $linha, $row->nif);
+            $sheet->setCellValue('E' . $linha, $row->data_nascimento); 
+            $sheet->setCellValue('F' . $linha, $row->created);    
             $linha++;
         }
 
-        foreach(range('A','C') as $columnID) {
+        foreach(range('A','F') as $columnID) {
             $sheet->getColumnDimension($columnID)
                 ->setAutoSize(true);
         }
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        $spreadsheet->getActiveSheet()->getStyle('A1:F1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
         
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);
