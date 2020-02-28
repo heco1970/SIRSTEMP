@@ -5,7 +5,12 @@
 <div class="card shadow mb-2">
     <div class="card-header py-3">
         <a class="btn btn-success btn-circle btn-lg" href="/processos/add"><i class="fas fa-plus"></i></a>
-        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+        <?= $this->Html->link(
+            '<span class="fas fa-file-download"></span><span class="sr-only">' . __('View') . '</span>',
+            ['action' => 'xls'],
+            ['escape' => false, 'title' => __('View'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']) 
+        ?>
+        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
     </div>
 </div>
 
@@ -31,8 +36,6 @@ $dynElems['created'] = ['label' => 'Data de Criação'];
         <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
     </div>
 </div>
-
-<?= $this->Html->link('Download', ['controller' => 'Processos', 'action' => 'xls'], ['class' => 'btn btn-primary btn-lg float-right']) ?>
 
 <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text' ]); ?>
 
