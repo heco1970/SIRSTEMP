@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Processos Controller
@@ -133,5 +135,49 @@ class ProcessosController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function xls() {
+
+        $this->autoRender = false;
+        $path = TMP . "processos.xlsx";
+
+        
+        $processos = $this->Processos->find('all');
+        
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        
+        $sheet->setCellValue('A1', 'Id');
+        $sheet->setCellValue('B1', 'Entidade Judicial');
+        $sheet->setCellValue('C1', 'Natureza');
+        $sheet->setCellValue('D1', 'NIP');
+        $sheet->setCellValue('E1', 'Data de criação');
+        
+        $linha = 2;
+        foreach ($processos as $row) {
+            //$row = $this->Pedidos->formatDates($row);
+            $sheet->setCellValue('A' . $linha, $row->id);
+            $sheet->setCellValue('B' . $linha, $row->entjudicial);
+            $sheet->setCellValue('C' . $linha, $row->natureza);
+            $sheet->setCellValue('D' . $linha, $row->nip);
+            $sheet->setCellValue('E' . $linha, $row->created);    
+            $linha++;
+        }
+
+        foreach(range('A','E') as $columnID) {
+            $sheet->getColumnDimension($columnID)
+                ->setAutoSize(true);
+        }
+
+        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+        $this->response->withType("application/vnd.ms-excel");
+        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Processos.xlsx'));
+        
     }
 }

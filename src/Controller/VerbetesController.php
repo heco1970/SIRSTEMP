@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Verbetes Controller
@@ -133,5 +135,53 @@ class VerbetesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function xls() {
+
+        $this->autoRender = false;
+        $path = TMP . "verbetes.xlsx";
+        
+        $verbetes = $this->Verbetes->find('all')
+                    ->contain([
+                        'Pessoas'
+                    ]);
+               
+        
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        
+        $sheet->setCellValue('A1', 'Id');
+        $sheet->setCellValue('B1', 'Pessoa');;
+        $sheet->setCellValue('C1', 'Data de criação');
+        $sheet->setCellValue('D1', 'Data Distribuição');
+        $sheet->setCellValue('E1', 'Data Inicio Efectivo');
+        
+        $linha = 2;
+        foreach ($verbetes as $row) {
+            //$row = $this->Pedidos->formatDates($row);
+            $sheet->setCellValue('A' . $linha, $row->id);
+            $sheet->setCellValue('B' . $linha, $row->pessoa->nome);
+            $sheet->setCellValue('C' . $linha, $row->datacriacao);
+            $sheet->setCellValue('D' . $linha, $row->datadistribuicao);
+            $sheet->setCellValue('E' . $linha, $row->datainicioefectiva);
+             
+            $linha++;
+        }
+
+        foreach(range('A','E') as $columnID) {
+            $sheet->getColumnDimension($columnID)
+                ->setAutoSize(true);
+        }
+
+        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+        $this->response->withType("application/vnd.ms-excel");
+        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Verbetes.xlsx'));
+        
     }
 }

@@ -30,6 +30,8 @@ $dynElems['created'] = ['label' => 'Data de Criação'];
         </div>
     </div>
 
+<?= $this->Html->link('Download', ['controller' => 'Pedidos', 'action' => 'xls'], ['class' => 'btn btn-primary btn-lg float-right']) ?>
+
 <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text' ]); ?>
 
 <?=$this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]);?>

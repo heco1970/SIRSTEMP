@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Pessoas Controller
@@ -130,5 +132,44 @@ class PessoasController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function xls() {
+
+        $this->autoRender = false;
+        $path = TMP . "pessoas.xlsx";
+        
+        $pessoas = $this->Pessoas->find('all');
+        
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        
+        $sheet->setCellValue('A1', 'Id');
+        $sheet->setCellValue('B1', 'Nome');;
+        $sheet->setCellValue('C1', 'Data de criação');
+        
+        $linha = 2;
+        foreach ($pessoas as $row) {
+            //$row = $this->Pedidos->formatDates($row);
+            $sheet->setCellValue('A' . $linha, $row->id);
+            $sheet->setCellValue('B' . $linha, $row->nome);
+            $sheet->setCellValue('C' . $linha, $row->created);    
+            $linha++;
+        }
+
+        foreach(range('A','C') as $columnID) {
+            $sheet->getColumnDimension($columnID)
+                ->setAutoSize(true);
+        }
+
+        $spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+        $this->response->withType("application/vnd.ms-excel");
+        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pedidos.xlsx'));
+        
     }
 }
