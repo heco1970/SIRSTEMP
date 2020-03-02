@@ -175,7 +175,7 @@ class PessoasController extends AppController
         $writer->save($path);
 
         $this->response->withType("application/vnd.ms-excel");
-        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pedidos.xlsx'));
+        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pessoas.xlsx'));
         
     }
 }

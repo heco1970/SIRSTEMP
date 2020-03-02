@@ -6,9 +6,9 @@
     <div class="card-header py-3">
         <a class="btn btn-success btn-circle btn-lg" href="/processos/add"><i class="fas fa-plus"></i></a>
         <?= $this->Html->link(
-            '<span class="fas fa-file-download"></span><span class="sr-only">' . __('View') . '</span>',
+            '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['escape' => false, 'title' => __('View'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']) 
+            ['escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']) 
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
     </div>
