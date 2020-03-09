@@ -42,6 +42,7 @@ class PessoasController extends AppController
             $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
             $records = $this->$model->find('all')->where($conditions)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+            
         } else {
             //$types = $this->Users->Types->find('list', ['limit' => 200]);
             //$this->set(compact('types'));
@@ -134,13 +135,88 @@ class PessoasController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function xls() {
+    public function xls($filtroNome) {
 
+        
+        /*
+               
+        $model = 'Pessoas';
+        $this->loadComponent('Dynatables');
+
+        $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
+
+        $validOps = ['id', 'nome','created','modified'];
+        $convArray = ['id' => $model.'.id',
+            'nome' => $model.'.nome',
+            'created' => $model.'.created',
+            'modified' => $model.'.modified'];
+        $strings = ['nome'];
+
+        // $contain = ['Types'];
+        
+        $totalRecordsCount = $this->$model->find('all')->count();
+        $conditions = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
+        $queryRecordsCount = $this->$model->find('all')->where($conditions)->count();
+        $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+        
+        $records = $this->$model->find('all')->where($conditions)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+        // $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+        
+        
+        
+        //$showAll = ($showAll === 'all');
+        $this->autoRender = false;
+        $path = TMP . "pessoas.xlsx";
+        //$options = $this->getRequest()->getSession()->read('pessoasOptions');
+        //$conditions = $options['conditions'];
+        
+        //$this->set('Pessoas',$this->Pessoas->find('all', array ('conditions' => array('nome' => 'da'))));
+
+        //$pessoas = $this->Pessoas->find('all', array('conditions'=> array('nome' => 'David')));
+        /*
+                ->where('id'==1)
+                ->order($options['orderBy'])
+                ->toArray();
+        
+
+        /*
         $this->autoRender = false;
         $path = TMP . "pessoas.xlsx";
         
         $pessoas = $this->Pessoas->find('all');
         
+
+        //$results = $this->Pessoas->findByNome($pessoaNome);
+
+        //$this->set('results', $results);
+
+
+        //debug.log
+        
+        
+        */
+
+        //$isUserAdmin = $this->isUserAdmin();
+        //$showAll = ($showAll === 'all') && $isUserAdmin;
+        $this->autoRender = false;
+        $path = TMP . "pessoas.xlsx";
+        $options = $this->getRequest()->getSession()->read('pessoasOptions');
+        $conditions = $options['conditions'];
+        /*
+        if (!$showAll) {
+            $conditions['Records.user_id'] = $this->Auth->user('id');
+        }
+        */
+        //$pessoas = $this->Pessoas->find('all', array('conditions'=>array('Pessoas.nome LIKE'=>$filtroNome.'%')));
+                //->where($conditions)
+                //->order($options['orderBy'])
+                //->like()
+                //->toArray();
+
+        $pessoas = $this->Pessoas->find('all')
+                ->where($conditions)
+                ->toArray();
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -151,7 +227,13 @@ class PessoasController extends AppController
         $sheet->setCellValue('D1', 'NIF');
         $sheet->setCellValue('E1', 'Data de nascimento');
         $sheet->setCellValue('F1', 'Data de criação');
+        $sheet->setCellValue('G1', $filtroNome);
+        //$sheet->setCellValue('H1', print_r($this->getRequest()->getSession()->read('pessoasOptions')));
+        //$sheet->setCellValue('G1', print_r($convArray['nome']));
+        //$sheet->setCellValue('G1', $this->request->getQuery('queries[nome]'));
         
+        //$this->log('Got here', print_r($conditions));
+
         $linha = 2;
         foreach ($pessoas as $row) {
             //$row = $this->Pedidos->formatDates($row);
