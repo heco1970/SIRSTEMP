@@ -54,7 +54,48 @@ $dynElems['created'] = ['label' => 'Data de Criação'];
         }
         createDynatable("#dynatable","/processos/",{created: -1}, writers);
 
+        deleteCookie("Filtro");
+        createCookie("Filtro", "", "", "", "","1"); 
+
         // function removeElement(url)
     });
+
+    document.getElementById("id").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1"); 
+    };
+
+    document.getElementById("entjudicial").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1");
+    };
+
+    document.getElementById("natureza").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1");
+    };
+
+    document.getElementById("nip").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1");
+    };
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+    }
+    
+    function createCookie(name, valueId, valueEnt, valueNat, valueNip, days) { 
+        var expires; 
+        
+        if (days) { 
+            var date = new Date(); 
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); 
+            expires = "; expires=" + date.toGMTString(); 
+        } 
+        else { 
+            expires = ""; 
+        } 
+        
+        document.cookie = escape(name) + "=" +
+            valueId + "," + valueEnt + "," + valueNat + "," + valueNip
+            + expires + "; path=/"; 
+    } 
+
 </script>
 <?php $this->end(); ?>

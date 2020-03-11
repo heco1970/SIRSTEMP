@@ -56,7 +56,52 @@ $dynElems['created'] = ['label' => 'Data de Criação'];
         }
         createDynatable("#dynatable","/verbetes/",{created: -1}, writers);
 
+        deleteCookie("Filtro");
+        createCookie("Filtro", "", "", "", "", "","1");
+
         // function removeElement(url)
     });
+
+    document.getElementById("id").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1"); 
+    };
+
+    document.getElementById("pessoa").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");          
+    };
+
+    document.getElementById("criacao").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");         
+    };
+
+    document.getElementById("distribuicao").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");         
+    };
+
+    document.getElementById("efectivo").onkeyup = function() {
+        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");        
+    };
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+    }
+    
+    function createCookie(name, valueId, valuePessoa, valueCria, valueDis, valueEfe , days) { 
+        var expires; 
+        
+        if (days) { 
+            var date = new Date(); 
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); 
+            expires = "; expires=" + date.toGMTString(); 
+        } 
+        else { 
+            expires = ""; 
+        } 
+        
+        document.cookie = escape(name) + "=" +
+            valueId + "," + valuePessoa + "," + valueCria + "," + valueDis + "," + valueEfe
+            + expires + "; path=/"; 
+    } 
+
 </script>
 <?php $this->end(); ?>

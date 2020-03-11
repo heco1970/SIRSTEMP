@@ -138,16 +138,125 @@ class ProcessosController extends AppController
     }
 
     public function xls() {
+        $out = explode(',', $_COOKIE["Filtro"]);
 
+        if($out[0] != null && $out[1] != null && $out[2] != null && $out[3] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'id LIKE "%'.$out[0].'%"',
+                    'entjudicial LIKE "%'.$out[1].'%"',
+                    'natureza LIKE "%'.$out[2].'%"',
+                    'nip LIKE "%'.$out[3].'%"'
+            )));
+            // tudo preechido
+        } elseif($out[0] == null && $out[1] != null && $out[2] != null && $out[3] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'entjudicial LIKE "%'.$out[1].'%"',
+                    'natureza LIKE "%'.$out[2].'%"',
+                    'nip LIKE "%'.$out[3].'%"'
+            )));
+            // 1,2,3
+        } elseif($out[1] == null && $out[2] != null && $out[3] != null && $out[0] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'id LIKE "%'.$out[0].'%"',
+                    'natureza LIKE "%'.$out[2].'%"',
+                    'nip LIKE "%'.$out[3].'%"'
+            )));
+            // 0,2,3
+        } elseif($out[2] == null && $out[3] != null && $out[1] != null && $out[0] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'id LIKE "%'.$out[0].'%"',
+                    'entjudicial LIKE "%'.$out[1].'%"',
+                    'nip LIKE "%'.$out[3].'%"'
+            )));
+            // 0,1,3
+        } elseif($out[3] == null && $out[0] != null && $out[1] != null && $out[2] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'id LIKE "%'.$out[0].'%"',
+                    'entjudicial LIKE "%'.$out[1].'%"',
+                    'natureza LIKE "%'.$out[2].'%"'
+            )));
+            // 0,1,2
+        }elseif($out[2] == null && $out[3] == null && $out[0] != null && $out[1] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'id LIKE "%'.$out[0].'%"',
+                    'entjudicial LIKE "%'.$out[1].'%"'
+            )));
+            // 0,1
+        } elseif($out[1] == null && $out[3] == null && $out[0] != null && $out[2] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'id LIKE "%'.$out[0].'%"',
+                    'natureza LIKE "%'.$out[2].'%"',
+            )));
+            // 0,2
+        } elseif($out[1] == null && $out[2] == null && $out[0] != null && $out[3] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'id LIKE "%'.$out[0].'%"',
+                    'nip LIKE "%'.$out[3].'%"'
+            )));
+            // 0,3
+        } elseif($out[0] == null && $out[3] == null && $out[1] != null && $out[2] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'entjudicial LIKE "%'.$out[1].'%"',
+                    'natureza LIKE "%'.$out[2].'%"'
+            )));
+            // 1,2
+        } elseif($out[0] == null && $out[2] == null && $out[1] != null && $out[3] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'entjudicial LIKE "%'.$out[1].'%"',
+                    'nip LIKE "%'.$out[3].'%"'
+            )));
+            // 1,3
+        } elseif($out[0] == null && $out[1] == null && $out[2] != null && $out[3] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'natureza LIKE "%'.$out[2].'%"',
+                    'nip LIKE "%'.$out[3].'%"'
+            )));
+            // 2,3
+        } elseif($out[1] == null && $out[2] == null && $out[3] == null && $out[0] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'id LIKE "%'.$out[0].'%"'
+            )));
+            // 0
+        } elseif($out[0] == null && $out[2] == null && $out[3] == null && $out[1] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'entjudicial LIKE "%'.$out[1].'%"'
+            )));
+            // 1
+        } elseif($out[0] == null && $out[1] == null && $out[3] == null && $out[2] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'natureza LIKE "%'.$out[2].'%"'
+            )));
+            // 2
+        } elseif($out[0] == null && $out[1] == null && $out[2] == null && $out[3] != null){
+            $processos = $this->Processos->find('all',array(
+                'conditions'=>array(
+                    'nip LIKE "%'.$out[3].'%"'
+            )));
+            // 3
+        } else {
+            $processos = $this->Processos->find('all')->toArray();
+            // nada preenchido
+        }
+        
         $this->autoRender = false;
         $path = TMP . "processos.xlsx";
 
-        
-        $processos = $this->Processos->find('all');
-        
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-
         
         $sheet->setCellValue('A1', 'Id');
         $sheet->setCellValue('B1', 'Entidade Judicial');
@@ -157,7 +266,6 @@ class ProcessosController extends AppController
         
         $linha = 2;
         foreach ($processos as $row) {
-            //$row = $this->Pedidos->formatDates($row);
             $sheet->setCellValue('A' . $linha, $row->id);
             $sheet->setCellValue('B' . $linha, $row->entjudicial);
             $sheet->setCellValue('C' . $linha, $row->natureza);

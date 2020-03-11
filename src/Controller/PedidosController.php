@@ -149,27 +149,36 @@ class PedidosController extends AppController
     }
 
     public function xls() {
+        $out = explode(',', $_COOKIE["Filtro"]);
+
+        if($out[0] != null && $out[1] != null){
+            $pedidos = $this->Pedidos->find('all', 
+                array('conditions'=>
+                    array('Pedidos.id LIKE'=> $out[0], 'Pessoas.nome LIKE "%'.$out[1].'%"')
+                ))->contain(['Pessoas']);
+
+        } elseif($out[1] == null && $out[0] != null){
+            $pedidos = $this->Pedidos->find('all', array('conditions'=>array('Pedidos.id LIKE'=> $out[0])))->contain(['Pessoas']);
+
+        } elseif($out[0] == null && $out[1] != null){
+            $pedidos = $this->Pedidos->find('all', array('conditions'=>array('Pessoas.nome LIKE "%'.$out[1].'%"')))->contain(['Pessoas']);
+
+        } else{
+            $pedidos = $this->Pedidos->find('all')->contain(['Pessoas']);
+        }
 
         $this->autoRender = false;
         $path = TMP . "pedidos.xlsx";
         
-        $pedidos = $this->Pedidos->find('all')
-                    ->contain([
-                        'Pessoas'
-                    ]);
-               
-        
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-
         
         $sheet->setCellValue('A1', 'Id');
-        $sheet->setCellValue('B1', 'Pessoa');;
+        $sheet->setCellValue('B1', 'Pessoa');
         $sheet->setCellValue('C1', 'Data de criação');
         
         $linha = 2;
         foreach ($pedidos as $row) {
-            //$row = $this->Pedidos->formatDates($row);
             $sheet->setCellValue('A' . $linha, $row->id);
             $sheet->setCellValue('B' . $linha, $row->pessoa->nome);
             $sheet->setCellValue('C' . $linha, $row->created);    

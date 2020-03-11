@@ -52,7 +52,40 @@ $dynElems['created'] = ['label' => 'Data de Criação'];
             }
             createDynatable("#dynatable","/pedidos/",{created: -1}, writers);
 
+            deleteCookie("Filtro");
+            createCookie("Filtro", "", "","1");
+
             // function removeElement(url)
         });
+
+        document.getElementById("id").onkeyup = function() {
+            createCookie("Filtro", document.getElementById("id").value , document.getElementById("nome").value, "1"); 
+        };
+
+        document.getElementById("nome").onkeyup = function() {
+            createCookie("Filtro", document.getElementById("id").value , document.getElementById("nome").value, "1");         
+        };
+
+        function deleteCookie(name) {
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+        }
+        
+        function createCookie(name, valueId, valueNome, days) { 
+            var expires; 
+            
+            if (days) { 
+                var date = new Date(); 
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); 
+                expires = "; expires=" + date.toGMTString(); 
+            } 
+            else { 
+                expires = ""; 
+            } 
+            
+            document.cookie = escape(name) + "=" +
+                valueId + "," + valueNome
+                + expires + "; path=/"; 
+        } 
+
     </script>
 <?php $this->end(); ?>
