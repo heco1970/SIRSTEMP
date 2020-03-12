@@ -150,21 +150,21 @@ class PedidosController extends AppController
 
     public function xls() {
         $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+        $id = 'Pedidos.id LIKE "%'.$out[0].'%"';
+        $nome = 'Pessoas.nome LIKE "%'.$out[1].'%"';
 
-        if($out[0] != null && $out[1] != null){
-            $pedidos = $this->Pedidos->find('all', 
-                array('conditions'=>
-                    array('Pedidos.id LIKE'=> $out[0], 'Pessoas.nome LIKE "%'.$out[1].'%"')
-                ))->contain(['Pessoas']);
-
-        } elseif($out[1] == null && $out[0] != null){
-            $pedidos = $this->Pedidos->find('all', array('conditions'=>array('Pedidos.id LIKE'=> $out[0])))->contain(['Pessoas']);
-
-        } elseif($out[0] == null && $out[1] != null){
-            $pedidos = $this->Pedidos->find('all', array('conditions'=>array('Pessoas.nome LIKE "%'.$out[1].'%"')))->contain(['Pessoas']);
-
-        } else{
+        if($out[0] != null){
+            array_push($arr, $id);
+        }
+        if($out[1] != null){
+            array_push($arr, $nome);
+        }
+        if($arr == null){
             $pedidos = $this->Pedidos->find('all')->contain(['Pessoas']);
+        }
+        else{
+            $pedidos = $this->Pedidos->find('all', array('conditions'=>$arr))->contain(['Pessoas']);
         }
 
         $this->autoRender = false;
@@ -186,8 +186,7 @@ class PedidosController extends AppController
         }
 
         foreach(range('A','C') as $columnID) {
-            $sheet->getColumnDimension($columnID)
-                ->setAutoSize(true);
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
         $spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
@@ -197,6 +196,5 @@ class PedidosController extends AppController
 
         $this->response->withType("application/vnd.ms-excel");
         return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pedidos.xlsx'));
-        
     }
 }

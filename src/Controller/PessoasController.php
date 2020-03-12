@@ -137,21 +137,21 @@ class PessoasController extends AppController
 
     public function xls() {
         $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+        $id = 'id LIKE "%'.$out[0].'%"';
+        $nome = 'nome LIKE "%'.$out[1].'%"';
 
-        if($out[0] != null && $out[1] != null){
-            $pessoas = $this->Pessoas->find('all',array(
-                'conditions'=>array(
-                    'id LIKE "%'.$out[0].'%"',
-                    'nome LIKE "%'.$out[1].'%"'
-            )));   
-        } elseif($out[1] == null && $out[0] != null){
-            $pessoas = $this->Pessoas->find('all', array('conditions'=>array('id LIKE "%'.$out[0].'%"')));
-
-        } elseif($out[0] == null && $out[1] != null){
-            $pessoas = $this->Pessoas->find('all', array('conditions'=>array('nome LIKE "%'.$out[1].'%"')));
-
-        } else{
+        if($out[0] != null){
+            array_push($arr, $id);
+        }
+        if($out[1] != null){
+            array_push($arr, $nome);
+        }
+        if($arr == null){
             $pessoas = $this->Pessoas->find('all')->toArray();
+        }
+        else{
+            $pessoas = $this->Pessoas->find('all',array('conditions'=>$arr));
         }
 
         $this->autoRender = false;
@@ -179,8 +179,7 @@ class PessoasController extends AppController
         }
 
         foreach(range('A','F') as $columnID) {
-            $sheet->getColumnDimension($columnID)
-                ->setAutoSize(true);
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
         $spreadsheet->getActiveSheet()->getStyle('A1:F1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
@@ -190,6 +189,5 @@ class PessoasController extends AppController
 
         $this->response->withType("application/vnd.ms-excel");
         return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pessoas.xlsx'));
-        
     }
 }

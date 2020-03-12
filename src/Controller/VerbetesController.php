@@ -139,271 +139,33 @@ class VerbetesController extends AppController
 
     public function xls() {
         $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+        $id = 'Verbetes.id LIKE '. $out[0];
+        $nome = 'Pessoas.nome LIKE "%'.$out[1].'%"';
+        $datacriacao = 'Verbetes.datacriacao LIKE "%'.$out[2].'%"';
+        $datadistribuicao = 'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"';
+        $datainicioefectiva = 'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"';
 
-        if($out[0] != null && $out[1] != null && $out[2] != null && $out[3] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // tudo preechido
-        } elseif($out[0] == null && $out[1] != null && $out[2] != null && $out[3] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array( 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 1,2,3,4
-        } elseif($out[1] == null && $out[2] != null && $out[3] != null && $out[0] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 0,2,3,4
-        } elseif($out[2] == null && $out[3] != null && $out[1] != null && $out[0] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 0,1,3,4
-        } elseif($out[3] == null && $out[0] != null && $out[1] != null && $out[2] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 0,1,2,4
-        } elseif($out[4] == null && $out[0] != null && $out[1] != null && $out[2] != null && $out[3] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"')
-            ))->contain(['Pessoas']);
-            // 0,1,2,3 
-        } elseif($out[2] == null && $out[3] == null && $out[0] != null && $out[1] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 0,1,4
-        } elseif($out[1] == null && $out[3] == null && $out[0] != null && $out[2] != null && $out[4] != null){
-            $verbetes = $this->Pedidos->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 0,2,4
-        } elseif($out[1] == null && $out[2] == null && $out[0] != null && $out[3] != null && $out[4] != null){
-            $verbetes = $this->Pedidos->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 0,3,4
-        } elseif($out[0] == null && $out[3] == null && $out[1] != null && $out[2] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 1,2,4
-        } elseif($out[0] == null && $out[2] == null && $out[1] != null && $out[3] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 1,3,4
-        } elseif($out[0] == null && $out[1] == null && $out[2] != null && $out[3] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 2,3,4
-        } elseif($out[0] == null && $out[1] != null && $out[4] == null && $out[2] != null && $out[3] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"')
-            ))->contain(['Pessoas']);
-            // 1,2,3
-        } elseif($out[1] == null && $out[2] != null && $out[4] == null && $out[3] != null && $out[0] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"')
-            ))->contain(['Pessoas']);
-            // 0,2,3
-        } elseif($out[2] == null && $out[3] != null && $out[4] == null && $out[1] != null && $out[0] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"')
-            ))->contain(['Pessoas']);
-            // 0,1,3
-        } elseif($out[3] == null && $out[0] != null && $out[4] == null && $out[1] != null && $out[2] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"')
-            ))->contain(['Pessoas']);
-            // 0,1,2
-        } elseif($out[2] == null && $out[3] == null && $out[4] == null && $out[0] != null && $out[1] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Pessoas.nome LIKE "%'.$out[1].'%"')
-            ))->contain(['Pessoas']);
-            // 0,1
-        } elseif($out[1] == null && $out[3] == null && $out[4] == null && $out[0] != null && $out[2] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"')
-            ))->contain(['Pessoas']);
-            // 0,2
-        } elseif($out[1] == null && $out[2] == null && $out[4] == null && $out[0] != null && $out[3] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"')
-            ))->contain(['Pessoas']);
-            // 0,3
-        } elseif($out[1] == null && $out[2] == null && $out[3] == null && $out[0] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.id LIKE'=> $out[0], 
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 0,4
-        } elseif($out[0] == null && $out[3] == null && $out[4] == null && $out[1] != null && $out[2] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"')
-            ))->contain(['Pessoas']);
-            // 1,2
-        } elseif($out[0] == null && $out[2] == null && $out[4] == null && $out[1] != null && $out[3] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"')
-            ))->contain(['Pessoas']);
-            // 1,3
-        } elseif($out[0] == null && $out[2] == null && $out[3] == null && $out[1] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Pessoas.nome LIKE "%'.$out[1].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 1,4
-        } elseif($out[0] == null && $out[1] == null && $out[4] == null && $out[2] != null && $out[3] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"')
-            ))->contain(['Pessoas']);
-            // 2,3
-        } elseif($out[0] == null && $out[1] == null && $out[3] == null && $out[2] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.datacriacao LIKE "%'.$out[2].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 2,4
-        } elseif($out[0] == null && $out[1] == null && $out[2] == null && $out[3] != null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array(
-                    'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"',
-                    'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 3,4
-        } elseif($out[1] == null && $out[2] == null && $out[3] == null && $out[4] == null && $out[0] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array('Verbetes.id LIKE'=> $out[0])
-            ))->contain(['Pessoas']);
-            // 0
-        } elseif($out[0] == null && $out[2] == null && $out[3] == null && $out[4] == null && $out[1] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array('Pessoas.nome LIKE "%'.$out[1].'%"')
-            ))->contain(['Pessoas']);
-            // 1
-        } elseif($out[0] == null && $out[1] == null && $out[3] == null && $out[4] == null && $out[2] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array('Verbetes.datacriacao LIKE "%'.$out[2].'%"')
-            ))->contain(['Pessoas']);
-            // 2
-        } elseif($out[0] == null && $out[1] == null && $out[2] == null && $out[4] == null && $out[3] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array('Verbetes.datadistribuicao LIKE "%'.$out[3].'%"')
-            ))->contain(['Pessoas']);
-            // 3
-        } elseif($out[0] == null && $out[1] == null && $out[2] == null && $out[3] == null && $out[4] != null){
-            $verbetes = $this->Verbetes->find('all', 
-            array('conditions'=>
-                array('Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"')
-            ))->contain(['Pessoas']);
-            // 4
-        } else {
+        if($out[0] != null){
+            array_push($arr, $id);
+        }
+        if($out[1] != null){
+            array_push($arr, $nome);
+        }
+        if($out[2] != null){
+            array_push($arr, $datacriacao);
+        }
+        if($out[3] != null){
+            array_push($arr, $datadistribuicao);
+        }
+        if($out[4] != null){
+            array_push($arr, $datainicioefectiva);
+        }
+        if($arr == null){
             $verbetes = $this->Verbetes->find('all')->contain(['Pessoas']);
-            // nada preenchido
+        }
+        else{
+            $verbetes = $this->Verbetes->find('all', array('conditions'=>$arr))->contain(['Pessoas']);
         }
 
         $this->autoRender = false;
@@ -412,28 +174,24 @@ class VerbetesController extends AppController
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        
         $sheet->setCellValue('A1', 'Id');
-        $sheet->setCellValue('B1', 'Pessoa');;
+        $sheet->setCellValue('B1', 'Pessoa');
         $sheet->setCellValue('C1', 'Data de criação');
         $sheet->setCellValue('D1', 'Data Distribuição');
         $sheet->setCellValue('E1', 'Data Inicio Efectivo');
         
         $linha = 2;
         foreach ($verbetes as $row) {
-            //$row = $this->Pedidos->formatDates($row);
             $sheet->setCellValue('A' . $linha, $row->id);
             $sheet->setCellValue('B' . $linha, $row->pessoa->nome);
             $sheet->setCellValue('C' . $linha, $row->datacriacao);
             $sheet->setCellValue('D' . $linha, $row->datadistribuicao);
             $sheet->setCellValue('E' . $linha, $row->datainicioefectiva);
-             
             $linha++;
         }
 
         foreach(range('A','E') as $columnID) {
-            $sheet->getColumnDimension($columnID)
-                ->setAutoSize(true);
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
         $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
@@ -443,6 +201,5 @@ class VerbetesController extends AppController
 
         $this->response->withType("application/vnd.ms-excel");
         return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Verbetes.xlsx'));
-        
     }
 }
