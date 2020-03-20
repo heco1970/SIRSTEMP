@@ -3,10 +3,12 @@
 ?>
 
 <h1 class="h3 mb-2 text-gray-800"><?=__('Registo de Pessoas')?></h1>
+<a id="myBtn" href="#" class="modalLogin" data-content="">Modal</a>
 
 <div class="card shadow mb-2">
     <div class="card-header py-3">
         <a class="btn btn-success btn-circle btn-lg" href="/pessoas/add"><i class="fas fa-plus"></i></a>
+        
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
