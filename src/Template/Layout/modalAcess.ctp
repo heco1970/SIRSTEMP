@@ -1,4 +1,4 @@
-    <?php
+<?php
     $title = 'Direção-Geral de Reinserção e Serviços Prisionais ';
     ?>
 
@@ -90,5 +90,98 @@
             <?= $this->fetch('script') ?>
             <?= $this->fetch('scriptBottom') ?>
         </body>
+
+    <style>
+        /* The Modal (background) */
+        .modale {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modale-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 75%; /* Could be more or less, depending on screen size */
+            height: 45%;
+        }
+
+        /* The Close Button */
+        .exit {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .exit:hover,
+        .exit:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        } 
+    </style>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modale">
+
+    <!-- Modal content -->
+    <div class="modale-content container">
+        <div class="row mt-4">
+            <div class="col-4 d-flex justify-content-center">
+                <img src="https://picsum.photos/200/300" class="rounded-circle w-75 h-50" alt="Profile"> 
+            </div>
+            <div class="col-8">
+                <div class="mt-4">
+                    <?php echo "<h5><b>Nome: </b>".$this->Session->read('Auth.User.name')."</h5>" ?>
+                    <?php echo "<h5><b>Username: </b>".$this->Session->read('Auth.User.username')."</h5>" ?>
+                    <?php echo "<h5><b>Email: </b>".$this->Session->read('Auth.User.email')."</h5>" ?>
+                    <?php echo "<h5><b>Ultimo acesso: </b>".$this->Session->read('Auth.User.browser_version')."</h5>" ?>
+                    <?php echo "<h5><b>Ultimo acesso: </b>".$this->Session->read('Auth.User.id')."</h5>" ?>
+                    <?php echo "<h5><b>Ultimo acesso: </b>".$this->Session->read('Auth.User.id')."</h5>" ?>
+                   
+                </div>
+                <span class="exit">&times;</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("exit")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        window.onload = function mod() {
+            modal.style.display = "block";
+        }
+        
+    </script>
 
 </html>

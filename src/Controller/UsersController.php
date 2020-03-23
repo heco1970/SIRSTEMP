@@ -183,7 +183,12 @@ class UsersController extends AppController
                   $this->log('Problem saving access data');
                 }
                 $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+
+                //$this->redirect($this->Auth->redirectUrl());
+
+                return $this->redirect(['controller' => 'Dummy', 'action' => 'modalAcess']);
+                //return header("Location: /acess");
+                /*$this->redirect($this->DummyController->modalAcess())*/
             }
             $this->Flash->error(__('Invalid username or password, try again'));
         }
