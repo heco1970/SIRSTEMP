@@ -1,5 +1,5 @@
 <?php
-$projectTitle = 'Protofi';
+  $projectTitle = 'Protofi';
 ?>
 <!DOCTYPE html>
 <html lang="en">

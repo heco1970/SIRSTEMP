@@ -55,7 +55,6 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Dummy', 'action' => 'index']);
 
     $routes->connect('/login', ['controller' => 'Dummy', 'action' => 'login']);
-    $routes->connect('/acess', ['controller' => 'Dummy', 'action' => 'modalAcess']);
 
     /**
      * Connect catchall routes for all controllers.

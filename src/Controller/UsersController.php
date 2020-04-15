@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Auth\DefaultPasswordHasher;
 use Jenssegers\Agent\Agent;
+use Cake\I18n\Time;
 
 /**
  * Users Controller
@@ -158,44 +159,119 @@ class UsersController extends AppController
     }
 
     public function login() {
-        $this->viewBuilder()->setLayout('login');
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $agent = new Agent();
-                $browser = $agent->browser();
-                $browserVersion = $agent->version($browser);
-                $os = $agent->platform();
-                $osVersion = $agent->version($os);
-                $device = $agent->device();
+      $this->viewBuilder()->setLayout('login');
+      if ($this->request->is('post')) {
+        $user = $this->Auth->identify();
 
-                $this->loadModel('Accesses');
-                $access = $this->Accesses->newEntity([
-                  'user_id' => $user['id'],
-                  'browser' => $browser,
-                  'browser_version' => $browserVersion,
-                  'os' => $os,
-                  'os_version' => $osVersion,
-                  'device' => $device
-                ]);
+        //Attemps
+        $this->loadModel('Attempts');
+        $att = $this->Attempts->find('all', 
+          array(
+            'conditions'=>
+              array('Attempts.username'=> strtolower($_POST['username']))
+          )
+        )->toArray();
 
-                if (!$this->Accesses->save($access)) {
-                  $this->log('Problem saving access data');
+        if($att[0]['ban'] == false){
+          if ($user) {
+            //Accesses
+            $this->loadModel('Accesses');
+            $result = $this->Accesses->find('all', 
+              array(
+                'conditions'=>
+                  array('Accesses.user_id'=> $user['id'])
+              )
+            )->all();
+            $lastAccess = $result->last();
+  
+            $agent = new Agent();
+            $browser = $agent->browser();
+            $browserVersion = $agent->version($browser);
+            $os = $agent->platform();
+            $osVersion = $agent->version($os);
+            $device = $agent->device();
+  
+            $access = $this->Accesses->newEntity([
+              'user_id' => $user['id'],
+              'browser' => $browser,
+              'browser_version' => $browserVersion,
+              'os' => $os,
+              'os_version' => $osVersion,
+              'device' => $device
+            ]);
+
+            if (!$this->Accesses->save($access)) {
+              $this->log('Problem saving access data');
+            }
+  
+            $user['last'] = $lastAccess['created'];
+            $user['show'] = true;
+            $this->Auth->setUser($user);
+  
+            return $this->redirect($this->Auth->redirectUrl()); 
+          }
+  
+          //Attemps
+          $this->loadModel('Attempts');
+          $att = $this->Attempts->find('all', 
+            array(
+              'conditions'=>
+                array('Attempts.username'=> strtolower($_POST['username']))
+            )
+          )->toArray();
+          
+          if(sizeof($att) != 0){
+            if($att[0]['count'] > 2){
+              if($att[0]['suspenso'] > Time::now()){
+                $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
+              }
+              else{
+                $att[0]['count'] = 0;
+                $att[0]['suspenso'] = null;
+                $att[0]['modified'] = Time::now();
+  
+                if (!$this->Attempts->save($att[0])) {
+                  $this->log('Problem saving attempt data');
                 }
-                $this->Auth->setUser($user);
-
-                //$this->redirect($this->Auth->redirectUrl());
-
-                return $this->redirect(['controller' => 'Dummy', 'action' => 'modalAcess']);
-                //return header("Location: /acess");
-                /*$this->redirect($this->DummyController->modalAcess())*/
+                $this->Flash->error(__('Invalid username or password, try again'));
+              }
+            } else {
+              $att[0]['count'] += 1;
+              $att[0]['modified'] = Time::now();
+  
+              if($att[0]['count'] == 3){
+                $startTime = Time::now();
+                $startTime = date("Y-m-d H:i:s");
+                $add_date = date('Y-m-d H:i:s',strtotime('+30 minutes',strtotime($startTime)));
+                $att[0]['suspenso'] = $add_date;
+              }
+              if (!$this->Attempts->save($att[0])) {
+                $this->log('Problem saving attempt data');
+              }
+              $this->Flash->error(__('Invalid username or password, try again'));
+            }
+          }
+          else{
+            $att = $this->Attempts->newEntity([
+              'username' => strtolower($_POST['username']),
+              'count' => 1,
+              'created' => Time::now(),
+              'modified' => Time::now()
+            ]);
+            if (!$this->Attempts->save($att)) {
+              $this->log('Problem saving access data');
             }
             $this->Flash->error(__('Invalid username or password, try again'));
+          }
         }
+        else{
+          $this->Flash->error(__('Utilizador bloquedo pelo administrador'));
+        }
+      }
     }
 
     public function logout() {
-        return $this->redirect($this->Auth->logout());
+      return $this->redirect($this->Auth->logout());
     }
     
     public function password(){

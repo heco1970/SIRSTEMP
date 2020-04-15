@@ -37,16 +37,20 @@ $active = $show = '';
 
 
     <?php
-    if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/AclManager')):
-        $active = $aAclManager = $aAccesses = '';
+    if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/attempts/admin') || $this->Acl->hasAccess('/AclManager')):
+        $active = $aAclManager = $aAccesses = $aAttempts = '';
         if ($controller == 'Accesses' && $action == 'admin') {
             $aAccesses = $active = 'active';
             $show = 'show';
         } else if ($controller == 'Acl') {
             $aAclManager = $active = 'active';
             $show = 'show';
+        } else if ($controller == 'Attempts' && $action == 'admin') {
+            $aAttempts = $active = 'active';
+            $show = 'show';
         }
         $acesses = $this->Acl->link(__('Accesses'), '/accesses/admin', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);
+        $attempts = $this->Acl->link(__('Attempts'), '/attempts/admin', ['class' => ['collapse-item ' . $aAttempts], 'escape' => false]);
         $aclManager = $this->Acl->link(__('Acl Manager'), '/AclManager', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
         ?>
         <li class="nav-item active">
@@ -71,8 +75,8 @@ $active = $show = '';
     <?php endif; ?>
 
         <?php
-        if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/AclManager')):
-            $active = $aAclManager = $aAccesses = '';
+        if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/attempts/admin') || $this->Acl->hasAccess('/AclManager')):
+            $active = $aAclManager = $aAccesses = $aAttempts = '';
             if ($controller == 'Accesses' && $action == 'admin') {
                 $aAccesses = $active = 'active';
                 $show = 'show';
@@ -80,7 +84,12 @@ $active = $show = '';
                 $aAclManager = $active = 'active';
                 $show = 'show';
             }
+            else if ($controller == 'Attempts' && $action == 'admin') {
+                $aAttempts = $active = 'active';
+                $show = 'show';
+            }
             $acesses = $this->Acl->link(__('Accesses'), '/accesses/admin', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);
+            $attempts = $this->Acl->link(__('Attempts'), '/attempts/admin', ['class' => ['collapse-item ' . $aAttempts], 'escape' => false]);
             $aclManager = $this->Acl->link(__('Acl Manager'), '/AclManager', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
             $users = $this->Acl->link(__('Utilizadores'), '/users', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
             ?>
@@ -94,6 +103,7 @@ $active = $show = '';
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <?= $acesses ?>
+                        <?= $attempts ?>
                         <?= $aclManager ?>
                         <?= $users ?>
                     </div>
