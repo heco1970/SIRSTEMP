@@ -13,9 +13,9 @@
 $dynElems =
   [
     'username' => ['label' => __('Username')],
-    'ban' => ['label' => __('Estado'), 'options' => ['true', 'false']],
-    'modifiedFirst' => ['label' => __('Ultima alteração de'), 'type' => 'date'],
-    'modifiedLast' => ['label' => __('Ultima alteração até'), 'type' => 'date']
+    'ban' => ['label' => __('Estado'), 'type' => 'select', 'options' => ['Ativo','Banido'], 'empty' => ' '],
+    'modifiedFirst' => ['label' => __('Ultima alteração de'), 'type' => 'date', 'empty' => ' '],
+    'modifiedLast' => ['label' => __('Ultima alteração até'), 'type' => 'date', 'empty' => ' ']
   ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>

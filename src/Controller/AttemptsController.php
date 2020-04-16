@@ -33,7 +33,7 @@ class AttemptsController extends AppController
         $model = 'Attempts';
         $this->loadComponent('Dynatables');
         $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
-
+      
         $validOps = ['username', 'ban', 'modified'];
         $convArray = [
           'username' => $model.'.username',
@@ -44,6 +44,20 @@ class AttemptsController extends AppController
 
         $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
         $parsedQueries = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
+
+        if($parsedQueries != null){
+          for($i = 0; $i <= (count($parsedQueries) - 1); $i++){
+            if(isset($parsedQueries[$i]['Attempts.ban LIKE'])){
+              if($parsedQueries[$i]['Attempts.ban LIKE'] == '%1%'){
+                $parsedQueries[$i]['Attempts.ban LIKE'] = true;
+              }
+              else{
+                $parsedQueries[$i]['Attempts.ban LIKE'] = false;
+              }
+            } 
+          }
+        }
+
         $conditions = array_merge($conditions,$parsedQueries);
         $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
@@ -52,7 +66,6 @@ class AttemptsController extends AppController
         $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
       }
       $this->set(compact('admin'));
-
 
       $this->viewBuilder()->setTemplate('index');
     }
