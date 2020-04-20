@@ -12,10 +12,10 @@
 <?php
 $dynElems =
   [
-    'username' => ['label' => __('Username')],
+    'username' => ['label' => __('Username'), 'type' => 'text'],
     'ban' => ['label' => __('Estado'), 'type' => 'select', 'options' => ['Ativo','Banido'], 'empty' => ' '],
-    'modifiedFirst' => ['label' => __('Ultima alteração de'), 'type' => 'date', 'empty' => ' '],
-    'modifiedLast' => ['label' => __('Ultima alteração até'), 'type' => 'date', 'empty' => ' ']
+    'modifiedfirst' => ['label' => __('Ultima alteração de'), 'type' => 'text'],
+    'modifiedlast' => ['label' => __('Ultima alteração de'), 'type' => 'text']
   ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
@@ -47,6 +47,9 @@ $dynElems =
           return '<div class="btn-group btn-group-sm" role="group">' + view + '</div>';
         }
       }
+
+      document.getElementById('modifiedfirst').type = 'date';
+      document.getElementById('modifiedlast').type = 'date';
 
       createDynatable("#dynatable","/attempts/<?=$admin?'admin':''?>",{created: -1}, writers);
 

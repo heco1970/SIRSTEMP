@@ -34,29 +34,21 @@ class AttemptsController extends AppController
         $this->loadComponent('Dynatables');
         $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
       
-        $validOps = ['username', 'ban', 'modified'];
+        $validOps = ['username', 'ban'];
         $convArray = [
           'username' => $model.'.username',
-          'ban' => $model.'.ban',
-          'modified' => $model.'.modified'];
-        $strings = ['username', 'ban', 'modified'];
+          'ban' => $model.'.ban'];
+        $strings = ['username'];
         $contain = $conditions = [];
+
+        if(isset($query['queries']['modifiedfirst']) && isset($query['queries']['modifiedlast'])){
+          $conditions[] = [
+            ''.$model.'.modified BETWEEN "'.$query['queries']['modifiedfirst'].'" and "'.$query['queries']['modifiedlast'].'"',
+          ];
+        }
 
         $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
         $parsedQueries = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
-
-        if($parsedQueries != null){
-          for($i = 0; $i <= (count($parsedQueries) - 1); $i++){
-            if(isset($parsedQueries[$i]['Attempts.ban LIKE'])){
-              if($parsedQueries[$i]['Attempts.ban LIKE'] == '%1%'){
-                $parsedQueries[$i]['Attempts.ban LIKE'] = true;
-              }
-              else{
-                $parsedQueries[$i]['Attempts.ban LIKE'] = false;
-              }
-            } 
-          }
-        }
 
         $conditions = array_merge($conditions,$parsedQueries);
         $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
