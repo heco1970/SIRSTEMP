@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\Time;
 
 /**
  * Attempts Controller
@@ -41,10 +42,26 @@ class AttemptsController extends AppController
         $strings = ['username'];
         $contain = $conditions = [];
 
-        if(isset($query['queries']['modifiedfirst']) && isset($query['queries']['modifiedlast'])){
-          $conditions[] = [
-            ''.$model.'.modified BETWEEN "'.$query['queries']['modifiedfirst'].'" and "'.$query['queries']['modifiedlast'].'"',
-          ];
+        if(isset($query['queries']['modifiedfirst']) || isset($query['queries']['modifiedlast'])){
+          if(isset($query['queries']['modifiedfirst']) && !isset($query['queries']['modifiedlast'])){
+            $datefirst = h($query['queries']['modifiedfirst']);
+            $conditions[] = [
+              $model.'.modified >= "'.$datefirst.'"',
+            ];
+          }
+          elseif(isset($query['queries']['modifiedlast']) && !isset($query['queries']['modifiedfirst'])){
+            $datelast = h($query['queries']['modifiedlast']); 
+            $conditions[] = [
+              $model.'.modified <= "'.$datelast.'"',
+            ];
+          }
+          else{
+            $datefirst = h($query['queries']['modifiedfirst']);
+            $datelast = h($query['queries']['modifiedlast']); 
+            $conditions[] = [
+              $model.'.modified BETWEEN "'.$datefirst.'" and "'.$datelast.'"',
+            ];
+          }
         }
 
         $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
