@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\I18n\Time;
 
 /**
  * Attempts Controller
@@ -33,57 +32,42 @@ class AttemptsController extends AppController
       if ($this->request->is('ajax')) {
         $model = 'Attempts';
         $this->loadComponent('Dynatables');
+
         $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
       
-        $validOps = ['username', 'ban'];
+        $validOps = ['username', 'ban', 'modifiedfirst', 'modifiedlast'];
         $convArray = [
           'username' => $model.'.username',
-          'ban' => $model.'.ban'];
+          'ban' => $model.'.ban',
+          'modifiedfirst' => $model.'.modified',
+          'modifiedlast' => $model.'.modified'
+        ];
         $strings = ['username'];
+        $date_start = ['modifiedfirst']; //data inicial
+        $date_end = ['modifiedlast'];  //data final
+
         $contain = $conditions = [];
-
-        if(isset($query['queries']['modifiedfirst']) || isset($query['queries']['modifiedlast'])){
-          if(isset($query['queries']['modifiedfirst']) && !isset($query['queries']['modifiedlast'])){
-            $datefirst = h($query['queries']['modifiedfirst']);
-            $conditions[] = [
-              $model.'.modified >= "'.$datefirst.'"',
-            ];
-          }
-          elseif(isset($query['queries']['modifiedlast']) && !isset($query['queries']['modifiedfirst'])){
-            $datelast = h($query['queries']['modifiedlast']); 
-            $conditions[] = [
-              $model.'.modified <= "'.$datelast.'"',
-            ];
-          }
-          else{
-            $datefirst = h($query['queries']['modifiedfirst']);
-            $datelast = h($query['queries']['modifiedlast']); 
-            $conditions[] = [
-              $model.'.modified BETWEEN "'.$datefirst.'" and "'.$datelast.'"',
-            ];
-          }
-        }
-
+      
         $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-        $parsedQueries = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
+        
+        $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
 
         $conditions = array_merge($conditions,$parsedQueries);
         $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
         $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
         $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+
         $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
       }
       $this->set(compact('admin'));
-
       $this->viewBuilder()->setTemplate('index');
     }
 
     public function view($id = null)
     {
-        $attempt = $this->Attempts->get($id);
-
-        $this->set('attempt', $attempt);
+      $attempt = $this->Attempts->get($id);
+      $this->set('attempt', $attempt);
     }
 
     public function add()

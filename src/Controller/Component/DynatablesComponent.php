@@ -25,7 +25,7 @@ class DynatablesComponent extends Component {
         return $sortsValidated;
     }
 
-    public function parseQueries($queries, $validOps, $convArray, $strings) {
+    public function parseQueries($queries, $validOps, $convArray, $strings, $date_start, $date_end) {
         $queriesValidated = [];
         if (empty($queries['queries'])) {
             return $queriesValidated;
@@ -35,8 +35,12 @@ class DynatablesComponent extends Component {
 
         foreach ($queries as $index => $value) {
             if (in_array($index, $validOps)) {
-                if (in_array($index,$strings)) {
+                if (in_array($index, $strings)) {
                     $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($value) . '%');
+                } elseif (in_array($index, $date_start)) {
+                    $queriesValidated[] = array($convArray[$index] . ' >=' =>  h($value));
+                } elseif (in_array($index, $date_end)) {
+                    $queriesValidated[] = array($convArray[$index] . ' <=' =>  h($value).' 23:59');
                 } else {
                     $queriesValidated[] = array($convArray[$index] => h($value));
                 }

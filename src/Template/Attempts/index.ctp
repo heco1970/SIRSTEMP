@@ -14,8 +14,8 @@ $dynElems =
   [
     'username' => ['label' => __('Username'), 'type' => 'text'],
     'ban' => ['label' => __('Estado'), 'type' => 'select', 'options' => ['Ativo','Banido'], 'empty' => ' '],
-    'modifiedfirst' => ['label' => __('Ultima alteração de'), 'type' => 'text'],
-    'modifiedlast' => ['label' => __('Ultima alteração até'), 'type' => 'text']
+    'modifiedfirst' => ['label' => __('Ultima alteração (Início)'), 'type' => 'text'],
+    'modifiedlast' => ['label' => __('Ultima alteração (Fim)'), 'type' => 'text']
   ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
@@ -49,7 +49,9 @@ $dynElems =
       }
 
       document.getElementById('modifiedfirst').type = 'date';
+      document.getElementById('modifiedfirst').max = new Date().toISOString().split("T")[0];
       document.getElementById('modifiedlast').type = 'date';
+      document.getElementById('modifiedlast').min = new Date().toISOString().split("T")[0];
 
       createDynatable("#dynatable","/attempts/<?=$admin?'admin':''?>",{created: -1}, writers);
 
