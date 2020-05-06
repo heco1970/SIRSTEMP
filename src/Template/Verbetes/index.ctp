@@ -1,6 +1,6 @@
 <?=$this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]);?>
 
-<h1 class="h3 mb-2 text-gray-800"><?=__('Registo de Processos')?></h1>
+<h1 class="h3 mb-2 text-gray-800"><?=__('Registo de Verbetes')?></h1>
 
 <div class="card shadow mb-2">
     <div class="card-header py-3">
@@ -19,20 +19,26 @@
 $dynElems =
     [
         'id' => ['label' => __('Id')],
-        'Pessoa' => ['label' => __('Pessoa')],
+        'pessoa' => ['label' => __('Pessoa')],
         'criacao' => ['label' => __('Data Criação')],
         'distribuicao' => ['label' => __('Data Distribuição')],
         'efectivo' => ['label' => __('Data Inicio Efectivo')],
-
+        'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
+        'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems['created'] = ['label' => 'Data de Criação'];
+$dynElems = ['id' => ['label' => __('Id')]] + 
+            ['pessoa' => ['label' => __('Pessoa')]] +
+            ['criacao' => ['label' => __('Data Criação')]] +
+            ['distribuicao' => ['label' => __('Data Distribuição')]] +
+            ['efectivo' => ['label' => __('Data Inicio Efectivo')]] +
+            ['created' => ['label' => __('Data de Criação (original)')]];
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Pessoas')?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Verbetes')?></h6>
     </div>
     <div class="card-body">
         <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
@@ -55,6 +61,11 @@ $dynElems['created'] = ['label' => 'Data de Criação'];
             }
         }
         createDynatable("#dynatable","/verbetes/",{created: -1}, writers);
+
+        document.getElementById('createdfirst').type = 'date';
+        document.getElementById('createdfirst').max = new Date().toISOString().split("T")[0];
+        document.getElementById('createdlast').type = 'date';
+        document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
 
         deleteCookie("Filtro");
         createCookie("Filtro", "", "", "", "", "","1");

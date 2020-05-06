@@ -23,24 +23,35 @@ class VerbetesController extends AppController
     public function index()
     {
         if ($this->request->is('ajax')) {
-            $model = 'Vernetes';
+            $model = 'Verbetes';
             $this->loadComponent('Dynatables');
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'pessoa_id', 'created', 'modified'];
-            $convArray = ['id' => $model . '.id',
-                'pessoa_id' => $model . '.pessoa_id',
-                'created' => $model . '.created',
-                'modified' => $model . '.modified'];
+            $validOps = ['id', 'pessoa_id', 'createdfirst', 'createdlast'];
+            $convArray = [
+                'id' => $model.'.id',
+                'pessoa_id' => $model.'.pessoa_id',
+                'createdfirst' => $model.'.created',
+                'createdlast' => $model.'.created'
+            ];
             $strings = ['pessoa_id'];
+            $date_start = ['createdfirst']; //data inicial
+            $date_end = ['createdlast'];  //data final
 
-            // $contain = ['Types'];
-            $totalRecordsCount = $this->$model->find('all')->count();
-            $conditions = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings);
-            $queryRecordsCount = $this->$model->find('all')->count();
-            $sorts = $this->Dynatables->parseSorts($query, $validOps, $convArray);
-            $records = $this->$model->find('all')->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+            $contain = ['Pessoas'];
+            $conditions = [];
+      
+            $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
+            $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+
+            $conditions = array_merge($conditions,$parsedQueries);
+            $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
+            $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+            $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+            
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
             //$types = $this->Users->Types->find('list', ['limit' => 200]);
@@ -81,8 +92,6 @@ class VerbetesController extends AppController
             }
             $this->Flash->error(__('The verbete could not be saved. Please, try again.'));
         }
-
-
 
         $pessoas = $this->Verbetes->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome'])->toArray();
         $estados = $this->Verbetes->Estados->find('list', ['keyField' => 'id', 'valueField' => 'designacao'])->toArray();

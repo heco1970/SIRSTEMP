@@ -28,21 +28,32 @@ class ProcessosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'entjudicial','created','modified'];
-            $convArray = ['id' => $model.'.id',
+            $validOps = ['id', 'entjudicial', 'natureza', 'nip', 'createdfirst', 'createdlast'];
+            $convArray = [
+                'id' => $model.'.id',
                 'entjudicial' => $model.'.entjudicial',
                 'natureza' => $model.'.natureza',
                 'nip' => $model.'.nip',
-                'created' => $model.'.created',
-                'modified' => $model.'.modified'];
+                'createdfirst' => $model.'.created',
+                'createdlast' => $model.'.created'
+            ];
             $strings = ['entjudicial'];
+            $date_start = ['createdfirst']; //data inicial
+            $date_end = ['createdlast'];  //data final
 
             // $contain = ['Types'];
-            $totalRecordsCount = $this->$model->find('all')->count();
-            $conditions = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
-            $queryRecordsCount = $this->$model->find('all')->count();
+            $contain = $conditions = [];
+      
+            $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
+            $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+
+            $conditions = array_merge($conditions,$parsedQueries);
+            $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
             $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
-            $records = $this->$model->find('all')->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+            $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+            
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
             //$types = $this->Users->Types->find('list', ['limit' => 200]);

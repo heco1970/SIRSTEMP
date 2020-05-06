@@ -17,6 +17,8 @@ $dynElems =
   'os' => ['label' => __('OS')],
   'os_version' => ['label' => __('OS Version')],
   'device' => ['label' => __('Device')],
+  'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
+  'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
 ];
 if ($admin) {
   $dynElems = ['user' => ['label' => __('User')]] + $dynElems;
@@ -24,7 +26,12 @@ if ($admin) {
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-  $dynElems = ['created' => ['label' => __('Access')]] + $dynElems;
+$dynElems = ['browser' => ['label' => __('Browser')]] +
+            ['browser_version' => ['label' => __('Browser Version')]] +
+            ['os' => ['label' => __('OS')]] +
+            ['os_version' => ['label' => __('OS Version')]] +
+            ['device' => ['label' => __('Device')]] +
+            ['created' => ['label' => __('Data de Criação (Access)')]];
 ?>
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -42,6 +49,11 @@ if ($admin) {
 <script>
   $(document).ready(function() {
     createDynatable("#dynatable","/accesses/<?=$admin?'admin':''?>",{created: -1});
+
+    document.getElementById('createdfirst').type = 'date';
+    document.getElementById('createdfirst').max = new Date().toISOString().split("T")[0];
+    document.getElementById('createdlast').type = 'date';
+    document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
   });
 </script>
 <?php $this->end(); ?>

@@ -28,29 +28,41 @@ class UsersController extends AppController
      */
     public function index()
     {
-        if ($this->request->is('ajax')) {
-            $model = 'Users';
-            $this->loadComponent('Dynatables');
+      if ($this->request->is('ajax')) {
+        $model = 'Users';
+        $this->loadComponent('Dynatables');
 
-            $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
+        $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['username', 'name', 'type', 'created', 'modified'];
-            $convArray = ['username' => $model.'.username', 'name' => $model.'.name',
-              'type' => $model.'.type_id', 'created' => $model.'.created',
-              'modified' => $model.'.modified'];
-            $strings = ['username','name'];
+        $validOps = ['username', 'name', 'type', 'createdfirst', 'createdlast'];
+        $convArray = [
+          'username' => $model.'.username',
+          'name' => $model.'.name',
+          'type' => $model.'.type_id',
+          'createdfirst' => $model.'.created',
+          'createdlast' => $model.'.created'
+        ];
+        $strings = ['username', 'name'];
+        $date_start = ['createdfirst']; //data inicial
+        $date_end = ['createdlast'];  //data final
+        $contain = ['Types'];
+        $conditions = [];
+        
+        $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
-            $contain = ['Types'];
-            $totalRecordsCount = $this->$model->find('all')->contain($contain)->count();
-            $conditions = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
-            $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-            $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
-            $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-            $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
-        } else {
-            $types = $this->Users->Types->find('list', ['limit' => 200]);
-            $this->set(compact('types'));
-        }
+        $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+
+        $conditions = array_merge($conditions,$parsedQueries);
+        $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
+        $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+        $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+        
+        $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+      } else {
+        $types = $this->Users->Types->find('list', ['limit' => 200])->toArray();
+        $this->set(compact('types'));
+      }
     }
 
     /**

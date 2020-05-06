@@ -1,4 +1,3 @@
-
 <?=$this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]);?>
 
 <h1 class="h3 mb-2 text-gray-800"><?=__('Users')?></h1>
@@ -16,11 +15,16 @@ $dynElems =
   'username' => ['label' => __('Username')],
   'type' => ['label' => __('Type'), 'options' => $types, 'empty' => ' '],
   'name' => ['label' => __('Name')],
+  'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
+  'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
 ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-  $dynElems['created'] = ['label' => 'Created'];
+  $dynElems = ['username' => ['label' => __('Username')]] +
+              ['type' => ['label' => __('Type')]] +
+              ['name' => ['label' => __('Name')]] +
+              ['created' => ['label' => __('Data de Criação')]];
 ?>
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -49,6 +53,11 @@ $dynElems =
       }
     }
     createDynatable("#dynatable","/users/",{created: -1}, writers);
+
+    document.getElementById('createdfirst').type = 'date';
+    document.getElementById('createdfirst').max = new Date().toISOString().split("T")[0];
+    document.getElementById('createdlast').type = 'date';
+    document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
 
     // function removeElement(url)
   });

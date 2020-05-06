@@ -16,11 +16,11 @@
             </tr>
             <tr>
                 <th scope="row"><?= __('Suspenso') ?></th>
-                <td><?= h($attempt->suspenso->i18nFormat('dd-MM-yyyy HH:mm:ss')) ?></td>
+                <td><?= h($attempt->suspenso->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Modified') ?></th>
-                <td><?= h($attempt->modified->i18nFormat('dd-MM-yyyy HH:mm:ss')) ?></td>
+                <td><?= h($attempt->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
             </tr>
         </table>
 

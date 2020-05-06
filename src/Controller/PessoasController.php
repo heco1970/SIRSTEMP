@@ -28,21 +28,31 @@ class PessoasController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'nome','created','modified'];
-            $convArray = ['id' => $model.'.id',
+            $validOps = ['id', 'nome', 'createdfirst', 'createdlast'];
+            $convArray = [
+                'id' => $model.'.id',
                 'nome' => $model.'.nome',
-                'created' => $model.'.created',
-                'modified' => $model.'.modified'];
+                'createdfirst' => $model.'.created',
+                'createdlast' => $model.'.created'
+            ];
             $strings = ['nome'];
+            $date_start = ['createdfirst']; //data inicial
+            $date_end = ['createdlast'];  //data final
 
+            $contain = $conditions = [];
             // $contain = ['Types'];
-            $totalRecordsCount = $this->$model->find('all')->count();
-            $conditions = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
-            $queryRecordsCount = $this->$model->find('all')->where($conditions)->count();
+
+            $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
+            $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+
+            $conditions = array_merge($conditions,$parsedQueries);
+            $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
             $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
-            $records = $this->$model->find('all')->where($conditions)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-            $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+            $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
             
+            $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
             //$types = $this->Users->Types->find('list', ['limit' => 200]);
             //$this->set(compact('types'));

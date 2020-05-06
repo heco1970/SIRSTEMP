@@ -2,13 +2,18 @@
 $data = [];
 foreach ($records as $record) {
   $data[] = [
-    'created' => $record->created->i18nFormat('yyyy-MM-dd HH:mm:ss'),
-    'modified' => $record->modified->i18nFormat('yyyy-MM-dd HH:mm:ss'),
+    'created' => $record->created->i18nFormat('dd/MM/yyyy HH:mm:ss'),
+    //'modified' => $record->modified->i18nFormat('dd/MM/yyyy HH:mm:ss'),
     'pessoa' => $record->pessoa->nome,
-    'criacao' => $record->datacriacao,
-    'distribuicao' => $record->datadistribuicao,
-      'efectivo' => $record->datainicioefectiva,
+    'criacao' => $record->datacriacao->i18nFormat('dd/MM/yyyy'),
+    'distribuicao' => $record->datadistribuicao->i18nFormat('dd/MM/yyyy'),
+    'efectivo' => $record->datainicioefectiva->i18nFormat('dd/MM/yyyy'),
     'id' => $record->id,
   ];
 }
 
+echo json_encode([
+  'records' => $data,
+  'queryRecordCount' => $queryRecordsCount,
+  'totalRecordCount' => $totalRecordsCount
+]);

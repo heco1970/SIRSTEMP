@@ -2,12 +2,13 @@
 $data = [];
 foreach ($records as $record) {
   $data[] = [
-    'created' => $record->created->i18nFormat('yyyy-MM-dd HH:mm:ss'),
-    'modified' => $record->modified->i18nFormat('yyyy-MM-dd HH:mm:ss'),
-    'pessoa_id' => $record->nome,
-   'id' => $record->id,
+    'created' => $record->created->i18nFormat('dd/MM/yyyy HH:mm:ss'),
+    //'modified' => $record->modified->i18nFormat('dd/MM/yyyy HH:mm:ss'),
+    'pessoa' => $record->pessoa->nome,
+    'id' => $record->id,
   ];
 }
+
 
 echo json_encode([
   'records' => $data,

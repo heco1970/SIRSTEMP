@@ -34,13 +34,22 @@ class AccessesController extends AppController
       $this->loadComponent('Dynatables');
       $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-      $validOps = ['created', 'browser', 'browser_version', 'os', 'os_version', 'device'];
+      $validOps = ['browser', 'browser_version', 'os', 'os_version', 'device', 'createdfirst', 'createdlast'];
       $convArray = [
-        'created' => $model.'.created', 'browser' => $model.'.browser',
-        'browser_version' => $model.'.browser_version', 'os' => $model.'.os',
-        'os_version' => $model.'.os_version', 'device' => $model.'.device'];
+        'browser' => $model.'.browser',
+        'browser_version' => $model.'.browser_version',
+        'os' => $model.'.os',
+        'os_version' => $model.'.os_version',
+        'device' => $model.'.device',
+        'createdfirst' => $model.'.created',
+        'createdlast' => $model.'.created'
+      ];
       $strings = ['browser','browser_version', 'os', 'os_version', 'device'];
+      $date_start = ['createdfirst']; //data inicial
+      $date_end = ['createdlast'];  //data final
       $contain = $conditions = [];
+
+      //$contain = ['Pessoas'];
 
       if (!$admin) {
         $conditions['user_id'] = $this->Auth->user('id');
@@ -49,12 +58,15 @@ class AccessesController extends AppController
       }
 
       $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-      $parsedQueries = $this->Dynatables->parseQueries($query,$validOps,$convArray,$strings);
+
+      $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+
       $conditions = array_merge($conditions,$parsedQueries);
       $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
       $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
       $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+      
       $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
     }
     $this->set(compact('admin'));
