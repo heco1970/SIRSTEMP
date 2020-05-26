@@ -32,6 +32,9 @@ $dynElems = ['browser' => ['label' => __('Browser')]] +
             ['os_version' => ['label' => __('OS Version')]] +
             ['device' => ['label' => __('Device')]] +
             ['created' => ['label' => __('Data de Criação (Access)')]];
+if ($admin) {
+  $dynElems = ['user' => ['label' => __('User')]] + $dynElems;
+}
 ?>
 <div class="card shadow mb-4">
   <div class="card-header py-3">

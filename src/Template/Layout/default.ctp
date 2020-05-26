@@ -138,27 +138,26 @@
 
         <!-- Modal content -->
         <div class="modale-content container">
-            <div class="float-right"><span class="exit">&times;</span></div>
+            <div class="float-right"><span id="fechar" class="exit">&times;</span></div>
             <div class="row mt-4">
                 <div class="col-4 d-flex justify-content-center">
                     <img src="https://picsum.photos/200/300" class="rounded-circle w-75 h-50" alt="Profile"> 
                 </div>
                 <div class="col-8">
                     <div class="mt-4">
-                    
-                            <?php 
-                                $session = $this->request->session();
-                                $session->write('Auth.User.show', false); 
-                                echo "<h5><b>Nome: </b>".$this->Session->read('Auth.User.name')."</h5>";
-                                echo "<h5><b>Username: </b>".$this->Session->read('Auth.User.username')."</h5>";
-                                echo "<h5><b>Email: </b>".$this->Session->read('Auth.User.email')."</h5>";
-                                echo "<h5><b>Ultimo acesso: </b>".$this->Session->read('Auth.User.last')."</h5>";
-                            ?>
-                            <script>
-                                window.onload = function mod() {
-                                    modal.style.display = "block";
-                                }
-                            </script>
+                        <?php 
+                            $session = $this->request->session();
+                            $session->write('Auth.User.show', false); 
+                            echo "<h5><b>Nome: </b>".$this->Session->read('Auth.User.name')."</h5>";
+                            echo "<h5><b>Username: </b>".$this->Session->read('Auth.User.username')."</h5>";
+                            echo "<h5><b>Email: </b>".$this->Session->read('Auth.User.email')."</h5>";
+                            echo "<h5><b>Ultimo acesso: </b>".$this->Session->read('Auth.User.last')."</h5>";
+                        ?>
+                        <script>
+                            window.onload = function mod() {
+                                modal.style.display = "block";
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
@@ -173,11 +172,13 @@
         var btn = document.getElementById("myBtn");
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("exit")[0];
+        var span = document.getElementById("fechar");
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
+        if (span){
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
         }
 
         // When the user clicks anywhere outside of the modal, close it

@@ -184,7 +184,7 @@ class UsersController extends AppController
           )
         )->toArray();
 
-        if($att[0]['ban'] == false){
+        if(isset($att[0]['ban']) == false || $att[0]['ban'] == false){
           if ($user) {
             //Accesses
             $this->loadModel('Accesses');

@@ -49,9 +49,29 @@ $dynElems =
       }
 
       document.getElementById('modifiedfirst').type = 'date';
-      document.getElementById('modifiedfirst').max = new Date().toISOString().split("T")[0];
       document.getElementById('modifiedlast').type = 'date';
-      document.getElementById('modifiedlast').min = new Date().toISOString().split("T")[0];
+
+      document.getElementById("modifiedfirst").onchange = function() {
+        if(document.getElementById('modifiedfirst').value != ""){
+          datefirst = new Date(document.getElementById('modifiedfirst').value);
+          datefirst.setDate(datefirst.getDate() + 1)
+          document.getElementById('modifiedlast').min = datefirst.toISOString().split("T")[0];
+        }
+        else{
+          document.getElementById('modifiedlast').min = null;
+        }
+      };
+
+      document.getElementById("modifiedlast").onchange = function() {
+        if(document.getElementById('modifiedlast').value != ""){
+          datelast = new Date(document.getElementById('modifiedlast').value);
+          datelast.setDate(datelast.getDate() - 1)
+          document.getElementById('modifiedfirst').max = datelast.toISOString().split("T")[0];
+        }
+        else{
+          document.getElementById('modifiedfirst').max = null;
+        }
+      };
 
       createDynatable("#dynatable","/attempts/<?=$admin?'admin':''?>",{created: -1}, writers);
 

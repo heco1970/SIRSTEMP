@@ -28,14 +28,14 @@ class VerbetesController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'pessoa_id', 'createdfirst', 'createdlast'];
+            $validOps = ['id', 'pessoa', 'createdfirst', 'createdlast'];
             $convArray = [
                 'id' => $model.'.id',
-                'pessoa_id' => $model.'.pessoa_id',
+                'pessoa' => $model.'.pessoa_id',
                 'createdfirst' => $model.'.created',
                 'createdlast' => $model.'.created'
             ];
-            $strings = ['pessoa_id'];
+            $strings = ['pessoa'];
             $date_start = ['createdfirst']; //data inicial
             $date_end = ['createdlast'];  //data final
 

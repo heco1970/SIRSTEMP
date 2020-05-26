@@ -34,8 +34,9 @@ class AccessesController extends AppController
       $this->loadComponent('Dynatables');
       $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-      $validOps = ['browser', 'browser_version', 'os', 'os_version', 'device', 'createdfirst', 'createdlast'];
+      $validOps = ['user', 'browser', 'browser_version', 'os', 'os_version', 'device', 'createdfirst', 'createdlast'];
       $convArray = [
+        'user' => $model.'.user_id',
         'browser' => $model.'.browser',
         'browser_version' => $model.'.browser_version',
         'os' => $model.'.os',
@@ -44,12 +45,10 @@ class AccessesController extends AppController
         'createdfirst' => $model.'.created',
         'createdlast' => $model.'.created'
       ];
-      $strings = ['browser','browser_version', 'os', 'os_version', 'device'];
+      $strings = ['user', 'browser', 'browser_version', 'os', 'os_version', 'device'];
       $date_start = ['createdfirst']; //data inicial
       $date_end = ['createdlast'];  //data final
       $contain = $conditions = [];
-
-      //$contain = ['Pessoas'];
 
       if (!$admin) {
         $conditions['user_id'] = $this->Auth->user('id');
