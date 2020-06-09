@@ -4,7 +4,7 @@ foreach ($records as $attemp) {
   $data[] = [
     'modified' => $attemp->modified->i18nFormat('dd/MM/yyyy HH:mm:ss'),
     'username' => $attemp->username,
-    'ban' => $attemp->ban ? "Banido" : "Ativo",
+    'state' => $attemp->user_state->descri,
     'id' => $attemp->id
   ];
 }

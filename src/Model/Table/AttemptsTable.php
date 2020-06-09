@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Attempts Model
  *
+ * @property \App\Model\Table\UserStatesTable|\Cake\ORM\Association\BelongsTo $UserStates
+ *
  * @method \App\Model\Entity\Attempt get($primaryKey, $options = [])
  * @method \App\Model\Entity\Attempt newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Attempt[] newEntities(array $data, array $options = [])
@@ -38,6 +40,11 @@ class AttemptsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('UserStates', [
+            'foreignKey' => 'user_states_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -66,11 +73,6 @@ class AttemptsTable extends Table
             ->dateTime('suspenso')
             ->allowEmpty('suspenso');
 
-        $validator
-            ->boolean('ban')
-            ->requirePresence('ban', 'create')
-            ->notEmpty('ban');
-
         return $validator;
     }
 
@@ -84,6 +86,7 @@ class AttemptsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['username']));
+        $rules->add($rules->existsIn(['user_states_id'], 'UserStates'));
 
         return $rules;
     }

@@ -38,9 +38,19 @@ class DynatablesComponent extends Component {
                 if (in_array($index, $strings)) {
                     $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($value) . '%');
                 } elseif (in_array($index, $date_start)) {
-                    $queriesValidated[] = array($convArray[$index] . ' >=' =>  h($value));
+                    if(in_array($index, $date_end)){
+                        $queriesValidated[] = array($convArray[$index] . ' >=' =>  h($value));
+                    }
+                    else{
+                        $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($value) . '%');
+                    }
                 } elseif (in_array($index, $date_end)) {
-                    $queriesValidated[] = array($convArray[$index] . ' <=' =>  h($value).' 23:59');
+                    if(in_array($index, $date_start)){
+                        $queriesValidated[] = array($convArray[$index] . ' <=' =>  h($value).' 23:59');
+                    }
+                    else{
+                        $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($value) . '%');
+                    }
                 } else {
                     $queriesValidated[] = array($convArray[$index] => h($value));
                 }

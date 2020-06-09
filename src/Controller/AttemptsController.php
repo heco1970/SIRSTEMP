@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\Time;
 
 /**
  * Attempts Controller
@@ -35,10 +36,10 @@ class AttemptsController extends AppController
 
         $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
       
-        $validOps = ['username', 'ban', 'modifiedfirst', 'modifiedlast'];
+        $validOps = ['username', 'state', 'modifiedfirst', 'modifiedlast'];
         $convArray = [
           'username' => $model.'.username',
-          'ban' => $model.'.ban',
+          'state' => $model.'.user_states_id',
           'modifiedfirst' => $model.'.modified',
           'modifiedlast' => $model.'.modified'
         ];
@@ -46,7 +47,8 @@ class AttemptsController extends AppController
         $date_start = ['modifiedfirst']; //data inicial
         $date_end = ['modifiedlast'];  //data final
 
-        $contain = $conditions = [];
+        $contain = ['UserStates'];
+        $conditions = [];
       
         $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
         
@@ -60,13 +62,15 @@ class AttemptsController extends AppController
 
         $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
       }
-      $this->set(compact('admin'));
+      $states = $this->Attempts->UserStates->find('list', ['limit' => 200])->toArray();
+
+      $this->set(compact('admin', 'states'));
       $this->viewBuilder()->setTemplate('index');
     }
 
     public function view($id = null)
     {
-      $attempt = $this->Attempts->get($id);
+      $attempt = $this->Attempts->get($id, array('contain' => 'UserStates'));
       $this->set('attempt', $attempt);
     }
 
@@ -75,15 +79,28 @@ class AttemptsController extends AppController
       $attempt = $this->Attempts->newEntity();
       if ($this->request->is('post')) {
           $attempt = $this->Attempts->patchEntity($attempt, $this->request->getData());
-          if ($this->Attempts->save($attempt)) {
-              $this->Flash->success(__('The attempt has been saved.'));
 
-              return $this->redirect(['action' => 'index']);
+          if($attempt->user_states_id == 3){
+            $startTime = Time::now();
+            $startTime = date("Y-m-d H:i:s");
+            $add_date = date('Y-m-d H:i:s',strtotime('+30 minutes',strtotime($startTime)));
+            $attempt->suspenso = $add_date;
+          }
+          else {
+            $attempt->suspenso = null;
+          }
+
+          if ($this->Attempts->save($attempt)) {
+            $this->Flash->success(__('The attempt has been saved.'));
+
+            return $this->redirect(['action' => 'index']);
           }
           $this->Flash->error(__('The attempt could not be saved. Please, try again.'));
       }
       $types = $this->Attempts->find('list', ['limit' => 200]);
-      $this->set(compact('attempt', 'types'));
+      $states = $this->Attempts->UserStates->find('list', ['limit' => 200])->toArray();
+
+      $this->set(compact('attempt', 'types', 'states'));
     }
 
     public function edit($id = null)
@@ -92,9 +109,20 @@ class AttemptsController extends AppController
     }
     
     private function _edit($id) {
-      $attempt = $this->Attempts->get($id);
+      $attempt = $this->Attempts->get($id, array('contain' => 'UserStates'));
       if ($this->request->is(['patch', 'post', 'put'])) {
         $attempt = $this->Attempts->patchEntity($attempt, $this->request->getData());
+
+        if($attempt->user_states_id == 3){
+          $startTime = Time::now();
+          $startTime = date("Y-m-d H:i:s");
+          $add_date = date('Y-m-d H:i:s',strtotime('+30 minutes',strtotime($startTime)));
+          $attempt->suspenso = $add_date;
+        }
+        else {
+          $attempt->suspenso = null;
+        }
+
         if ($this->Attempts->save($attempt)) {
           $this->Flash->success(__('The attempt has been saved.'));
 
@@ -103,7 +131,9 @@ class AttemptsController extends AppController
         $this->Flash->error(__('The attempt could not be saved. Please, try again.'));
       }
       $types = $this->Attempts->find('list', ['limit' => 200]);
-      $this->set(compact('attempt', 'types'));
+      $states = $this->Attempts->UserStates->find('list', ['limit' => 200])->toArray();
+
+      $this->set(compact('attempt', 'types', 'states'));
       $this->viewBuilder()->setTemplate('edit');
     }
 

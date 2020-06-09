@@ -10,9 +10,11 @@ use Cake\ORM\Entity;
  * @property string $username
  * @property int|null $count
  * @property \Cake\I18n\FrozenTime|null $suspenso
- * @property string $ban
+ * @property int $user_states_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\UserState $user_state
  */
 class Attempt extends Entity
 {
@@ -30,8 +32,9 @@ class Attempt extends Entity
         'username' => true,
         'count' => true,
         'suspenso' => true,
-        'ban' => true,
+        'user_states_id' => true,
         'created' => true,
-        'modified' => true
+        'modified' => true,
+        'user_state' => true
     ];
 }

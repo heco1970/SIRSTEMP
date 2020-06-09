@@ -13,15 +13,15 @@
 $dynElems =
   [
     'username' => ['label' => __('Username'), 'type' => 'text'],
-    'ban' => ['label' => __('Estado'), 'type' => 'select', 'options' => ['Ativo','Banido'], 'empty' => ' '],
-    'modifiedfirst' => ['label' => __('Ultima alteração (Início)'), 'type' => 'text'],
-    'modifiedlast' => ['label' => __('Ultima alteração (Fim)'), 'type' => 'text']
+    'state' => ['label' => __('Estado'), 'type' => 'select', 'options' => $states, 'empty' => ' '],
+    'modifiedfirst' => ['label' => __('Ultima alteração (De)'), 'type' => 'text'],
+    'modifiedlast' => ['label' => __('Ultima alteração (Até)'), 'type' => 'text']
   ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
   $dynElems = ['username' => ['label' => __('Username')]] + 
-              ['ban' => ['label' => __('Estado')]] +
+              ['state' => ['label' => __('Estado')]] +
               ['modified' => ['label' => __('Ultima alteração')]];
 ?>
   <div class="card shadow mb-4">

@@ -9,21 +9,23 @@
                 <td><?= h($attempt->username) ?></td>
             </tr>
             <tr>
-                <th scope="row"><?= __('Ban') ?></th>
+                <th scope="row"><?= __('Estado') ?></th>
                 <td>
-                    <?= ($attempt->ban) ? "Banido" : (($attempt->ban) ? "No" : "Ativo") ?>
+                    <?= h($attempt->user_state->descri) ?>
                 </td>
             </tr>
-            <tr>
-                <th scope="row"><?= __('Suspenso') ?></th>
-                <td><?= h($attempt->suspenso->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
-            </tr>
+            <?php if($attempt->user_states_id == 3): ?>
+                <tr>
+                    <th scope="row"><?= __('Suspenso') ?></th>
+                    <td><?= h($attempt->suspenso->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
+                </tr>
+            <?php endif ?>
             <tr>
                 <th scope="row"><?= __('Modified') ?></th>
                 <td><?= h($attempt->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
             </tr>
         </table>
-
+        <?php $this->log($attempt); ?>
     </div>
     
 </div>

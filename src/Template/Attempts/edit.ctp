@@ -9,15 +9,15 @@
                 <th scope="row"><?= __('Username') ?></th>
                 <td>
                     <?php
-                       echo $this->Form->text('username', ['required' => true]);
+                       echo $this->Form->text('username', ['required' => true, 'disabled' => true]);
                     ?>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><?= __('Ban') ?></th>
+                <th scope="row"><?= __('Estado') ?></th>
                 <td>
                     <?php
-                        echo $this->Form->checkbox('ban', ['type' => 'checkbox'], ['required' => false]);
+                       echo $this->Form->select('user_states_id', $states);
                     ?>
                 </td>
             </tr>
