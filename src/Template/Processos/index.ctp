@@ -65,6 +65,31 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         document.getElementById('createdlast').type = 'date';
         document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
 
+        document.getElementById('createdfirst').type = 'date';
+        document.getElementById('createdlast').type = 'date';
+
+        document.getElementById("createdfirst").onchange = function() {
+            if(document.getElementById('createdfirst').value != ""){
+            datefirst = new Date(document.getElementById('createdfirst').value);
+            datefirst.setDate(datefirst.getDate() + 1)
+            document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
+            }
+            else{
+            document.getElementById('createdlast').min = null;
+            }
+        };
+
+        document.getElementById("createdlast").onchange = function() {
+            if(document.getElementById('createdlast').value != ""){
+            datelast = new Date(document.getElementById('createdlast').value);
+            datelast.setDate(datelast.getDate() - 1)
+            document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
+            }
+            else{
+            document.getElementById('createdfirst').max = null;
+            }
+        };
+
         deleteCookie("Filtro");
         createCookie("Filtro", "", "", "", "","1"); 
 

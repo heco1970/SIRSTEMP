@@ -40,8 +40,8 @@ $dynElems['modified'] = ['label' => 'Data de Modificação'];
     $(document).ready(function() {
         var writers = {
             actions: function(row) {
-                var editar = '<a class="btn btn-info" href="/states/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-edit fa-fw"></i></a>'
-                var dele = '<a class="btn btn-info" href="/states/delete/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-delete fa-fw"></i></a>'
+                var editar = '<a class="btn btn-warning" href="/states/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" href="/states/delete/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-delete fa-fw"></i></a>'
                 return '<div class="btn-group btn-group-sm" role="group">' + editar +  dele +'</div>';
             }
         }

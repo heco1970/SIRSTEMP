@@ -41,8 +41,8 @@ $dynElems =
     $(document).ready(function() {
       var writers = {
         actions: function(row) {
-          var view = '<a class="btn btn-info" href="/attempts/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
-          view += '<a class="btn btn-info" href="/attempts/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>';
+          var view = '<a class="btn btn-info mr-1" href="/attempts/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+          view += '<a class="btn btn-warning" href="/attempts/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>';
 
           return '<div class="btn-group btn-group-sm" role="group">' + view + '</div>';
         }

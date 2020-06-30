@@ -45,8 +45,8 @@ $dynElems =
   $(document).ready(function() {
     var writers = {
       actions: function(row) {
-        var view = '<a class="btn btn-info" href="/users/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
-        var password = '<a class="btn btn-warning" href="/users/adminPassword/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Change Password')?>"><i class="fas fa-key fa-fw"></i></a>'
+        var view = '<a class="btn btn-info mr-1" href="/users/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+        var password = '<a class="btn btn-warning mr-1" href="/users/adminPassword/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Change Password')?>"><i class="fas fa-key fa-fw"></i></a>'
         var toogleState = '<a class="btn btn-warning" href="/users/toogleState/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Disable')?>"><i class="fas fa-lock fa-fw"></i></a>'
 
         return '<div class="btn-group btn-group-sm" role="group">' + view + password + toogleState + '</div>';
@@ -55,9 +55,29 @@ $dynElems =
     createDynatable("#dynatable","/users/",{created: -1}, writers);
 
     document.getElementById('createdfirst').type = 'date';
-    document.getElementById('createdfirst').max = new Date().toISOString().split("T")[0];
     document.getElementById('createdlast').type = 'date';
-    document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
+
+    document.getElementById("createdfirst").onchange = function() {
+      if(document.getElementById('createdfirst').value != ""){
+        datefirst = new Date(document.getElementById('createdfirst').value);
+        datefirst.setDate(datefirst.getDate() + 1)
+        document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
+      }
+      else{
+        document.getElementById('createdlast').min = null;
+      }
+    };
+
+    document.getElementById("createdlast").onchange = function() {
+      if(document.getElementById('createdlast').value != ""){
+        datelast = new Date(document.getElementById('createdlast').value);
+        datelast.setDate(datelast.getDate() - 1)
+        document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
+      }
+      else{
+        document.getElementById('createdfirst').max = null;
+      }
+    };
 
     // function removeElement(url)
   });
