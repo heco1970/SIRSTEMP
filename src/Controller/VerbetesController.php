@@ -86,11 +86,11 @@ class VerbetesController extends AppController
         if ($this->request->is('post')) {
             $verbete = $this->Verbetes->patchEntity($verbete, $this->request->getData());
             if ($this->Verbetes->save($verbete)) {
-                $this->Flash->success(__('The verbete has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The verbete could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
 
         $pessoas = $this->Verbetes->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome'])->toArray();
@@ -114,11 +114,11 @@ class VerbetesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $verbete = $this->Verbetes->patchEntity($verbete, $this->request->getData());
             if ($this->Verbetes->save($verbete)) {
-                $this->Flash->success(__('The verbete has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The verbete could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $pessoas = $this->Verbetes->Pessoas->find('list', ['limit' => 200]);
         $estados = $this->Verbetes->Estados->find('list', ['limit' => 200]);
@@ -138,9 +138,9 @@ class VerbetesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $verbete = $this->Verbetes->get($id);
         if ($this->Verbetes->delete($verbete)) {
-            $this->Flash->success(__('The verbete has been deleted.'));
+            $this->Flash->success(__('O registro foi apagado.'));
         } else {
-            $this->Flash->error(__('The verbete could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -52,11 +52,11 @@ class UserStatesController extends AppController
         if ($this->request->is('post')) {
             $userState = $this->UserStates->patchEntity($userState, $this->request->getData());
             if ($this->UserStates->save($userState)) {
-                $this->Flash->success(__('The user state has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user state could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $this->set(compact('userState'));
     }
@@ -76,11 +76,11 @@ class UserStatesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $userState = $this->UserStates->patchEntity($userState, $this->request->getData());
             if ($this->UserStates->save($userState)) {
-                $this->Flash->success(__('The user state has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user state could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $this->set(compact('userState'));
     }
@@ -97,9 +97,9 @@ class UserStatesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $userState = $this->UserStates->get($id);
         if ($this->UserStates->delete($userState)) {
-            $this->Flash->success(__('The user state has been deleted.'));
+            $this->Flash->success(__('O registro foi apagado.'));
         } else {
-            $this->Flash->error(__('The user state could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -52,7 +52,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
 <script>
     $(document).ready(function() {
         var writers = {
-            actions: function(row) {
+            ação: function(row) {
                 var view = '<a class="btn btn-info" href="/processos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
 
                 return '<div class="btn-group btn-group-sm" role="group">' + view +  '</div>';

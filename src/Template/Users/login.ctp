@@ -20,10 +20,10 @@ background:url(/img/Logo.PNG);
               </div>
               <?= $this->Form->create('User', ['class' => 'user']) ?>
                 <div class="form-group">
-                  <?= $this->Form->control('username',['class' => 'form-control form-control-user', 'placeholder' => __('Enter Username') ,'required' => true , 'label' => false ]) ?>
+                  <?= $this->Form->control('username',['class' => 'form-control form-control-user', 'placeholder' => __('Nome do Utilizador') ,'required' => true , 'label' => false ]) ?>
                 </div>
                 <div class="form-group">
-                  <?= $this->Form->control('password',['class' => 'form-control form-control-user', 'placeholder' => __('Password') ,'required' => true , 'label' => false]) ?>
+                  <?= $this->Form->control('password',['class' => 'form-control form-control-user', 'placeholder' => __('Palavra Passe') ,'required' => true , 'label' => false]) ?>
                 </div>
                 <button class="btn btn-primary btn-user btn-block" ><?=__('Entrar')?></button>
                 <hr>

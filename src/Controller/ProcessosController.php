@@ -88,11 +88,11 @@ class ProcessosController extends AppController
         if ($this->request->is('post')) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
             if ($this->Processos->save($processo)) {
-                $this->Flash->success(__('The processo has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The processo could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
 
 
@@ -117,11 +117,11 @@ class ProcessosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
             if ($this->Processos->save($processo)) {
-                $this->Flash->success(__('The processo has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The processo could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $units = $this->Processos->Units->find('list', ['limit' => 200]);
         $states = $this->Processos->States->find('list', ['limit' => 200]);
@@ -140,9 +140,9 @@ class ProcessosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $processo = $this->Processos->get($id);
         if ($this->Processos->delete($processo)) {
-            $this->Flash->success(__('The processo has been deleted.'));
+            $this->Flash->success(__('O registro foi apagado.'));
         } else {
-            $this->Flash->error(__('The processo could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

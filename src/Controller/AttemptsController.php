@@ -91,11 +91,11 @@ class AttemptsController extends AppController
           }
 
           if ($this->Attempts->save($attempt)) {
-            $this->Flash->success(__('The attempt has been saved.'));
+            $this->Flash->success(__('O registro foi gravado.'));
 
             return $this->redirect(['action' => 'index']);
           }
-          $this->Flash->error(__('The attempt could not be saved. Please, try again.'));
+          $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
       }
       $types = $this->Attempts->find('list', ['limit' => 200]);
       $states = $this->Attempts->UserStates->find('list', ['limit' => 200])->toArray();

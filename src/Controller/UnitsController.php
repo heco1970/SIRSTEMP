@@ -88,11 +88,11 @@ class UnitsController extends AppController
         if ($this->request->is('post')) {
             $unit = $this->Units->patchEntity($unit, $this->request->getData());
             if ($this->Units->save($unit)) {
-                $this->Flash->success(__('The unit has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The unit could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $this->set(compact('unit'));
     }
@@ -112,11 +112,11 @@ class UnitsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $unit = $this->Units->patchEntity($unit, $this->request->getData());
             if ($this->Units->save($unit)) {
-                $this->Flash->success(__('The unit has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The unit could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $this->set(compact('unit'));
     }
@@ -133,9 +133,9 @@ class UnitsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $unit = $this->Units->get($id);
         if ($this->Units->delete($unit)) {
-            $this->Flash->success(__('The unit has been deleted.'));
+            $this->Flash->success(__('O registro foi apagado.'));
         } else {
-            $this->Flash->error(__('The unit could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -171,7 +171,7 @@
         </a> -->
         <a class="dropdown-item" href="/accesses">
           <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-          <?=__('Accesses')?>
+          <?=__('Acessos')?>
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

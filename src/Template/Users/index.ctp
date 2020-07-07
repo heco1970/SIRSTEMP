@@ -44,7 +44,7 @@ $dynElems =
 <script>
   $(document).ready(function() {
     var writers = {
-      actions: function(row) {
+      ação: function(row) {
         var view = '<a class="btn btn-info mr-1" href="/users/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
         var password = '<a class="btn btn-warning mr-1" href="/users/adminPassword/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Change Password')?>"><i class="fas fa-key fa-fw"></i></a>'
         var toogleState = '<a class="btn btn-warning" href="/users/toogleState/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Disable')?>"><i class="fas fa-lock fa-fw"></i></a>'

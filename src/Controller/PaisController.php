@@ -52,11 +52,11 @@ class PaisController extends AppController
         if ($this->request->is('post')) {
             $pai = $this->Pais->patchEntity($pai, $this->request->getData());
             if ($this->Pais->save($pai)) {
-                $this->Flash->success(__('The pai has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The pai could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $this->set(compact('pai'));
     }
@@ -76,11 +76,11 @@ class PaisController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pai = $this->Pais->patchEntity($pai, $this->request->getData());
             if ($this->Pais->save($pai)) {
-                $this->Flash->success(__('The pai has been saved.'));
+                $this->Flash->success(__('O registro foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The pai could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $this->set(compact('pai'));
     }
@@ -97,9 +97,9 @@ class PaisController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pai = $this->Pais->get($id);
         if ($this->Pais->delete($pai)) {
-            $this->Flash->success(__('The pai has been deleted.'));
+            $this->Flash->success(__('O registro foi apagado.'));
         } else {
-            $this->Flash->error(__('The pai could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

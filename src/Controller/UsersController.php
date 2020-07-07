@@ -109,11 +109,11 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+              $this->Flash->success(__('O registro foi gravado.'));
 
-                return $this->redirect(['action' => 'index']);
+              return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
         $types = $this->Users->Types->find('list', ['limit' => 200]);
         $this->set(compact('user', 'types'));
@@ -138,12 +138,12 @@ class UsersController extends AppController
       if ($this->request->is(['patch', 'post', 'put'])) {
         $user = $this->Users->patchEntity($user, $this->request->getData());
         if ($this->Users->save($user)) {
-          $this->Flash->success(__('The user has been saved.'));
+          $this->Flash->success(__('O registro foi gravado.'));
 
           if ($profile) return $this->redirect(['action' => 'profile']);
           return $this->redirect(['action' => 'index']);
         }
-        $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
       }
       $types = $this->Users->Types->find('list', ['limit' => 200]);
       $this->set(compact('user', 'types'));
@@ -159,15 +159,15 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
-        }
+      $this->request->allowMethod(['post', 'delete']);
+      $user = $this->Users->get($id);
+      if ($this->Users->delete($user)) {
+        $this->Flash->success(__('O registro foi apagado.'));
+      } else {
+        $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
+      }
 
-        return $this->redirect(['action' => 'index']);
+      return $this->redirect(['action' => 'index']);
     }
 
     public function login() {
@@ -184,70 +184,96 @@ class UsersController extends AppController
           )
         )->toArray();
 
-        if(isset($att[0]['user_states_id']) == false || $att[0]['user_states_id'] == 2){
-          if($att[0]['count'] < 3){
+        $this->log($user);
 
-            if ($user) {
-              //Accesses
-              $this->loadModel('Accesses');
-              $result = $this->Accesses->find('all', 
-                array(
-                  'conditions'=>
-                    array('Accesses.user_id'=> $user['id'])
-                )
-              )->all();
-              $lastAccess = $result->last();
-
-              $agent = new Agent();
-              $browser = $agent->browser();
-              $browserVersion = $agent->version($browser);
-              $os = $agent->platform();
-              $osVersion = $agent->version($os);
-              $device = $agent->device();
-
-              $access = $this->Accesses->newEntity([
-                'user_id' => $user['id'],
-                'browser' => $browser,
-                'browser_version' => $browserVersion,
-                'os' => $os,
-                'os_version' => $osVersion,
-                'device' => $device
-              ]);
-
-              if (!$this->Accesses->save($access)) {
-                $this->log('Problem saving access data');
+        if($user != null){
+          if(isset($att[0]['user_states_id']) == null || $att[0]['user_states_id'] == 2){
+            $this->log("deu");
+            if($att[0]['count'] < 3){
+  
+              if ($user) {
+                //Accesses
+                $this->loadModel('Accesses');
+                $result = $this->Accesses->find('all', 
+                  array(
+                    'conditions'=>
+                      array('Accesses.user_id'=> $user['id'])
+                  )
+                )->all();
+                $lastAccess = $result->last();
+  
+                $agent = new Agent();
+                $browser = $agent->browser();
+                $browserVersion = $agent->version($browser);
+                $os = $agent->platform();
+                $osVersion = $agent->version($os);
+                $device = $agent->device();
+  
+                $access = $this->Accesses->newEntity([
+                  'user_id' => $user['id'],
+                  'browser' => $browser,
+                  'browser_version' => $browserVersion,
+                  'os' => $os,
+                  'os_version' => $osVersion,
+                  'device' => $device
+                ]);
+  
+                if (!$this->Accesses->save($access)) {
+                  $this->log('Problem saving access data');
+                }
+  
+                $user['last'] = $lastAccess['created'];
+                $user['show'] = true;
+                $this->Auth->setUser($user);
+  
+                return $this->redirect($this->Auth->redirectUrl()); 
               }
-
-              $user['last'] = $lastAccess['created'];
-              $user['show'] = true;
-              $this->Auth->setUser($user);
-
-              return $this->redirect($this->Auth->redirectUrl()); 
+              else {
+                $att[0]['count'] += 1;
+                $att[0]['modified'] = Time::now();
+  
+                if (!$this->Attempts->save($att[0])) {
+                  $this->log('Problem saving attempt data');
+                }
+                $this->Flash->error(__('Nome do Utilizador ou Palavra Passe invalidos'));
+              }
             }
             else {
-              $att[0]['count'] += 1;
-              $att[0]['modified'] = Time::now();
-
-              if (!$this->Attempts->save($att[0])) {
-                $this->log('Problem saving attempt data');
+              
+              if($att[0]['suspenso'] == null){
+                $startTime = Time::now();
+                $startTime = date("Y-m-d H:i:s");
+                $add_date = date('Y-m-d H:i:s',strtotime('+30 minutes',strtotime($startTime)));
+                $att[0]['suspenso'] = $add_date;
+                $att[0]['user_states_id'] = 3;
+  
+                if (!$this->Attempts->save($att[0])) {
+                  $this->log('Problem saving attempt data');
+                }
               }
-              $this->Flash->error(__('Username ou Password invalidos'));
+            
+              if($att[0]['suspenso'] > Time::now()){
+                $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
+              }
+              elseif($att[0]['suspenso'] > Time::now()) {
+    
+                $att[0]['count'] = 0;
+                $att[0]['suspenso'] = null;
+                $att[0]['modified'] = Time::now();
+                $att[0]['user_states_id'] = 2;
+    
+                if (!$this->Attempts->save($att[0])) {
+                  $this->log('Problem saving attempt data');
+                }
+                $this->Flash->error(__('Fim de suspensão'));
+              }
+              else{
+                $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
+              }
             }
           }
-          else {
-            
-            if($att[0]['suspenso'] == null){
-              $startTime = Time::now();
-              $startTime = date("Y-m-d H:i:s");
-              $add_date = date('Y-m-d H:i:s',strtotime('+30 minutes',strtotime($startTime)));
-              $att[0]['suspenso'] = $add_date;
-              $att[0]['user_states_id'] = 3;
-
-              if (!$this->Attempts->save($att[0])) {
-                $this->log('Problem saving attempt data');
-              }
-            }
-          
+          elseif($att[0]['user_states_id'] == 3){
+  
             if($att[0]['suspenso'] > Time::now()){
               $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
             }
@@ -264,33 +290,15 @@ class UsersController extends AppController
               $this->Flash->error(__('Fim de suspensão'));
             }
             else{
-              $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
+              $this->Flash->error(__('loked'));
             }
           }
-        }
-        elseif($att[0]['user_states_id'] == 3){
-
-          if($att[0]['suspenso'] > Time::now()){
-            $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
-          }
-          elseif($att[0]['suspenso'] > Time::now()) {
-
-            $att[0]['count'] = 0;
-            $att[0]['suspenso'] = null;
-            $att[0]['modified'] = Time::now();
-            $att[0]['user_states_id'] = 2;
-
-            if (!$this->Attempts->save($att[0])) {
-              $this->log('Problem saving attempt data');
-            }
-            $this->Flash->error(__('Fim de suspensão'));
-          }
-          else{
-            $this->Flash->error(__('loked'));
+          else {
+            $this->Flash->error(__('Utilizador bloquedo pelo administrador'));
           }
         }
-        else {
-          $this->Flash->error(__('Utilizador bloquedo pelo administrador'));
+        else{
+          $this->Flash->error(__('Utilizador não existe'));
         }
       }
     }
@@ -319,13 +327,13 @@ class UsersController extends AppController
         if ($admin || (new DefaultPasswordHasher)->check($data['password_old'], $user['password'])) {
           $user = $this->Users->patchEntity($user, $data);
           if ($this->Users->save($user)) {
-              $this->Flash->success(__('The password has been changed.'));
-              return $this->redirect(['action' => 'profile']);
+            $this->Flash->success(__('A Palavra passe foi alterada com sucesso.'));
+            return $this->redirect(['action' => 'profile']);
           }
         } else {
           $user->setError('password_old', __('Invalid Password'));
         }
-        $this->Flash->error(__('The password could not be changed. Please, try again.'));
+        $this->Flash->error(__('A Palavra passe não foi alterada. Tente novamente.'));
       }
       
       if ($admin) {

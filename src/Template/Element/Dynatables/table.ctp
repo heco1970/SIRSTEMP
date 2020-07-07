@@ -6,7 +6,7 @@
           <th data-dynatable-column="<?=$element?>"><?=$options['label']?></th>
         <?php endforeach;?>
         <?php if($actions):?>
-          <th data-dynatable-no-sort="true">Actions</th>
+          <th data-dynatable-no-sort="true">Ação</th>
         <?php endif;?>
       </tr>
     </thead>
