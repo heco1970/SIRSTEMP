@@ -173,7 +173,6 @@ class UsersController extends AppController
     public function login() {
       $this->viewBuilder()->setLayout('login');
       if ($this->request->is('post')) {
-      
         $user = $this->Auth->identify();
 
         //Attemps
@@ -184,101 +183,60 @@ class UsersController extends AppController
           )
         )->toArray();
 
-        $this->log($user);
+        if($user){
 
-        if($user != null){
-          if(isset($att[0]['user_states_id']) == null || $att[0]['user_states_id'] == 2){
-            $this->log("deu");
-            if($att[0]['count'] < 3){
-  
-              if ($user) {
-                //Accesses
-                $this->loadModel('Accesses');
-                $result = $this->Accesses->find('all', 
-                  array(
-                    'conditions'=>
-                      array('Accesses.user_id'=> $user['id'])
-                  )
-                )->all();
-                $lastAccess = $result->last();
-  
-                $agent = new Agent();
-                $browser = $agent->browser();
-                $browserVersion = $agent->version($browser);
-                $os = $agent->platform();
-                $osVersion = $agent->version($os);
-                $device = $agent->device();
-  
-                $access = $this->Accesses->newEntity([
-                  'user_id' => $user['id'],
-                  'browser' => $browser,
-                  'browser_version' => $browserVersion,
-                  'os' => $os,
-                  'os_version' => $osVersion,
-                  'device' => $device
-                ]);
-  
-                if (!$this->Accesses->save($access)) {
-                  $this->log('Problem saving access data');
-                }
-  
-                $user['last'] = $lastAccess['created'];
-                $user['show'] = true;
-                $this->Auth->setUser($user);
-  
-                return $this->redirect($this->Auth->redirectUrl()); 
-              }
-              else {
-                $att[0]['count'] += 1;
-                $att[0]['modified'] = Time::now();
-  
-                if (!$this->Attempts->save($att[0])) {
-                  $this->log('Problem saving attempt data');
-                }
-                $this->Flash->error(__('Nome do Utilizador ou Palavra Passe invalidos'));
-              }
-            }
-            else {
-              
-              if($att[0]['suspenso'] == null){
-                $startTime = Time::now();
-                $startTime = date("Y-m-d H:i:s");
-                $add_date = date('Y-m-d H:i:s',strtotime('+30 minutes',strtotime($startTime)));
-                $att[0]['suspenso'] = $add_date;
-                $att[0]['user_states_id'] = 3;
-  
-                if (!$this->Attempts->save($att[0])) {
-                  $this->log('Problem saving attempt data');
-                }
-              }
+          //Ativo
+          if($att[0]['user_states_id'] == 2){
             
-              if($att[0]['suspenso'] > Time::now()){
-                $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
-              }
-              elseif($att[0]['suspenso'] > Time::now()) {
-    
-                $att[0]['count'] = 0;
-                $att[0]['suspenso'] = null;
-                $att[0]['modified'] = Time::now();
-                $att[0]['user_states_id'] = 2;
-    
-                if (!$this->Attempts->save($att[0])) {
-                  $this->log('Problem saving attempt data');
-                }
-                $this->Flash->error(__('Fim de suspensão'));
-              }
-              else{
-                $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
-              }
+            //Accesses
+            $this->loadModel('Accesses');
+            $result = $this->Accesses->find('all', 
+              array(
+                'conditions'=>
+                  array('Accesses.user_id'=> $user['id'])
+              )
+            )->all();
+            $lastAccess = $result->last();
+
+            $agent = new Agent();
+            $browser = $agent->browser();
+            $browserVersion = $agent->version($browser);
+            $os = $agent->platform();
+            $osVersion = $agent->version($os);
+            $device = $agent->device();
+
+            $access = $this->Accesses->newEntity([
+              'user_id' => $user['id'],
+              'browser' => $browser,
+              'browser_version' => $browserVersion,
+              'os' => $os,
+              'os_version' => $osVersion,
+              'device' => $device
+            ]);
+
+            if (!$this->Accesses->save($access)) {
+              $this->log('Problem saving access data');
             }
+
+            $att[0]['count'] = null;
+
+            if (!$this->Attempts->save($att[0])) {
+              $this->log('Problem saving access data');
+            }
+
+            $user['last'] = $lastAccess['created'];
+            $user['show'] = true;
+            $this->Auth->setUser($user);
+
+            return $this->redirect($this->Auth->redirectUrl()); 
           }
+          // Suspenso
           elseif($att[0]['user_states_id'] == 3){
-  
+            
             if($att[0]['suspenso'] > Time::now()){
               $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
             }
-            elseif($att[0]['suspenso'] > Time::now()) {
-  
+            elseif($att[0]['suspenso'] < Time::now()) {
               $att[0]['count'] = 0;
               $att[0]['suspenso'] = null;
               $att[0]['modified'] = Time::now();
@@ -289,16 +247,50 @@ class UsersController extends AppController
               }
               $this->Flash->error(__('Fim de suspensão'));
             }
-            else{
-              $this->Flash->error(__('loked'));
-            }
           }
-          else {
+          // Banido
+          elseif($att[0]['user_states_id'] == 1){
             $this->Flash->error(__('Utilizador bloquedo pelo administrador'));
           }
         }
-        else{
-          $this->Flash->error(__('Utilizador não existe'));
+        else {
+          // User existe
+          if(isset($att[0])){
+            // Ainda não está suspenso
+            if($att[0]['count'] < 3){
+              $att[0]['count'] += 1;
+              $att[0]['modified'] = Time::now();
+
+              if (!$this->Attempts->save($att[0])) {
+                $this->log('Problem saving attempt data');
+              }
+              $this->Flash->error(__('Palavra Passe invalida.'));
+            }
+            // Ficou suspenso
+            elseif($att[0]['count'] > 3) {
+              $startTime = Time::now();
+              $startTime = date("Y-m-d H:i:s");
+              $add_date = date('Y-m-d H:i:s',strtotime('+30 minutes',strtotime($startTime)));
+              $att[0]['suspenso'] = $add_date;
+              $att[0]['user_states_id'] = 3;
+
+              if (!$this->Attempts->save($att[0])) {
+                $this->log('Problem saving attempt data');
+              }
+            }
+            else {
+              if($att[0]['suspenso'] != null){
+                $this->Flash->error(__('Este utilizador foi suspenso dia '.$att[0]['suspenso']->format('d')." até à(s) ".$att[0]['suspenso']->format('H:i'))."h");
+              }
+              else {
+                $this->Flash->error(__('Este utilizador foi suspenso.'));
+              }
+            }
+          }
+          // User não existe
+          else {
+            $this->Flash->error(__('Utilizador não existe.'));
+          }
         }
       }
     }

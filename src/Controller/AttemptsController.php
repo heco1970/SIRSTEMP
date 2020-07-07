@@ -121,6 +121,7 @@ class AttemptsController extends AppController
         }
         else {
           $attempt->suspenso = null;
+          $attempt->count = null;
         }
 
         if ($this->Attempts->save($attempt)) {
