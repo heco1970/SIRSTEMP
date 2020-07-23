@@ -19,17 +19,21 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Id')],
         'nome' => ['label' => __('Nome')],
+        'cc' => ['label' => __('CC/BI')],
+        'nif' => ['label' => __('NIF')],
+        'datanascimento' => ['label' => __('Data de nascimento'), 'type' => 'text'],
         'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
         'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['id' => ['label' => __('Id')]] + 
-            ['nome' => ['label' => __('Nome')]] +
-            ['created' => ['label' => __('Data de Criação')]];
+$dynElems = ['nome' => ['label' => __('Nome')]] +
+            ['cc' => ['label' => __('CC/BI')]] + 
+            ['nif' => ['label' => __('NIF')]] +
+            ['datanascimento' => ['label' => __('Data de nascimento')]] + 
+            ['observacoes' => ['label' => __('Detalhes')]];
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -57,6 +61,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         }
         createDynatable("#dynatable","/pessoas/",{created: -1}, writers);
 
+        document.getElementById('datanascimento').type = 'date';
         document.getElementById('createdfirst').type = 'date';
         document.getElementById('createdlast').type = 'date';
 
@@ -83,24 +88,61 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         };
 
         deleteCookie("Filtro");
-        createCookie("Filtro", "", "","1");
+        createCookie("Filtro", "", "", "", "","1");
 
         // function removeElement(url) 
     });
 
-    document.getElementById("id").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value , document.getElementById("nome").value, "1"); 
+    document.getElementById("nome").onkeyup = function() {
+        createCookie(
+            "Filtro", 
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1" 
+        );         
     };
 
-    document.getElementById("nome").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value , document.getElementById("nome").value, "1");         
+    document.getElementById("cc").onkeyup = function() {
+        createCookie(
+            "Filtro", 
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1" 
+        );  
     };
+
+    document.getElementById("nif").onkeyup = function() {
+        createCookie(
+            "Filtro", 
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1" 
+        );  
+    };
+
+    document.getElementById("datanascimento").onchange = function() {
+        createCookie(
+            "Filtro", 
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1" 
+        );
+    };
+
 
     function deleteCookie(name) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
     
-    function createCookie(name, valueId, valueNome, days) { 
+    function createCookie(name, valueNome, valueCC, valueNIF, valueDatanascimento, days) { 
         var expires; 
         
         if (days) { 
@@ -113,7 +155,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         } 
         
         document.cookie = escape(name) + "=" +
-            valueId + "," + valueNome
+            valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento
             + expires + "; path=/"; 
     } 
     
