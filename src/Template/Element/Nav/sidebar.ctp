@@ -19,7 +19,7 @@ $active = $show = '';
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-        <!-- Heading -->
+    <!-- Heading -->
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -37,7 +37,7 @@ $active = $show = '';
 
 
     <?php
-    if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/attempts/admin') || $this->Acl->hasAccess('/AclManager')):
+    if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/attempts/admin') || $this->Acl->hasAccess('/AclManager')) :
         $active = $aAclManager = $aAccesses = $aAttempts = '';
         if ($controller == 'Accesses' && $action == 'admin') {
             $aAccesses = $active = 'active';
@@ -52,64 +52,61 @@ $active = $show = '';
         $acesses = $this->Acl->link(__('Accesses'), '/accesses/admin', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);
         $attempts = $this->Acl->link(__('Attempts'), '/attempts/admin', ['class' => ['collapse-item ' . $aAttempts], 'escape' => false]);
         $aclManager = $this->Acl->link(__('Acl Manager'), '/AclManager', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
-        ?>
+    ?>
         <li class="nav-item active">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdminMenu2"
-               aria-expanded="true" aria-controls="collapseAdminMenu">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdminMenu2" aria-expanded="true" aria-controls="collapseAdminMenu">
                 <i class="fas fa-fw fa-toolbox"></i>
                 <span><?= __('Configuração') ?></span>
             </a>
-            <div id="collapseAdminMenu2" class="collapse hide" aria-labelledby="adminMenu"
-                 data-parent="#accordionSidebar">
+            <div id="collapseAdminMenu2" class="collapse hide" aria-labelledby="adminMenu" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <?= $this->Html->link(__('Estados'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Unidades Orgânicas'), '/units/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Entidades Judiciais'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Unidades Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Caracteristicas Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Motivos Verbete'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Entidades'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
+                    <?= $this->Html->link(__('Perfis'), '/perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Perfil de Utilizador'), '/user-perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Estados'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Unidades Orgânicas'), '/units/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Entidades Judiciais'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Unidades Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Caracteristicas Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Motivos Verbete'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Entidades'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                 </div>
             </div>
         </li>
     <?php endif; ?>
 
-        <?php
-        if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/attempts/admin') || $this->Acl->hasAccess('/AclManager')):
-            $active = $aAclManager = $aAccesses = $aAttempts = '';
-            if ($controller == 'Accesses' && $action == 'admin') {
-                $aAccesses = $active = 'active';
-                $show = 'show';
-            } else if ($controller == 'Acl') {
-                $aAclManager = $active = 'active';
-                $show = 'show';
-            }
-            else if ($controller == 'Attempts' && $action == 'admin') {
-                $aAttempts = $active = 'active';
-                $show = 'show';
-            }
-            $acesses = $this->Acl->link(__('Accesses'), '/accesses/admin', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);
-            $attempts = $this->Acl->link(__('Attempts'), '/attempts/admin', ['class' => ['collapse-item ' . $aAttempts], 'escape' => false]);
-            $aclManager = $this->Acl->link(__('Acl Manager'), '/AclManager', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
-            $users = $this->Acl->link(__('Utilizadores'), '/users', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
-            ?>
-            <li class="nav-item <?= $active ?>">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdminMenu"
-                   aria-expanded="true" aria-controls="collapseAdminMenu">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span><?= __('Administração') ?></span>
-                </a>
-                <div id="collapseAdminMenu" class="collapse hide" aria-labelledby="adminMenu"
-                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <?= $acesses ?>
-                        <?= $attempts ?>
-                        <?= $aclManager ?>
-                        <?= $users ?>
-                    </div>
+    <?php
+    if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/attempts/admin') || $this->Acl->hasAccess('/AclManager')) :
+        $active = $aAclManager = $aAccesses = $aAttempts = '';
+        if ($controller == 'Accesses' && $action == 'admin') {
+            $aAccesses = $active = 'active';
+            $show = 'show';
+        } else if ($controller == 'Acl') {
+            $aAclManager = $active = 'active';
+            $show = 'show';
+        } else if ($controller == 'Attempts' && $action == 'admin') {
+            $aAttempts = $active = 'active';
+            $show = 'show';
+        }
+        $acesses = $this->Acl->link(__('Accesses'), '/accesses/admin', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);
+        $attempts = $this->Acl->link(__('Attempts'), '/attempts/admin', ['class' => ['collapse-item ' . $aAttempts], 'escape' => false]);
+        $aclManager = $this->Acl->link(__('Acl Manager'), '/AclManager', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
+        $users = $this->Acl->link(__('Utilizadores'), '/users', ['class' => ['collapse-item ' . $aAclManager], 'escape' => false]);
+    ?>
+        <li class="nav-item <?= $active ?>">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdminMenu" aria-expanded="true" aria-controls="collapseAdminMenu">
+                <i class="fas fa-fw fa-cog"></i>
+                <span><?= __('Administração') ?></span>
+            </a>
+            <div id="collapseAdminMenu" class="collapse hide" aria-labelledby="adminMenu" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <?= $acesses ?>
+                    <?= $attempts ?>
+                    <?= $aclManager ?>
+                    <?= $users ?>
                 </div>
-            </li>
-        <?php endif; ?>
+            </div>
+        </li>
+    <?php endif; ?>
 
 
     <!-- Divider -->

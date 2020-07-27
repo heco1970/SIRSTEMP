@@ -74,7 +74,11 @@ class PessoasController extends AppController
             'contain' => ['Pais']
         ]);
 
+        
+        $this->loadModel('Contactos');
+        $contactos = $this->Contactos->find()->where(['pessoa_id' => $id]);
         $this->set('pessoa', $pessoa);
+        $this->set(compact('contactos'));
     }
 
     /**
