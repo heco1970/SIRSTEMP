@@ -15,7 +15,6 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('descricao') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
@@ -25,7 +24,6 @@
         <tbody>
             <?php foreach ($estados as $estado): ?>
             <tr>
-                <td><?= $this->Number->format($estado->id) ?></td>
                 <td><?= h($estado->descricao) ?></td>
                 <td><?= h($estado->created) ?></td>
                 <td><?= h($estado->modified) ?></td>

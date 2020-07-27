@@ -12,7 +12,6 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Id')],
         'designacao' => ['label' => __('Designação')],
         'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
         'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
@@ -20,8 +19,7 @@ $dynElems =
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['id' => ['label' => __('Id')]] + 
-            ['designacao' => ['label' => __('Designação')]] +
+$dynElems = ['designacao' => ['label' => __('Designação')]] +
             ['created' => ['label' => __('Data de Criação')]];
 ?>
 <div class="card shadow mb-4">

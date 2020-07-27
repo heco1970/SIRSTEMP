@@ -151,21 +151,17 @@ class ProcessosController extends AppController
     public function xls() {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $id = 'id LIKE "%'.$out[0].'%"';
-        $entjudicial = 'entjudicial LIKE "%'.$out[1].'%"';
-        $natureza = 'natureza LIKE "%'.$out[2].'%"';
-        $nip =  'nip LIKE "%'.$out[3].'%"';
+        $entjudicial = 'entjudicial LIKE "%'.$out[0].'%"';
+        $natureza = 'natureza LIKE "%'.$out[1].'%"';
+        $nip =  'nip LIKE "%'.$out[2].'%"';
 
         if($out[0] != null){
-            array_push($arr, $id);
-        }
-        if($out[1] != null){
             array_push($arr, $entjudicial);
         }
-        if($out[2] != null){
+        if($out[1] != null){
             array_push($arr, $natureza);
         }
-        if($out[3] != null){
+        if($out[2] != null){
             array_push($arr, $nip);
         }
         if($arr == null){
@@ -181,27 +177,25 @@ class ProcessosController extends AppController
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         
-        $sheet->setCellValue('A1', 'Id');
-        $sheet->setCellValue('B1', 'Entidade Judicial');
-        $sheet->setCellValue('C1', 'Natureza');
-        $sheet->setCellValue('D1', 'NIP');
-        $sheet->setCellValue('E1', 'Data de criação');
+        $sheet->setCellValue('A1', 'Entidade Judicial');
+        $sheet->setCellValue('B1', 'Natureza');
+        $sheet->setCellValue('C1', 'NIP');
+        $sheet->setCellValue('D1', 'Data de criação');
         
         $linha = 2;
         foreach ($processos as $row) {
-            $sheet->setCellValue('A' . $linha, $row->id);
-            $sheet->setCellValue('B' . $linha, $row->entjudicial);
-            $sheet->setCellValue('C' . $linha, $row->natureza);
-            $sheet->setCellValue('D' . $linha, $row->nip);
-            $sheet->setCellValue('E' . $linha, $row->created);    
+            $sheet->setCellValue('A' . $linha, $row->entjudicial);
+            $sheet->setCellValue('B' . $linha, $row->natureza);
+            $sheet->setCellValue('C' . $linha, $row->nip);
+            $sheet->setCellValue('D' . $linha, $row->created);    
             $linha++;
         }
 
-        foreach(range('A','E') as $columnID) {
+        foreach(range('A','D') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        $spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
         
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);

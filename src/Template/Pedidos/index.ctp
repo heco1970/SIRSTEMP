@@ -18,7 +18,6 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Id')],
         'nome' => ['label' => __('Nome')],
         'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
         'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
@@ -26,8 +25,7 @@ $dynElems =
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['id' => ['label' => __('Id')]] + 
-            ['pessoa' => ['label' => __('Nome')]] +
+$dynElems = ['pessoa' => ['label' => __('Nome')]] +
             ['created' => ['label' => __('Data de Criação')]];
 ?>
     <div class="card shadow mb-4">
@@ -82,14 +80,10 @@ $dynElems = ['id' => ['label' => __('Id')]] +
             };
 
             deleteCookie("Filtro");
-            createCookie("Filtro", "", "","1");
+            createCookie("Filtro", "","1");
 
             // function removeElement(url)
         });
-
-        document.getElementById("id").onkeyup = function() {
-            createCookie("Filtro", document.getElementById("id").value , document.getElementById("nome").value, "1"); 
-        };
 
         document.getElementById("nome").onkeyup = function() {
             createCookie("Filtro", document.getElementById("id").value , document.getElementById("nome").value, "1");         
@@ -99,7 +93,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
             document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
         }
         
-        function createCookie(name, valueId, valueNome, days) { 
+        function createCookie(name, valueNome, days) { 
             var expires; 
             
             if (days) { 
@@ -112,7 +106,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
             } 
             
             document.cookie = escape(name) + "=" +
-                valueId + "," + valueNome
+                valueNome
                 + expires + "; path=/"; 
         } 
 

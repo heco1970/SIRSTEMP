@@ -12,7 +12,6 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Id')],
         'designacao' => ['label' => __('Designacao')],
     ];
 ?>

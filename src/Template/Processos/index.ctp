@@ -18,7 +18,6 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Id')],
         'entjudicial' => ['label' => __('Entidade Judicial')],
         'natureza' => ['label' => __('Natureza')],
         'nip' => ['label' => __('NIP')],
@@ -28,8 +27,7 @@ $dynElems =
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['id' => ['label' => __('Id')]] + 
-            ['entjudicial' => ['label' => __('Entidade Judicial')]] +
+$dynElems = ['entjudicial' => ['label' => __('Entidade Judicial')]] +
             ['natureza' => ['label' => __('Natureza')]] +
             ['nip' => ['label' => __('NIP')]] +
             ['created' => ['label' => __('Data de Criação')]];
@@ -91,14 +89,10 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         };
 
         deleteCookie("Filtro");
-        createCookie("Filtro", "", "", "", "","1"); 
+        createCookie("Filtro", "", "", "","1"); 
 
         // function removeElement(url)
     });
-
-    document.getElementById("id").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1"); 
-    };
 
     document.getElementById("entjudicial").onkeyup = function() {
         createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1");
@@ -116,7 +110,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
     
-    function createCookie(name, valueId, valueEnt, valueNat, valueNip, days) { 
+    function createCookie(name, valueEnt, valueNat, valueNip, days) { 
         var expires; 
         
         if (days) { 
@@ -129,7 +123,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         } 
         
         document.cookie = escape(name) + "=" +
-            valueId + "," + valueEnt + "," + valueNat + "," + valueNip
+            valueEnt + "," + valueNat + "," + valueNip
             + expires + "; path=/"; 
     } 
 

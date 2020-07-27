@@ -163,13 +163,9 @@ class PedidosController extends AppController
     public function xls() {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $id = 'Pedidos.id LIKE "%'.$out[0].'%"';
-        $nome = 'Pessoas.nome LIKE "%'.$out[1].'%"';
+        $nome = 'Pessoas.nome LIKE "%'.$out[0].'%"';
 
         if($out[0] != null){
-            array_push($arr, $id);
-        }
-        if($out[1] != null){
             array_push($arr, $nome);
         }
         if($arr == null){
@@ -185,23 +181,21 @@ class PedidosController extends AppController
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         
-        $sheet->setCellValue('A1', 'Id');
-        $sheet->setCellValue('B1', 'Pessoa');
-        $sheet->setCellValue('C1', 'Data de criação');
+        $sheet->setCellValue('A1', 'Pessoa');
+        $sheet->setCellValue('B1', 'Data de criação');
         
         $linha = 2;
         foreach ($pedidos as $row) {
-            $sheet->setCellValue('A' . $linha, $row->id);
-            $sheet->setCellValue('B' . $linha, $row->pessoa->nome);
-            $sheet->setCellValue('C' . $linha, $row->created);    
+            $sheet->setCellValue('A' . $linha, $row->pessoa->nome);
+            $sheet->setCellValue('B' . $linha, $row->created);    
             $linha++;
         }
 
-        foreach(range('A','C') as $columnID) {
+        foreach(range('A','B') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
         
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);

@@ -18,7 +18,6 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Id')],
         'pessoa' => ['label' => __('Pessoa')],
         'criacao' => ['label' => __('Data Criação')],
         'distribuicao' => ['label' => __('Data Distribuição')],
@@ -29,8 +28,7 @@ $dynElems =
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['id' => ['label' => __('Id')]] + 
-            ['pessoa' => ['label' => __('Pessoa')]] +
+$dynElems = ['pessoa' => ['label' => __('Pessoa')]] +
             ['criacao' => ['label' => __('Data Criação')]] +
             ['distribuicao' => ['label' => __('Data Distribuição')]] +
             ['efectivo' => ['label' => __('Data Inicio Efectivo')]] +
@@ -68,14 +66,10 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
 
         deleteCookie("Filtro");
-        createCookie("Filtro", "", "", "", "", "","1");
+        createCookie("Filtro", "", "", "", "","1");
 
         // function removeElement(url)
     });
-
-    document.getElementById("id").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1"); 
-    };
 
     document.getElementById("pessoa").onkeyup = function() {
         createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");          
@@ -97,7 +91,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
     
-    function createCookie(name, valueId, valuePessoa, valueCria, valueDis, valueEfe , days) { 
+    function createCookie(name, valuePessoa, valueCria, valueDis, valueEfe , days) { 
         var expires; 
         
         if (days) { 
@@ -110,7 +104,7 @@ $dynElems = ['id' => ['label' => __('Id')]] +
         } 
         
         document.cookie = escape(name) + "=" +
-            valueId + "," + valuePessoa + "," + valueCria + "," + valueDis + "," + valueEfe
+            valuePessoa + "," + valueCria + "," + valueDis + "," + valueEfe
             + expires + "; path=/"; 
     } 
 

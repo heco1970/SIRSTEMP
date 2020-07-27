@@ -149,25 +149,22 @@ class VerbetesController extends AppController
     public function xls() {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $id = 'Verbetes.id LIKE '. $out[0];
-        $nome = 'Pessoas.nome LIKE "%'.$out[1].'%"';
-        $datacriacao = 'Verbetes.datacriacao LIKE "%'.$out[2].'%"';
-        $datadistribuicao = 'Verbetes.datadistribuicao LIKE "%'.$out[3].'%"';
-        $datainicioefectiva = 'Verbetes.datainicioefectiva LIKE "%'.$out[4].'%"';
+        
+        $nome = 'Pessoas.nome LIKE "%'.$out[0].'%"';
+        $datacriacao = 'Verbetes.datacriacao LIKE "%'.$out[1].'%"';
+        $datadistribuicao = 'Verbetes.datadistribuicao LIKE "%'.$out[2].'%"';
+        $datainicioefectiva = 'Verbetes.datainicioefectiva LIKE "%'.$out[3].'%"';
 
         if($out[0] != null){
-            array_push($arr, $id);
-        }
-        if($out[1] != null){
             array_push($arr, $nome);
         }
-        if($out[2] != null){
+        if($out[1] != null){
             array_push($arr, $datacriacao);
         }
-        if($out[3] != null){
+        if($out[2] != null){
             array_push($arr, $datadistribuicao);
         }
-        if($out[4] != null){
+        if($out[3] != null){
             array_push($arr, $datainicioefectiva);
         }
         if($arr == null){
@@ -183,27 +180,25 @@ class VerbetesController extends AppController
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        $sheet->setCellValue('A1', 'Id');
-        $sheet->setCellValue('B1', 'Pessoa');
-        $sheet->setCellValue('C1', 'Data de criação');
-        $sheet->setCellValue('D1', 'Data Distribuição');
-        $sheet->setCellValue('E1', 'Data Inicio Efectivo');
+        $sheet->setCellValue('A1', 'Pessoa');
+        $sheet->setCellValue('B1', 'Data de criação');
+        $sheet->setCellValue('C1', 'Data Distribuição');
+        $sheet->setCellValue('D1', 'Data Inicio Efectivo');
         
         $linha = 2;
         foreach ($verbetes as $row) {
-            $sheet->setCellValue('A' . $linha, $row->id);
-            $sheet->setCellValue('B' . $linha, $row->pessoa->nome);
-            $sheet->setCellValue('C' . $linha, $row->datacriacao);
-            $sheet->setCellValue('D' . $linha, $row->datadistribuicao);
-            $sheet->setCellValue('E' . $linha, $row->datainicioefectiva);
+            $sheet->setCellValue('A' . $linha, $row->pessoa->nome);
+            $sheet->setCellValue('B' . $linha, $row->datacriacao);
+            $sheet->setCellValue('C' . $linha, $row->datadistribuicao);
+            $sheet->setCellValue('D' . $linha, $row->datainicioefectiva);
             $linha++;
         }
 
-        foreach(range('A','E') as $columnID) {
+        foreach(range('A','C') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        $spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
         
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);
