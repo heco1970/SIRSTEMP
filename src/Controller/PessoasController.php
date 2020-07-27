@@ -28,14 +28,16 @@ class PessoasController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'nome', 'createdfirst', 'createdlast'];
+            $validOps = ['nome', 'cc', 'nif', 'datanascimento', 'createdfirst', 'createdlast'];
             $convArray = [
-                'id' => $model.'.id',
                 'nome' => $model.'.nome',
+                'cc' => $model.'.cc',
+                'nif' => $model.'.nif',
+                'datanascimento' => $model.'.data_nascimento',
                 'createdfirst' => $model.'.created',
                 'createdlast' => $model.'.created'
             ];
-            $strings = ['nome'];
+            $strings = ['nome', 'cc'];
             $date_start = ['createdfirst']; //data inicial
             $date_end = ['createdlast'];  //data final
 
@@ -51,7 +53,7 @@ class PessoasController extends AppController
 
             $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-            
+
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
             //$types = $this->Users->Types->find('list', ['limit' => 200]);
@@ -148,14 +150,22 @@ class PessoasController extends AppController
     public function xls() {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $id = 'id LIKE "%'.$out[0].'%"';
-        $nome = 'nome LIKE "%'.$out[1].'%"';
+        $nome = 'nome LIKE "%'.$out[0].'%"';
+        $cc = 'cc LIKE "%'.$out[1].'%"';
+        $nif = 'nif LIKE "%'.$out[2].'%"';
+        $datanascimento = 'data_nascimento LIKE "%'.$out[3].'%"';
 
         if($out[0] != null){
-            array_push($arr, $id);
+            array_push($arr, $nome);
         }
         if($out[1] != null){
-            array_push($arr, $nome);
+            array_push($arr, $cc);
+        }
+        if($out[2] != null){
+            array_push($arr, $nif);
+        }
+        if($out[3] != null){
+            array_push($arr, $datanascimento);
         }
         if($arr == null){
             $pessoas = $this->Pessoas->find('all')->toArray();
@@ -170,29 +180,27 @@ class PessoasController extends AppController
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
     
-        $sheet->setCellValue('A1', 'Id');
-        $sheet->setCellValue('B1', 'Nome');
-        $sheet->setCellValue('C1', 'CC');
-        $sheet->setCellValue('D1', 'NIF');
-        $sheet->setCellValue('E1', 'Data de nascimento');
-        $sheet->setCellValue('F1', 'Data de criação');
+        $sheet->setCellValue('A1', 'Nome');
+        $sheet->setCellValue('B1', 'CC');
+        $sheet->setCellValue('C1', 'NIF');
+        $sheet->setCellValue('D1', 'Data de nascimento');
+        $sheet->setCellValue('E1', 'Data de criação');
       
         $linha = 2;
         foreach ($pessoas as $row) {
-            $sheet->setCellValue('A' . $linha, $row->id);
-            $sheet->setCellValue('B' . $linha, $row->nome);
-            $sheet->setCellValue('C' . $linha, $row->cc);
-            $sheet->setCellValue('D' . $linha, $row->nif);
-            $sheet->setCellValue('E' . $linha, $row->data_nascimento); 
-            $sheet->setCellValue('F' . $linha, $row->created);    
+            $sheet->setCellValue('A' . $linha, $row->nome);
+            $sheet->setCellValue('B' . $linha, $row->cc);
+            $sheet->setCellValue('C' . $linha, $row->nif);
+            $sheet->setCellValue('D' . $linha, $row->data_nascimento); 
+            $sheet->setCellValue('E' . $linha, $row->created);    
             $linha++;
         }
 
-        foreach(range('A','F') as $columnID) {
+        foreach(range('A','E') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:F1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
         
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);

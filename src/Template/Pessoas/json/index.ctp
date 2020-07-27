@@ -2,10 +2,12 @@
 $data = [];
 foreach ($records as $record) {
   $data[] = [
-    'created' => $record->created->i18nFormat('dd/MM/yyyy HH:mm:ss'),
-    //'modified' => $record->modified->i18nFormat('dd/MM/yyyy HH:mm:ss'),
-    'nome' => $record->nome,
     'id' => $record->id,
+    'nome' => $record->nome,
+    'cc' => $record->cc,
+    'nif' => $record->nif,
+    'datanascimento' => $record->data_nascimento->i18nFormat('dd/MM/yyyy'), 
+    'observacoes' => substr($record->observacoes,0,20),  
   ];
 }
 
