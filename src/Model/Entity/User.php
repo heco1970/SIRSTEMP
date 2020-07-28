@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Entity;
 
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -13,11 +12,14 @@ use Cake\ORM\Entity;
  * @property string|null $password
  * @property string $name
  * @property string $email
- * @property string $photo
+ * @property $photo
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
  * @property \App\Model\Entity\Type $type
+ * @property \App\Model\Entity\Access[] $accesses
+ * @property \App\Model\Entity\Team[] $teams
+ * @property \App\Model\Entity\User[] $users
  */
 class User extends Entity
 {
@@ -40,7 +42,10 @@ class User extends Entity
         'photo' => true,
         'created' => true,
         'modified' => true,
-        'type' => true
+        'type' => true,
+        'accesses' => true,
+        'teams' => true,
+        'users' => true
     ];
 
     /**
@@ -51,28 +56,4 @@ class User extends Entity
     protected $_hidden = [
         'password'
     ];
-
-    protected function _setPassword($password) {
-        if (strlen($password) > 0) {
-            return (new DefaultPasswordHasher)->hash($password);
-        }
-    }
-
-    public function parentNode() {
-        if (!$this->id) {
-            return null;
-        }
-        if (isset($this->type_id)) {
-            $typeId = $this->type_id;
-        } else {
-            $Users = TableRegistry::get('Users');
-            $user = $Users->find('all', ['fields' => ['type_id']])->where(['id' => $this->id])->first();
-            $typeId = $user->type_id;
-        }
-        if (!$typeId) {
-            return null;
-        }
-        return ['Types' => ['id' => $typeId]];
-    }
-
 }

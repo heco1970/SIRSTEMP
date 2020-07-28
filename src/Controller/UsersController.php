@@ -183,10 +183,10 @@ class UsersController extends AppController
           )
         )->toArray();
 
+       
         if($user){
-
           //Ativo
-          if($att[0]['user_states_id'] == 2){
+          if(isset($att[0]['user_states_id']) == false || $att[0]['user_states_id'] == 2){
             
             //Accesses
             $this->loadModel('Accesses');
@@ -218,9 +218,20 @@ class UsersController extends AppController
               $this->log('Problem saving access data');
             }
 
+            if(isset($att[0]['user_states_id']) == false){
+              $att[0] = $this->Attempts->newEntity([
+                'username' => strtolower($_POST['username']),
+                'count' => null,
+                'suspenso' => null,
+                'user_states_id' => 2,
+                'created' => Time::now(),
+                'modified' => Time::now()
+              ]);
+            }
+
             $att[0]['count'] = null;
 
-            if (!$this->Attempts->save($att[0])) {
+            if(!$this->Attempts->save($att[0])) {
               $this->log('Problem saving access data');
             }
 

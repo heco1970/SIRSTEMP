@@ -10,7 +10,8 @@ use Cake\Validation\Validator;
  * Users Model
  *
  * @property \App\Model\Table\TypesTable|\Cake\ORM\Association\BelongsTo $Types
- * @property |\Cake\ORM\Association\HasMany $Accesses
+ * @property \App\Model\Table\AccessesTable|\Cake\ORM\Association\HasMany $Accesses
+ * @property \App\Model\Table\TeamsTable|\Cake\ORM\Association\BelongsToMany $Teams
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -37,7 +38,7 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('id');
+        $this->setDisplayField('username');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -48,34 +49,10 @@ class UsersTable extends Table
         $this->hasMany('Accesses', [
             'foreignKey' => 'user_id'
         ]);
-        
-        $this->addBehavior('Josegonzalez/Upload.Upload', [
-            'photo' => [
-              'nameCallback' => function ($table, $entity, $data, $field, $settings) {
-                $extension = pathinfo($data['name'], PATHINFO_EXTENSION);
-                $valid = false;
-                do {
-                    $name = sha1(microtime(true) . mt_rand(10000, 900000)) . '.' . $extension;
-                    if (!file_exists(WWW_ROOT . 'files' . DS . 'Users' . DS . 'photo' . DS . $name)) {
-                        $valid = true;
-                    }
-                } while (!$valid);
-                return $name;
-              },
-              'transformer' =>  function ($table, $entity, $data, $field, $settings) {
-                $size = new \Imagine\Image\Box(210, 210);
-                $mode = \Imagine\Image\ImageInterface::THUMBNAIL_INSET;
-                $imagine = new \Imagine\Gd\Imagine();
-                
-                $extension = pathinfo($data['name'], PATHINFO_EXTENSION);
-                $tmp = tempnam(sys_get_temp_dir(), 'upload') . '.' . $extension;
-                $imagine->open($data['tmp_name'])->thumbnail($size, $mode)->save($tmp);
-                return [
-                    $data['tmp_name'] => $data['name'],
-                    $tmp => $data['name'],
-                ];
-              }
-            ],
+        $this->belongsToMany('Teams', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'team_id',
+            'joinTable' => 'users_teams'
         ]);
     }
 
@@ -94,53 +71,27 @@ class UsersTable extends Table
         $validator
             ->scalar('username')
             ->maxLength('username', 50)
-            ->requirePresence('username', 'create')
-            ->notEmpty('username', __('The username cannot be empty'));
-        
-        $validator
-            ->scalar('password_old')
-            ->maxLength('password_old', 255)
-            ->notEmpty('password_old', __('The password cannot be empty'));
+            ->allowEmpty('username');
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
-            ->notEmpty('password', __('The password cannot be empty'))
-            ->minLength('password',6, __('The password needs to have at least 6 characters'));
-        
-        $validator
-            ->scalar('password_confirm')
-            ->maxLength('password_confirm', 255)
-            ->notEmpty('password_confirm', __('The password cannot be empty'));
-        
-        $validator
-            ->sameAs('password_confirm','password',__('Passwords did\'t match'));
+            ->allowEmpty('password');
 
         $validator
             ->scalar('name')
             ->maxLength('name', 255)
             ->requirePresence('name', 'create')
-            ->notEmpty('name', __('The name cannot be empty'));
+            ->notEmpty('name');
 
         $validator
-            ->email('email', true, __('The email is not valid'))
+            ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmpty('email', __('The email cannot be empty'));
-        
-        $validator
-            ->requirePresence('type_id', 'create')
-            ->notEmpty('type_id', __('The type cannot be empty'));
-        
-        $validator->setProvider('upload', \Josegonzalez\Upload\Validation\DefaultValidation::class);
-        
-        
-        $validator->add('photo', 'fileAboveMinHeight', [
-            'rule' => ['isAboveMinHeight', 210],
-            'message' => __('This image should at least be 210px high'),
-            'provider' => 'upload'
-        ]);
+            ->notEmpty('email');
 
-        $validator->allowEmpty('photo');
+        $validator
+            ->requirePresence('photo', 'create')
+            ->notEmpty('photo');
 
         return $validator;
     }
@@ -154,16 +105,10 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['username'], __('The username already exists')));
-        $rules->add($rules->isUnique(['email']), __('The email already exists'));
+        $rules->add($rules->isUnique(['username']));
+        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['type_id'], 'Types'));
 
         return $rules;
-    }
-    
-    public function getName($id){
-      $user = $this->get($id);
-      
-      return $user->name;
     }
 }
