@@ -45,6 +45,19 @@ class PessoasTable extends Table
             'foreignKey' => 'pais_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Generos', [
+            'foreignKey' => 'id_genero',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Estadocivils', [
+            'foreignKey' => 'id_estadocivil',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Unidadeoperas', [
+            'foreignKey' => 'id_unidadeopera',
+            'joinType' => 'INNER'
+        ]);
+        
     }
 
     /**
@@ -82,15 +95,15 @@ class PessoasTable extends Table
             ->requirePresence('nomemae', 'create')
             ->notEmpty('nomemae');
 
-        $validator
-            ->integer('id_estadocivil')
-            ->requirePresence('id_estadocivil', 'create')
-            ->notEmpty('id_estadocivil');
+        // $validator
+        //     ->integer('id_estadocivil')
+        //     ->requirePresence('id_estadocivil', 'create')
+        //     ->notEmpty('id_estadocivil');
 
-        $validator
-            ->integer('id_genero')
-            ->requirePresence('id_genero', 'create')
-            ->notEmpty('id_genero');
+        // $validator
+        //     ->integer('id_genero')
+        //     ->requirePresence('id_genero', 'create')
+        //     ->notEmpty('id_genero');
 
         $validator
             ->scalar('cc')
@@ -118,6 +131,7 @@ class PessoasTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['pais_id'], 'Pais'));
+        $rules->add($rules->existsIn(['id_estadocivil'], 'Estadocivils'));
 
         return $rules;
     }
