@@ -44,10 +44,9 @@ $dynElems = ['nome' => ['label' => __('Designação')]] +
             ação: function(row) {
                 var view = '<a class="btn btn-info mr-1" href="/teams/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
                 var edit = '<a class="btn btn-warning mr-1" href="/teams/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
-                var dele = '<a class="btn btn-danger" href="/teams/delete/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="far fa-eye fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Quer mesmo apagar?'"+')" href="/teams/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
 
-
-                return '<div class="btn-group btn-group-sm" role="group">'+ view + edit + dele +  '</div>';
+                return '<div class="btn-group btn-group-sm" role="group">'+ view + edit + dele + '</div>';
             }
         }
             

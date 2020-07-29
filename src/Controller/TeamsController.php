@@ -176,7 +176,7 @@ class TeamsController extends AppController
    */
   public function delete($id = null)
   {
-    $this->request->allowMethod(['post', 'delete']);
+    //$this->request->allowMethod(['post', 'delete']);
     $team = $this->Teams->get($id);
     if ($this->Teams->delete($team)) {
         $this->Flash->success(__('The team has been deleted.'));
