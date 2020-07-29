@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\TeamsTable;
+use App\Model\Table\PessoasCrimesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\TeamsTable Test Case
+ * App\Model\Table\PessoasCrimesTable Test Case
  */
-class TeamsTableTest extends TestCase
+class PessoasCrimesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\TeamsTable
+     * @var \App\Model\Table\PessoasCrimesTable
      */
-    public $Teams;
+    public $PessoasCrimes;
 
     /**
      * Fixtures
@@ -24,9 +24,9 @@ class TeamsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.teams',
-        'app.users',
-        'app.users_teams'
+        'app.pessoas_crimes',
+        'app.pessoas',
+        'app.crimes'
     ];
 
     /**
@@ -37,8 +37,8 @@ class TeamsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Teams') ? [] : ['className' => TeamsTable::class];
-        $this->Teams = TableRegistry::getTableLocator()->get('Teams', $config);
+        $config = TableRegistry::getTableLocator()->exists('PessoasCrimes') ? [] : ['className' => PessoasCrimesTable::class];
+        $this->PessoasCrimes = TableRegistry::getTableLocator()->get('PessoasCrimes', $config);
     }
 
     /**
@@ -48,7 +48,7 @@ class TeamsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Teams);
+        unset($this->PessoasCrimes);
 
         parent::tearDown();
     }
@@ -64,11 +64,11 @@ class TeamsTableTest extends TestCase
     }
 
     /**
-     * Test validationDefault method
+     * Test buildRules method
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

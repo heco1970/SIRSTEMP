@@ -4,17 +4,15 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Team Entity
+ * PessoasCrime Entity
  *
- * @property int $id
- * @property string $nome
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
+ * @property int $pessoas_id
+ * @property string $crimes_id
  *
- * @property \App\Model\Entity\User[] $users
- * @property \App\Model\Entity\UsersTeam[] $users_teams
+ * @property \App\Model\Entity\Pessoa $pessoa
+ * @property \App\Model\Entity\Crime $crime
  */
-class Team extends Entity
+class PessoasCrime extends Entity
 {
 
     /**
@@ -27,10 +25,7 @@ class Team extends Entity
      * @var array
      */
     protected $_accessible = [
-        'nome' => true,
-        'created' => true,
-        'modified' => true,
-        'users' => true,
-        'users_teams' => true
+        'pessoa' => true,
+        'crime' => true
     ];
 }

@@ -44,9 +44,9 @@ class TeamsTable extends Table
         $this->belongsToMany('Users', [
             'foreignKey' => 'team_id',
             'targetForeignKey' => 'user_id',
-            'joinTable' => 'users_teams',
+            'joinTable' => 'users_teams'
         ]);
-
+    
         $this->hasMany('UsersTeams');
     }
 

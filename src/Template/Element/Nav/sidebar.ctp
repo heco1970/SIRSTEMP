@@ -70,6 +70,7 @@ $active = $show = '';
                     <?= $this->Html->link(__('Motivos Verbete'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Entidades'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Equipas'), '/teams/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
+                    <?= $this->Html->link(__('Crimes'), '/crimes /index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                 </div>
             </div>
         </li>

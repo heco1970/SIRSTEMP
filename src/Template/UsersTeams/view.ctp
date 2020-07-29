@@ -18,11 +18,11 @@
     </ul>
 </nav>
 <div class="usersTeams view large-9 medium-8 columns content">
-    <h3><?= h($usersTeam->team_id) ?></h3>
+    <h3><?= h($usersTeam->user_id) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('User') ?></th>
-            <td><?= $usersTeam->has('user') ? $this->Html->link($usersTeam->user->id, ['controller' => 'Users', 'action' => 'view', $usersTeam->user->id]) : '' ?></td>
+            <td><?= $usersTeam->has('user') ? $this->Html->link($usersTeam->user->username, ['controller' => 'Users', 'action' => 'view', $usersTeam->user->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Team') ?></th>

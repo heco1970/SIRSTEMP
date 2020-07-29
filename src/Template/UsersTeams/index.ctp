@@ -27,7 +27,7 @@
         <tbody>
             <?php foreach ($usersTeams as $usersTeam): ?>
             <tr>
-                <td><?= $usersTeam->has('user') ? $this->Html->link($usersTeam->user->id, ['controller' => 'Users', 'action' => 'view', $usersTeam->user->id]) : '' ?></td>
+                <td><?= $usersTeam->has('user') ? $this->Html->link($usersTeam->user->username, ['controller' => 'Users', 'action' => 'view', $usersTeam->user->id]) : '' ?></td>
                 <td><?= $usersTeam->has('team') ? $this->Html->link($usersTeam->team->id, ['controller' => 'Teams', 'action' => 'view', $usersTeam->team->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $usersTeam->team_id]) ?>
