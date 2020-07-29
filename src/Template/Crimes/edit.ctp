@@ -16,6 +16,31 @@
            
         </table>
 
+        <h4>Utilizadores da equipa</h4>
+    
+        <table class="table">
+            <?php foreach($crime->pessoas as $row) : ?>
+                <tr>
+                    <th scope="row"><?= __('Utilizadores') ?></th>
+                    <td><?= h($row->nome) ?></td>
+
+                    <td><input type="checkbox" name="formDoor[]" value= <?= $row->id ?> />   </td>             
+                </tr> 
+            <?php endforeach ?>
+
+        </table>
+
+        <table class="table">            
+            <th><?= __('Adicionar outro utilizador: ') ?></th>
+            <th>
+                <?php
+                    echo $this->Form->select('pessoas_crimes', $pessoas, ['empty' => 'Selecionar']);
+                ?>
+                
+            </th>
+        </table>
+            
+
     </div>
     <button class="btn btn-success btn-lg" type="submit">Alterar</button>
     <?= $this->Form->end() ?>

@@ -10,6 +10,10 @@ use Cake\Validation\Validator;
  * Pessoas Model
  *
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
+ * @property |\Cake\ORM\Association\HasMany $Contactos
+ * @property |\Cake\ORM\Association\HasMany $Pedidos
+ * @property |\Cake\ORM\Association\HasMany $Verbetes
+ * @property |\Cake\ORM\Association\BelongsToMany $Crimes
  *
  * @method \App\Model\Entity\Pessoa get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pessoa newEntity($data = null, array $options = [])
@@ -45,19 +49,20 @@ class PessoasTable extends Table
             'foreignKey' => 'pais_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Generos', [
-            'foreignKey' => 'id_genero',
-            'joinType' => 'INNER'
+        $this->hasMany('Contactos', [
+            'foreignKey' => 'pessoa_id'
         ]);
-        $this->belongsTo('Estadocivils', [
-            'foreignKey' => 'id_estadocivil',
-            'joinType' => 'INNER'
+        $this->hasMany('Pedidos', [
+            'foreignKey' => 'pessoa_id'
         ]);
-        $this->belongsTo('Unidadeoperas', [
-            'foreignKey' => 'id_unidadeopera',
-            'joinType' => 'INNER'
+        $this->hasMany('Verbetes', [
+            'foreignKey' => 'pessoa_id'
         ]);
-        
+        $this->belongsToMany('Crimes', [
+            'foreignKey' => 'pessoa_id',
+            'targetForeignKey' => 'crime_id',
+            'joinTable' => 'pessoas_crimes'
+        ]);
     }
 
     /**
@@ -95,15 +100,15 @@ class PessoasTable extends Table
             ->requirePresence('nomemae', 'create')
             ->notEmpty('nomemae');
 
-        // $validator
-        //     ->integer('id_estadocivil')
-        //     ->requirePresence('id_estadocivil', 'create')
-        //     ->notEmpty('id_estadocivil');
+        $validator
+            ->integer('id_estadocivil')
+            ->requirePresence('id_estadocivil', 'create')
+            ->notEmpty('id_estadocivil');
 
-        // $validator
-        //     ->integer('id_genero')
-        //     ->requirePresence('id_genero', 'create')
-        //     ->notEmpty('id_genero');
+        $validator
+            ->integer('id_genero')
+            ->requirePresence('id_genero', 'create')
+            ->notEmpty('id_genero');
 
         $validator
             ->scalar('cc')
@@ -116,7 +121,27 @@ class PessoasTable extends Table
             ->requirePresence('nif', 'create')
             ->notEmpty('nif');
 
+        $validator
+            ->scalar('outroidentifica')
+            ->maxLength('outroidentifica', 255)
+            ->requirePresence('outroidentifica', 'create')
+            ->notEmpty('outroidentifica');
 
+        $validator
+            ->integer('id_unidadeopera')
+            ->requirePresence('id_unidadeopera', 'create')
+            ->notEmpty('id_unidadeopera');
+
+        $validator
+            ->boolean('estado')
+            ->requirePresence('estado', 'create')
+            ->notEmpty('estado');
+
+        $validator
+            ->scalar('observacoes')
+            ->maxLength('observacoes', 255)
+            ->requirePresence('observacoes', 'create')
+            ->notEmpty('observacoes');
 
         return $validator;
     }
@@ -131,7 +156,6 @@ class PessoasTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['pais_id'], 'Pais'));
-        $rules->add($rules->existsIn(['id_estadocivil'], 'Estadocivils'));
 
         return $rules;
     }

@@ -39,11 +39,11 @@ class PessoasCrimesTable extends Table
         $this->setPrimaryKey(['pessoas_id', 'crimes_id']);
 
         $this->belongsTo('Pessoas', [
-            'foreignKey' => 'pessoas_id',
+            'foreignKey' => 'pessoa_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Crimes', [
-            'foreignKey' => 'crimes_id',
+            'foreignKey' => 'crime_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -57,8 +57,8 @@ class PessoasCrimesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['pessoas_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['crimes_id'], 'Crimes'));
+        $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
+        $rules->add($rules->existsIn(['crime_id'], 'Crimes'));
 
         return $rules;
     }

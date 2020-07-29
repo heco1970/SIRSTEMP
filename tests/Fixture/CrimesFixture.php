@@ -42,8 +42,8 @@ class CrimesFixture extends TestFixture
             [
                 'id' => 1,
                 'descricao' => 'Lorem ipsum dolor sit amet',
-                'created' => '2020-07-28 20:51:34',
-                'modified' => '2020-07-28 20:51:34'
+                'created' => '2020-07-29 16:25:11',
+                'modified' => '2020-07-29 16:25:11'
             ],
         ];
         parent::init();

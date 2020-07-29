@@ -17,10 +17,10 @@ class PessoasCrimesFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'pessoas_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'crimes_id' => ['type' => 'string', 'length' => 45, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'pessoa_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'crime_id' => ['type' => 'string', 'length' => 45, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['pessoas_id', 'crimes_id'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['pessoa_id', 'crime_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -38,8 +38,8 @@ class PessoasCrimesFixture extends TestFixture
     {
         $this->records = [
             [
-                'pessoas_id' => 1,
-                'crimes_id' => 'a4fc40a5-5577-4575-af34-8a6c06a3d6bd'
+                'pessoa_id' => 1,
+                'crime_id' => '700323a4-6297-443c-aaa0-fdb0096c5298'
             ],
         ];
         parent::init();

@@ -6,8 +6,8 @@ use Cake\ORM\Entity;
 /**
  * PessoasCrime Entity
  *
- * @property int $pessoas_id
- * @property string $crimes_id
+ * @property int $pessoa_id
+ * @property string $crime_id
  *
  * @property \App\Model\Entity\Pessoa $pessoa
  * @property \App\Model\Entity\Crime $crime
