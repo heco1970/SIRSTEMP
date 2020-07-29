@@ -17,5 +17,16 @@
                 <td><?= h($team->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
             </tr>
         </table>
+
+        <h4>Utilizadores da equipa</h4>
+
+        <table class="table">
+            <?php foreach($team->users as $row) : ?>
+                <tr>
+                    <th scope="row"><?= __('Utilizadores') ?></th>
+                    <td><?= h($row->username) ?></td>
+                </tr>
+            <?php endforeach ?>
+        </table>
 </div>
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pessoa $pessoa
@@ -7,7 +8,7 @@
 <div class="alert alert-success" role="alert">
     Novo Registo de Pessoa
 </div>
-<?= $this->Form->create(Null, ['type' => 'POST', 'id' => 'formulario']) ?>
+<?= $this->Form->create($pessoa) ?>
 
 <div id='my-form-body'>
 
@@ -15,8 +16,7 @@
         <div class="col">
             <div class="form-group">
                 <label for="nome">Nome da Pessoa</label>
-                <input type="text" class="form-control" name="nome" id="nome">
-
+                <?php echo $this->Form->control('nome', ['label' => false, 'class' => 'form-control']); ?>
             </div>
         </div>
     </div>
@@ -24,8 +24,7 @@
         <div class="col">
             <div class="form-group">
                 <label for="nomepai">Nome do Pai</label>
-                <input type="text" class="form-control" name="nomepai" id="nomepai">
-
+                <?php echo $this->Form->control('nomepai', ['label' => false, 'class' => 'form-control']); ?>
             </div>
         </div>
     </div>
@@ -33,7 +32,7 @@
         <div class="col">
             <div class="form-group">
                 <label for="nomemaae">Nome da Mâe</label>
-                <input type="text" class="form-control" name="nomemae" id="nomemae">
+                <?php echo $this->Form->control('nomemae', ['label' => false, 'class' => 'form-control']); ?>
 
             </div>
         </div>
@@ -42,35 +41,23 @@
         <div class="col">
             <div class="form-group">
                 <label for="id_estadocivil">Estado Civil</label>
-                <select class="form-control" name="id_estadocivil" id="id_estadocivil">
-                    <option value="1">Casado</option>
-                    <option value="2">União de Facto</option>
-                    <option value="3">Solteiro</option>
-                    <option value="4">Viuvo</option>
-                </select>
-
+                <?php echo $this->Form->control('id_estadocivil',['label' => false,'type' => 'select','multiple' => false,'options' => $estadocivils,'class'=>'form-control']); ?>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label for="id_genero">Genero</label>
-                <select class="form-control" name="id_genero" id="id_genero">
-                    <option value="1">Masculino</option>
-                    <option value="2">Feminino</option>
-                    <option value="3">Outro</option>
-
-                </select>
+                
+                <?php echo $this->Form->control('id_genero',['label' => false,'type' => 'select','multiple' => false,'options' => $generos,'class'=>'form-control']); ?>
 
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label for="pais_id">Nacionalidade</label>
-                <select class="form-control" name="pais_id" id="pais_id">
-                <?php foreach ($pais as $pai): ?>
-                    <option value="<?= $pai->id ?>"><?= $pai->paisNome ?></option>
-                <?php endforeach; ?>
-                </select>
+               
+                <?php echo $this->Form->control('pais_id',['label' => false,'type' => 'select','multiple' => false,'options' => $pais,'class'=>'form-control']); ?>
+
             </div>
         </div>
     </div>
@@ -81,25 +68,28 @@
         <div class="col">
             <div class="form-group">
                 <label for="hea">Data de Nascimento</label>
-                <input type="date" class="form-control" name="data_nascimento" id="data_nascimento">
+                <?php echo $this->Form->text('data_nascimento', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label for="cc">Cartão de Cidadão</label>
-                <input type="text" class="form-control" name="cc" id="cc">
+                <?php echo $this->Form->control('cc', ['label' => false, 'class' => 'form-control']); ?>
+
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label for="nif">Numero de Contribuinte</label>
-                <input type="text" class="form-control" name="nif" id="nif">
+                <?php echo $this->Form->control('nif', ['label' => false, 'class' => 'form-control','type' => 'text']); ?>
+
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label for="outroidentifica">Outra Identificação</label>
-                <input type="text" class="form-control" name="outroidentifica" id="outroidentifica ">
+                <?php echo $this->Form->control('outroidentifica', ['label' => false, 'class' => 'form-control']); ?>
+
             </div>
         </div>
     </div>
@@ -107,9 +97,10 @@
     <div class="form-row">
         <div class="col">
             <div class="form-group">
-                <label for="nome">Observações</label>
+                <label for="observacoes">Observações</label>
 
-                <input type="text" class="form-control" name="observacoes" id="observacoes">
+                <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control']); ?>
+
 
             </div>
         </div>
@@ -117,8 +108,7 @@
 
 
 </div>
-<button class="btn btn-success btn-lg" type="submit">GRAVAR</button>
+
+<?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success"]) ?>
 
 <?= $this->Form->end() ?>
-
-

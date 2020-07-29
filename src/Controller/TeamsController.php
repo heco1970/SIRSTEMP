@@ -107,7 +107,7 @@ class TeamsController extends AppController
       'limit' => 200
     ])->toArray();
 
-    if($team->users == true){
+    if(isset($team->users[0])){
       $users = $this->Teams->Users->find('list', [
         'conditions' => [
           'NOT' => [

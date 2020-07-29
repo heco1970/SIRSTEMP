@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\Rule\IsUnique;
 
 /**
  * Pessoas Model
@@ -63,6 +64,21 @@ class PessoasTable extends Table
             'targetForeignKey' => 'crime_id',
             'joinTable' => 'pessoas_crimes'
         ]);
+
+        $this->hasMany('Contactos', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->hasMany('Pedidos', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->hasMany('Verbetes', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->belongsToMany('Crimes', [
+            'foreignKey' => 'pessoa_id',
+            'targetForeignKey' => 'crime_id',
+            'joinTable' => 'pessoas_crimes'
+        ]);
     }
 
     /**
@@ -101,16 +117,6 @@ class PessoasTable extends Table
             ->notEmpty('nomemae');
 
         $validator
-            ->integer('id_estadocivil')
-            ->requirePresence('id_estadocivil', 'create')
-            ->notEmpty('id_estadocivil');
-
-        $validator
-            ->integer('id_genero')
-            ->requirePresence('id_genero', 'create')
-            ->notEmpty('id_genero');
-
-        $validator
             ->scalar('cc')
             ->maxLength('cc', 10)
             ->requirePresence('cc', 'create')
@@ -127,10 +133,6 @@ class PessoasTable extends Table
             ->requirePresence('outroidentifica', 'create')
             ->notEmpty('outroidentifica');
 
-        $validator
-            ->integer('id_unidadeopera')
-            ->requirePresence('id_unidadeopera', 'create')
-            ->notEmpty('id_unidadeopera');
 
         $validator
             ->boolean('estado')
@@ -155,7 +157,12 @@ class PessoasTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['nome','data_nascimento'], 'Já existe um registo com o mesmo nome e data de nascimento.'));
+        $rules->add($rules->isUnique(['nome'], 'Já existe um registo com o mesmo nome.'));
         $rules->add($rules->existsIn(['pais_id'], 'Pais'));
+        $rules->add($rules->existsIn(['id_estadocivil'], 'Estadocivils'));
+        $rules->add($rules->existsIn(['id_genero'], 'Generos'));
+        $rules->add($rules->existsIn(['id_unidadeopera'], 'Unidadeoperas'));
 
         return $rules;
     }

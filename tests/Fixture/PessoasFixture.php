@@ -66,8 +66,8 @@ class PessoasFixture extends TestFixture
                 'id_unidadeopera' => 1,
                 'estado' => 1,
                 'observacoes' => 'Lorem ipsum dolor sit amet',
-                'created' => 1596036281,
-                'modified' => 1596036281
+                'created' => 1596044690,
+                'modified' => 1596044690
             ],
         ];
         parent::init();

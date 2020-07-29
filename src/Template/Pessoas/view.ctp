@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Nacionalidade') ?></h6>
-                        <p><?= h($pessoa->pai->nome) ?></p>
+                        <p><?= h(ucfirst(mb_strtolower($pessoa->pai->paisNome))) ?></p>
 
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Modificado') ?></h6>
-                        <p><?= h($pessoa->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+                        <p><?= !empty($pessoa->modified) ? h($pessoa->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) : '' ?></p>
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Estado') ?></h6>
