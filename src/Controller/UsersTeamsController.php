@@ -101,14 +101,14 @@ class UsersTeamsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $usersTeam = $this->UsersTeams->get($id);
         if ($this->UsersTeams->delete($usersTeam)) {
-            $this->Flash->success(__('The users team has been deleted.'));
+            //$this->Flash->success(__('The users team has been deleted.'));
         } else {
-            $this->Flash->error(__('The users team could not be deleted. Please, try again.'));
+            //$this->Flash->error(__('The users team could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        //return $this->redirect(['action' => 'index']);
     }
 }

@@ -107,7 +107,7 @@ class TeamsController extends AppController
       'limit' => 200
     ])->toArray();
 
-    if($team->users == ""){
+    if($team->users == true){
       $users = $this->Teams->Users->find('list', [
         'conditions' => [
           'NOT' => [
@@ -135,9 +135,9 @@ class TeamsController extends AppController
           $userteamsTable->save($usa_team);
         }
 
-        $aDoor = $_POST['formDoor'];
-        if(!empty($aDoor)) 
+        if(isset($_POST['formDoor'])) 
         {
+          $aDoor = $_POST['formDoor'];
           for($i=0; $i < count($aDoor); $i++)
           {
             $result = $this->Teams->UsersTeams->find('all', 
@@ -150,21 +150,10 @@ class TeamsController extends AppController
               )
             )->all();
 
-            $this->log($result);
-
-            //$this->UsersTeams->deleteDavid($result); 
-
-            // Instantiation // mention within cron function
-            //$UsersTeams = new UsersTeamsController;
-            // Call a method from
-            //$UsersTeams->delete($result);
-
-  
-            //this->Teams->UsersTeams->delete($result);
-
-            //$userteamsTable = TableRegistry::getTableLocator()->get('UsersTeams');
-            //$userteamsTable->deleteDavid($result);
-
+            $this->Teams->UsersTeams->deleteAll(array(
+              'UsersTeams.user_id'=> $aDoor[$i],
+              'UsersTeams.team_id'=> $id,
+            ));
           }
         } 
 
