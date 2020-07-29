@@ -24,6 +24,9 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Pai $pai
+ * @property \App\Model\Entity\Genero $genero
+ * @property \App\Model\Entity\Estadocivil $estadocivil
+ * @property \App\Model\Entity\Unidadeopera $unidadeopera
  */
 class Pessoa extends Entity
 {
@@ -53,6 +56,9 @@ class Pessoa extends Entity
         'observacoes' => true,
         'created' => true,
         'modified' => true,
-        'pai' => true
+        'pai' => true,
+        'genero' => true,
+        'estadocivil' => true,
+        'unidadeopera' => true
     ];
 }

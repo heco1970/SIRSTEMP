@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -30,12 +31,12 @@ class PessoasController extends AppController
 
             $validOps = ['nome', 'cc', 'nif', 'datanascimento', 'createdfirst', 'createdlast'];
             $convArray = [
-                'nome' => $model.'.nome',
-                'cc' => $model.'.cc',
-                'nif' => $model.'.nif',
-                'datanascimento' => $model.'.data_nascimento',
-                'createdfirst' => $model.'.created',
-                'createdlast' => $model.'.created'
+                'nome' => $model . '.nome',
+                'cc' => $model . '.cc',
+                'nif' => $model . '.nif',
+                'datanascimento' => $model . '.data_nascimento',
+                'createdfirst' => $model . '.created',
+                'createdlast' => $model . '.created'
             ];
             $strings = ['nome', 'cc'];
             $date_start = ['createdfirst']; //data inicial
@@ -48,10 +49,10 @@ class PessoasController extends AppController
 
             $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
 
-            $conditions = array_merge($conditions,$parsedQueries);
+            $conditions = array_merge($conditions, $parsedQueries);
             $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
-            $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+            $sorts = $this->Dynatables->parseSorts($query, $validOps, $convArray);
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
 
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
@@ -71,10 +72,10 @@ class PessoasController extends AppController
     public function view($id = null)
     {
         $pessoa = $this->Pessoas->get($id, [
-            'contain' => ['Pais','Estadocivils','Generos','Unidadeoperas']
+            'contain' => ['Pais', 'Estadocivils', 'Generos', 'Unidadeoperas']
         ]);
 
-        
+
         $this->loadModel('Contactos');
         $contactos = $this->Contactos->find()->where(['pessoa_id' => $id]);
         $this->set('pessoa', $pessoa);
@@ -91,16 +92,19 @@ class PessoasController extends AppController
         $pessoa = $this->Pessoas->newEntity();
         if ($this->request->is('post')) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
-
+            $pessoa->estado = 1;
             if ($this->Pessoas->save($pessoa)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
-     //   $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
-        $this->set('pais', $this->Pessoas->Pais->find('all'));
+
+        $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id','valueField' => 'paisNome']));
+        $this->set('estadocivils', $this->Pessoas->Estadocivils->find('list', ['keyField' => 'id','valueField' => 'estado']));
+        $this->set('generos', $this->Pessoas->Generos->find('list', ['keyField' => 'id','valueField' => 'genero']));
+        $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id','valueField' => 'designacao']));
 
         $this->set(compact('pessoa'));
     }
@@ -151,31 +155,31 @@ class PessoasController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function xls() {
+    public function xls()
+    {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $nome = 'nome LIKE "%'.$out[0].'%"';
-        $cc = 'cc LIKE "%'.$out[1].'%"';
-        $nif = 'nif LIKE "%'.$out[2].'%"';
-        $datanascimento = 'data_nascimento LIKE "%'.$out[3].'%"';
+        $nome = 'nome LIKE "%' . $out[0] . '%"';
+        $cc = 'cc LIKE "%' . $out[1] . '%"';
+        $nif = 'nif LIKE "%' . $out[2] . '%"';
+        $datanascimento = 'data_nascimento LIKE "%' . $out[3] . '%"';
 
-        if($out[0] != null){
+        if ($out[0] != null) {
             array_push($arr, $nome);
         }
-        if($out[1] != null){
+        if ($out[1] != null) {
             array_push($arr, $cc);
         }
-        if($out[2] != null){
+        if ($out[2] != null) {
             array_push($arr, $nif);
         }
-        if($out[3] != null){
+        if ($out[3] != null) {
             array_push($arr, $datanascimento);
         }
-        if($arr == null){
+        if ($arr == null) {
             $pessoas = $this->Pessoas->find('all')->toArray();
-        }
-        else{
-            $pessoas = $this->Pessoas->find('all',array('conditions'=>$arr));
+        } else {
+            $pessoas = $this->Pessoas->find('all', array('conditions' => $arr));
         }
 
         $this->autoRender = false;
@@ -183,29 +187,29 @@ class PessoasController extends AppController
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-    
+
         $sheet->setCellValue('A1', 'Nome');
         $sheet->setCellValue('B1', 'CC');
         $sheet->setCellValue('C1', 'NIF');
         $sheet->setCellValue('D1', 'Data de nascimento');
         $sheet->setCellValue('E1', 'Data de criação');
-      
+
         $linha = 2;
         foreach ($pessoas as $row) {
             $sheet->setCellValue('A' . $linha, $row->nome);
             $sheet->setCellValue('B' . $linha, $row->cc);
             $sheet->setCellValue('C' . $linha, $row->nif);
-            $sheet->setCellValue('D' . $linha, $row->data_nascimento); 
-            $sheet->setCellValue('E' . $linha, $row->created);    
+            $sheet->setCellValue('D' . $linha, $row->data_nascimento);
+            $sheet->setCellValue('E' . $linha, $row->created);
             $linha++;
         }
 
-        foreach(range('A','E') as $columnID) {
+        foreach (range('A', 'E') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
         $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
-        
+
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);
 

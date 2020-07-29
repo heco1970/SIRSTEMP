@@ -5,11 +5,16 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\Rule\IsUnique;
 
 /**
  * Pessoas Model
  *
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
+ * @property |\Cake\ORM\Association\HasMany $Contactos
+ * @property |\Cake\ORM\Association\HasMany $Pedidos
+ * @property |\Cake\ORM\Association\HasMany $Verbetes
+ * @property |\Cake\ORM\Association\BelongsToMany $Crimes
  *
  * @method \App\Model\Entity\Pessoa get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pessoa newEntity($data = null, array $options = [])
@@ -57,7 +62,21 @@ class PessoasTable extends Table
             'foreignKey' => 'id_unidadeopera',
             'joinType' => 'INNER'
         ]);
-        
+
+        $this->hasMany('Contactos', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->hasMany('Pedidos', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->hasMany('Verbetes', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->belongsToMany('Crimes', [
+            'foreignKey' => 'pessoa_id',
+            'targetForeignKey' => 'crime_id',
+            'joinTable' => 'pessoas_crimes'
+        ]);
     }
 
     /**
@@ -95,16 +114,6 @@ class PessoasTable extends Table
             ->requirePresence('nomemae', 'create')
             ->notEmpty('nomemae');
 
-        // $validator
-        //     ->integer('id_estadocivil')
-        //     ->requirePresence('id_estadocivil', 'create')
-        //     ->notEmpty('id_estadocivil');
-
-        // $validator
-        //     ->integer('id_genero')
-        //     ->requirePresence('id_genero', 'create')
-        //     ->notEmpty('id_genero');
-
         $validator
             ->scalar('cc')
             ->maxLength('cc', 10)
@@ -116,7 +125,23 @@ class PessoasTable extends Table
             ->requirePresence('nif', 'create')
             ->notEmpty('nif');
 
+        $validator
+            ->scalar('outroidentifica')
+            ->maxLength('outroidentifica', 255)
+            ->requirePresence('outroidentifica', 'create')
+            ->notEmpty('outroidentifica');
 
+
+        $validator
+            ->boolean('estado')
+            ->requirePresence('estado', 'create')
+            ->notEmpty('estado');
+
+        $validator
+            ->scalar('observacoes')
+            ->maxLength('observacoes', 255)
+            ->requirePresence('observacoes', 'create')
+            ->notEmpty('observacoes');
 
         return $validator;
     }
@@ -130,8 +155,12 @@ class PessoasTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['nome','data_nascimento'], 'Já existe um registo com o mesmo nome e data de nascimento.'));
+        $rules->add($rules->isUnique(['nome'], 'Já existe um registo com o mesmo nome.'));
         $rules->add($rules->existsIn(['pais_id'], 'Pais'));
         $rules->add($rules->existsIn(['id_estadocivil'], 'Estadocivils'));
+        $rules->add($rules->existsIn(['id_genero'], 'Generos'));
+        $rules->add($rules->existsIn(['id_unidadeopera'], 'Unidadeoperas'));
 
         return $rules;
     }
