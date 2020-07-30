@@ -16,7 +16,7 @@
            
         </table>
 
-        <h4>Utilizadores da equipa</h4>
+        <h4>Crimes</h4>
     
         <table class="table">
             <?php foreach($crime->pessoas as $row) : ?>
@@ -31,10 +31,10 @@
         </table>
 
         <table class="table">            
-            <th><?= __('Adicionar outro utilizador: ') ?></th>
+            <th><?= __('Adicionar outra pessoa: ') ?></th>
             <th>
                 <?php
-                    echo $this->Form->select('pessoas_crimes', $pessoas, ['empty' => 'Selecionar']);
+                    echo $this->Form->select('pessoa_crimes', $pessoas, ['empty' => 'Selecionar']);
                 ?>
                 
             </th>
