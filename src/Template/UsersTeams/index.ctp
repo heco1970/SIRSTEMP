@@ -1,51 +1,54 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\UsersTeam[]|\Cake\Collection\CollectionInterface $usersTeams
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Users Team'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Teams'), ['controller' => 'Teams', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Team'), ['controller' => 'Teams', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="usersTeams index large-9 medium-8 columns content">
-    <h3><?= __('Users Teams') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('team_id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($usersTeams as $usersTeam): ?>
-            <tr>
-                <td><?= $usersTeam->has('user') ? $this->Html->link($usersTeam->user->username, ['controller' => 'Users', 'action' => 'view', $usersTeam->user->id]) : '' ?></td>
-                <td><?= $usersTeam->has('team') ? $this->Html->link($usersTeam->team->id, ['controller' => 'Teams', 'action' => 'view', $usersTeam->team->id]) : '' ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $usersTeam->team_id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $usersTeam->team_id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $usersTeam->team_id], ['confirm' => __('Are you sure you want to delete # {0}?', $usersTeam->team_id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<?=$this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]);?>
+
+<div class="card shadow mb-2">
+    <div class="card-header py-3">
+        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
     </div>
 </div>
+
+
+<?php
+$dynElems =
+    [
+        'user_id' => ['label' => __('User')],
+        'team_id' => ['label' => __('team')]
+    ];
+?>
+<?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
+<?php
+$dynElems = ['user_id' => ['label' => __('User')]] +
+            ['team_id' => ['label' => __('team')]];
+?>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Processos')?></h6>
+    </div>
+    <div class="card-body">
+        <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
+    </div>
+</div>
+
+<?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text' ]); ?>
+
+<?=$this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]);?>
+<?=$this->Html->script('/js/dynatable-helper.js', ['block' => true]);?>
+
+<?php $this->start('scriptBottom') ?>
+<script>
+    $(document).ready(function() {
+        var writers = {
+            ação: function(row) {
+                var view = '<a class="btn btn-info mr-1" href="/teams/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a class="btn btn-warning mr-1" href="/teams/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Quer mesmo apagar?'"+')" href="/teams/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
+
+                return '<div class="btn-group btn-group-sm" role="group">'+ view + edit + dele + '</div>';
+            }
+        }
+            
+        createDynatable("#dynatable","/users-teams/",{created: -1}, writers);
+    });
+
+</script>
+<?php $this->end(); ?>
+

@@ -13,19 +13,47 @@ use App\Controller\AppController;
 class UsersTeamsController extends AppController
 {
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users', 'Teams']
+      $this->_index();
+    }
+  
+    public function admin(){
+      $this->_index(true);
+    }
+  
+    private function _index($admin = false)
+    {
+      if ($this->request->is('ajax')) {
+        $model = 'UsersTeams';
+        $this->loadComponent('Dynatables');
+  
+        $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
+      
+        $validOps = ['user_id', 'team_id'];
+        $convArray = [
+          'user_id' => $model.'.user_id',
+          'team_id' => $model.'.team_id'
         ];
-        $usersTeams = $this->paginate($this->UsersTeams);
-
-        $this->set(compact('usersTeams'));
+        $strings = [];
+        $date_start = []; //data inicial
+        $date_end = [];  //data final
+  
+        $conditions = [];
+        $contain = ['Users', 'Teams'];
+      
+        $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+        
+        $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+  
+        $conditions = array_merge($conditions,$parsedQueries);
+        $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+  
+        $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+        $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+  
+        $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+      }
     }
 
     /**

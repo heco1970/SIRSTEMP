@@ -64,7 +64,7 @@ $active = $show = '';
                     <?= $this->Html->link(__('Perfil de Utilizador'), '/user-perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                     <?= $this->Html->link(__('Estados'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Unidades Orgânicas'), '/units/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Entidades Judiciais'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
+                    <?= $this->Html->link(__('Entidades Judiciais'), '/entidadejudiciais/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Unidades Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Caracteristicas Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Motivos Verbete'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
