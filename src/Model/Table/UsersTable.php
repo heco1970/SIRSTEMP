@@ -54,6 +54,11 @@ class UsersTable extends Table
             'targetForeignKey' => 'team_id',
             'joinTable' => 'users_teams'
         ]);
+        $this->belongsToMany('Perfis', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'perfi_id',
+            'joinTable' => 'user_perfis'
+        ]);
     }
 
     /**

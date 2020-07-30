@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -28,27 +29,28 @@ class PerfisController extends AppController
 
             $validOps = ['id', 'perfil', 'createdfirst', 'createdlast'];
             $convArray = [
-                'id' => $model.'.id',
-                'perfil' => $model.'.perfil',
-                'createdfirst' => $model.'.created',
-                'createdlast' => $model.'.created'];
+                'id' => $model . '.id',
+                'perfil' => $model . '.perfil',
+                'createdfirst' => $model . '.created',
+                'createdlast' => $model . '.created'
+            ];
             $strings = ['perfil'];
             $date_start = ['createdfirst']; //data inicial
             $date_end = ['createdlast'];  //data final
 
             $contain = $conditions = [];
-            
+
 
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
             $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
 
-            $conditions = array_merge($conditions,$parsedQueries);
+            $conditions = array_merge($conditions, $parsedQueries);
             $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
-            $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+            $sorts = $this->Dynatables->parseSorts($query, $validOps, $convArray);
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-            
+
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         }
     }
@@ -63,7 +65,7 @@ class PerfisController extends AppController
     public function view($id = null)
     {
         $perfi = $this->Perfis->get($id, [
-            'contain' => ['UserPerfis']
+            'contain' => ['Users']
         ]);
 
         $this->set('perfi', $perfi);
@@ -78,15 +80,25 @@ class PerfisController extends AppController
     {
         $perfi = $this->Perfis->newEntity();
         if ($this->request->is('post')) {
+            $select = $this->request->getData('multiselect_to');
             $perfi = $this->Perfis->patchEntity($perfi, $this->request->getData());
-            if ($this->Perfis->save($perfi)) {
+            if ($perfi=$this->Perfis->save($perfi)) {
+                $lastId=$perfi->id;
+                $this->loadModel('UserPerfis');
+                foreach ($select as $row) {
+                    $userPerfi = $this->UserPerfis->newEntity();
+                    $userPerfi->user_id = $row;
+                    $userPerfi->perfi_id = $lastId;
+                    $this->UserPerfis->save($userPerfi);
+                }
                 $this->Flash->success(__('Perfil guardado com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Não foi possível guardar o Perfil. Por favor tente novamente.'));
         }
-        $this->set(compact('perfi'));
+        $users = $this->Perfis->Users->find('list', ['limit' => 200]);
+        $this->set(compact('perfi','users'));
     }
 
     /**
@@ -99,18 +111,60 @@ class PerfisController extends AppController
     public function edit($id = null)
     {
         $perfi = $this->Perfis->get($id, [
-            'contain' => []
+            'contain' => ['Users', 'UserPerfis']
         ]);
+        $subquery = $this->Perfis->UserPerfis
+            ->find()
+            ->select(['UserPerfis.user_id'])
+            ->where(['UserPerfis.perfi_id' => $id]);
+
+        $users = $this->Perfis->Users
+            ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
+            ->where([
+                'Users.id NOT IN' => $subquery
+            ]);
+        $users1 = $this->Perfis->Users
+            ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
+            ->where([
+                'Users.id IN' => $subquery
+            ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $perfi = $this->Perfis->patchEntity($perfi, $this->request->getData());
+            $perfi = $this->Perfis->patchEntity($perfi, $this->request->getData(), ['associated' => ['Users', 'UserPerfis']]);
+
+            $this->loadModel('UserPerfis');
+
+
+            $select = $this->request->getData('user_id');
+            $select1 = $this->request->getData('multiselect');
+            $iddelete = $this->UserPerfis->find('list')->select(['id'])->where(['perfi_id' => $id])->toArray();
+
+
             if ($this->Perfis->save($perfi)) {
+
+
+                if (!empty($select)) {
+                    $this->UserPerfis->deleteAll($iddelete);
+                    foreach ($select as $row) {
+                        $userPerfi = $this->UserPerfis->newEntity();
+                        $userPerfi->user_id = $row;
+                        $userPerfi->perfi_id = $id;
+                        $this->UserPerfis->save($userPerfi);
+                    }
+                } else {
+                    $userPerfi = $this->UserPerfis->newEntity();
+                    $userPerfi->user_id = $select1;
+                    $this->UserPerfis->deleteAll($iddelete);
+                }
+
+
                 $this->Flash->success(__('Perfil guardado com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Não foi possível guardar o Perfil. Por favor tente novamente.'));
         }
-        $this->set(compact('perfi'));
+        $this->set(compact('perfi', 'users1', 'users', 'user_perfi'));
     }
 
     /**
@@ -122,12 +176,11 @@ class PerfisController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
         $perfi = $this->Perfis->get($id);
         if ($this->Perfis->delete($perfi)) {
-            $this->Flash->success(__('The perfi has been deleted.'));
+            $this->Flash->success(__('O perfil foi apagado.'));
         } else {
-            $this->Flash->error(__('The perfi could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O perfil não pode ser apagado. Por favor tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

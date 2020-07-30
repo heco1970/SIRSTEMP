@@ -41,6 +41,12 @@ class PerfisTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsToMany('Users', [
+            'foreignKey' => 'perfi_id',
+            'targetForeignKey' => 'user_id',
+            'joinTable' => 'user_perfis'
+        ]);
+
         $this->hasMany('UserPerfis', [
             'foreignKey' => 'perfi_id'
         ]);
@@ -65,5 +71,10 @@ class PerfisTable extends Table
             ->notEmpty('perfil');
 
         return $validator;
+    }
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['perfil'], 'Já existe um perfil com a mesma designação.'));
+        return $rules;
     }
 }
