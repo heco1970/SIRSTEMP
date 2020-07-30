@@ -34,8 +34,8 @@
 
 
     <?php
-        $dynElems = ['nome' => ['label' => __('Utilizador')]] +
-            ['created' => ['label' => __('Data de Criação')]];
+        $dynElems = ['user_id' => ['label' => __('Utilizador')]] +
+            ['team_id' => ['label' => __('Equipa')]];
     ?>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -61,11 +61,3 @@
     });
 </script>
 <?php $this->end(); ?>
-
-
-    <object type="text/html" data="http://localhost:8765/users-teams/index?sorts%5Bcreated%5D=-1">
-    </object>
-    <iframe 
-        sandbox="allow-scripts allow-forms allow-same-origin" 
-        src="http://localhost:8765/users-teams/index?sorts%5Bcreated%5D=-1">
-    </iframe>

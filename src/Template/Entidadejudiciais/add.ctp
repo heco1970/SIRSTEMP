@@ -1,23 +1,22 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Entidadejudiciai $entidadejudiciai
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Entidadejudiciais'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="entidadejudiciais form large-9 medium-8 columns content">
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
     <?= $this->Form->create($entidadejudiciai) ?>
-    <fieldset>
-        <legend><?= __('Add Entidadejudiciai') ?></legend>
-        <?php
-            echo $this->Form->control('descricao');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <legend><?= __('Adicionar Entidade judicial') ?></legend>
+
+        <table class="table">
+            <tr>
+                <th scope="row"><?= __('Designação') ?></th>
+                <td>
+                    <?php
+                       echo $this->Form->text('descricao', ['required' => true]);
+                    ?>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <button class="btn btn-success btn-lg" type="submit">Adicionar</button>
     <?= $this->Form->end() ?>
+    
 </div>
