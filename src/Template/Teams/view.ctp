@@ -18,6 +18,8 @@
             </tr>
         </table>
 
+        
+
         <h4>Utilizadores da equipa</h4>
 
         <table class="table">
@@ -28,5 +30,34 @@
                 </tr>
             <?php endforeach ?>
         </table>
+
+
+
+    <?php
+        $dynElems = ['user_id' => ['label' => __('Utilizador')]] +
+            ['team_id' => ['label' => __('Equipa')]];
+    ?>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"><?=__('Utilizadores da equipa')?></h6>
+        </div>
+        <div class="card-body">
+            <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => false]); ?>
+        </div>
+    </div>
+
+    <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text' ]); ?>
+
+    <?=$this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]);?>
+    <?=$this->Html->script('/js/dynatable-helper.js', ['block' => true]);?>
+
 </div>
 
+<?php $this->start('scriptBottom') ?>
+<script>
+    $(document).ready(function() {
+        writers = {};
+        createDynatable("#dynatable","/users-teams/",{created: -1}, writers);
+    });
+</script>
+<?php $this->end(); ?>

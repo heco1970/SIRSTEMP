@@ -61,9 +61,23 @@ class TeamsController extends AppController
   public function view($id = null)
   {
     $team = $this->Teams->get($id, [
-      'contain' => ['Users']
+      'contain' => ['Users', 'UsersTeams']
     ]);
+
+    /*
+    $users_team = $this->Teams->UsersTeams->find('list', [
+      'conditions' => 
+      [
+        'UsersTeams.team_id ' => $id
+      ],
+      'limit' => 200
+    ])->toArray();
+    */
+    
+
+
     $this->set('team', $team);
+    //$this->set(compact('team', 'users_team'));
   }
 
   /**

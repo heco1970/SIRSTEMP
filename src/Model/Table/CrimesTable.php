@@ -36,7 +36,7 @@ class CrimesTable extends Table
         parent::initialize($config);
 
         $this->setTable('crimes');
-        $this->setDisplayField('id');
+        $this->setDisplayField('descricao');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -46,6 +46,8 @@ class CrimesTable extends Table
             'targetForeignKey' => 'pessoa_id',
             'joinTable' => 'pessoas_crimes'
         ]);
+
+        $this->hasMany('PessoasCrimes');
     }
 
     /**

@@ -17,5 +17,16 @@
                 <td><?= h($crime->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
             </tr>
         </table>
+
+        <h4>Utilizadores da equipa</h4>
+
+        <table class="table">
+            <?php foreach($crime->pessoas as $row) : ?>
+                <tr>
+                    <th scope="row"><?= __('Pessoas') ?></th>
+                    <td><?= h($row->nome) ?></td>
+                </tr>
+            <?php endforeach ?>
+        </table>
 </div>
 
