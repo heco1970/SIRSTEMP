@@ -83,6 +83,7 @@ class CrimesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
+    /*
     public function add()
     {
         $crime = $this->Crimes->newEntity();
@@ -97,6 +98,32 @@ class CrimesController extends AppController
         }
         $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('crime', 'pessoas'));
+    }*/
+
+    public function add()
+    {
+        $crime = $this->Crimes->newEntity();
+        if ($this->request->is('post')) {
+            $select = $this->request->getData('multiselect_to');
+            $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
+            if ($crime=$this->Crimes->save($crime)) {
+                $lastId=$crime->id;
+                $this->loadModel('PessoasCrimes');
+                $pessoasCrimesTable = TableRegistry::getTableLocator()->get('PessoasCrimes');
+                foreach ($select as $row) {
+                    $pessoaCrime = $pessoasCrimesTable->newEntity();
+                    $pessoaCrime->pessoa_id = $row;
+                    $pessoaCrime->crime_id = $lastId;
+                    $this->PessoasCrimes->save($pessoaCrime);
+                }
+                $this->Flash->success(('Perfil guardado com sucesso.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(('Não foi possível guardar o Perfil. Por favor tente novamente.'));
+        }
+        $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
+        $this->set(compact('crime','pessoas'));
     }
 
 /**

@@ -111,4 +111,45 @@ class PessoasCrimesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
+    public function indexpessoas($id)
+    {
+      if ($this->request->is('ajax')) {
+        $model = 'PessoasCrimes';
+        $this->loadComponent('Dynatables');
+
+        $this->log($id);
+
+        $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
+
+        $validOps = ['pessoa_id', 'crime_id'];
+        $convArray = [
+          'pessoa_id' => $model.'.pessoa_id',
+          'crime_id' => $model.'.crime_id'
+        ];
+        $strings = [];
+        $date_start = []; //data inicial
+        $date_end = [];  //data final
+
+        $conditions = [
+            'PessoasCrimes.pessoa_id ' => $id,
+            //pesquisa aqui
+        ];
+        $contain = ['Pessoas', 'Crimes'];
+
+        $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
+        $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+
+        $conditions = array_merge($conditions,$parsedQueries);
+        $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
+        $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+        $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+
+        $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+      }
+    }
+
 }
