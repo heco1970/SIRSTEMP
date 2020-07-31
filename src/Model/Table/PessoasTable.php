@@ -5,16 +5,15 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\ORM\Rule\IsUnique;
 
 /**
  * Pessoas Model
  *
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
- * @property |\Cake\ORM\Association\HasMany $Contactos
- * @property |\Cake\ORM\Association\HasMany $Pedidos
- * @property |\Cake\ORM\Association\HasMany $Verbetes
- * @property |\Cake\ORM\Association\BelongsToMany $Crimes
+ * @property \App\Model\Table\ContactosTable|\Cake\ORM\Association\HasMany $Contactos
+ * @property \App\Model\Table\PedidosTable|\Cake\ORM\Association\HasMany $Pedidos
+ * @property \App\Model\Table\VerbetesTable|\Cake\ORM\Association\HasMany $Verbetes
+ * @property \App\Model\Table\CrimesTable|\Cake\ORM\Association\BelongsToMany $Crimes
  *
  * @method \App\Model\Entity\Pessoa get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pessoa newEntity($data = null, array $options = [])
@@ -82,23 +81,7 @@ class PessoasTable extends Table
             'joinTable' => 'pessoas_crimes'
         ]);
 
-        $this->hasMany('Contactos', [
-            'foreignKey' => 'pessoa_id'
-        ]);
-        $this->hasMany('Pedidos', [
-            'foreignKey' => 'pessoa_id'
-        ]);
-        $this->hasMany('Verbetes', [
-            'foreignKey' => 'pessoa_id'
-        ]);
-        $this->belongsToMany('Crimes', [
-            'foreignKey' => 'pessoa_id',
-            'targetForeignKey' => 'crime_id',
-            'joinTable' => 'pessoas_crimes'
-        ]);
-
         $this->hasMany('PessoasCrimes');
-
     }
 
     /**
@@ -136,6 +119,8 @@ class PessoasTable extends Table
             ->requirePresence('nomemae', 'create')
             ->notEmpty('nomemae');
 
+        
+
         $validator
             ->scalar('cc')
             ->maxLength('cc', 10)
@@ -153,6 +138,43 @@ class PessoasTable extends Table
             ->requirePresence('outroidentifica', 'create')
             ->notEmpty('outroidentifica');
 
+       
+
+        $validator
+            ->scalar('distrito')
+            ->maxLength('distrito', 255)
+            ->requirePresence('distrito', 'create')
+            ->notEmpty('distrito');
+
+        $validator
+            ->scalar('concelho')
+            ->maxLength('concelho', 255)
+            ->requirePresence('concelho', 'create')
+            ->notEmpty('concelho');
+
+        $validator
+            ->scalar('freguesia')
+            ->maxLength('freguesia', 255)
+            ->requirePresence('freguesia', 'create')
+            ->notEmpty('freguesia');
+
+        $validator
+            ->scalar('centro_edu')
+            ->maxLength('centro_edu', 255)
+            ->requirePresence('centro_edu', 'create')
+            ->notEmpty('centro_edu');
+
+        $validator
+            ->scalar('estb_pri')
+            ->maxLength('estb_pri', 255)
+            ->requirePresence('estb_pri', 'create')
+            ->notEmpty('estb_pri');
+
+        $validator
+            ->scalar('nome_alt')
+            ->maxLength('nome_alt', 100)
+            ->requirePresence('nome_alt', 'create')
+            ->notEmpty('nome_alt');
 
         $validator
             ->boolean('estado')

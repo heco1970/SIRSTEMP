@@ -19,34 +19,38 @@
                 </li>
             </ul>
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <table class="table">
-                    <tr>
-                        <th scope="row" class="text-primary"><?= __('Nome') ?></th>
-                        <td><?= h($perfi->perfil) ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?= __('Criado') ?></th>
-                        <td><?= h($perfi->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?= __('Modificado') ?></th>
-                        <td><?= h($perfi->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-primary"><?= h('Utilizadores') ?></th>
-                        <td></td>
-                    </tr>
-                    <?php foreach ($perfi->users as $row) : ?>
-                        <tr>
-                            <th scope="row"><?= h($row->username) ?></th>
-                            <td></td>
-                        </tr>
-                    <?php endforeach ?>
-                </table>
+                <div class="row">
+                    <div class="col">
+                        <h6 class="text-primary"><?= __('Nome') ?></h6>
+                        <p><?= h($perfi->perfil) ?></p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Criado') ?></h6>
+                        <p><?= h($perfi->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Modificado') ?></h6>
+                        <p><?= h($perfi->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <h6 class="text-primary"><?= __('Utilizadores') ?></h6>
+                        <?php foreach ($perfi->users as $row) : ?>
+
+                            <p><?= h($row->username) ?></p>
+                            
+                        <?php endforeach ?>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>

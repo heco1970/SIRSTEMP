@@ -82,8 +82,8 @@ class PerfisController extends AppController
         if ($this->request->is('post')) {
             $select = $this->request->getData('multiselect_to');
             $perfi = $this->Perfis->patchEntity($perfi, $this->request->getData());
-            if ($perfi=$this->Perfis->save($perfi)) {
-                $lastId=$perfi->id;
+            if ($perfi = $this->Perfis->save($perfi)) {
+                $lastId = $perfi->id;
                 $this->loadModel('UserPerfis');
                 foreach ($select as $row) {
                     $userPerfi = $this->UserPerfis->newEntity();
@@ -97,8 +97,15 @@ class PerfisController extends AppController
             }
             $this->Flash->error(__('Não foi possível guardar o Perfil. Por favor tente novamente.'));
         }
-        $users = $this->Perfis->Users->find('list', ['limit' => 200]);
-        $this->set(compact('perfi','users'));
+        $subquery1 = $this->Perfis->UserPerfis
+            ->find()
+            ->select(['UserPerfis.user_id']);
+
+        $users = $this->Perfis->Users
+            ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
+            ->where([
+                'Users.id NOT IN' => $subquery1]);
+        $this->set(compact('perfi', 'users'));
     }
 
     /**
@@ -117,11 +124,14 @@ class PerfisController extends AppController
             ->find()
             ->select(['UserPerfis.user_id'])
             ->where(['UserPerfis.perfi_id' => $id]);
+        $subquery1 = $this->Perfis->UserPerfis
+            ->find()
+            ->select(['UserPerfis.user_id']);
 
         $users = $this->Perfis->Users
             ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
             ->where([
-                'Users.id NOT IN' => $subquery
+                'Users.id NOT IN' => $subquery1
             ]);
         $users1 = $this->Perfis->Users
             ->find('list', ['keyField' => 'id', 'valueField' => 'username'])

@@ -1,38 +1,106 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Contacto $contacto
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $contacto->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $contacto->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Contactos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Pessoas'), ['controller' => 'Pessoas', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Pessoa'), ['controller' => 'Pessoas', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="contactos form large-9 medium-8 columns content">
-    <?= $this->Form->create($contacto) ?>
-    <fieldset>
-        <legend><?= __('Edit Contacto') ?></legend>
-        <?php
-            echo $this->Form->control('pessoa_id', ['options' => $pessoas]);
-            echo $this->Form->control('localidade');
-            echo $this->Form->control('telefone');
-            echo $this->Form->control('fax');
-            echo $this->Form->control('telemovel');
-            echo $this->Form->control('email');
-            echo $this->Form->control('descricao');
-            echo $this->Form->control('estado');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Registo de Contacto') ?></h6>
+    </div>
+    <div class='ml-4 mt-4 mr-4'>
+        <?= $this->Form->create($contacto) ?>
+
+        <div id='my-form-body'>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="pessoa_id">Nome</label>
+                        <?= $this->Form->control('pessoa_id', ['options' => $pessoas, 'label' => false, 'class' => "form-control", 'disabled' => true]); ?>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="localidade">Localidade</label>
+                        <?= $this->Form->control('localidade', ['label' => false, 'class' => "form-control", 'required']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="telefone">Telefone</label>
+
+                        <?= $this->Form->control('telefone', ['label' => false, 'class' => "form-control"]); ?>
+
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="fax">Fax</label>
+
+                        <?= $this->Form->control('fax', ['label' => false, 'class' => "form-control"]); ?>
+
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="telemovel">Telemóvel</label>
+
+                        <?= $this->Form->control('telemovel', ['label' => false, 'class' => "form-control"]); ?>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+
+                        <?= $this->Form->control('email', ['label' => false, 'class' => "form-control", 'required']); ?>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="descricao">Descrição</label>
+
+                        <?= $this->Form->control('descricao', ['label' => false, 'class' => "form-control"]); ?>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+
+                        <?= $this->Form->control('estado', ['options' => ['0' => 'Não Ativo', '1' => 'Ativo'], 'label' => false, 'class' => "form-control"]); ?>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer card-footer-fixed">
+        <button class="btn btn-success" type="submit">Gravar</button>
+        <?= $this->Html->link(__('Voltar'), $this->request->referer(), ['class' => 'btn btn-secondary']) ?>
+   
+    </div>
     <?= $this->Form->end() ?>
+
 </div>

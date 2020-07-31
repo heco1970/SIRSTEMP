@@ -18,15 +18,22 @@ use Cake\ORM\Entity;
  * @property int $nif
  * @property string $outroidentifica
  * @property int $id_unidadeopera
+ * @property string $distrito
+ * @property string $concelho
+ * @property string $freguesia
+ * @property string $centro_edu
+ * @property string $estb_pri
+ * @property string $nome_alt
  * @property bool $estado
  * @property string $observacoes
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Pai $pai
- * @property \App\Model\Entity\Genero $genero
- * @property \App\Model\Entity\Estadocivil $estadocivil
- * @property \App\Model\Entity\Unidadeopera $unidadeopera
+ * @property \App\Model\Entity\Contacto[] $contactos
+ * @property \App\Model\Entity\Pedido[] $pedidos
+ * @property \App\Model\Entity\Verbete[] $verbetes
+ * @property \App\Model\Entity\Crime[] $crimes
  */
 class Pessoa extends Entity
 {
@@ -52,13 +59,20 @@ class Pessoa extends Entity
         'nif' => true,
         'outroidentifica' => true,
         'id_unidadeopera' => true,
+        'distrito' => true,
+        'concelho' => true,
+        'freguesia' => true,
+        'centro_edu' => true,
+        'estb_pri' => true,
+        'nome_alt' => true,
         'estado' => true,
         'observacoes' => true,
         'created' => true,
         'modified' => true,
         'pai' => true,
-        'genero' => true,
-        'estadocivil' => true,
-        'unidadeopera' => true
+        'contactos' => true,
+        'pedidos' => true,
+        'verbetes' => true,
+        'crimes' => true
     ];
 }

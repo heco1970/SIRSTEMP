@@ -20,13 +20,16 @@
             </ul>
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-7">
                         <h6 class="text-primary"><?= __('Nome') ?></h6>
                         <p><?= h($pessoa->nome) ?></p>
-                        <hr>
+                    </div>
+                    <div class="col-5">
+                        <h6 class="text-primary"><?= __('Nome Alternativo') ?></h6>
+                        <p><?= h($pessoa->nome_alt) ?></p>
                     </div>
                 </div>
-
+                <hr>
                 <div class="row">
                     <div class="col">
                         <h6 class="text-primary"><?= __('Nome do Pai') ?></h6>
@@ -54,6 +57,33 @@
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Nacionalidade') ?></h6>
                         <p><?= h(ucfirst(mb_strtolower($pessoa->pai->paisNome))) ?></p>
+
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Distrito') ?></h6>
+                        <p><?= h($pessoa->distrito) ?></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Concelho') ?></h6>
+                        <p><?= h($pessoa->concelho) ?></p>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Freguesia') ?></h6>
+                        <p><?= h($pessoa->freguesia) ?></p>
+
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
+                        <p><?= h($pessoa->centro_edu) ?></p>
+
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
+                        <p><?= h($pessoa->estb_pri) ?></p>
 
                     </div>
                 </div>
@@ -150,7 +180,10 @@
                                         <td><?= h($contacto->fax) ?></td>
                                         <td><?= h($contacto->telemovel) ?></td>
                                         <td><?= $contacto->estado == 1 ? __('Ativo') : __('Não Ativo') ?></td>
-                                        <td><a class="btn btn-info" href="/contactos/view/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a></td>
+                                        <td><a class="btn btn-info" href="/contactos/view/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                            <a class="btn btn-warning" href="/contactos/edit/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                            <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/contactos/delete/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
+
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
