@@ -103,7 +103,7 @@ class ContactosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
+        
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
 
         return $rules;

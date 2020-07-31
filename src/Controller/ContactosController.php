@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -54,16 +55,17 @@ class ContactosController extends AppController
         $contacto = $this->Contactos->newEntity();
         if ($this->request->is('post')) {
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
-            if ($this->Contactos->save($contacto)) {
-                $this->Flash->success(__('The contacto has been saved.'));
 
-                return $this->redirect(['controller'=>'pessoas','action' => 'index']);
+            if ($save = $this->Contactos->save($contacto)) {
+
+                $this->Flash->success(__('O contacto foi guardado com sucesso.'));
+
+                return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The contacto could not be saved. Please, try again.'));
+            $this->Flash->error(__('Não foi possível guardar o contacto. Por favor tente novamente'));
         }
-        $pessoas = $this->Contactos->Pessoas->find('all');
+        $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('contacto', 'pessoas'));
-        
     }
 
     /**
@@ -81,11 +83,11 @@ class ContactosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
             if ($this->Contactos->save($contacto)) {
-                $this->Flash->success(__('The contacto has been saved.'));
+                $this->Flash->success(__('O contacto foi guardado com sucesso.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
             }
-            $this->Flash->error(__('The contacto could not be saved. Please, try again.'));
+            $this->Flash->error(__('Não foi possível guardar o contacto. Por favor tente novamente'));
         }
         $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('contacto', 'pessoas'));
@@ -100,14 +102,14 @@ class ContactosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $contacto = $this->Contactos->get($id);
         if ($this->Contactos->delete($contacto)) {
-            $this->Flash->success(__('The contacto has been deleted.'));
+            $this->Flash->success(__('O contacto foi apagado com sucesso'));
         } else {
-            $this->Flash->error(__('The contacto could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possível apagar o contacto. Por favor tente novamente.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
 }

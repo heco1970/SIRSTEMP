@@ -150,7 +150,10 @@
                                         <td><?= h($contacto->fax) ?></td>
                                         <td><?= h($contacto->telemovel) ?></td>
                                         <td><?= $contacto->estado == 1 ? __('Ativo') : __('Não Ativo') ?></td>
-                                        <td><a class="btn btn-info" href="/contactos/view/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a></td>
+                                        <td><a class="btn btn-info" href="/contactos/view/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                        <a class="btn btn-warning" href="/contactos/edit/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                        <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/contactos/delete/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
+                                    
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
