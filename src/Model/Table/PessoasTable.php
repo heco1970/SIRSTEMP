@@ -50,6 +50,23 @@ class PessoasTable extends Table
             'foreignKey' => 'pais_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->belongsTo('Estadocivils', [
+            'foreignKey' => 'id_estadocivils',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Estadocivils', [
+            'foreignKey' => 'id_estadocivil',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Generos', [
+            'foreignKey' => 'id_genero',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Unidadeoperas', [
+            'foreignKey' => 'id_unidadeopera',
+            'joinType' => 'INNER'
+        ]);
         $this->hasMany('Contactos', [
             'foreignKey' => 'pessoa_id'
         ]);
