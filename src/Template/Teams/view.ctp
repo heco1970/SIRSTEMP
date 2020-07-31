@@ -24,10 +24,8 @@
             ['username' => ['label' => __('Utilizador')]] +
             ['name' => ['label' => __('Nome')]];
     ?>
-    <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
             <h6 class="m-0 font-weight-bold text-primary"><?=__('Utilizadores da equipa')?></h6>
         </div>
         <div class="card-body">

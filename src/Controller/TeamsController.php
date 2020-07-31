@@ -74,84 +74,9 @@ class TeamsController extends AppController
    */
   public function add()
   {
-      $team = $this->Teams->newEntity();
-      if ($this->request->is('post')) {
-          $team = $this->Teams->patchEntity($team, $this->request->getData());
-          if ($this->Teams->save($team)) {
-              $this->Flash->success(__('The team has been saved.'));
-
-              return $this->redirect(['action' => 'index']);
-          }
-          $this->Flash->error(__('The team could not be saved. Please, try again.'));
-      }
-      $this->set(compact('team'));
-  }
-
-  /*
-  public function edit($id = null)
-  {
-    $team = $this->Teams->get($id, ['contain' => ['Users','UsersTeams']]);
-
-    $users = [];
-
-    $user_team = $this->Teams->UsersTeams->find('list', [
-      'conditions' => 
-      [
-        'UsersTeams.team_id ' => $id
-      ],
-      'limit' => 200
-    ])->toArray();
-
-    if(isset($team->users[0])){
-      $users = $this->Teams->Users->find('list', [
-        'conditions' => [
-          'NOT' => [
-            'id IN' => $user_team
-          ]
-        ],
-        'limit' => 200, 
-      ])->toArray();
-    }
-    else{
-      $users = $this->Teams->Users->find('list', [
-        'limit' => 200
-      ])->toArray();
-    }
-
-    if ($this->request->is(['patch', 'post', 'put'])) {
+    $team = $this->Teams->newEntity();
+    if ($this->request->is('post')) {
         $team = $this->Teams->patchEntity($team, $this->request->getData());
-        if($_POST['user_teams'] != null){
-          $userteamsTable = TableRegistry::getTableLocator()->get('UsersTeams');
-          $usa_team = $userteamsTable->newEntity();
-
-          $usa_team->user_id = $_POST['user_teams'];
-          $usa_team->team_id = $id;
-
-          $userteamsTable->save($usa_team);
-        }
-
-        if(isset($_POST['formDoor'])) 
-        {
-          $aDoor = $_POST['formDoor'];
-          for($i=0; $i < count($aDoor); $i++)
-          {
-            $result = $this->Teams->UsersTeams->find('all', 
-              array(
-                'conditions'=>
-                  array(
-                    'UsersTeams.user_id'=> $aDoor[$i],
-                    'UsersTeams.team_id'=> $id,
-                  )
-              )
-            )->all();
-
-            $this->Teams->UsersTeams->deleteAll(array(
-              'UsersTeams.user_id'=> $aDoor[$i],
-              'UsersTeams.team_id'=> $id,
-            ));
-          }
-        } 
-
         if ($this->Teams->save($team)) {
           $this->Flash->success(__('The team has been saved.'));
 
@@ -159,25 +84,20 @@ class TeamsController extends AppController
         }
         $this->Flash->error(__('The team could not be saved. Please, try again.'));
     }
-    $this->set(compact('team','users','user_team'));
+    $this->set(compact('team'));
   }
-  */
 
   public function edit($id = null)
   {
     $team = $this->Teams->get($id, [
       'contain' => ['Users', 'UsersTeams']
     ]);
-
-    $team = $this->Teams->get($id, ['contain' => ['Users','UsersTeams']]);
-
     
     $subquery = $this->Teams->UsersTeams
       ->find()
       ->select(['UsersTeams.user_id'])
       ->where(['UsersTeams.team_id' => $id]);
     
-
     $users1 = $this->Teams->Users
       ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
       ->where([
@@ -198,9 +118,7 @@ class TeamsController extends AppController
       $select = $this->request->getData('user_id');
       $select1 = $this->request->getData('multiselect');
       
-      //////////////////////
       $iddelete = $this->UsersTeams->find('list')->where(['team_id' => $id , 'user_id' => 'id'])->toArray();
-      $this->log($iddelete);
 
       if ($this->Teams->save($team)) {
         if (!empty($select)) {
@@ -238,9 +156,9 @@ class TeamsController extends AppController
     //$this->request->allowMethod(['post', 'delete']);
     $team = $this->Teams->get($id);
     if ($this->Teams->delete($team)) {
-        $this->Flash->success(__('The team has been deleted.'));
+      $this->Flash->success(__('The team has been deleted.'));
     } else {
-        $this->Flash->error(__('The team could not be deleted. Please, try again.'));
+      $this->Flash->error(__('The team could not be deleted. Please, try again.'));
     }
 
     return $this->redirect(['action' => 'index']);
