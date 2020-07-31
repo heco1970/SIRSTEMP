@@ -17,7 +17,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="pessoa_id">Nome</label>
-                        <?= $this->Form->control('pessoa_id', ['options' => $pessoas, 'label' => false, 'class' => "form-control", 'disabled' => true]); ?>
+                        <?= $this->Form->control('pessoa_id', ['options' => $pessoas, 'label' => false, 'class' => "form-control"]); ?>
 
                     </div>
                 </div>
