@@ -56,6 +56,45 @@ class UsersTeamsController extends AppController
       }
     }
 
+    public function indexuser($id)
+    {
+      if ($this->request->is('ajax')) {
+        $model = 'UsersTeams';
+        $this->loadComponent('Dynatables');
+
+        $this->log($id);
+  
+        $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
+      
+        $validOps = ['user_id', 'team_id'];
+        $convArray = [
+          'user_id' => $model.'.user_id',
+          'team_id' => $model.'.team_id'
+        ];
+        $strings = [];
+        $date_start = []; //data inicial
+        $date_end = [];  //data final
+  
+        $conditions = [
+            'UsersTeams.team_id ' => $id,
+            //pesquisa aqui
+        ];
+        $contain = ['Users', 'Teams'];
+      
+        $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+        
+        $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+  
+        $conditions = array_merge($conditions,$parsedQueries);
+        $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+  
+        $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+        $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+  
+        $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+      }
+    }
+
     /**
      * View method
      *

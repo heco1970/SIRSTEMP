@@ -1,44 +1,33 @@
+<?=$this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]);?>
 <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
     <h3><?=  h($team->nome) ?></h3>
 
-        <table class="table">
-            <tr>
-                <th scope="row"><?= __('Nome') ?></th>
-                <td><?=  h($team->nome) ?></td>
-            </tr>
-            <tr>
-                <th scope="row"><?= __('Criado') ?></th>
-                <td><?= h($team->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
-            </tr>
-            <tr>
-                <th scope="row"><?= __('Alterado') ?></th>
-                <td><?= h($team->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
-            </tr>
-        </table>
-
-        
-
-        <h4>Utilizadores da equipa</h4>
-
-        <table class="table">
-            <?php foreach($team->users as $row) : ?>
-                <tr>
-                    <th scope="row"><?= __('Utilizadores') ?></th>
-                    <td><?= h($row->username) ?></td>
-                </tr>
-            <?php endforeach ?>
-        </table>
-
-
+    <table class="table">
+        <tr>
+            <th scope="row"><?= __('Nome') ?></th>
+            <td><?=  h($team->nome) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Criado') ?></th>
+            <td><?= h($team->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Alterado') ?></th>
+            <td><?= h($team->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
+        </tr>
+    </table>
 
     <?php
-        $dynElems = ['user_id' => ['label' => __('Utilizador')]] +
-            ['team_id' => ['label' => __('Equipa')]];
+        $dynElems =
+            ['username' => ['label' => __('Utilizador')]] +
+            ['name' => ['label' => __('Nome')]];
     ?>
+    <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
+            <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
             <h6 class="m-0 font-weight-bold text-primary"><?=__('Utilizadores da equipa')?></h6>
         </div>
         <div class="card-body">
@@ -57,7 +46,7 @@
 <script>
     $(document).ready(function() {
         writers = {};
-        createDynatable("#dynatable","/users-teams/",{created: -1}, writers);
+        createDynatable("#dynatable","/users-teams/indexuser/" + <?=  h($team->id) ?> ,{created: -1}, writers);
     });
 </script>
 <?php $this->end(); ?>

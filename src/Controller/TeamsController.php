@@ -63,21 +63,8 @@ class TeamsController extends AppController
     $team = $this->Teams->get($id, [
       'contain' => ['Users', 'UsersTeams']
     ]);
-
-    /*
-    $users_team = $this->Teams->UsersTeams->find('list', [
-      'conditions' => 
-      [
-        'UsersTeams.team_id ' => $id
-      ],
-      'limit' => 200
-    ])->toArray();
-    */
     
-
-
     $this->set('team', $team);
-    //$this->set(compact('team', 'users_team'));
   }
 
   /**
@@ -100,13 +87,7 @@ class TeamsController extends AppController
       $this->set(compact('team'));
   }
 
-  /**
-   * Edit method
-   *
-   * @param string|null $id Team id.
-   * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-   * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-   */
+  /*
   public function edit($id = null)
   {
     $team = $this->Teams->get($id, ['contain' => ['Users','UsersTeams']]);
@@ -179,6 +160,70 @@ class TeamsController extends AppController
         $this->Flash->error(__('The team could not be saved. Please, try again.'));
     }
     $this->set(compact('team','users','user_team'));
+  }
+  */
+
+  public function edit($id = null)
+  {
+    $team = $this->Teams->get($id, [
+      'contain' => ['Users', 'UsersTeams']
+    ]);
+
+    $team = $this->Teams->get($id, ['contain' => ['Users','UsersTeams']]);
+
+    
+    $subquery = $this->Teams->UsersTeams
+      ->find()
+      ->select(['UsersTeams.user_id'])
+      ->where(['UsersTeams.team_id' => $id]);
+    
+
+    $users1 = $this->Teams->Users
+      ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
+      ->where([
+          'Users.id IN' => $subquery
+      ]);
+
+    $users = $this->Teams->Users
+      ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
+      ->where([
+          'Users.id NOT IN' => $subquery
+      ]);
+
+    if ($this->request->is(['patch', 'post', 'put'])) {
+      $team = $this->Teams->patchEntity($team, $this->request->getData(), ['associated' => ['Users', 'UsersTeams']]);
+
+      $this->loadModel('UsersTeams');
+
+      $select = $this->request->getData('user_id');
+      $select1 = $this->request->getData('multiselect');
+      
+      //////////////////////
+      $iddelete = $this->UsersTeams->find('list')->where(['team_id' => $id , 'user_id' => 'id'])->toArray();
+      $this->log($iddelete);
+
+      if ($this->Teams->save($team)) {
+        if (!empty($select)) {
+          $this->UsersTeams->deleteAll($iddelete);
+          foreach ($select as $row) {
+            $userTeam = $this->UsersTeams->newEntity();
+            $userTeam->user_id = $row;
+            $userTeam->team_id = $id;
+            $this->UsersTeams->save($userTeam);
+          }
+        } else {
+          $userTeam = $this->UsersTeams->newEntity();
+          $userTeam->user_id = $select1;
+          $this->UsersTeams->deleteAll($iddelete);
+        }
+
+        $this->Flash->success(__('Equipa guardada com sucesso.'));
+
+        return $this->redirect(['action' => 'index']);
+      }
+      $this->Flash->error(__('Não foi possível guardar a Equipa. Por favor tente novamente.'));
+    }
+    $this->set(compact('team', 'users1', 'users', 'user_team'));
   }
 
   /**
