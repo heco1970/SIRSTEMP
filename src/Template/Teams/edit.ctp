@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Alterar'), ['class' => 'btn btn-success float-right', 'onclick' => 'selectAll()']) ?>
+        <?= $this->Form->button(__('Gravar alterações'), ['class' => 'btn btn-success float-right']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>
