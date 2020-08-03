@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right', 'onclick' => 'selectAll()']) ?>
+        <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
         <a href="/perfis/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>

@@ -32,8 +32,8 @@ class PessoasFixture extends TestFixture
         'distrito' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'concelho' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'freguesia' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'centro_edu' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'estb_pri' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'centro_educs_id' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'estb_pris_id' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'nome_alt' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'estado' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
         'observacoes' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -60,7 +60,7 @@ class PessoasFixture extends TestFixture
             [
                 'id' => 1,
                 'nome' => 'Lorem ipsum dolor sit amet',
-                'data_nascimento' => '2020-07-31',
+                'data_nascimento' => '2020-08-03',
                 'nomepai' => 'Lorem ipsum dolor sit amet',
                 'nomemae' => 'Lorem ipsum dolor sit amet',
                 'id_estadocivil' => 1,
@@ -73,13 +73,13 @@ class PessoasFixture extends TestFixture
                 'distrito' => 'Lorem ipsum dolor sit amet',
                 'concelho' => 'Lorem ipsum dolor sit amet',
                 'freguesia' => 'Lorem ipsum dolor sit amet',
-                'centro_edu' => 'Lorem ipsum dolor sit amet',
-                'estb_pri' => 'Lorem ipsum dolor sit amet',
+                'centro_educs_id' => 'Lorem ipsum dolor sit amet',
+                'estb_pris_id' => 'Lorem ipsum dolor sit amet',
                 'nome_alt' => 'Lorem ipsum dolor sit amet',
                 'estado' => 1,
                 'observacoes' => 'Lorem ipsum dolor sit amet',
-                'created' => 1596192104,
-                'modified' => 1596192104
+                'created' => 1596454919,
+                'modified' => 1596454919
             ],
         ];
         parent::init();
