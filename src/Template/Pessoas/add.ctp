@@ -66,7 +66,7 @@
                     <div class="form-group">
                         <label for="pais_id">Nacionalidade</label>
 
-                        <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pais, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false,'default'=>193, 'options' => $pais, 'class' => 'form-control']); ?>
 
                     </div>
                 </div>
