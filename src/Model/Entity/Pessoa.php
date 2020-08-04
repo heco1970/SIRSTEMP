@@ -73,6 +73,7 @@ class Pessoa extends Entity
         'contactos' => true,
         'pedidos' => true,
         'verbetes' => true,
-        'crimes' => true
+        'crimes' => true,
+        'pessoas_crimes' => true
     ];
 }

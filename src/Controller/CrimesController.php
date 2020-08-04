@@ -62,21 +62,6 @@ class CrimesController extends AppController
         $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
       }
     }
-    /**
-     * View method
-     *
-     * @param string|null $id Crime id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $crime = $this->Crimes->get($id, [
-            'contain' => ['Pessoas']
-        ]);
-
-        $this->set('crime', $crime);
-    }
 
     /**
      * Add method
@@ -126,89 +111,23 @@ class CrimesController extends AppController
         $this->set(compact('crime','pessoas'));
     }
 
-/**
-   * Edit method
-   *
-   * @param string|null $id crime id.
-   * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-   * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-   */
-  public function edit($id = null)
-  {
-    $crime = $this->Crimes->get($id, ['contain' => ['Pessoas','PessoasCrimes']]);
+    public function edit($id = null)
+    {
+        $crime = $this->Crimes->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
+            if ($this->Crimes->save($crime)) {
+                $this->Flash->success(__('O registro foi gravado.'));
 
-    $pessoas = [];
-
-    $pessoa_crime = $this->Crimes->PessoasCrimes->find('list', [
-      'conditions' => 
-      [
-        'PessoasCrimes.crime_id ' => $id
-      ],
-      'limit' => 200
-    ])->toArray();
-
-    if(isset($crime->pessoas[0])){
-      $pessoas = $this->Crimes->Pessoas->find('list', [
-        'conditions' => [
-          'NOT' => [
-            'id IN' => $pessoa_crime
-          ]
-        ],
-        'limit' => 200, 
-      ])->toArray();
-    }
-    else{
-      $pessoas = $this->Crimes->Pessoas->find('list', [
-        'limit' => 200
-      ])->toArray();
-    }
-
-    if ($this->request->is(['patch', 'post', 'put'])) {
-        $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
-        if($_POST['pessoa_crimes'] != null){
-          $pessoacrimesTable = TableRegistry::getTableLocator()->get('PessoasCrimes');
-          $persona_crime = $pessoacrimesTable->newEntity();
-
-          $persona_crime->pessoa_id = $_POST['pessoa_crimes'];
-          $persona_crime->crime_id = $id;
-          $this->log($persona_crime);
-          $this->log($id);
-          $this->log($_POST['pessoa_crimes']);
-          $pessoacrimesTable->save($persona_crime);
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
-
-        if(isset($_POST['formDoor'])) 
-        {
-          $aDoor = $_POST['formDoor'];
-          for($i=0; $i < count($aDoor); $i++)
-          {
-            $result = $this->Crimes->PessoasCrimes->find('all', 
-              array(
-                'conditions'=>
-                  array(
-                    'PessoasCrimes.pessoa_id'=> $aDoor[$i],
-                    'PessoasCrimes.crime_id'=> $id,
-                  )
-              )
-            )->all();
-
-            $this->Crimes->PessoasCrimes->deleteAll(array(
-              'PessoasCrimes.pessoa_id'=> $aDoor[$i],
-              'PessoasCrimes.crime_id'=> $id,
-            ));
-          }
-        } 
-
-        if ($this->Crimes->save($crime)) {
-          $this->Flash->success(__('The team has been saved.'));
-
-          return $this->redirect(['action' => 'index']);
-        }
-        $this->Flash->error(__('The crime could not be saved. Please, try again.'));
+        $this->set(compact('crime'));
     }
-    $this->set(compact('crime','pessoas','pessoa_crime'));
-  }
-
+   
     /**
      * Delete method
      *

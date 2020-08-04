@@ -47,7 +47,7 @@ class CrimesTable extends Table
             'joinTable' => 'pessoas_crimes'
         ]);
 
-        $this->hasMany('PessoasCrimes');
+        
     }
 
     /**

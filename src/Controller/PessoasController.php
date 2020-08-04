@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Cake\ORM\TableRegistry;
+use Cake\ORM\Table;
 
 /**
  * Pessoas Controller
@@ -116,6 +118,7 @@ class PessoasController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    /*
     public function edit($id = null)
     {
         $pessoa = $this->Pessoas->get($id, [
@@ -133,6 +136,69 @@ class PessoasController extends AppController
 
         $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
         $this->set(compact('pessoa', 'pais'));
+    }*/
+
+
+    public function edit($id = null)
+    {
+        $pessoa = $this->Pessoas->get($id, [
+        'contain' => ['Crimes', 'PessoasCrimes']
+        ]);
+
+        //$pessoa = $this->Pessoas->get($id, ['contain' => ['Users','UsersTeams']]);
+        
+        $subquery = $this->Pessoas->PessoasCrimes
+        ->find()
+        ->select(['PessoasCrimes.crime_id'])
+        ->where(['PessoasCrimes.pessoa_id' => $id]);
+        
+
+        $crimes1 = $this->Pessoas->Crimes
+        ->find('list', ['keyField' => 'id', 'valueField' => 'descricao'])
+        ->where([
+            'Crimes.id IN' => $subquery
+        ]);
+
+        $crimes = $this->Pessoas->Crimes
+        ->find('list', ['keyField' => 'id', 'valueField' => 'descricao'])
+        ->where([
+            'Crimes.id NOT IN' => $subquery
+        ]);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+        $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData(), ['associated' => ['Crimes', 'PessoasCrimes']]);
+
+        $this->loadModel('PessoasCrimes');
+
+        $select = $this->request->getData('crime_id');
+        $select1 = $this->request->getData('multiselect');
+        
+        $iddelete = $this->PessoasCrimes->find('list')->where(['pessoa_id' => $id , 'crime_id' => 'id'])->toArray();
+
+        if ($this->Pessoas->save($pessoa)) {
+            if (!empty($select)) {
+                $this->PessoasCrimes->deleteAll($iddelete);
+                foreach ($select as $row) {
+                    $pessoaCrime = $this->PessoasCrimes->newEntity();
+                    $pessoaCrime->crime_id = $row;
+                    $pessoaCrime->pessoa_id = $id;
+                    $this->PessoasCrimes->save($pessoaCrime);
+                }
+            } else {
+                $pessoaCrime = $this->PessoasCrimes->newEntity();
+                $pessoaCrime->crime_id = $select1;
+                $this->PessoasCrimes->deleteAll($iddelete);
+            }
+
+            $this->Flash->success(__('Equipa guardada com sucesso.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
+        $this->Flash->error(__('Não foi possível guardar o Crime. Por favor tente novamente.'));
+        }
+
+        $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
+        $this->set(compact('pessoa', 'crimes1', 'crimes', 'pessoa_crime','pais'));
     }
 
     /**

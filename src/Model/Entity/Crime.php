@@ -29,6 +29,7 @@ class Crime extends Entity
         'descricao' => true,
         'created' => true,
         'modified' => true,
-        'pessoas' => true
+        'pessoas' => true,
+        'crimes' => true
     ];
 }
