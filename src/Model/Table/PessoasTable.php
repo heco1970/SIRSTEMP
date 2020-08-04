@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
  * Pessoas Model
  *
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
+ * @property |\Cake\ORM\Association\BelongsTo $CentroEducs
+ * @property \App\Model\Table\EstbPrisTable|\Cake\ORM\Association\BelongsTo $EstbPris
  * @property \App\Model\Table\ContactosTable|\Cake\ORM\Association\HasMany $Contactos
  * @property \App\Model\Table\PedidosTable|\Cake\ORM\Association\HasMany $Pedidos
  * @property \App\Model\Table\VerbetesTable|\Cake\ORM\Association\HasMany $Verbetes
@@ -50,8 +52,12 @@ class PessoasTable extends Table
             'joinType' => 'INNER'
         ]);
 
-        $this->belongsTo('Estadocivils', [
-            'foreignKey' => 'id_estadocivils',
+        $this->belongsTo('CentroEducs', [
+            'foreignKey' => 'centro_educs_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('EstbPris', [
+            'foreignKey' => 'estb_pris_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Estadocivils', [
@@ -159,18 +165,6 @@ class PessoasTable extends Table
             ->notEmpty('freguesia');
 
         $validator
-            ->scalar('centro_edu')
-            ->maxLength('centro_edu', 255)
-            ->requirePresence('centro_edu', 'create')
-            ->notEmpty('centro_edu');
-
-        $validator
-            ->scalar('estb_pri')
-            ->maxLength('estb_pri', 255)
-            ->requirePresence('estb_pri', 'create')
-            ->notEmpty('estb_pri');
-
-        $validator
             ->scalar('nome_alt')
             ->maxLength('nome_alt', 100)
             ->requirePresence('nome_alt', 'create')
@@ -205,6 +199,8 @@ class PessoasTable extends Table
         $rules->add($rules->existsIn(['id_estadocivil'], 'Estadocivils'));
         $rules->add($rules->existsIn(['id_genero'], 'Generos'));
         $rules->add($rules->existsIn(['id_unidadeopera'], 'Unidadeoperas'));
+        $rules->add($rules->existsIn(['centro_educs_id'], 'CentroEducs'));
+        $rules->add($rules->existsIn(['estb_pris_id'], 'EstbPris'));
 
         return $rules;
     }

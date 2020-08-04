@@ -74,7 +74,7 @@ class PessoasController extends AppController
     public function view($id = null)
     {
         $pessoa = $this->Pessoas->get($id, [
-            'contain' => ['Pais', 'Estadocivils', 'Generos', 'Unidadeoperas', 'PessoasCrimes','Crimes']
+            'contain' => ['Pais', 'Estadocivils', 'CentroEducs', 'EstbPris', 'Generos', 'Unidadeoperas', 'PessoasCrimes','Crimes']
         ]);
 
 
@@ -104,6 +104,8 @@ class PessoasController extends AppController
         }
 
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id','valueField' => 'paisNome']));
+        $this->set('centro_educs', $this->Pessoas->CentroEducs->find('list', ['keyField' => 'id','valueField' => 'designacao']));
+        $this->set('estb_pris', $this->Pessoas->EstbPris->find('list', ['keyField' => 'id','valueField' => 'designacao']));
         $this->set('estadocivils', $this->Pessoas->Estadocivils->find('list', ['keyField' => 'id','valueField' => 'estado']));
         $this->set('generos', $this->Pessoas->Generos->find('list', ['keyField' => 'id','valueField' => 'genero']));
         $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id','valueField' => 'designacao']));

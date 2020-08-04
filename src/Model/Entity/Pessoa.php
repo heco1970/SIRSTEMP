@@ -21,8 +21,8 @@ use Cake\ORM\Entity;
  * @property string $distrito
  * @property string $concelho
  * @property string $freguesia
- * @property string $centro_edu
- * @property string $estb_pri
+ * @property string $centro_educs_id
+ * @property string $estb_pris_id
  * @property string $nome_alt
  * @property bool $estado
  * @property string $observacoes
@@ -30,10 +30,15 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Pai $pai
+ * @property \App\Model\Entity\CentroEdus $centro_edus
+ * @property \App\Model\Entity\EstbPri $estb_pri
+ * @property \App\Model\Entity\Genero $genero
+ * @property \App\Model\Entity\Unidadeopera $unidadeopera
  * @property \App\Model\Entity\Contacto[] $contactos
  * @property \App\Model\Entity\Pedido[] $pedidos
  * @property \App\Model\Entity\Verbete[] $verbetes
  * @property \App\Model\Entity\Crime[] $crimes
+ * @property \App\Model\Entity\PessoasCrime[] $pessoas_crimes
  */
 class Pessoa extends Entity
 {
@@ -62,14 +67,18 @@ class Pessoa extends Entity
         'distrito' => true,
         'concelho' => true,
         'freguesia' => true,
-        'centro_edu' => true,
-        'estb_pri' => true,
+        'centro_educs_id' => true,
+        'estb_pris_id' => true,
         'nome_alt' => true,
         'estado' => true,
         'observacoes' => true,
         'created' => true,
         'modified' => true,
         'pai' => true,
+        'centro_edus' => true,
+        'estb_pri' => true,
+        'genero' => true,
+        'unidadeopera' => true,
         'contactos' => true,
         'pedidos' => true,
         'verbetes' => true,

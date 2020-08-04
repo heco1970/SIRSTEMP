@@ -5,7 +5,7 @@
  * @var \App\Model\Entity\Pessoa $pessoa
  */
 ?>
-<?=$this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]);?>
+<?= $this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]); ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe da Pessoa') ?></h6>
@@ -78,12 +78,12 @@
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
-                        <p><?= h($pessoa->centro_edu) ?></p>
+                        <p><?= h($pessoa->centro_educ->designacao) ?></p>
 
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
-                        <p><?= h($pessoa->estb_pri) ?></p>
+                        <p><?= h($pessoa->estb_pri->designacao) ?></p>
 
                     </div>
                 </div>
@@ -341,34 +341,35 @@
                     </div>
                 </div>
                 <?php
-                    $dynElems =
+                        $dynElems =
                             ['descricao' => ['label' => ('Crime')]];
-                    ?>
+                        ?>
                     <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
-                            <h6 class="m-0 font-weight-bold text-primary"><?=__('Crimes:')?></h6>
+                            <h6 class="m-0 font-weight-bold text-primary"><?= __('Crimes:') ?></h6>
                         </div>
                         <div class="card-body">
                             <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => false]); ?>
                         </div>
                     </div>
 
-                    <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text' ]); ?>
+                    <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text']); ?>
 
-                    <?=$this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]);?>
-                    <?=$this->Html->script('/js/dynatable-helper.js', ['block' => true]);?>
+                    <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
+                    <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
 
                     <?php $this->start('scriptBottom') ?>
                     <script>
                         $(document).ready(function() {
                             writers = {};
-                            createDynatable("#dynatable","/pessoas-crimes/indexpessoas/" + <?=  h($pessoa->id) ?> ,{created: -1}, writers);
+                            createDynatable("#dynatable","/pessoas-crimes/indexpessoas/" + <?= h($pessoa->id) ?> ,{created: -1}, writers);
                         });
                     </script>
                 <?php $this->end(); ?>
             </div>
         </div>
-        
+
     </div>
+</div>

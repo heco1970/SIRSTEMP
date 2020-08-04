@@ -104,7 +104,8 @@ class PerfisController extends AppController
         $users = $this->Perfis->Users
             ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
             ->where([
-                'Users.id NOT IN' => $subquery1]);
+                'Users.id NOT IN' => $subquery1
+            ]);
         $this->set(compact('perfi', 'users'));
     }
 
@@ -147,14 +148,15 @@ class PerfisController extends AppController
 
             $select = $this->request->getData('user_id');
             $select1 = $this->request->getData('multiselect');
-            $iddelete = $this->UserPerfis->find('list')->select(['id'])->where(['perfi_id' => $id])->toArray();
 
 
             if ($this->Perfis->save($perfi)) {
 
 
+
                 if (!empty($select)) {
-                    $this->UserPerfis->deleteAll($iddelete);
+                    $delete = $this->UserPerfis->deleteAll(['UserPerfis.perfi_id' => $id]);
+                    $this->log($delete);
                     foreach ($select as $row) {
                         $userPerfi = $this->UserPerfis->newEntity();
                         $userPerfi->user_id = $row;
@@ -162,9 +164,8 @@ class PerfisController extends AppController
                         $this->UserPerfis->save($userPerfi);
                     }
                 } else {
-                    $userPerfi = $this->UserPerfis->newEntity();
-                    $userPerfi->user_id = $select1;
-                    $this->UserPerfis->deleteAll($iddelete);
+
+                    $this->UserPerfis->deleteAll(['UserPerfis.perfi_id' => $id]);
                 }
 
 

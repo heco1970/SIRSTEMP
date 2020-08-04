@@ -66,7 +66,7 @@
                     <div class="form-group">
                         <label for="pais_id">Nacionalidade</label>
 
-                        <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pais, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false,'default'=>193, 'options' => $pais, 'class' => 'form-control']); ?>
 
                     </div>
                 </div>
@@ -131,14 +131,14 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="centro_edu">Centro Educacional</label>
-                        <?php echo $this->Form->control('centro_edu', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('centro_educs_id', ['label' => false, 'class' => 'form-control','options' => $centro_educs]); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="estb_pri">Estabelecimento Prisional</label>
 
-                        <?php echo $this->Form->control('estb_pri', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('estb_pris_id', ['label' => false, 'class' => 'form-control','options' => $estb_pris]); ?>
 
                     </div>
                 </div>
