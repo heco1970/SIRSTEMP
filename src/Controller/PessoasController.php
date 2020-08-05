@@ -166,20 +166,18 @@ class PessoasController extends AppController
         ->where([
             'Crimes.id NOT IN' => $subquery
         ]);
-
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
         $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData(), ['associated' => ['Crimes', 'PessoasCrimes']]);
 
         $this->loadModel('PessoasCrimes');
-
+        
         $select = $this->request->getData('crime_id');
         $select1 = $this->request->getData('multiselect');
         
-        $iddelete = $this->PessoasCrimes->find('list')->where(['pessoa_id' => $id , 'crime_id' => 'id'])->toArray();
-
         if ($this->Pessoas->save($pessoa)) {
-            if (!empty($select)) {
-                $this->PessoasCrimes->deleteAll($iddelete);
+            if (!empty($select)) {        
+                $delete = $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
                 foreach ($select as $row) {
                     $pessoaCrime = $this->PessoasCrimes->newEntity();
                     $pessoaCrime->crime_id = $row;
@@ -187,16 +185,14 @@ class PessoasController extends AppController
                     $this->PessoasCrimes->save($pessoaCrime);
                 }
             } else {
-                $pessoaCrime = $this->PessoasCrimes->newEntity();
-                $pessoaCrime->crime_id = $select1;
-                $this->PessoasCrimes->deleteAll($iddelete);
+                $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
             }
 
-            $this->Flash->success(__('Equipa guardada com sucesso.'));
+            $this->Flash->success(__('Crime guardada com sucesso.'));
 
             return $this->redirect(['action' => 'index']);
-        }
-        $this->Flash->error(__('Não foi possível guardar o Crime. Por favor tente novamente.'));
+            }
+            $this->Flash->error(__('Não foi possível guardar o Crime. Por favor tente novamente.'));
         }
 
         $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
