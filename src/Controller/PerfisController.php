@@ -175,7 +175,7 @@ class PerfisController extends AppController
             }
             $this->Flash->error(__('Não foi possível guardar o Perfil. Por favor tente novamente.'));
         }
-        $this->set(compact('perfi', 'users1', 'users', 'user_perfi'));
+        $this->set(compact('perfi', 'users1', 'users'));
     }
 
     /**

@@ -200,7 +200,7 @@ class PessoasController extends AppController
         }
 
         $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
-        $this->set(compact('pessoa', 'crimes1', 'crimes', 'pessoa_crime','pais'));
+        $this->set(compact('pessoa', 'crimes1', 'crimes', 'pais'));
     }
 
     /**
