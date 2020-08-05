@@ -101,28 +101,25 @@ class TeamsController extends AppController
     $users1 = $this->Teams->Users
       ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
       ->where([
-          'Users.id IN' => $subquery
-      ]);
+        'Users.id IN' => $subquery
+    ]);
 
     $users = $this->Teams->Users
       ->find('list', ['keyField' => 'id', 'valueField' => 'username'])
       ->where([
-          'Users.id NOT IN' => $subquery
-      ]);
+        'Users.id NOT IN' => $subquery
+    ]);
 
     if ($this->request->is(['patch', 'post', 'put'])) {
       $team = $this->Teams->patchEntity($team, $this->request->getData(), ['associated' => ['Users', 'UsersTeams']]);
-
       $this->loadModel('UsersTeams');
 
       $select = $this->request->getData('user_id');
       $select1 = $this->request->getData('multiselect');
-      
-      $iddelete = $this->UsersTeams->find('list')->where(['team_id' => $id , 'user_id' => 'id'])->toArray();
 
       if ($this->Teams->save($team)) {
         if (!empty($select)) {
-          $this->UsersTeams->deleteAll($iddelete);
+          $delete = $this->UsersTeams->deleteAll(['UsersTeams.team_id' => $id]);
           foreach ($select as $row) {
             $userTeam = $this->UsersTeams->newEntity();
             $userTeam->user_id = $row;
@@ -130,18 +127,16 @@ class TeamsController extends AppController
             $this->UsersTeams->save($userTeam);
           }
         } else {
-          $userTeam = $this->UsersTeams->newEntity();
-          $userTeam->user_id = $select1;
-          $this->UsersTeams->deleteAll($iddelete);
+          $this->UsersTeams->deleteAll(['UsersTeams.team_id' => $id]);
         }
 
-        $this->Flash->success(__('Equipa guardada com sucesso.'));
+        $this->Flash->success(__('Equipa guardado com sucesso.'));
 
         return $this->redirect(['action' => 'index']);
       }
       $this->Flash->error(__('Não foi possível guardar a Equipa. Por favor tente novamente.'));
     }
-    $this->set(compact('team', 'users1', 'users', 'user_team'));
+    $this->set(compact('team', 'users1', 'users'));
   }
 
   /**
