@@ -66,32 +66,22 @@
                     <div class="form-group">
                         <label for="pais_id">Nacionalidade</label>
 
-                        <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false,'default'=>193, 'options' => $pais, 'class' => 'form-control']); ?>
-
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="distrito">Distrito</label>
-                        <?php echo $this->Form->control('distrito', ['label' => false, 'class' => 'form-control']); ?>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="concelho">Concelho</label>
-
-                        <?php echo $this->Form->control('concelho', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
 
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="freguesia">Freguesia</label>
 
-                        <?php echo $this->Form->control('freguesia', ['label' => false, 'class' => 'form-control']); ?>
-
+                        <label for="codigo_postal">Código Postal</label>
+                        <div class="form-row">
+                            <div class="col-7">
+                                <?php echo $this->Form->control('codigo_postal', ['type' => 'number','max'=>9999,'label' => false, 'class' => 'form-control','required']); ?>
+                            </div>
+                            <div class="col-5">
+                                <?php echo $this->Form->control('codigo_postal1', ['type' => 'number','max'=>999,'label' => false, 'class' => 'form-control','required']); ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,14 +121,14 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="centro_edu">Centro Educacional</label>
-                        <?php echo $this->Form->control('centro_educs_id', ['label' => false, 'class' => 'form-control','options' => $centro_educs]); ?>
+                        <?php echo $this->Form->control('centro_educs_id', ['label' => false, 'class' => 'form-control', 'options' => $centro_educs]); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="estb_pri">Estabelecimento Prisional</label>
 
-                        <?php echo $this->Form->control('estb_pris_id', ['label' => false, 'class' => 'form-control','options' => $estb_pris]); ?>
+                        <?php echo $this->Form->control('estb_pris_id', ['label' => false, 'class' => 'form-control', 'options' => $estb_pris]); ?>
 
                     </div>
                 </div>

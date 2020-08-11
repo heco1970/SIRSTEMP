@@ -8,30 +8,32 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $nome
+ * @property string $nome_alt
  * @property \Cake\I18n\FrozenDate $data_nascimento
  * @property string $nomepai
  * @property string $nomemae
  * @property int $id_estadocivil
  * @property int $id_genero
  * @property int $pais_id
+ * @property string $distritos_id
+ * @property string $freguesias_id
+ * @property int $codigos_postais_id
+ * @property string $concelhos_id
+ * @property int $centro_educs_id
+ * @property int $estb_pris_id
  * @property string $cc
  * @property int $nif
  * @property string $outroidentifica
  * @property int $id_unidadeopera
- * @property string $distrito
- * @property string $concelho
- * @property string $freguesia
- * @property string $centro_educs_id
- * @property string $estb_pris_id
- * @property string $nome_alt
  * @property bool $estado
  * @property string $observacoes
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Pai $pai
- * @property \App\Model\Entity\CentroEdus $centro_edus
+ * @property \App\Model\Entity\CentroEduc $centro_educ
  * @property \App\Model\Entity\EstbPri $estb_pri
+ * @property \App\Model\Entity\Estadocivil $estadocivil
  * @property \App\Model\Entity\Genero $genero
  * @property \App\Model\Entity\Unidadeopera $unidadeopera
  * @property \App\Model\Entity\Contacto[] $contactos
@@ -54,29 +56,31 @@ class Pessoa extends Entity
      */
     protected $_accessible = [
         'nome' => true,
+        'nome_alt' => true,
         'data_nascimento' => true,
         'nomepai' => true,
         'nomemae' => true,
         'id_estadocivil' => true,
         'id_genero' => true,
         'pais_id' => true,
+        'distritos_id' => true,
+        'freguesias_id' => true,
+        'codigos_postais_id' => true,
+        'concelhos_id' => true,
+        'centro_educs_id' => true,
+        'estb_pris_id' => true,
         'cc' => true,
         'nif' => true,
         'outroidentifica' => true,
         'id_unidadeopera' => true,
-        'distrito' => true,
-        'concelho' => true,
-        'freguesia' => true,
-        'centro_educs_id' => true,
-        'estb_pris_id' => true,
-        'nome_alt' => true,
         'estado' => true,
         'observacoes' => true,
         'created' => true,
         'modified' => true,
         'pai' => true,
-        'centro_edus' => true,
+        'centro_educ' => true,
         'estb_pri' => true,
+        'estadocivil' => true,
         'genero' => true,
         'unidadeopera' => true,
         'contactos' => true,

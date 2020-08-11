@@ -59,34 +59,30 @@
                         <p><?= h(ucfirst(mb_strtolower($pessoa->pai->paisNome))) ?></p>
 
                     </div>
-                    <div class="col-3">
-                        <h6 class="text-primary"><?= __('Distrito') ?></h6>
-                        <p><?= h($pessoa->distrito) ?></p>
-                    </div>
+
                 </div>
                 <hr>
                 <div class="row">
-
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Código Postal') ?></h6>
+                        <p><?= h($pessoa->codigos_postai->NumCodigoPostal) ?> - <?= h($pessoa->codigos_postai->ExtCodigoPostal) ?></p>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Distrito') ?></h6>
+                        <p><?= h($pessoa->distrito->Designacao) ?></p>
+                    </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Concelho') ?></h6>
-                        <p><?= h($pessoa->concelho) ?></p>
+                        <p><?= h($pessoa->concelho->Designacao) ?></p>
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Freguesia') ?></h6>
-                        <p><?= h($pessoa->freguesia) ?></p>
+                        <p><?= h($pessoa->codigos_postai->NomeLocalidade) ?></p>
 
                     </div>
-                    <div class="col-3">
-                        <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
-                        <p><?= h($pessoa->centro_educ->designacao) ?></p>
 
-                    </div>
-                    <div class="col-3">
-                        <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
-                        <p><?= h($pessoa->estb_pri->designacao) ?></p>
-
-                    </div>
                 </div>
+
                 <hr>
                 <div class="row">
                     <div class="col-3">
@@ -104,6 +100,19 @@
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Outra Identificação') ?></h6>
                         <p><?= h($pessoa->outroidentifica) ?></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
+                        <p><?= h($pessoa->centro_educ->designacao) ?></p>
+
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
+                        <p><?= h($pessoa->estb_pri->designacao) ?></p>
+
                     </div>
                 </div>
                 <hr>
@@ -341,32 +350,34 @@
                     </div>
                 </div>
                 <?php
-                        $dynElems =
-                            ['descricao' => ['label' => ('Crime')]];
-                        ?>
-                    <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
-                            <h6 class="m-0 font-weight-bold text-primary"><?= __('Crimes:') ?></h6>
-                        </div>
-                        <div class="card-body">
-                            <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => false]); ?>
-                        </div>
+                $dynElems =
+                    ['descricao' => ['label' => ('Crime')]];
+                ?>
+                <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
+                        <h6 class="m-0 font-weight-bold text-primary"><?= __('Crimes:') ?></h6>
                     </div>
+                    <div class="card-body">
+                        <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => false]); ?>
+                    </div>
+                </div>
 
-                    <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text']); ?>
+                <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text']); ?>
 
-                    <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
-                    <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
+                <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
+                <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
 
-                    <?php $this->start('scriptBottom') ?>
-                    <script>
-                        $(document).ready(function() {
-                            writers = {};
-                            createDynatable("#dynatable","/pessoas-crimes/indexpessoas/" + <?= h($pessoa->id) ?> ,{created: -1}, writers);
-                        });
-                    </script>
+                <?php $this->start('scriptBottom') ?>
+                <script>
+                    $(document).ready(function() {
+                        writers = {};
+                        createDynatable("#dynatable", "/pessoas-crimes/indexpessoas/" + <?= h($pessoa->id) ?>, {
+                            created: -1
+                        }, writers);
+                    });
+                </script>
                 <?php $this->end(); ?>
             </div>
         </div>

@@ -156,7 +156,6 @@ class PerfisController extends AppController
 
                 if (!empty($select)) {
                     $delete = $this->UserPerfis->deleteAll(['UserPerfis.perfi_id' => $id]);
-                    $this->log($delete);
                     foreach ($select as $row) {
                         $userPerfi = $this->UserPerfis->newEntity();
                         $userPerfi->user_id = $row;
