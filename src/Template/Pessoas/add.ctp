@@ -76,12 +76,38 @@
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
                             <div class="col-7">
-                                <?php echo $this->Form->control('codigo_postal', ['type' => 'number','max'=>9999,'label' => false, 'class' => 'form-control','required']); ?>
+                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'label' => false, 'class' => 'form-control', 'required']); ?>
                             </div>
                             <div class="col-5">
-                                <?php echo $this->Form->control('codigo_postal1', ['type' => 'number','max'=>999,'label' => false, 'class' => 'form-control','required']); ?>
+                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'label' => false, 'class' => 'form-control', 'required']); ?>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" id="distrito">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="distrito">Distrito</label>
+
+                        <input class='form-control' disabled>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="concelho">Concelho</label>
+
+                        <input class='form-control' disabled>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="freguesia">Freguesia</label>
+
+                        <input class='form-control' disabled>
+
                     </div>
                 </div>
             </div>
@@ -148,6 +174,8 @@
             </div>
 
 
+
+
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
@@ -156,3 +184,39 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('document').ready(function() {
+        $('#codigo_postal1').keyup(function() {
+
+            var searchkey = $('#codigo_postal').val();
+            var searchkey1 = $('#codigo_postal1').val();
+            searchTags(searchkey, searchkey1);
+        });
+        $('#codigo_postal').keyup(function() {
+
+            var searchkey = $('#codigo_postal').val();
+            var searchkey1 = $('#codigo_postal1').val();
+            searchTags(searchkey, searchkey1);
+        });
+
+
+        function searchTags(keyword, keyword1) {
+            var data = keyword;
+            var data1 = keyword1;
+            $.ajax({
+                method: 'get',
+                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'Search']); ?>",
+                data: {
+                    keyword: data,
+                    keyword1: data1,
+
+                },
+
+                success: function(response) {
+                    $('#distrito').html(response);
+                }
+            });
+        };
+    });
+</script>

@@ -74,7 +74,7 @@ class PessoasController extends AppController
     public function view($id = null)
     {
         $pessoa = $this->Pessoas->get($id, [
-            'contain' => ['Pais', 'Estadocivils', 'CentroEducs', 'EstbPris', 'Generos', 'Unidadeoperas','CodigosPostais','Concelhos','Distritos', ]
+            'contain' => ['Pais', 'Estadocivils', 'CentroEducs', 'EstbPris', 'Generos', 'Unidadeoperas', 'CodigosPostais', 'Concelhos', 'Distritos',]
         ]);
 
 
@@ -125,6 +125,27 @@ class PessoasController extends AppController
         $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
 
         $this->set(compact('pessoa'));
+    }
+
+    public function search()
+    {
+
+        $this->request->allowMethod('ajax');
+
+        $keyword = $this->request->getQuery('keyword');
+        $keyword1 = $this->request->getQuery('keyword1');
+
+        $codigo = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['ExtCodigoPostal' => $keyword1,'NumCodigoPostal' => $keyword]);
+        $coddistrito = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]); 
+        $codconcelho = $this->Pessoas->CodigosPostais->find()->select('CodigoConcelho')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]);
+       
+
+        $this->set('distritos',$this->Pessoas->Distritos->find('list',['keyField'=>'id','valueField'=>'Designacao'])->where(['CodigoDistrito' => $codigo]));
+        $this->set('concelhos',$this->Pessoas->Concelhos->find('list',['keyField'=>'id','valueField'=>'Designacao'])->where(['CodigoConcelho' => $codconcelho, 'CodigoDistrito' => $coddistrito]));
+        $this->set('freguesias',$this->Pessoas->CodigosPostais->find('list',['keyField'=>'id','valueField'=>'NomeLocalidade'])->where(['ExtCodigoPostal' => $keyword1,'NumCodigoPostal' => $keyword]));
+
+        
+        $this->set('_serialize', ['distritos']);
     }
 
 
