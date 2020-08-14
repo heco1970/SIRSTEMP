@@ -76,10 +76,10 @@
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
                             <div class="col-7">
-                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'label' => false, 'class' => 'form-control', 'required']); ?>
+                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min'=>1,'label' => false, 'class' => 'form-control', 'required']); ?>
                             </div>
                             <div class="col-5">
-                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'label' => false, 'class' => 'form-control', 'required']); ?>
+                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min'=>1,'label' => false, 'class' => 'form-control', 'required']); ?>
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
 
-                        <input class='form-control' disabled>
+                        <select class='form-control' disabled></select>
 
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
 
-                        <input class='form-control' disabled>
+                        <select class='form-control' disabled></select>
 
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
 
-                        <input class='form-control' disabled>
+                        <select class='form-control' disabled></select>
 
                     </div>
                 </div>
