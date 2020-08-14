@@ -37,7 +37,7 @@ class ProcessosTable extends Table
         parent::initialize($config);
 
         $this->setTable('processos');
-        $this->setDisplayField('id');
+        $this->setDisplayField('entjudicial');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

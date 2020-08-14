@@ -27,7 +27,7 @@
         ?>
 
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="name"><h4><?=__('Processo')?></h4></label>
@@ -35,26 +35,24 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="name"><h4><?=__('Pessoa')?></h4></label>
-                        <?= $this->Form->control('pessoa_id', ['class' => 'form-control select2', 'label' => false]);?>
+                        <?= $this->Form->control('pessoa_id', ['class' => 'form-control', 'options' => $pessoas, 'label' => false]);?>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="name"><h4><?=__('Data de recepção')?></h4></label>
-                        <?= $this->Form->control('datarecepcao', ['class' => 'form-control', 'label' => false, 'type' => 'text']);?>
+                        <input type="date" class="form-control" name="datarecepcao" id="datarecepcao">
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
@@ -71,14 +69,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        <label for="name"><h4><?=__('Descricão')?></h4></label>
-                        <?= $this->Form->control('descricao', ['class' => 'form-control',  'label' => false]);?>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-sm-4">
@@ -92,8 +82,8 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <label for="name"><h4><?=__('Descrição')?></h4></label>
-                        <?= $this->Form->control('descricao', ['class' => 'form-control',  'label' => false]);?>
+                        <label for="name"><h4><?=__('Tipos de Pedidos')?></h4></label>
+                        <?= $this->Form->control('pedidostypes_id', ['class' => 'form-control', 'options' => $pedidostypes, 'label' => false]);?>
                     </div>
                 </div>
             </div>
@@ -107,7 +97,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="name"><h4><?=__('Estado')?></h4></label>
@@ -115,19 +105,134 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="name"><h4><?=__('Termino')?></h4></label>
-                        <?= $this->Form->control('termino', ['class' => 'form-control',  'label' => false, 'type' => 'text']);?>
+                        <input type="date" class="form-control" name="termino" id="termino">
                     </div>
                 </div>
             </div>
-
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Número do pedido')?></h4></label>
+                        <?= $this->Form->control('numeropedido', ['class' => 'form-control',  'label' => false, 'type' => 'number']);?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Data de criação')?></h4></label>
+                        <input type="date" class="form-control" name="datacriacao" id="datacriacao">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Data de atribuição')?></h4></label>
+                        <input type="date" class="form-control" name="dataatribuicao" id="dataatribuicao">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Data de Inicio Efetivo')?></h4></label>
+                        <input type="date" class="form-control" name="datainicioefetivo" id="datainicioefetivo">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Data de termo previsto')?></h4></label>
+                        <input type="date" class="form-control" name="datatermoprevisto" id="datatermoprevisto">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Data de efetivo termo')?></h4></label>
+                        <input type="date" class="form-control" name="dataefetivotermo" id="dataefetivotermo">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Motivos dos pedidos')?></h4></label>
+                        <?= $this->Form->control('pedidosmotives_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]);?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('País')?></h4></label>
+                        <?= $this->Form->control('pais_id', ['class' => 'form-control', 'options' => $pais, 'label' => false]);?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Concelho')?></h4></label>
+                        <?= $this->Form->control('concelho', ['class' => 'form-control',  'label' => false, 'type' => 'text']);?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Transferencias')?></h4></label>
+                        <?= $this->Form->control('transferencias', ['class' => 'form-control',  'label' => false, 'type' => 'text']);?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Gestor')?></h4></label>
+                        <?= $this->Form->control('gestor', ['class' => 'form-control',  'label' => false, 'type' => 'text']);?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Seguro')?></h4></label>
+                        <?= $this->Form->control('seguro', ['class' => 'form-control',  'label' => false, 'type' => 'text']);?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="name"><h4><?=__('Periocidade de Relatorios')?></h4></label>
+                        <?= $this->Form->control('periocidaderelatorios', ['class' => 'form-control',  'label' => false, 'type' => 'text']);?>
+                    </div>
+                </div>
+            </div>
         </div>
     </fieldset>
-    <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success']) ?>
-    <?= $this->Form->end() ?>
+    <div class="card-footer card-footer-fixed">
+        <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
+        <a href="/perfis/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+    </div>    <?= $this->Form->end() ?>
 </div>
 <?=$this->Html->css('/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css', ['block' => true]);?>
 <?=$this->Html->css('/vendor/select2/select2.min', ['block' => true]);?>

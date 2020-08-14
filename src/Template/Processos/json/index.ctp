@@ -11,6 +11,7 @@ foreach ($records as $record) {
   ];
 }
 
+
 echo json_encode([
   'records' => $data,
   'queryRecordCount' => $queryRecordsCount,

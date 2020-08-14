@@ -32,7 +32,7 @@ class PedidostypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('pedidostypes');
-        $this->setDisplayField('id');
+        $this->setDisplayField('descricao');
         $this->setPrimaryKey('id');
     }
 
