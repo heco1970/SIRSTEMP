@@ -32,7 +32,7 @@ class PaisTable extends Table
         parent::initialize($config);
 
         $this->setTable('pais');
-        $this->setDisplayField('id');
+        $this->setDisplayField('paisNome');
         $this->setPrimaryKey('id');
 
     }

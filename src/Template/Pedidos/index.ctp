@@ -18,14 +18,58 @@
 <?php
 $dynElems =
     [
-        'nome' => ['label' => __('Nome')],
+        'processo' => ['label' => __('Processo')],
+        'pessoa' => ['label' => __('Pessoa')],
+        'referencia' => ['label' => __('Referência')],
+        'canalentrada' => ['label' => __('Canal de entrada')],
+        'datarecepcao' => ['label' => __('Data de Receção')],
+        'origem' => ['label' => __('Origem')],
+        'pedidostypes' => ['label' => __('Tipos de Pedidos')],
+        'equiparesponsavel' => ['label' => __('Equipa Responsvel')],
+        'state' => ['label' => __('Estado')],
+        'termino' => ['label' => __('Termino')],
+        'numeropedido' => ['label' => __('Número do pedido')],
+        'datacriacao' => ['label' => __('Data criação')],
+        'dataatribuicao' => ['label' => __('Data atribuição')],
+        'datainicioefectivo' => ['label' => __('Data inicio efectivo')],
+        'datatermoprevisto' => ['label' => __('Data termo previsto')],
+        'dataefecivatermo' => ['label' => __('Data efetiva termo')],
+        'pedidosmotives' => ['label' => __('Pedidos de motivos')],
+        'pais' => ['label' => __('País')],
+        'concelho' => ['label' => __('Concelho')],
+        'transferencias' => ['label' => __('Transferências')],
+        'gestor' => ['label' => __('Gestor')],
+        'seguro' => ['label' => __('Seguro')],
+        'periocidaderelatorios' => ['label' => __('Periocidade relatorios')],
         'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
         'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['pessoa' => ['label' => __('Nome')]] +
+$dynElems = ['processo' => ['label' => __('Processo')]] +
+            ['pessoa' => ['label' => __('Pessoa')]] +
+            ['referencia' => ['label' => __('Referência')]] +
+            ['canalentrada' => ['label' => __('Canal de entrada')]] +
+            ['datarecepcao' => ['label' => __('Data de Receção')]] +
+            ['origem' => ['label' => __('Origem')]] +
+            ['pedidostypes' => ['label' => __('Tipos de Pedidos')]] +
+            ['equiparesponsavel' => ['label' => __('Equipa Responsvel')]] +
+            ['state' => ['label' => __('Estado')]] +
+            ['termino' => ['label' => __('Termino')]] +
+            ['numeropedido' => ['label' => __('Número do pedido')]] +
+            ['datacriacao' => ['label' => __('Canal de entrada')]] +
+            ['dataatribuicao' => ['label' => __('Data Atribuição')]] +
+            ['datainicioefectivo' => ['label' => __('Data inicio efectivo')]] +
+            ['datatermoprevisto' => ['label' => __('Data termo previsto')]] +
+            ['dataefecivatermo' => ['label' => __('Data efetiva termo')]] +
+            ['pedidosmotives' => ['label' => __('Pedidos de motivos')]] +
+            ['pais' => ['label' => __('País')]] +
+            ['concelho' => ['label' => __('Concelho')]] +
+            ['transferencias' => ['label' => __('Transferências')]] +
+            ['gestor' => ['label' => __('Gestor')]] +
+            ['seguro' => ['label' => __('Seguro')]] +
+            ['periocidaderelatorios' => ['label' => __('Periocidade relatorios')]] +
             ['created' => ['label' => __('Data de Criação')]];
 ?>
     <div class="card shadow mb-4">
@@ -48,8 +92,9 @@ $dynElems = ['pessoa' => ['label' => __('Nome')]] +
             var writers = {
                 ação: function(row) {
                     var view = '<a class="btn btn-info" href="/pedidos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+                    var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Quer mesmo apagar?'"+')" href="/pedidos/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
 
-                    return '<div class="btn-group btn-group-sm" role="group">' + view +  '</div>';
+                    return '<div class="btn-group btn-group-sm" role="group">' + view +  dele + '</div>';
                 }
             }
             createDynatable("#dynatable","/pedidos/",{created: -1}, writers);

@@ -11,7 +11,11 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
  * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsTo $Pessoas
+ * @property |\Cake\ORM\Association\BelongsTo $Pedidostypes
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
+ * @property |\Cake\ORM\Association\BelongsTo $Pedidosmotives
+ * @property |\Cake\ORM\Association\BelongsTo $Pais
+ * @property |\Cake\ORM\Association\HasMany $Verbetes
  *
  * @method \App\Model\Entity\Pedido get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pedido newEntity($data = null, array $options = [])
@@ -51,9 +55,24 @@ class PedidosTable extends Table
             'foreignKey' => 'pessoa_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Pedidostypes', [
+            'foreignKey' => 'pedidostypes_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('States', [
             'foreignKey' => 'state_id',
             'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Pedidosmotives', [
+            'foreignKey' => 'pedidosmotives_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Pais', [
+            'foreignKey' => 'pais_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Verbetes', [
+            'foreignKey' => 'pedido_id'
         ]);
     }
 
@@ -93,12 +112,6 @@ class PedidosTable extends Table
             ->notEmpty('origem');
 
         $validator
-            ->scalar('descricao')
-            ->maxLength('descricao', 20)
-            ->requirePresence('descricao', 'create')
-            ->notEmpty('descricao');
-
-        $validator
             ->scalar('equiparesponsavel')
             ->maxLength('equiparesponsavel', 20)
             ->requirePresence('equiparesponsavel', 'create')
@@ -108,6 +121,66 @@ class PedidosTable extends Table
             ->date('termino')
             ->requirePresence('termino', 'create')
             ->notEmpty('termino');
+
+        $validator
+            ->integer('numeropedido')
+            ->requirePresence('numeropedido', 'create')
+            ->notEmpty('numeropedido');
+
+        $validator
+            ->date('datacriacao')
+            ->requirePresence('datacriacao', 'create')
+            ->notEmpty('datacriacao');
+
+        $validator
+            ->date('dataatribuicao')
+            ->requirePresence('dataatribuicao', 'create')
+            ->notEmpty('dataatribuicao');
+
+        $validator
+            ->date('datainicioefectivo')
+            ->requirePresence('datainicioefectivo', 'create')
+            ->notEmpty('datainicioefectivo');
+
+        $validator
+            ->date('datatermoprevisto')
+            ->requirePresence('datatermoprevisto', 'create')
+            ->notEmpty('datatermoprevisto');
+
+        $validator
+            ->date('dataefectivatermo')
+            ->requirePresence('dataefectivatermo', 'create')
+            ->notEmpty('dataefectivatermo');
+
+        $validator
+            ->scalar('concelho')
+            ->maxLength('concelho', 45)
+            ->requirePresence('concelho', 'create')
+            ->notEmpty('concelho');
+
+        $validator
+            ->scalar('transferencias')
+            ->maxLength('transferencias', 45)
+            ->requirePresence('transferencias', 'create')
+            ->notEmpty('transferencias');
+
+        $validator
+            ->scalar('gestor')
+            ->maxLength('gestor', 45)
+            ->requirePresence('gestor', 'create')
+            ->notEmpty('gestor');
+
+        $validator
+            ->scalar('seguro')
+            ->maxLength('seguro', 45)
+            ->requirePresence('seguro', 'create')
+            ->notEmpty('seguro');
+
+        $validator
+            ->scalar('periocidaderelatorios')
+            ->maxLength('periocidaderelatorios', 45)
+            ->requirePresence('periocidaderelatorios', 'create')
+            ->notEmpty('periocidaderelatorios');
 
         return $validator;
     }
@@ -123,7 +196,10 @@ class PedidosTable extends Table
     {
         $rules->add($rules->existsIn(['processo_id'], 'Processos'));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
+        $rules->add($rules->existsIn(['pedidostypes_id'], 'Pedidostypes'));
         $rules->add($rules->existsIn(['state_id'], 'States'));
+        $rules->add($rules->existsIn(['pedidosmotives_id'], 'Pedidosmotives'));
+        $rules->add($rules->existsIn(['pais_id'], 'Pais'));
 
         return $rules;
     }

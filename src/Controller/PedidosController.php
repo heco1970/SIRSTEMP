@@ -40,7 +40,7 @@ class PedidosController extends AppController
             $date_end = ['createdlast'];  //data final
 
             // $contain = ['Types'];
-            $contain = ['Pessoas'];
+            $contain = ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives','Pais'];
             $conditions = [];
       
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
@@ -70,7 +70,7 @@ class PedidosController extends AppController
     public function view($id = null)
     {
         $pedido = $this->Pedidos->get($id, [
-            'contain' => ['Processos', 'Pessoas', 'States']
+            'contain' => ['Processos', 'Pessoas', 'States','PedidosTypes', 'PedidosMotives','Pais']
         ]);
 
         $this->set('pedido', $pedido);
@@ -86,6 +86,7 @@ class PedidosController extends AppController
         $pedido = $this->Pedidos->newEntity();
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
+            $this->log($pedido);
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registro foi gravado.'));
 
@@ -106,11 +107,12 @@ class PedidosController extends AppController
             }
         }
         $processos = $this->Pedidos->Processos->find('list', ['limit' => 200]);
-
-
-
+        $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
         $states = $this->Pedidos->States->find('list', ['limit' => 200]);
-        $this->set(compact('pedido', 'processos', 'pessoas', 'states'));
+        $pedidostypes = $this->Pedidos->PedidosTypes->find('list', ['limit' => 200]);
+        $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['limit' => 200]);
+        $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
+        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes','pedidosmotives','pais','states'));
     }
 
     /**
@@ -149,7 +151,7 @@ class PedidosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $pedido = $this->Pedidos->get($id);
         if ($this->Pedidos->delete($pedido)) {
             $this->Flash->success(__('O registro foi apagado.'));

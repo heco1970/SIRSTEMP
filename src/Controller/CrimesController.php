@@ -63,12 +63,7 @@ class CrimesController extends AppController
       }
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    /*
+    
     public function add()
     {
         $crime = $this->Crimes->newEntity();
@@ -83,8 +78,9 @@ class CrimesController extends AppController
         }
         $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('crime', 'pessoas'));
-    }*/
+    }
 
+    /*
     public function add()
     {
         $crime = $this->Crimes->newEntity();
@@ -109,7 +105,7 @@ class CrimesController extends AppController
         }
         $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('crime','pessoas'));
-    }
+    }*/
 
     public function edit($id = null)
     {
