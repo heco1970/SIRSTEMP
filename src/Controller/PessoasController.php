@@ -105,16 +105,25 @@ class PessoasController extends AppController
             $codconcelho = $this->Pessoas->CodigosPostais->find()->select('CodigoConcelho')->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1]);
             $concelho = $this->Pessoas->Concelhos->find()->select('id')->where(['CodigoConcelho' => $codconcelho, 'CodigoDistrito' => $distrito]);
             $freguesia = $this->Pessoas->CodigosPostais->find()->select('CodigoLocalidade')->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1]);
-            $pessoa->codigos_postais_id = $codigoid;
-            $pessoa->distritos_id = $distrito;
-            $pessoa->concelhos_id = $concelho;
-            $pessoa->freguesias_id = $freguesia;
-            if ($this->Pessoas->save($pessoa)) {
-                $this->Flash->success(__('O registo foi gravado.'));
 
-                return $this->redirect(['action' => 'index']);
+            $pessoa->codigos_postais_id = $codigoid;
+            if (!empty($pessoa->codigos_postais_id)) {
+                $pessoa->distritos_id = $distrito;
+                $pessoa->concelhos_id = $concelho;
+                $pessoa->freguesias_id = $freguesia;
+               
+
+                if ($this->Pessoas->save($pessoa)) {
+                    $this->Flash->success(__('O registo foi gravado.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            } else {
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+                $this->Flash->error(__('O código postal inserido não está correto.'));
             }
-            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
@@ -135,16 +144,16 @@ class PessoasController extends AppController
         $keyword = $this->request->getQuery('keyword');
         $keyword1 = $this->request->getQuery('keyword1');
 
-        $codigo = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['ExtCodigoPostal' => $keyword1,'NumCodigoPostal' => $keyword]);
-        $coddistrito = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]); 
+        $codigo = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['ExtCodigoPostal' => $keyword1, 'NumCodigoPostal' => $keyword]);
+        $coddistrito = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]);
         $codconcelho = $this->Pessoas->CodigosPostais->find()->select('CodigoConcelho')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]);
-       
 
-        $this->set('distritos',$this->Pessoas->Distritos->find('list',['keyField'=>'id','valueField'=>'Designacao'])->where(['CodigoDistrito' => $codigo]));
-        $this->set('concelhos',$this->Pessoas->Concelhos->find('list',['keyField'=>'id','valueField'=>'Designacao'])->where(['CodigoConcelho' => $codconcelho, 'CodigoDistrito' => $coddistrito]));
-        $this->set('freguesias',$this->Pessoas->CodigosPostais->find('list',['keyField'=>'id','valueField'=>'NomeLocalidade'])->where(['ExtCodigoPostal' => $keyword1,'NumCodigoPostal' => $keyword]));
 
-        
+        $this->set('distritos', $this->Pessoas->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito' => $codigo]));
+        $this->set('concelhos', $this->Pessoas->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoConcelho' => $codconcelho, 'CodigoDistrito' => $coddistrito]));
+        $this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['ExtCodigoPostal' => $keyword1, 'NumCodigoPostal' => $keyword]));
+
+
         $this->set('_serialize', ['distritos']);
     }
 

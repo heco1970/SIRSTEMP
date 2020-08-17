@@ -72,11 +72,11 @@ class PessoasTable extends Table
 
         $this->belongsTo('CentroEducs', [
             'foreignKey' => 'centro_educs_id',
-            'joinType' => 'INNER'
+            'joinType' => 'LEFT'
         ]);
         $this->belongsTo('EstbPris', [
             'foreignKey' => 'estb_pris_id',
-            'joinType' => 'INNER'
+            'joinType' => 'LEFT'
         ]);
         $this->belongsTo('Estadocivils', [
             'foreignKey' => 'id_estadocivil',
@@ -167,8 +167,7 @@ class PessoasTable extends Table
         $validator
             ->scalar('outroidentifica')
             ->maxLength('outroidentifica', 255)
-            ->requirePresence('outroidentifica', 'create')
-            ->notEmpty('outroidentifica');
+            ->allowEmpty('outroidentifica');
 
         $validator
             ->boolean('estado')
@@ -178,8 +177,7 @@ class PessoasTable extends Table
         $validator
             ->scalar('observacoes')
             ->maxLength('observacoes', 255)
-            ->requirePresence('observacoes', 'create')
-            ->notEmpty('observacoes');
+            ->allowEmpty('observacoes');
 
         return $validator;
     }

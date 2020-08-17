@@ -19,6 +19,7 @@ class ContactosFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'pessoa_id' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'nome' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'localidade' => ['type' => 'string', 'length' => 250, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'telefone' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'fax' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -49,6 +50,7 @@ class ContactosFixture extends TestFixture
             [
                 'id' => 1,
                 'pessoa_id' => 1,
+                'nome' => 'Lorem ipsum dolor sit amet',
                 'localidade' => 'Lorem ipsum dolor sit amet',
                 'telefone' => 1,
                 'fax' => 1,
@@ -56,8 +58,8 @@ class ContactosFixture extends TestFixture
                 'email' => 'Lorem ipsum dolor sit amet',
                 'descricao' => 'Lorem ipsum dolor sit amet',
                 'estado' => 1,
-                'created' => 1595578467,
-                'modified' => 1595578467
+                'created' => 1597679097,
+                'modified' => 1597679097
             ],
         ];
         parent::init();

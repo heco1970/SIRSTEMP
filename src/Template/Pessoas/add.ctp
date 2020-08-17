@@ -5,6 +5,15 @@
  * @var \App\Model\Entity\Pessoa $pessoa
  */
 ?>
+<style>
+    #distritos,#concelhos, #freguesias {
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Chrome */
+  -webkit-appearance: none;
+}
+
+</style>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -90,7 +99,7 @@
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
 
-                        <select class='form-control' disabled></select>
+                        <select class='form-control' id="distritos" disabled></select>
 
                     </div>
                 </div>
@@ -98,7 +107,7 @@
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
 
-                        <select class='form-control' disabled></select>
+                        <select class='form-control' id="concelhos" disabled></select>
 
                     </div>
                 </div>
@@ -106,7 +115,7 @@
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
 
-                        <select class='form-control' disabled></select>
+                        <select class='form-control' id="freguesias" disabled></select>
 
                     </div>
                 </div>
@@ -147,14 +156,14 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="centro_edu">Centro Educacional</label>
-                        <?php echo $this->Form->control('centro_educs_id', ['label' => false, 'class' => 'form-control', 'options' => $centro_educs]); ?>
+                        <?php echo $this->Form->control('centro_educs_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $centro_educs]); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="estb_pri">Estabelecimento Prisional</label>
 
-                        <?php echo $this->Form->control('estb_pris_id', ['label' => false, 'class' => 'form-control', 'options' => $estb_pris]); ?>
+                        <?php echo $this->Form->control('estb_pris_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $estb_pris]); ?>
 
                     </div>
                 </div>

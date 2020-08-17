@@ -106,12 +106,12 @@
                 <div class="row">
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
-                        <p><?= h($pessoa->centro_educ->designacao) ?></p>
+                        <p><?= !empty($pessoa->centro_educ->designacao)? h($pessoa->centro_educ->designacao):'' ?></p>
 
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
-                        <p><?= h($pessoa->estb_pri->designacao) ?></p>
+                        <p><?= !empty($pessoa->estb_pri->designacao) ? h($pessoa->estb_pri->designacao):'' ?></p>
 
                     </div>
                 </div>
@@ -165,7 +165,7 @@
                 <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                     <div class="card shadow mb-2">
                         <div class="card-header py-3">
-                            <a class="btn btn-success btn-circle btn-lg" href="/contactos/add"><i class="fas fa-plus"></i></a>
+                            <a class="btn btn-success btn-circle btn-lg" href="/contactos/add/<?= h($pessoa->id);?>"><i class="fas fa-plus"></i></a>
                         </div>
 
                         <table class="table">
@@ -183,7 +183,7 @@
                             <tbody>
                                 <?php foreach ($contactos as $contacto) : ?>
                                     <tr>
-                                        <th scope="row"><?= h($pessoa->nome) ?></th>
+                                        <th scope="row"><?= h($contacto->nome) ?></th>
                                         <td><?= h($contacto->localidade) ?></td>
                                         <td><?= h($contacto->telefone) ?></td>
                                         <td><?= h($contacto->fax) ?></td>

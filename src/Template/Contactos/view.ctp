@@ -12,8 +12,15 @@
     <div class="ml-4 mr-4 mb-2 mt-2">
         <div class="row">
             <div class="col">
-                <h6 class="text-primary"><?= __('Nome') ?></h6>
+                <h6 class="text-primary"><?= __('Nome da Pessoa') ?></h6>
                 <p><?= $contacto->has('pessoa') ? h($contacto->pessoa->nome) : '' ?></p>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h6 class="text-primary"><?= __('Nome do Contacto') ?></h6>
+                <p><?= h($contacto->nome) ?></p>
                 <hr>
             </div>
         </div>

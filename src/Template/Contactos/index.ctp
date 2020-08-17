@@ -18,7 +18,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('pessoa_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('localidade') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('telefone') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fax') ?></th>
@@ -33,7 +33,7 @@
             <?php foreach ($contactos as $contacto): ?>
             <tr>
                 <td><?= $this->Number->format($contacto->id) ?></td>
-                <td><?= $contacto->has('pessoa') ? $this->Html->link($contacto->pessoa->id, ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id]) : '' ?></td>
+                <td><?= h($contacto->nome)  ?></td>
                 <td><?= h($contacto->localidade) ?></td>
                 <td><?= $this->Number->format($contacto->telefone) ?></td>
                 <td><?= $this->Number->format($contacto->fax) ?></td>

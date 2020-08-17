@@ -50,12 +50,15 @@ class ContactosController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $contacto = $this->Contactos->newEntity();
+        
+
         if ($this->request->is('post')) {
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
-
+            $contacto->pessoa_id=$id;
+            $this->log($contacto);
             if ($save = $this->Contactos->save($contacto)) {
 
                 $this->Flash->success(__('O contacto foi guardado com sucesso.'));

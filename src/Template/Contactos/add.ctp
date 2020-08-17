@@ -7,17 +7,18 @@
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Registo de Contacto') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Registo de Contacto ')?> </h6>
     </div>
     <div class='ml-4 mt-4 mr-4'>
         <?= $this->Form->create($contacto) ?>
 
         <div id='my-form-body'>
+            
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="pessoa_id">Nome</label>
-                        <?= $this->Form->control('pessoa_id', ['options' => $pessoas, 'label' => false, 'class' => "form-control"]); ?>
+                        <label for="nome">Nome</label>
+                        <?= $this->Form->control('nome', [ 'label' => false, 'class' => "form-control"]); ?>
 
                     </div>
                 </div>

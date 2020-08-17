@@ -16,8 +16,8 @@
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="pessoa_id">Nome</label>
-                        <?= $this->Form->control('pessoa_id', ['options' => $pessoas, 'label' => false, 'class' => "form-control"]); ?>
+                        <label for="nome">Nome do Contacto</label>
+                        <?= $this->Form->control('nome', [ 'label' => false, 'class' => "form-control"]); ?>
 
                     </div>
                 </div>

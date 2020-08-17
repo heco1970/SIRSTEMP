@@ -60,6 +60,12 @@ class ContactosTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->scalar('nome')
+            ->maxLength('nome', 255)
+            ->requirePresence('nome', 'create')
+            ->notEmpty('nome');
+
+        $validator
             ->scalar('localidade')
             ->maxLength('localidade', 250)
             ->requirePresence('localidade', 'create')
@@ -103,7 +109,7 @@ class ContactosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        
+        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
 
         return $rules;

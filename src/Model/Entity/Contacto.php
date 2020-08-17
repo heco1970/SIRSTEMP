@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $pessoa_id
+ * @property string $nome
  * @property string $localidade
  * @property int|null $telefone
  * @property int|null $fax
@@ -34,6 +35,7 @@ class Contacto extends Entity
      */
     protected $_accessible = [
         'pessoa_id' => true,
+        'nome' => true,
         'localidade' => true,
         'telefone' => true,
         'fax' => true,
