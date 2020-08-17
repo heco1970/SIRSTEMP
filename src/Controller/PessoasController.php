@@ -191,7 +191,7 @@ class PessoasController extends AppController
     public function edit($id = null)
     {
         $pessoa = $this->Pessoas->get($id, [
-            'contain' => ['Crimes', 'PessoasCrimes']
+            'contain' => ['Crimes']
         ]);
 
         //$pessoa = $this->Pessoas->get($id, ['contain' => ['Users','UsersTeams']]);

@@ -35,8 +35,8 @@ class PessoasCrimesTable extends Table
         parent::initialize($config);
 
         $this->setTable('pessoas_crimes');
-        $this->setDisplayField('pessoas_id');
-        $this->setPrimaryKey(['pessoas_id', 'crimes_id']);
+        $this->setDisplayField('pessoa_id');
+        $this->setPrimaryKey(['pessoa_id', 'crime_id']);
 
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id',
