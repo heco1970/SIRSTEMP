@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -30,27 +31,27 @@ class PedidosController extends AppController
 
             $validOps = ['id', 'pessoa_id', 'createdfirst', 'createdlast'];
             $convArray = [
-                'id' => $model.'.id',
-                'pessoa_id' => $model.'.pessoa_id',
-                'createdfirst' => $model.'.created',
-                'createdlast' => $model.'.created'
+                'id' => $model . '.id',
+                'pessoa_id' => $model . '.pessoa_id',
+                'createdfirst' => $model . '.created',
+                'createdlast' => $model . '.created'
             ];
             $strings = ['pessoa_id'];
             $date_start = ['createdfirst']; //data inicial
             $date_end = ['createdlast'];  //data final
 
             // $contain = ['Types'];
-            $contain = ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives','Pais'];
+            $contain = ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Pais'];
             $conditions = [];
-      
+
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
             $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
 
-            $conditions = array_merge($conditions,$parsedQueries);
+            $conditions = array_merge($conditions, $parsedQueries);
             $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
-            $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+            $sorts = $this->Dynatables->parseSorts($query, $validOps, $convArray);
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
             //$this->log($records,'debug');
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
@@ -70,7 +71,7 @@ class PedidosController extends AppController
     public function view($id = null)
     {
         $pedido = $this->Pedidos->get($id, [
-            'contain' => ['Processos', 'Pessoas', 'States','PedidosTypes', 'PedidosMotives','Pais']
+            'contain' => ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Pais']
         ]);
 
         $this->set('pedido', $pedido);
@@ -86,6 +87,13 @@ class PedidosController extends AppController
         $pedido = $this->Pedidos->newEntity();
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
+            
+            $pessoa_nome=$this->request->getData('pessoa_id');
+            $processo_nome=$this->request->getData('processo_id');
+            
+            $pessoa_id=$this->Pedidos->Pessoas->find()->where(['nome'=>$pessoa_nome])->select(['id']);
+            $pedido->pessoa_id=$pessoa_id;
+            $pedido->processo_id=$this->Pedidos->Processos->find()->where(['entjudicial'=>$processo_nome])->select(['id']);;
             $this->log($pedido);
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registro foi gravado.'));
@@ -94,16 +102,16 @@ class PedidosController extends AppController
             }
             $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         } else if ($this->request->is('ajax')) {
-            $this->autoRender = false;   
+            $this->autoRender = false;
             if (!empty($this->request->query['term'])) {
-              $term = h($this->request->query['term']);
-              $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome', 'conditions' => ['nome LIKE' => '%' . $term . '%' ],'limit' => 20]);
-              $result = [];
-              foreach ($pessoas as $id => $name) {
-                $result[] = ['text' => $name, 'id' => $id];
-              }
-              echo json_encode(['results' => $result]);
-              return;
+                $term = h($this->request->query['term']);
+                $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome', 'conditions' => ['nome LIKE' => '%' . $term . '%'], 'limit' => 20]);
+                $result = [];
+                foreach ($pessoas as $id => $name) {
+                    $result[] = ['text' => $name, 'id' => $id];
+                }
+                echo json_encode(['results' => $result]);
+                return;
             }
         }
         $processos = $this->Pedidos->Processos->find('list', ['limit' => 200]);
@@ -112,7 +120,37 @@ class PedidosController extends AppController
         $pedidostypes = $this->Pedidos->PedidosTypes->find('list', ['limit' => 200]);
         $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['limit' => 200]);
         $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
-        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes','pedidosmotives','pais','states'));
+        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'states'));
+    }
+    public function search()
+    {
+
+        $this->request->allowMethod('ajax');
+
+        $keyword = $this->request->getQuery('term');
+        $this->log($keyword);
+
+        $terms = $this->Pedidos->Pessoas->find('list', array(
+            'conditions' => array(
+                'Pessoas.nome LIKE' => trim($keyword) . '%'
+            )
+        ));
+        echo json_encode($terms);
+    }
+    public function searchPedido()
+    {
+
+        $this->request->allowMethod('ajax');
+
+        $keyword = $this->request->getQuery('term');
+        $this->log($keyword);
+
+        $terms = $this->Pedidos->Processos->find('list', array(
+            'conditions' => array(
+                'Processos.nip LIKE' => trim($keyword) . '%'
+            )
+        ));
+        echo json_encode($terms);
     }
 
     /**
@@ -162,43 +200,43 @@ class PedidosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function xls() {
+    public function xls()
+    {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $nome = 'Pessoas.nome LIKE "%'.$out[0].'%"';
+        $nome = 'Pessoas.nome LIKE "%' . $out[0] . '%"';
 
-        if($out[0] != null){
+        if ($out[0] != null) {
             array_push($arr, $nome);
         }
-        if($arr == null){
+        if ($arr == null) {
             $pedidos = $this->Pedidos->find('all')->contain(['Pessoas']);
-        }
-        else{
-            $pedidos = $this->Pedidos->find('all', array('conditions'=>$arr))->contain(['Pessoas']);
+        } else {
+            $pedidos = $this->Pedidos->find('all', array('conditions' => $arr))->contain(['Pessoas']);
         }
 
         $this->autoRender = false;
         $path = TMP . "pedidos.xlsx";
-        
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        
+
         $sheet->setCellValue('A1', 'Pessoa');
         $sheet->setCellValue('B1', 'Data de criação');
-        
+
         $linha = 2;
         foreach ($pedidos as $row) {
             $sheet->setCellValue('A' . $linha, $row->pessoa->nome);
-            $sheet->setCellValue('B' . $linha, $row->created);    
+            $sheet->setCellValue('B' . $linha, $row->created);
             $linha++;
         }
 
-        foreach(range('A','B') as $columnID) {
+        foreach (range('A', 'B') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
         $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
-        
+
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);
 
