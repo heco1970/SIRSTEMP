@@ -18,7 +18,6 @@
 <?php
 $dynElems =
     [
-        'entjudicial' => ['label' => __('Entidade Judicial')],
         'natureza' => ['label' => __('Natureza')],
         'nip' => ['label' => __('NIP')],
         'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
@@ -27,9 +26,9 @@ $dynElems =
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['entjudicial' => ['label' => __('Entidade Judicial')]] +
+$dynElems = ['nip' => ['label' => __('NIP')]] +
+            ['entjudicial' => ['label' => __('Entidade Judicial')]] +
             ['natureza' => ['label' => __('Natureza')]] +
-            ['nip' => ['label' => __('NIP')]] +
             ['created' => ['label' => __('Data de Criação')]];
 ?>
 <div class="card shadow mb-4">

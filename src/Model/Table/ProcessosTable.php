@@ -9,8 +9,10 @@ use Cake\Validation\Validator;
 /**
  * Processos Model
  *
+ * @property |\Cake\ORM\Association\BelongsTo $Entidadejudiciais
  * @property \App\Model\Table\UnitsTable|\Cake\ORM\Association\BelongsTo $Units
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
+ * @property |\Cake\ORM\Association\HasMany $Pedidos
  *
  * @method \App\Model\Entity\Processo get($primaryKey, $options = [])
  * @method \App\Model\Entity\Processo newEntity($data = null, array $options = [])
@@ -42,6 +44,10 @@ class ProcessosTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Entidadejudiciais', [
+            'foreignKey' => 'entidadejudiciai_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('Units', [
             'foreignKey' => 'unit_id',
             'joinType' => 'INNER'
@@ -49,6 +55,9 @@ class ProcessosTable extends Table
         $this->belongsTo('States', [
             'foreignKey' => 'state_id',
             'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Pedidos', [
+            'foreignKey' => 'processo_id'
         ]);
     }
 
@@ -65,13 +74,8 @@ class ProcessosTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('entjudicial')
-            ->maxLength('entjudicial', 255)
-            ->requirePresence('entjudicial', 'create')
-            ->notEmpty('entjudicial');
-
-        $validator
             ->scalar('natureza')
+            ->maxLength('natureza', 200)
             ->requirePresence('natureza', 'create')
             ->notEmpty('natureza');
 
@@ -103,6 +107,7 @@ class ProcessosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->existsIn(['entidadejudiciai_id'], 'Entidadejudiciais'));
         $rules->add($rules->existsIn(['unit_id'], 'Units'));
         $rules->add($rules->existsIn(['state_id'], 'States'));
 

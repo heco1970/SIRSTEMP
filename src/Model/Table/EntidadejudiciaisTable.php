@@ -34,7 +34,7 @@ class EntidadejudiciaisTable extends Table
         parent::initialize($config);
 
         $this->setTable('entidadejudiciais');
-        $this->setDisplayField('id');
+        $this->setDisplayField('descricao');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
