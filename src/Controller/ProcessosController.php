@@ -28,7 +28,7 @@ class ProcessosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'entjudicial', 'natureza', 'nip', 'createdfirst', 'createdlast'];
+            $validOps = ['id', 'natureza', 'nip', 'createdfirst', 'createdlast'];
             $convArray = [
                 'id' => $model.'.id',
                 'entjudicial' => $model.'.entjudicial',
@@ -37,12 +37,13 @@ class ProcessosController extends AppController
                 'createdfirst' => $model.'.created',
                 'createdlast' => $model.'.created'
             ];
-            $strings = ['entjudicial'];
+            $strings = [];
             $date_start = ['createdfirst']; //data inicial
             $date_end = ['createdlast'];  //data final
 
             // $contain = ['Types'];
-            $contain = $conditions = [];
+            $contain = ['Entidadejudiciais'];
+            $conditions = [];
       
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
@@ -71,7 +72,7 @@ class ProcessosController extends AppController
     public function view($id = null)
     {
         $processo = $this->Processos->get($id, [
-            'contain' => ['Units', 'States']
+            'contain' => ['Units', 'States', 'Entidadejudiciais']
         ]);
 
         $this->set('processo', $processo);
@@ -87,6 +88,7 @@ class ProcessosController extends AppController
         $processo = $this->Processos->newEntity();
         if ($this->request->is('post')) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
+            $this->log($processo);
             if ($this->Processos->save($processo)) {
                 $this->Flash->success(__('O registro foi gravado.'));
 
@@ -98,6 +100,7 @@ class ProcessosController extends AppController
 
         $this->set('units', $this->Processos->Units->find('all'));
         $this->set('states', $this->Processos->States->find('all'));
+        $this->set('entidades', $this->Processos->Entidadejudiciais->find('all'));
        // $states = $this->Processos->States->find('list', ['limit' => 200]);
         $this->set(compact('processo'));
     }

@@ -27,8 +27,8 @@
 
         <table class="table">
             <tr>
-                <th scope="row"><?= __('Entjudicial') ?></th>
-                <td><?= h($processo->entjudicial) ?></td>
+            <th scope="row"><?= __('Entidade Judicial') ?></th>
+                <td><?= $processo->has('entidadejudiciai') ? $this->Html->link($processo->entidadejudiciai->descricao, ['controller' => 'Entidadejudiciais', 'action' => 'view', $processo->entidadejudiciai->id]) : '' ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Unit') ?></th>
