@@ -111,7 +111,7 @@ class PessoasController extends AppController
                 $pessoa->distritos_id = $distrito;
                 $pessoa->concelhos_id = $concelho;
                 $pessoa->freguesias_id = $freguesia;
-               
+
 
                 if ($this->Pessoas->save($pessoa)) {
                     $this->Flash->success(__('O registo foi gravado.'));
@@ -167,14 +167,30 @@ class PessoasController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    /*
+
     public function edit($id = null)
     {
         $pessoa = $this->Pessoas->get($id, [
-            'contain' => []
+            'contain' => ['Pais', 'Estadocivils', 'CentroEducs', 'EstbPris', 'Generos', 'Unidadeoperas', 'CodigosPostais', 'Concelhos', 'Distritos']
         ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
+            $codigo_postal = $this->request->getData('codigo_postal');
+            $codigo_postal1 = $this->request->getData('codigo_postal1');
+            $codigoid = $this->Pessoas->CodigosPostais->find()->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1])->select('id');
+
+            $distrito = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1]);
+            $codconcelho = $this->Pessoas->CodigosPostais->find()->select('CodigoConcelho')->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1]);
+            $concelho = $this->Pessoas->Concelhos->find()->select('id')->where(['CodigoConcelho' => $codconcelho, 'CodigoDistrito' => $distrito]);
+            $freguesia = $this->Pessoas->CodigosPostais->find()->select('CodigoLocalidade')->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1]);
+
+            $pessoa->codigos_postais_id = $codigoid;
+
+
+            $pessoa->distritos_id = $distrito;
+            $pessoa->concelhos_id = $concelho;
+            $pessoa->freguesias_id = $freguesia;
             if ($this->Pessoas->save($pessoa)) {
                 $this->Flash->success(__('O registro foi gravado.'));
 
@@ -183,68 +199,74 @@ class PessoasController extends AppController
             $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
 
-        $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
-        $this->set(compact('pessoa', 'pais'));
-    }*/
+        $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
+        $this->set('centro_educs', $this->Pessoas->CentroEducs->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
+        $this->set('estb_pris', $this->Pessoas->EstbPris->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
+        $this->set('estadocivils', $this->Pessoas->Estadocivils->find('list', ['keyField' => 'id', 'valueField' => 'estado']));
+        $this->set('generos', $this->Pessoas->Generos->find('list', ['keyField' => 'id', 'valueField' => 'genero']));
+        $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
 
-
-    public function edit($id = null)
-    {
-        $pessoa = $this->Pessoas->get($id, [
-            'contain' => ['Crimes']
-        ]);
-
-        //$pessoa = $this->Pessoas->get($id, ['contain' => ['Users','UsersTeams']]);
-
-        $subquery = $this->Pessoas->PessoasCrimes
-            ->find()
-            ->select(['PessoasCrimes.crime_id'])
-            ->where(['PessoasCrimes.pessoa_id' => $id]);
-
-
-        $crimes1 = $this->Pessoas->Crimes
-            ->find('list', ['keyField' => 'id', 'valueField' => 'descricao'])
-            ->where([
-                'Crimes.id IN' => $subquery
-            ]);
-
-        $crimes = $this->Pessoas->Crimes
-            ->find('list', ['keyField' => 'id', 'valueField' => 'descricao'])
-            ->where([
-                'Crimes.id NOT IN' => $subquery
-            ]);
-
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData(), ['associated' => ['Crimes', 'PessoasCrimes']]);
-
-            $this->loadModel('PessoasCrimes');
-
-            $select = $this->request->getData('crime_id');
-            $select1 = $this->request->getData('multiselect');
-
-            if ($this->Pessoas->save($pessoa)) {
-                if (!empty($select)) {
-                    $delete = $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
-                    foreach ($select as $row) {
-                        $pessoaCrime = $this->PessoasCrimes->newEntity();
-                        $pessoaCrime->crime_id = $row;
-                        $pessoaCrime->pessoa_id = $id;
-                        $this->PessoasCrimes->save($pessoaCrime);
-                    }
-                } else {
-                    $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
-                }
-
-                $this->Flash->success(__('Crime guardada com sucesso.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('Não foi possível guardar o Crime. Por favor tente novamente.'));
-        }
-
-        $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
-        $this->set(compact('pessoa', 'crimes1', 'crimes', 'pais'));
+        $this->set(compact('pessoa'));
     }
+
+
+    // public function edit($id = null)
+    // {
+    //     $pessoa = $this->Pessoas->get($id, [
+    //         'contain' => ['Crimes']
+    //     ]);
+
+    //     //$pessoa = $this->Pessoas->get($id, ['contain' => ['Users','UsersTeams']]);
+
+    //     $subquery = $this->Pessoas->PessoasCrimes
+    //         ->find()
+    //         ->select(['PessoasCrimes.crime_id'])
+    //         ->where(['PessoasCrimes.pessoa_id' => $id]);
+
+
+    //     $crimes1 = $this->Pessoas->Crimes
+    //         ->find('list', ['keyField' => 'id', 'valueField' => 'descricao'])
+    //         ->where([
+    //             'Crimes.id IN' => $subquery
+    //         ]);
+
+    //     $crimes = $this->Pessoas->Crimes
+    //         ->find('list', ['keyField' => 'id', 'valueField' => 'descricao'])
+    //         ->where([
+    //             'Crimes.id NOT IN' => $subquery
+    //         ]);
+
+    //     if ($this->request->is(['patch', 'post', 'put'])) {
+    //         $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData(), ['associated' => ['Crimes', 'PessoasCrimes']]);
+
+    //         $this->loadModel('PessoasCrimes');
+
+    //         $select = $this->request->getData('crime_id');
+    //         $select1 = $this->request->getData('multiselect');
+
+    //         if ($this->Pessoas->save($pessoa)) {
+    //             if (!empty($select)) {
+    //                 $delete = $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
+    //                 foreach ($select as $row) {
+    //                     $pessoaCrime = $this->PessoasCrimes->newEntity();
+    //                     $pessoaCrime->crime_id = $row;
+    //                     $pessoaCrime->pessoa_id = $id;
+    //                     $this->PessoasCrimes->save($pessoaCrime);
+    //                 }
+    //             } else {
+    //                 $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
+    //             }
+
+    //             $this->Flash->success(__('Crime guardada com sucesso.'));
+
+    //             return $this->redirect(['action' => 'index']);
+    //         }
+    //         $this->Flash->error(__('Não foi possível guardar o Crime. Por favor tente novamente.'));
+    //     }
+
+    //     $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
+    //     $this->set(compact('pessoa', 'crimes1', 'crimes', 'pais'));
+    // }
 
     /**
      * Delete method

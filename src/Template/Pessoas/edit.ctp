@@ -1,148 +1,238 @@
+<?php
 
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Pessoa $pessoa
+ */
+?>
+<style>
+    #distritos,
+    #concelhos,
+    #freguesias {
+        /* for Firefox */
+        -moz-appearance: none;
+        /* for Chrome */
+        -webkit-appearance: none;
+    }
+</style>
 
-
-
-
-
-<link href="/css/style.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="/js/multiselect.js"></script>
-    <div class="card shadow mb-4">
+<div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Registo de Equipa') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Pessoa') ?></h6>
     </div>
-    <?= $this->Form->create($pessoa, ['id' => 'myForm']) ?>
-  
-<div class='ml-4 mr-4 mt-4'>
-        <div class="form-row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="nome">
-                        <h4><?= __('Nome') ?></h4>
-                    </label>
-                    <?= $this->Form->control('nome', ['class' => 'form-control', 'nome' => 'nome', 'label' => false, 'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="data">
-                        <h4><?= __('Data Nascimento') ?></h4>
-                    </label>
-                    <?php //echo $this->Form->text('data_nascimento', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+    <?= $this->Form->create($pessoa) ?>
+    <div class='ml-4 mt-4 mr-4'>
+        <div id='my-form-body'>
 
-                    <?= $this->Form->control('data_nascimento', ['class' => 'form-control', 'data_nascimento' => 'data_nascimento', 'label' => false, 'type' => 'date' ,'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="nomepai">
-                        <h4><?= __('Nome do pai') ?></h4>
-                    </label>
-                    <?= $this->Form->control('nomepai', ['class' => 'form-control', 'nomepai' => 'nomepai', 'label' => false, 'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="nomemae">
-                        <h4><?= __('Nome da mãe') ?></h4>
-                    </label>
-                    <?= $this->Form->control('nomemae', ['class' => 'form-control', 'nomemae' => 'nomemae', 'label' => false, 'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="estadocivil">
-                        <h4><?= __('Estado Civil') ?></h4>
-                    </label>
-                    <?= $this->Form->control('id_estadocivil', ['class' => 'form-control', 'id_estadocivil' => 'id_estadocivil', 'label' => false, 'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="genero">
-                        <h4><?= __('Genero') ?></h4>
-                    </label>
-                    <?= $this->Form->control('id_genero', ['class' => 'form-control', 'id_genero' => 'id_genero', 'label' => false, 'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="pais">
-                        <h4><?= __('País') ?></h4>
-                    </label>
-                    <?= $this->Form->control('pais_id', ['class' => 'form-control', 'pais_id' => 'pais_id', 'label' => false, 'required']); ?>
-                </div>
-               
-                <div class="form-group">
-                    <label for="cc">
-                        <h4><?= __('cc') ?></h4>
-                    </label>
-                    <?= $this->Form->control('cc', ['class' => 'form-control', 'cc' => 'cc', 'label' => false, 'required']); ?>
-                </div>
-
-                <div class="form-group">
-                    <label for="nif">
-                        <h4><?= __('NIF') ?></h4>
-                    </label>
-                    <?= $this->Form->control('nif', ['class' => 'form-control', 'nif' => 'nif', 'label' => false, 'required']); ?>
-                </div>
-               
-                <div class="form-group">
-                    <label for="outroidentifica">
-                        <h4><?= __('outroidentifica') ?></h4>
-                    </label>
-                    <?= $this->Form->control('outroidentifica', ['class' => 'form-control', 'outroidentifica' => 'outroidentifica', 'label' => false, 'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="unidadeopera">
-                        <h4><?= __('unidadeopera') ?></h4>
-                    </label>
-                    <?= $this->Form->control('id_unidadeopera', ['class' => 'form-control', 'id_unidadeopera' => 'cid_unidadeoperac', 'label' => false, 'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="estado">
-                        <h4><?= __('Estado') ?></h4>
-                    </label>
-                    <?= $this->Form->control('estado', ['class' => 'form-control', 'estado' => 'estado', 'label' => false, 'required']); ?>
-                </div>
-                <div class="form-group">
-                    <label for="observacoes">
-                        <h4><?= __('Observações') ?></h4>
-                    </label>
-                    <?= $this->Form->control('observacoes', ['class' => 'form-control', 'observacoes' => 'observacoes', 'label' => false, 'required']); ?>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nome">Nome da Pessoa</label>
+                        <?php echo $this->Form->control('nome', ['label' => false, 'class' => 'form-control']); ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nome_alt">Nome Alternativo</label>
+                        <?php echo $this->Form->control('nome_alt', ['label' => false, 'class' => 'form-control']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nomepai">Nome do Pai</label>
+                        <?php echo $this->Form->control('nomepai', ['label' => false, 'class' => 'form-control']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nomemaae">Nome da Mâe</label>
+                        <?php echo $this->Form->control('nomemae', ['label' => false, 'class' => 'form-control']); ?>
 
-    <div class="pessoas form large-9 medium-8 columns content">
-        <div class="form-row">
-                <div class="col-5">
-                    <div class="form-group">
-                        <label for="multiselect">
-                            <h4><?= __(' por seleccionar: ') ?></h4>
-                        </label>
-                    
-                    <?= $this->Form->control('multiselect',array('label'=>false,'size'=>8,'class'=>"form-control",'type' => 'select', 'multiple' => true, 'options' => $crimes));?>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="form-group mt-5">
-                        <button type="button" id="multiselect_rightAll" class="btn btn-block btn-warning">Adicionar Todos</button>
-                        <button type="button" id="multiselect_rightSelected" class="btn btn-block btn-primary">Adicionar<i class="glyphicon glyphicon-chevron-right"></i></button>
-                        <button type="button" id="multiselect_leftSelected" class="btn btn-block btn-primary">Remover<i class="glyphicon glyphicon-chevron-left"></i></button>
-                        <button type="button" id="multiselect_leftAll" class="btn btn-block btn-warning">Remover Todos<i class="glyphicon glyphicon-backward"></i></button>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="id_estadocivil">Estado Civil</label>
+                        <?php echo $this->Form->control('id_estadocivil', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $estadocivils, 'class' => 'form-control']); ?>
                     </div>
                 </div>
-                <div class="col-5">
+                <div class="col">
                     <div class="form-group">
-                        <label for="multiselect_to">
-                            <h4><?= __(' seleccionados: ') ?></h4>
-                        </label>
-                        
-                        <?= $this->Form->control('crime_id',array('id'=>"multiselect_to",'label'=>false,'size'=>8,'class'=>"form-control",'type' => 'select', 'multiple' => true, 'options' => $crimes1));?>
-                
+                        <label for="id_genero">Genero</label>
+
+                        <?php echo $this->Form->control('id_genero', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $generos, 'class' => 'form-control']); ?>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="pais_id">Nacionalidade</label>
+
+                        <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+
+                        <label for="codigo_postal">Código Postal</label>
+                        <div class="form-row">
+                            <div class="col-7">
+                                <?php echo $this->Form->number('codigo_postal', ['id' => 'codigo_postal', 'value' => h($pessoa->codigos_postai->NumCodigoPostal), 'max' => 9999, 'min' => 1, 'label' => false, 'class' => 'form-control', 'required']); ?>
+                            </div>
+                            <div class="col-5">
+                                <?php echo $this->Form->number('codigo_postal1', ['id' => 'codigo_postal1', 'value' => h($pessoa->codigos_postai->ExtCodigoPostal), 'max' => 999, 'min' => 1, 'label' => false, 'class' => 'form-control', 'required']); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" id="distrito">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="distrito">Distrito</label>
+
+                        <select class='form-control' id="distritos" disabled>
+                            <option><?= h($pessoa->distrito->Designacao) ?></option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="concelho">Concelho</label>
+
+                        <select class='form-control' id="concelhos" disabled>
+                            <option><?= h($pessoa->concelho->Designacao) ?></option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="freguesia">Freguesia</label>
+
+                        <select class='form-control' id="freguesias" disabled>
+                            <option><?= h($pessoa->codigos_postai->NomeLocalidade) ?></option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="hea">Data de Nascimento</label>
+                        <?php echo $this->Form->text('data_nascimento', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="cc">Cartão de Cidadão</label>
+                        <?php echo $this->Form->control('cc', ['label' => false, 'class' => 'form-control']); ?>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nif">Numero de Contribuinte</label>
+                        <?php echo $this->Form->control('nif', ['label' => false, 'class' => 'form-control', 'type' => 'text']); ?>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="outroidentifica">Outra Identificação</label>
+                        <?php echo $this->Form->control('outroidentifica', ['label' => false, 'class' => 'form-control']); ?>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="centro_edu">Centro Educacional</label>
+                        <?php echo $this->Form->control('centro_educs_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $centro_educs]); ?>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="estb_pri">Estabelecimento Prisional</label>
+
+                        <?php echo $this->Form->control('estb_pris_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $estb_pris]); ?>
+
                     </div>
                 </div>
 
             </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="observacoes">Observações</label>
+
+                        <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control']); ?>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
         </div>
-        <div class="card-footer card-footer-fixed">
-            <?= $this->Form->button(__('Alterar'), ['class' => 'btn btn-success float-right']) ?>
-        </div>
-        <?= $this->Form->end() ?>
     </div>
+    <div class="card-footer card-footer-fixed">
+        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success"]) ?>
+        <a href="/pessoas/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
+    </div>
+    <?= $this->Form->end() ?>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $('#multiselect').multiselect();
-</script>
+    $('document').ready(function() {
+        $('#codigo_postal1').keyup(function() {
 
+            var searchkey = $('#codigo_postal').val();
+            var searchkey1 = $('#codigo_postal1').val();
+            searchTags(searchkey, searchkey1);
+        });
+        $('#codigo_postal').keyup(function() {
+
+            var searchkey = $('#codigo_postal').val();
+            var searchkey1 = $('#codigo_postal1').val();
+            searchTags(searchkey, searchkey1);
+        });
+
+
+        function searchTags(keyword, keyword1) {
+            var data = keyword;
+            var data1 = keyword1;
+            $.ajax({
+                method: 'get',
+                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'Search']); ?>",
+                data: {
+                    keyword: data,
+                    keyword1: data1,
+
+                },
+
+                success: function(response) {
+                    $('#distrito').html(response);
+                }
+            });
+        };
+    });
+</script>
