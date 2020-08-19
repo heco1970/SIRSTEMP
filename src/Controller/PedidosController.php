@@ -96,11 +96,11 @@ class PedidosController extends AppController
             $pedido->processo_id=$this->Pedidos->Processos->find()->where(['entjudicial'=>$processo_nome])->select(['id']);;
             $this->log($pedido);
             if ($this->Pedidos->save($pedido)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         } else if ($this->request->is('ajax')) {
             $this->autoRender = false;
             if (!empty($this->request->query['term'])) {
@@ -168,11 +168,11 @@ class PedidosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
             if ($this->Pedidos->save($pedido)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $processos = $this->Pedidos->Processos->find('list', ['limit' => 200]);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
@@ -192,9 +192,9 @@ class PedidosController extends AppController
         //$this->request->allowMethod(['post', 'delete']);
         $pedido = $this->Pedidos->get($id);
         if ($this->Pedidos->delete($pedido)) {
-            $this->Flash->success(__('O registro foi apagado.'));
+            $this->Flash->success(__('O registo foi apagado.'));
         } else {
-            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

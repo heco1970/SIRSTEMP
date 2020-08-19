@@ -52,11 +52,11 @@ class UserStatesController extends AppController
         if ($this->request->is('post')) {
             $userState = $this->UserStates->patchEntity($userState, $this->request->getData());
             if ($this->UserStates->save($userState)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $this->set(compact('userState'));
     }
@@ -76,11 +76,11 @@ class UserStatesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $userState = $this->UserStates->patchEntity($userState, $this->request->getData());
             if ($this->UserStates->save($userState)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $this->set(compact('userState'));
     }
@@ -97,9 +97,9 @@ class UserStatesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $userState = $this->UserStates->get($id);
         if ($this->UserStates->delete($userState)) {
-            $this->Flash->success(__('O registro foi apagado.'));
+            $this->Flash->success(__('O registo foi apagado.'));
         } else {
-            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

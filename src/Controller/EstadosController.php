@@ -52,11 +52,11 @@ class EstadosController extends AppController
         if ($this->request->is('post')) {
             $estado = $this->Estados->patchEntity($estado, $this->request->getData());
             if ($this->Estados->save($estado)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $this->set(compact('estado'));
     }
@@ -76,11 +76,11 @@ class EstadosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $estado = $this->Estados->patchEntity($estado, $this->request->getData());
             if ($this->Estados->save($estado)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $this->set(compact('estado'));
     }
@@ -97,9 +97,9 @@ class EstadosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $estado = $this->Estados->get($id);
         if ($this->Estados->delete($estado)) {
-            $this->Flash->success(__('O registro foi apagado.'));
+            $this->Flash->success(__('O registo foi apagado.'));
         } else {
-            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

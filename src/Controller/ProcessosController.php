@@ -90,11 +90,11 @@ class ProcessosController extends AppController
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
             $this->log($processo);
             if ($this->Processos->save($processo)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
 
@@ -120,11 +120,11 @@ class ProcessosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
             if ($this->Processos->save($processo)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $units = $this->Processos->Units->find('list', ['limit' => 200]);
         $states = $this->Processos->States->find('list', ['limit' => 200]);
@@ -143,9 +143,9 @@ class ProcessosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $processo = $this->Processos->get($id);
         if ($this->Processos->delete($processo)) {
-            $this->Flash->success(__('O registro foi apagado.'));
+            $this->Flash->success(__('O registo foi apagado.'));
         } else {
-            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

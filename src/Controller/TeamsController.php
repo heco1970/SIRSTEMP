@@ -78,11 +78,11 @@ class TeamsController extends AppController
     if ($this->request->is('post')) {
         $team = $this->Teams->patchEntity($team, $this->request->getData());
         if ($this->Teams->save($team)) {
-          $this->Flash->success(__('The team has been saved.'));
+          $this->Flash->success(__('O registo foi gravado.'));
 
           return $this->redirect(['action' => 'index']);
         }
-        $this->Flash->error(__('The team could not be saved. Please, try again.'));
+        $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
     }
     $this->set(compact('team'));
   }
@@ -130,11 +130,11 @@ class TeamsController extends AppController
           $this->UsersTeams->deleteAll(['UsersTeams.team_id' => $id]);
         }
 
-        $this->Flash->success(__('Equipa guardado com sucesso.'));
+        $this->Flash->success(__('O registo foi gravado.'));
 
         return $this->redirect(['action' => 'index']);
       }
-      $this->Flash->error(__('Não foi possível guardar a Equipa. Por favor tente novamente.'));
+      $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
     }
     $this->set(compact('team', 'users1', 'users'));
   }
@@ -151,9 +151,9 @@ class TeamsController extends AppController
     //$this->request->allowMethod(['post', 'delete']);
     $team = $this->Teams->get($id);
     if ($this->Teams->delete($team)) {
-      $this->Flash->success(__('The team has been deleted.'));
+      $this->Flash->success(__('O registo foi apagado.'));
     } else {
-      $this->Flash->error(__('The team could not be deleted. Please, try again.'));
+      $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
     }
 
     return $this->redirect(['action' => 'index']);
