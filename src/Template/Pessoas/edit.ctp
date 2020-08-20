@@ -134,7 +134,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="hea">Data de Nascimento</label>
-                        <?php echo $this->Form->text('data_nascimento', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data_nascimento', ['label' => false, 'value'=>h($pessoa->data_nascimento->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
                 <div class="col">
