@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="name"><h4><?=__('Processo')?></h4></label>
-                                <?= $this->Form->control('processo_id', ['class' => 'form-control', 'nip' => 'nip', 'label' => false, 'required']); ?>
+                                <?= $this->Form->text('processo', ['id'=>'processo_id','class' => 'form-control',  'label' => false, 'required']); ?>
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                         <div class="form-group ui-widget">
                             <div class="col-xs-12">
                                 <label for="name"><h4><?=__('Nome da Pessoa')?></h4></label>
-                                <?= $this->Form->control('pessoa_id', ['class' => 'form-control', 'nome' => 'nome', 'label' => false, 'required']); ?>
+                                <?= $this->Form->text('pessoa', ['id'=>'pessoa_id','class' => 'form-control',  'label' => false, 'required']); ?>
                             </div>
                         </div>
                     </div>

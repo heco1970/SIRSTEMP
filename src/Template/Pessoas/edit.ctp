@@ -18,7 +18,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Pessoa') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Registo de Pessoa') ?></h6>
     </div>
     <?= $this->Form->create($pessoa) ?>
     <div class='ml-4 mt-4 mr-4'>
@@ -182,7 +182,7 @@
                     <div class="form-group">
                         <label for="observacoes">Observações</label>
 
-                        <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('observacoes', ['type' => 'textarea','label' => false, 'class' => 'form-control']); ?>
 
 
                     </div>

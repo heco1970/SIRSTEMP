@@ -86,14 +86,16 @@ class PedidosController extends AppController
         $pedido = $this->Pedidos->newEntity();
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
-            
-            $pessoa_nome=$this->request->getData('pessoa_id');
-            $processo_nome=$this->request->getData('processo_id');
-            
-            $pessoa_id=$this->Pedidos->Pessoas->find()->where(['nome'=>$pessoa_nome])->select(['id']);
-            $pedido->pessoa_id=$pessoa_id;
-            $pedido->processo_id=$this->Pedidos->Processos->find()->where(['entjudicial'=>$processo_nome])->select(['id']);;
+
+            $pessoa_nome = $this->request->getData('pessoa');
+            $processo_nome = $this->request->getData('processo');
+
+            $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
+            $pedido->pessoa_id = $pessoa_id;
+            $this->log($processo_nome);
+            $pedido->processo_id = $this->Pedidos->Processos->find()->where(['entjudicial' => $processo_nome])->select('id');;
             $this->log($pedido);
+
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
@@ -144,11 +146,15 @@ class PedidosController extends AppController
         $keyword = $this->request->getQuery('term');
         $this->log($keyword);
 
-        $terms = $this->Pedidos->Processos->find('list', array(
-            'conditions' => array(
-                'Processos.nip LIKE' => trim($keyword) . '%'
-            )
-        ));
+        $terms = $this->Pedidos->Processos->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'entjudicial'
+        ])->where([
+
+            'Processos.nip LIKE' => trim($keyword) . '%'
+
+        ]);
+        
         echo json_encode($terms);
     }
 
