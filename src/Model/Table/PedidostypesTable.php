@@ -17,6 +17,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Pedidostype patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Pedidostype[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Pedidostype findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class PedidostypesTable extends Table
 {
@@ -34,6 +36,8 @@ class PedidostypesTable extends Table
         $this->setTable('pedidostypes');
         $this->setDisplayField('descricao');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
     }
 
     /**

@@ -17,6 +17,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Pedidosmotive patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Pedidosmotive[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Pedidosmotive findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class PedidosmotivesTable extends Table
 {
@@ -34,6 +36,8 @@ class PedidosmotivesTable extends Table
         $this->setTable('pedidosmotives');
         $this->setDisplayField('descricao');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
     }
 
     /**
@@ -46,7 +50,8 @@ class PedidosmotivesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmpty('id', 'create')
+            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('descricao')
@@ -55,5 +60,19 @@ class PedidosmotivesTable extends Table
             ->notEmpty('descricao');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['id']));
+
+        return $rules;
     }
 }

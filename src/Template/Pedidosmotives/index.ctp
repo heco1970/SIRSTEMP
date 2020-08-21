@@ -17,12 +17,12 @@ $dynElems =
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['id' => ['label' => __('Id')]] +
-            ['descricao' => ['label' => __('Descrição')]];
+$dynElems = ['descricao' => ['label' => __('Descrição')]] +
+            ['created' => ['label' => __('Data de Criação')]];
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Perfis')?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Motivos de Pedidos')?></h6>
     </div>
     <div class="card-body">
         <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>

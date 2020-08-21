@@ -1,22 +1,22 @@
-<div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
-<?= $this->Form->create($entidadejudiciai) ?>
-    <legend><?= __('Alterar Entidades judicial') ?></legend>
-
-        <table class="table">
-            <tr>
-                <th scope="row"><?= __('Designação') ?></th>
-                <td>
-                    <?php
-                       echo $this->Form->text('descricao', ['required' => true]);
-                    ?>
-                </td>
-            </tr>
-        </table>
-
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Entidades judicial') ?></h6>
     </div>
-    <button class="btn btn-success btn-lg" type="submit">Alterar</button>
+    <?= $this->Form->create($entidadejudiciai, ['id' => 'myForm']) ?>
+    <div class='ml-4 mr-4 mt-4'>
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="team">
+                        <h4><?= __('Designação') ?></h4>
+                    </label>
+                    <?= $this->Form->control('descricao', ['class' => 'form-control', 'descricao' => 'descricao', 'label' => false, 'required']); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer card-footer-fixed">
+        <?= $this->Form->button(__('Gravar alterações'), ['class' => 'btn btn-success float-right']) ?>
+    </div>
     <?= $this->Form->end() ?>
-        
 </div>

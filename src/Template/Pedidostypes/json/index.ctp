@@ -3,6 +3,7 @@ $data = [];
 foreach ($records as $record) {
   $data[] = [
     'descricao' => $record->descricao,
+    'created' => $record->created->i18nFormat('dd/MM/yyyy'),
     'id' => $record->id,
   ];
 }
