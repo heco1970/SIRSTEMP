@@ -97,11 +97,9 @@ class ProcessosController extends AppController
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
-
-        $this->set('units', $this->Processos->Units->find('all'));
-        $this->set('states', $this->Processos->States->find('all'));
-        $this->set('entidades', $this->Processos->Entidadejudiciais->find('all'));
-       // $states = $this->Processos->States->find('list', ['limit' => 200]);
+        $this->set('units', $this->Processos->Units->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
+        $this->set('states', $this->Processos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
+        $this->set('entidades', $this->Processos->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
         $this->set(compact('processo'));
     }
 
