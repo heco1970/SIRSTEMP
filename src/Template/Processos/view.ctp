@@ -1,6 +1,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe da Processo') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe do Processo') ?></h6>
     </div>
     <div class="ml-3 mr-3 mb-3 mt-3">
 
@@ -19,7 +19,7 @@
                 <hr>
                 <div class="row">
                     <div class="col">
-                        <h6 class="text-primary"><?= __('Unidades Orgânicas') ?></h6>
+                        <h6 class="text-primary"><?= __('Unidade Orgânica') ?></h6>
                         <td><?= h($processo->unit->designacao) ?></td>
                         <hr>
                     </div>

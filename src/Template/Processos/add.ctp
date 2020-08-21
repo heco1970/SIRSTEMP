@@ -5,33 +5,21 @@
     <?= $this->Form->create($processo) ?>
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
-            <div class="form-row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="entidade_id">Entidade Judicial</label>
-                        <select class="form-control" name="entidadejudiciai_id" id="entidadejudiciai_id">
-                            <?php foreach ($entidades as $entidade): ?>
-                                <option value="<?= $entidade->id ?>"><?= $entidade->descricao ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="entidade_id">Entidade Judicial</label>
+                <?php echo $this->Form->control('entidade_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
             </div>
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
                         <label for="unit_id">Unidade Orgânica</label>
-                        <select class="form-control" name="unit_id" id="unit_id">
-                            <?php foreach ($units as $unit): ?>
-                                <option value="<?= $unit->id ?>"><?= $unit->designacao ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <?php echo $this->Form->control('unit_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $units, 'required']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="natureza">Natureza</label>
-                        <?php echo $this->Form->control('natureza', ['label' => false, 'class' => 'form-control', 'required' => true]); ?>
+                        <?php echo $this->Form->control('natureza', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
             </div>
@@ -39,7 +27,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="dataconclusao">Data de Conclusão</label>
-                        <input type="date" class="form-control" name="dataconclusao" id="dataconclusao">
+                        <?php echo $this->Form->text('dataconclusao', ['label' => false, 'class' => 'form-control', 'type' => 'date', 'required']); ?>
                     </div>
                 </div>
                 <div class="col">
@@ -51,12 +39,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="state_id">Estado</label>
-                        <select class="form-control" name="state_id" id="state_id">
-                            <?php foreach ($states as $state): ?>
-                                <option value="<?= $state->id ?>"><?= $state->designacao ?></option>
-                            <?php endforeach; ?>
-                        </select>
-
+                        <?php echo $this->Form->control('state_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $states, 'required']); ?>
                     </div>
                 </div>
             </div>
@@ -64,7 +47,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="observacoes">Observações</label>
-                        <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control', 'required' => false]); ?>
+                        <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
             </div>
