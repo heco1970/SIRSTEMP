@@ -83,11 +83,11 @@ class PedidosmotivesController extends AppController
         if ($this->request->is('post')) {
             $pedidosmotive = $this->Pedidosmotives->patchEntity($pedidosmotive, $this->request->getData());
             if ($this->Pedidosmotives->save($pedidosmotive)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $this->set(compact('pedidosmotive'));
     }
@@ -104,11 +104,11 @@ class PedidosmotivesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedidosmotive = $this->Pedidosmotives->patchEntity($pedidosmotive, $this->request->getData());
             if ($this->Pedidosmotives->save($pedidosmotive)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $this->set(compact('pedidosmotive'));
     }
@@ -125,7 +125,7 @@ class PedidosmotivesController extends AppController
         //$this->request->allowMethod(['post', 'delete']);
         $pedidosmotive = $this->Pedidosmotives->get($id);
         if ($this->Pedidosmotives->delete($pedidosmotive)) {
-            $this->Flash->success(__('The pedidosmotive has been deleted.'));
+            $this->Flash->success(__('O registo foi apagado.'));
         } else {
             $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
         }

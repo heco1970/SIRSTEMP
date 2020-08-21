@@ -91,11 +91,11 @@ class AttemptsController extends AppController
           }
 
           if ($this->Attempts->save($attempt)) {
-            $this->Flash->success(__('O registro foi gravado.'));
+            $this->Flash->success(__('O registo foi gravado.'));
 
             return $this->redirect(['action' => 'index']);
           }
-          $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+          $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
       }
       $types = $this->Attempts->find('list', ['limit' => 200]);
       $states = $this->Attempts->UserStates->find('list', ['limit' => 200])->toArray();
@@ -125,11 +125,11 @@ class AttemptsController extends AppController
         }
 
         if ($this->Attempts->save($attempt)) {
-          $this->Flash->success(__('O registro foi gravado.'));
+          $this->Flash->success(__('O registo foi gravado.'));
 
           return $this->redirect(['action' => 'index']);
         }
-        $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+        $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
       }
       $types = $this->Attempts->find('list', ['limit' => 200]);
       $states = $this->Attempts->UserStates->find('list', ['limit' => 200])->toArray();
