@@ -18,33 +18,16 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Processo')?></h4></label>
                         <?php echo $this->Form->control('processo_id', ['label' => false, 'class' => 'form-control']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('Processo') ?></h4>
-                        </label>
-                        <?= $this->Form->text('processo_id', ['class' => 'form-control','id'=>'processo_id', 'label' => false]); ?>
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group ui-widget">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Nome da Pessoa')?></h4></label>
                         <?php echo $this->Form->control('pessoa_id', ['label' => false, 'class' => 'form-control']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('Pessoa') ?></h4>
-                        </label>
-                        <?= $this->Form->text('pessoa_id', ['class' => 'form-control','id'=>'pessoa_id', 'label' => false]); ?>
-                  
-                
-
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
@@ -53,15 +36,8 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Data de recepção')?></h4></label>
                         <?php echo $this->Form->text('datarecepcao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('Data de recepção') ?></h4>
-                        </label>
-                        <input type="date" class="form-control" name="datarecepcao" id="datarecepcao" required>
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
@@ -132,16 +108,9 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Termino')?></h4></label>
                         <?php echo $this->Form->text('termino', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
 
-=======
-                        <label for="name">
-                            <h4><?= __('Termino') ?></h4>
-                        </label>
-                        <input type="date" class="form-control" name="termino" id="termino" required>
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
@@ -160,30 +129,16 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Data de criação')?></h4></label>
                         <?php echo $this->Form->text('datacriacao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('Data de criação') ?></h4>
-                        </label>
-                        <input type="date" class="form-control" name="datacriacao" id="datacriacao" required>
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Data de atribuição')?></h4></label>
                         <?php echo $this->Form->text('dataatribuicao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('Data de atribuição') ?></h4>
-                        </label>
-                        <input type="date" class="form-control" name="dataatribuicao" id="dataatribuicao" required>
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
@@ -192,46 +147,24 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Data de Inicio Efetivo')?></h4></label>
                         <?php echo $this->Form->text('datainicioefectivo', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('Data de Inicio Efetivo') ?></h4>
-                        </label>
-                        <input type="date" class="form-control" name="datainicioefetivo" id="datainicioefetivo" required>
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Data de termo previsto')?></h4></label>
                         <?php echo $this->Form->text('datatermoprevisto', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('Data de termo previsto') ?></h4>
-                        </label>
-                        <input type="date" class="form-control" name="datatermoprevisto" id="datatermoprevisto" required>
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('Data de efetivo termo')?></h4></label>
                         <?php echo $this->Form->text('dataefectivatermo', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('Data de efetivo termo') ?></h4>
-                        </label>
-                        <input type="date" class="form-control" name="dataefetivotermo" id="dataefetivotermo"required>
-                        
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
@@ -250,15 +183,8 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <div class="col-xs-12">
-<<<<<<< HEAD
                         <label for="name"><h4><?=__('País')?></h4></label>
                         <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
-=======
-                        <label for="name">
-                            <h4><?= __('País') ?></h4>
-                        </label>
-                        <?= $this->Form->control('pais_id', ['class' => 'form-control', 'options' => $pais, 'label' => false]); ?>
->>>>>>> b8e09079cf11f2dd4eca61ff24d51140efdda0d2
                     </div>
                 </div>
             </div>
