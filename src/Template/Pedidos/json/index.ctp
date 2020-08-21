@@ -4,13 +4,13 @@ foreach ($records as $record) {
   $data[] = [
     'created' => $record->created->i18nFormat('dd/MM/yyyy'),
     //'modified' => $record->modified->i18nFormat('dd/MM/yyyy HH:mm:ss'),
-    'processo' => $record->processo->entjudicial,
+    'processo' => $record->processo->nip,
     'pessoa' => $record->pessoa->nome,
     'referencia' => $record->referencia,
     'canalentrada' => $record->canalentrada,
     'datarecepcao' => $record->datarecepcao->i18nFormat('dd/MM/yyyy'),
     'origem' => $record->origem,
-    //'pedidostypes' => $record->pedidostypes->descricao,
+    //'Pedidostypes' => $record->Pedidostypes->descricao,
     'equiparesponsavel' => $record->equiparesponsavel,
     'state' => $record->state->designacao,
     'termino' => $record->termino->i18nFormat('dd/MM/yyyy'),
@@ -20,8 +20,8 @@ foreach ($records as $record) {
     'datainicioefectivo' => $record->datainicioefectivo->i18nFormat('dd/MM/yyyy'),
     'datatermoprevisto' => $record->datatermoprevisto->i18nFormat('dd/MM/yyyy'),
     'dataefectivatermo' => $record->dataefectivatermo->i18nFormat('dd/MM/yyyy'),
-    //'pedidosmotives' => $record->pedidosmotives->descricao,
-    //'pais' => $record->pais->paisNome,
+    //'Pedidosmotives' => $record->Pedidosmotives->descricao,
+    'pais' => $record->pai->paisNome,
     'concelho' => $record->concelho,
     'transferencias' => $record->transferencias,
     'gestor' => $record->gestor,
@@ -29,8 +29,8 @@ foreach ($records as $record) {
     'periocidaderelatorios' => $record->periocidaderelatorios,
     'id' => $record->id,
   ];
+  $this->log($record);
 }
-
 
 echo json_encode([
   'records' => $data,

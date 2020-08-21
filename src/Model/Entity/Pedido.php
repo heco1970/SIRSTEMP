@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property string $canalentrada
  * @property \Cake\I18n\FrozenDate $datarecepcao
  * @property string $origem
- * @property string $pedidostypes_id
+ * @property int $pedidostypes_id
  * @property string $equiparesponsavel
  * @property int $state_id
  * @property \Cake\I18n\FrozenDate $termino
@@ -35,8 +35,11 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Processo $processo
  * @property \App\Model\Entity\Pessoa $pessoa
+ * @property \App\Model\Entity\Pedidostype $pedidostype
  * @property \App\Model\Entity\State $state
- * @property \App\Model\Entity\Pedidostype $pedidos_type
+ * @property \App\Model\Entity\Pedidosmotive $pedidosmotive
+ * @property \App\Model\Entity\Pai $pai
+ * @property \App\Model\Entity\Verbete[] $verbetes
  */
 class Pedido extends Entity
 {
@@ -78,7 +81,10 @@ class Pedido extends Entity
         'modified' => true,
         'processo' => true,
         'pessoa' => true,
+        'pedidostype' => true,
         'state' => true,
-        'pedidos_type' => true
+        'pedidosmotive' => true,
+        'pai' => true,
+        'verbetes' => true
     ];
 }

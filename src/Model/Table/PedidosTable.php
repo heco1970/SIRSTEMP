@@ -11,11 +11,11 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
  * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsTo $Pessoas
- * @property |\Cake\ORM\Association\BelongsTo $Pedidostypes
+ * @property \App\Model\Table\PedidostypesTable|\Cake\ORM\Association\BelongsTo $Pedidostypes
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
- * @property |\Cake\ORM\Association\BelongsTo $Pedidosmotives
- * @property |\Cake\ORM\Association\BelongsTo $Pais
- * @property |\Cake\ORM\Association\HasMany $Verbetes
+ * @property \App\Model\Table\PedidosmotivesTable|\Cake\ORM\Association\BelongsTo $Pedidosmotives
+ * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
+ * @property \App\Model\Table\VerbetesTable|\Cake\ORM\Association\HasMany $Verbetes
  *
  * @method \App\Model\Entity\Pedido get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pedido newEntity($data = null, array $options = [])

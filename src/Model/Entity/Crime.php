@@ -7,10 +7,17 @@ use Cake\ORM\Entity;
  * Crime Entity
  *
  * @property int $id
- * @property string|null $descricao
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property string $descricao
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
+ * @property string $pessoa_id
+ * @property int $processo_id
+ * @property string $ocorrencia
+ * @property string $registo
+ * @property int $qte
+ * @property string $apenaspre
  *
+ * @property \App\Model\Entity\Processo $processo
  * @property \App\Model\Entity\Pessoa[] $pessoas
  */
 class Crime extends Entity
@@ -29,7 +36,13 @@ class Crime extends Entity
         'descricao' => true,
         'created' => true,
         'modified' => true,
-        'pessoas' => true,
-        'crimes' => true
+        'pessoa_id' => true,
+        'processo_id' => true,
+        'ocorrencia' => true,
+        'registo' => true,
+        'qte' => true,
+        'apenaspre' => true,
+        'processo' => true,
+        'pessoas' => true
     ];
 }

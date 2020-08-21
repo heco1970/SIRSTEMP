@@ -6,9 +6,16 @@
  */
 ?>
 <?= $this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="/js/multiselect.js"></script>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe da Pessoa') ?></h6>
+        <?= $this->Form->create($pessoa, ['id' => 'myForm']) ?>
+
+
     </div>
     <div class="ml-3 mr-3 mb-3 mt-3">
 
@@ -199,46 +206,88 @@
                         </table>
                     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-crim-tab" data-toggle="pill" href="#pills-crim" role="tab" aria-controls="pills-crim" aria-selected="true">Crimes</a>
-                        </li>
-                    </ul>
-                    <div class="tab-pane fade show active" id="pills-crim" role="tabpanel" aria-labelledby="pills-crim-tab">
-
-                        <div class="card shadow mb-2">
-                            <div class="card-header py-3">
-                                <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-                                <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id Rc</th>
-                                        <th scope="col">Nome</th>
-                                        <th scope="col">NIP</th>
-                                        <th scope="col">Tipo</th>
-                                        <th scope="col">Ocorrencia</th>
-                                        <th scope="col">Registo</th>
-                                        <th scope="col">Qte</th>
-                                        <th scope="col">Apenas Pré</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">333</th>
-                                        <td>teste de nome</td>
-                                        <td>2125412544</td>
-                                        <td>6 27 111 Tráfico de Estupefacientes</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>66</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
+                    </li>
+                </ul>
+                <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div class="card shadow mb-2">
+                        <div class="card-header py-3">
+                            <a class="btn btn-success btn-circle btn-lg" href="/crimes/add/<?= h($pessoa->id);?>"><i class="fas fa-plus"></i></a>
                         </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tipo de Crime</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Nip</th>
+                                    <th scope="col">Ocorrencia</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Quantidade</th>
+                                    <th scope="col">Apenas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($crimes as $crime) : ?>
+                                    <tr>
+                                        <th scope="row"><?= h($crime->descricao) ?></th>
+                                        <td><?= h($crime->nome) ?></td>
+                                        <td><?= h($crime->nip) ?></td>
+                                        <td><?= h($crime->ocorrencia) ?></td>
+                                        <td><?= h($crime->qte) ?></td>
+                                        <td><?= h($crime->apenaspre) ?></td>
+                                        <td><a class="btn btn-info" href="/crimes/view/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                            <a class="btn btn-warning" href="/crimes/edit/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                            <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
 
                     <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
@@ -349,38 +398,7 @@
                         </div>
                     </div>
                 </div>
-                <?php
-                $dynElems =
-                    ['descricao' => ['label' => ('Crime')]];
-                ?>
-                <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
-                        <h6 class="m-0 font-weight-bold text-primary"><?= __('Crimes:') ?></h6>
-                    </div>
-                    <div class="card-body">
-                        <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => false]); ?>
-                    </div>
-                </div>
-
-                <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text']); ?>
-
-                <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
-                <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
-
-                <?php $this->start('scriptBottom') ?>
-                <script>
-                    $(document).ready(function() {
-                        writers = {};
-                        createDynatable("#dynatable", "/pessoas-crimes/indexpessoas/" + <?= h($pessoa->id) ?>, {
-                            created: -1
-                        }, writers);
-                    });
-                </script>
-                <?php $this->end(); ?>
             </div>
         </div>
-
     </div>
 </div>

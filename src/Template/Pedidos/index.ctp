@@ -24,7 +24,7 @@ $dynElems =
         'canalentrada' => ['label' => __('Canal de entrada')],
         'datarecepcao' => ['label' => __('Data de Receção')],
         'origem' => ['label' => __('Origem')],
-        'pedidostypes' => ['label' => __('Tipos de Pedidos')],
+        'Pedidostypes' => ['label' => __('Tipos de Pedidos')],
         'equiparesponsavel' => ['label' => __('Equipa Responsvel')],
         'state' => ['label' => __('Estado')],
         'termino' => ['label' => __('Termino')],
@@ -33,8 +33,8 @@ $dynElems =
         'dataatribuicao' => ['label' => __('Data atribuição')],
         'datainicioefectivo' => ['label' => __('Data inicio efectivo')],
         'datatermoprevisto' => ['label' => __('Data termo previsto')],
-        'dataefecivatermo' => ['label' => __('Data efetiva termo')],
-        'pedidosmotives' => ['label' => __('Pedidos de motivos')],
+        'dataefectivatermo' => ['label' => __('Data efetiva termo')],
+        'Pedidosmotives' => ['label' => __('Pedidos de motivos')],
         'pais' => ['label' => __('País')],
         'concelho' => ['label' => __('Concelho')],
         'transferencias' => ['label' => __('Transferências')],
@@ -53,7 +53,7 @@ $dynElems = ['processo' => ['label' => __('Processo')]] +
             ['canalentrada' => ['label' => __('Canal de entrada')]] +
             ['datarecepcao' => ['label' => __('Data de Receção')]] +
             ['origem' => ['label' => __('Origem')]] +
-            ['pedidostypes' => ['label' => __('Tipos de Pedidos')]] +
+            ['Pedidostypes' => ['label' => __('Tipos de Pedidos')]] +
             ['equiparesponsavel' => ['label' => __('Equipa Responsvel')]] +
             ['state' => ['label' => __('Estado')]] +
             ['termino' => ['label' => __('Termino')]] +
@@ -62,8 +62,8 @@ $dynElems = ['processo' => ['label' => __('Processo')]] +
             ['dataatribuicao' => ['label' => __('Data Atribuição')]] +
             ['datainicioefectivo' => ['label' => __('Data inicio efectivo')]] +
             ['datatermoprevisto' => ['label' => __('Data termo previsto')]] +
-            ['dataefecivatermo' => ['label' => __('Data efetiva termo')]] +
-            ['pedidosmotives' => ['label' => __('Pedidos de motivos')]] +
+            ['dataefectivatermo' => ['label' => __('Data efetiva termo')]] +
+            ['Pedidosmotives' => ['label' => __('Pedidos de motivos')]] +
             ['pais' => ['label' => __('País')]] +
             ['concelho' => ['label' => __('Concelho')]] +
             ['transferencias' => ['label' => __('Transferências')]] +
@@ -92,68 +92,14 @@ $dynElems = ['processo' => ['label' => __('Processo')]] +
             var writers = {
                 ação: function(row) {
                     var view = '<a class="btn btn-info" href="/pedidos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+                    var edit = '<a class="btn btn-warning mr-1" href="/pedidos/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
                     var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Quer mesmo apagar?'"+')" href="/pedidos/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
 
-                    return '<div class="btn-group btn-group-sm" role="group">' + view +  dele + '</div>';
+                    return '<div class="btn-group btn-group-sm" role="group">' + view + edit +dele + '</div>';
                 }
             }
             createDynatable("#dynatable","/pedidos/",{created: -1}, writers);
-
-            document.getElementById('createdfirst').type = 'date';
-            document.getElementById('createdlast').type = 'date';
-
-            document.getElementById("createdfirst").onchange = function() {
-                if(document.getElementById('createdfirst').value != ""){
-                datefirst = new Date(document.getElementById('createdfirst').value);
-                datefirst.setDate(datefirst.getDate() + 1)
-                document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
-                }
-                else{
-                document.getElementById('createdlast').min = null;
-                }
-            };
-
-            document.getElementById("createdlast").onchange = function() {
-                if(document.getElementById('createdlast').value != ""){
-                datelast = new Date(document.getElementById('createdlast').value);
-                datelast.setDate(datelast.getDate() - 1)
-                document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
-                }
-                else{
-                document.getElementById('createdfirst').max = null;
-                }
-            };
-
-            deleteCookie("Filtro");
-            createCookie("Filtro", "","1");
-
-            // function removeElement(url)
         });
-
-        document.getElementById("nome").onkeyup = function() {
-            createCookie("Filtro", document.getElementById("id").value , document.getElementById("nome").value, "1");         
-        };
-
-        function deleteCookie(name) {
-            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
-        }
-        
-        function createCookie(name, valueNome, days) { 
-            var expires; 
-            
-            if (days) { 
-                var date = new Date(); 
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); 
-                expires = "; expires=" + date.toGMTString(); 
-            } 
-            else { 
-                expires = ""; 
-            } 
-            
-            document.cookie = escape(name) + "=" +
-                valueNome
-                + expires + "; path=/"; 
-        } 
 
     </script>
 <?php $this->end(); ?>

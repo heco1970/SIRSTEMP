@@ -74,14 +74,17 @@ class PessoasController extends AppController
     public function view($id = null)
     {
         $pessoa = $this->Pessoas->get($id, [
-            'contain' => ['Pais', 'Estadocivils', 'CentroEducs', 'EstbPris', 'Generos', 'Unidadeoperas', 'CodigosPostais', 'Concelhos', 'Distritos',]
+            'contain' => ['Pais', 'Estadocivils', 'CentroEducs', 'EstbPris', 'Generos', 'Unidadeoperas', 'CodigosPostais', 'Concelhos', 'Distritos','Crimes']
         ]);
 
-
         $this->loadModel('Contactos');
+        $this->loadModel('Crimes');
         $contactos = $this->Contactos->find()->where(['pessoa_id' => $id]);
+        $crimes = $this->Crimes->find()->where(['pessoa_id' => $id]);
+
         $this->set('pessoa', $pessoa);
-        $this->set(compact('contactos'));
+        $this->set(compact('contactos','crimes', 'pais'));
+
     }
 
     /**

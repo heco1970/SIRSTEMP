@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Crimes Model
  *
+ * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsTo $Pessoas
+ * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
  * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsToMany $Pessoas
  *
  * @method \App\Model\Entity\Crime get($primaryKey, $options = [])
@@ -41,13 +43,19 @@ class CrimesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Pessoas', [
+            'foreignKey' => 'pessoa_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Processos', [
+            'foreignKey' => 'processo_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsToMany('Pessoas', [
             'foreignKey' => 'crime_id',
             'targetForeignKey' => 'pessoa_id',
             'joinTable' => 'pessoas_crimes'
         ]);
-
-        
     }
 
     /**
@@ -65,8 +73,47 @@ class CrimesTable extends Table
         $validator
             ->scalar('descricao')
             ->maxLength('descricao', 50)
-            ->allowEmpty('descricao');
+            ->requirePresence('descricao', 'create')
+            ->notEmpty('descricao');
+
+        $validator
+            ->scalar('ocorrencia')
+            ->maxLength('ocorrencia', 45)
+            ->requirePresence('ocorrencia', 'create')
+            ->notEmpty('ocorrencia');
+
+        $validator
+            ->scalar('registo')
+            ->maxLength('registo', 45)
+            ->requirePresence('registo', 'create')
+            ->notEmpty('registo');
+
+        $validator
+            ->integer('qte')
+            ->requirePresence('qte', 'create')
+            ->notEmpty('qte');
+
+        $validator
+            ->scalar('apenaspre')
+            ->maxLength('apenaspre', 45)
+            ->requirePresence('apenaspre', 'create')
+            ->notEmpty('apenaspre');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
+        $rules->add($rules->existsIn(['processo_id'], 'Processos'));
+
+        return $rules;
     }
 }

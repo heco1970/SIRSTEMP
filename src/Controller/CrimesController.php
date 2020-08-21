@@ -47,7 +47,8 @@ class CrimesController extends AppController
         $date_start = ['createdfirst']; //data inicial
         $date_end = ['createdlast'];  //data final
   
-        $conditions = $contain = [];
+        $contain = ['Pessoas','Processos'];
+        $conditions = [];
       
         $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
         
@@ -69,6 +70,7 @@ class CrimesController extends AppController
         $crime = $this->Crimes->newEntity();
         if ($this->request->is('post')) {
             $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
+            $this->log($crime);
             if ($this->Crimes->save($crime)) {
                 $this->Flash->success(__('The crime has been saved.'));
 
@@ -77,7 +79,25 @@ class CrimesController extends AppController
             $this->Flash->error(__('The crime could not be saved. Please, try again.'));
         }
         $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('crime', 'pessoas'));
+        $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
+        
+        $this->set(compact('crime', 'pessoas','processos'));
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Pedido id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $crime = $this->Crimes->get($id, [
+            'contain' => ['Processos', 'Pessoas']
+        ]);
+
+        $this->set('crime', $crime);
     }
 
     /*
@@ -121,7 +141,9 @@ class CrimesController extends AppController
             }
             $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
         }
-        $this->set(compact('crime'));
+        $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
+        $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
+        $this->set(compact('crime','processos','pessoas'));
     }
    
     /**

@@ -52,7 +52,6 @@ class PedidosController extends AppController
 
             $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-            //$this->log($records,'debug');
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
             //$types = $this->Users->Types->find('list', ['limit' => 200]);
