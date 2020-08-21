@@ -47,7 +47,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="observacoes">Observações</label>
-                        <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control', 'required' => false]); ?>
                     </div>
                 </div>
             </div>
