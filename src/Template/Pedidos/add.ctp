@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="processo_id"><h4><?=__('Processo')?></h4></label>
-                                <?= $this->Form->number('processo', ['id'=>'processo_id','class' => 'form-control',  'label' => false, 'required']); ?>
+                                <?= $this->Form->text('processo', ['id'=>'processo_id','class' => 'form-control',  'label' => false, 'required']); ?>
                             </div>
                         </div>
                     </div>
