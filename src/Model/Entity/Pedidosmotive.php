@@ -8,6 +8,8 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $descricao
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  */
 class Pedidosmotive extends Entity
 {
@@ -22,6 +24,8 @@ class Pedidosmotive extends Entity
      * @var array
      */
     protected $_accessible = [
-        'descricao' => true
+        'descricao' => true,
+        'created' => true,
+        'modified' => true
     ];
 }

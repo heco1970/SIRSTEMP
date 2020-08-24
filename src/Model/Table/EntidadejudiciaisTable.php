@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Entidadejudiciais Model
  *
+ * @property |\Cake\ORM\Association\HasMany $Processos
+ *
  * @method \App\Model\Entity\Entidadejudiciai get($primaryKey, $options = [])
  * @method \App\Model\Entity\Entidadejudiciai newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Entidadejudiciai[] newEntities(array $data, array $options = [])
@@ -38,6 +40,10 @@ class EntidadejudiciaisTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->hasMany('Processos', [
+            'foreignKey' => 'entidadejudiciai_id'
+        ]);
     }
 
     /**

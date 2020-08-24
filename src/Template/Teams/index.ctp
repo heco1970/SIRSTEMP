@@ -25,7 +25,7 @@ $dynElems = ['nome' => ['label' => __('Designação')]] +
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Processos')?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Equipas')?></h6>
     </div>
     <div class="card-body">
         <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
