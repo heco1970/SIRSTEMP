@@ -9,7 +9,6 @@ foreach ($records as $record) {
     'nip' => $record->nip,
     'id' => $record->id,
   ];
-  $this->log($record);
 }
 
 
