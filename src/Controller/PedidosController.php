@@ -93,8 +93,8 @@ class PedidosController extends AppController
             $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
             $pedido->pessoa_id = $pessoa_id;
             $this->log($processo_nome);
-            $pedido->processo_id = $this->Pedidos->Processos->find()->where(['entjudicial' => $processo_nome])->select('id');;
-            $this->log($pedido);
+            $pedido->processo_id = $this->Pedidos->Processos->find()->where(['nip' => $processo_nome])->select('id');;
+
 
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
@@ -129,7 +129,6 @@ class PedidosController extends AppController
         $this->request->allowMethod('ajax');
 
         $keyword = $this->request->getQuery('term');
-        $this->log($keyword);
 
         $terms = $this->Pedidos->Pessoas->find('list', array(
             'conditions' => array(
@@ -144,17 +143,11 @@ class PedidosController extends AppController
         $this->request->allowMethod('ajax');
 
         $keyword = $this->request->getQuery('term');
-        $this->log($keyword);
 
         $terms = $this->Pedidos->Processos->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'entjudicial'
-        ])->where([
-
-            'Processos.nip LIKE' => trim($keyword) . '%'
-
+            'conditions' => ['Processos.nip LIKE' => trim($keyword) . '%']
         ]);
-        
+
         echo json_encode($terms);
     }
 

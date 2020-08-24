@@ -19,15 +19,15 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Processo')?></h4></label>
-                                <?= $this->Form->text('processo', ['id'=>'processo_id','class' => 'form-control',  'label' => false, 'required']); ?>
+                                <label for="processo_id"><h4><?=__('Processo')?></h4></label>
+                                <?= $this->Form->number('processo', ['id'=>'processo_id','class' => 'form-control',  'label' => false, 'required']); ?>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group ui-widget">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Nome da Pessoa')?></h4></label>
+                                <label for="pessoa_id"><h4><?=__('Nome da Pessoa')?></h4></label>
                                 <?= $this->Form->text('pessoa', ['id'=>'pessoa_id','class' => 'form-control',  'label' => false, 'required']); ?>
                             </div>
                         </div>
