@@ -6,8 +6,8 @@
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
             <div class="form-group">
-                <label for="entidade_id">Entidade Judicial</label>
-                <?php echo $this->Form->control('entidade_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
+                <label for="entidadejudiciai_id">Entidade Judicial</label>
+                <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
             </div>
             <div class="form-row">
                 <div class="col">
@@ -33,7 +33,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="nip">NIP</label>
-                        <?php echo $this->Form->control('nip', ['label' => false, 'class' => 'form-control', 'required' => true]); ?>
+                        <?php echo $this->Form->control('nip', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
                 <div class="col">
@@ -47,7 +47,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="observacoes">Observações</label>
-                        <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control', 'required' => false]); ?>
+                        <?php echo $this->Form->control('observacoes', ['label' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>

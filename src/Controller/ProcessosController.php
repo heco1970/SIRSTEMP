@@ -86,7 +86,6 @@ class ProcessosController extends AppController
         $processo = $this->Processos->newEntity();
         if ($this->request->is('post')) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
-            $this->log($processo);
             if ($this->Processos->save($processo)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
@@ -150,24 +149,35 @@ class ProcessosController extends AppController
     public function xls() {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $entjudicial = 'entjudicial LIKE "%'.$out[0].'%"';
-        $natureza = 'natureza LIKE "%'.$out[1].'%"';
-        $nip =  'nip LIKE "%'.$out[2].'%"';
+
+        $natureza = 'natureza LIKE "%'.$out[0].'%"';
+        $nip =  'nip LIKE "%'.$out[1].'%"';
 
         if($out[0] != null){
-            array_push($arr, $entjudicial);
-        }
-        if($out[1] != null){
             array_push($arr, $natureza);
         }
-        if($out[2] != null){
+        if($out[1] != null){
             array_push($arr, $nip);
         }
+        if($out[2] != null && $out[3] == null){
+            $createdfirst = 'Processos.created LIKE "%'.$out[2].'%"';
+            array_push($arr, $createdfirst);
+        }
+        if($out[2] == null && $out[3] != null){
+            $createdlast = 'Processos.created LIKE "%'.$out[3].'%"';
+            array_push($arr, $createdlast);
+        }
+        if($out[2] != null && $out[3] != null){
+            $createdfirst = 'Processos.created >= "'.$out[2].'"';
+            $createdlast = 'Processos.created <= "'.$out[3].' 23:59"';
+            array_push($arr, $createdfirst);
+            array_push($arr, $createdlast);
+        }
         if($arr == null){
-            $processos = $this->Processos->find('all')->toArray();
+            $processos = $this->Processos->find('all')->contain(['Entidadejudiciais']);
         }
         else{
-            $processos = $this->Processos->find('all',array('conditions'=>$arr));
+            $processos = $this->Processos->find('all', array('conditions' => $arr))->contain(['Entidadejudiciais']);
         }
         
         $this->autoRender = false;
@@ -183,7 +193,7 @@ class ProcessosController extends AppController
         
         $linha = 2;
         foreach ($processos as $row) {
-            $sheet->setCellValue('A' . $linha, $row->entjudicial);
+            $sheet->setCellValue('A' . $linha, $row->entidadejudiciai->descricao);
             $sheet->setCellValue('B' . $linha, $row->natureza);
             $sheet->setCellValue('C' . $linha, $row->nip);
             $sheet->setCellValue('D' . $linha, $row->created);    

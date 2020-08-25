@@ -8,7 +8,7 @@
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']) 
+            ['escape' => false, 'title' => __('Obter listagem em formato excel'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']) 
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2" title="Filtros"><i class="fas fa-filter"></i></button>
     </div>
@@ -70,6 +70,7 @@ $dynElems = ['nip' => ['label' => __('NIP')]] +
             else{
             document.getElementById('createdlast').min = null;
             }
+            createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, document.getElementById("createdfirst").value, document.getElementById("createdlast").value, "1");
         };
 
         document.getElementById("createdlast").onchange = function() {
@@ -81,28 +82,28 @@ $dynElems = ['nip' => ['label' => __('NIP')]] +
             else{
             document.getElementById('createdfirst').max = null;
             }
+            createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, document.getElementById("createdfirst").value, document.getElementById("createdlast").value, "1");
         };
 
         deleteCookie("Filtro");
-        createCookie("Filtro", "", "","1"); 
+        createCookie("Filtro", "", "", "", "","1"); 
 
         // function removeElement(url)
     });
 
-
     document.getElementById("natureza").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, "1");
+        createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, document.getElementById("createdfirst").value, document.getElementById("createdlast").value, "1");
     };
 
     document.getElementById("nip").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, "1");
+        createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, document.getElementById("createdfirst").value, document.getElementById("createdlast").value, "1");
     };
 
     function deleteCookie(name) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
     
-    function createCookie(name, valueEnt, valueNat, valueNip, days) { 
+    function createCookie(name, valueNat, valueNip, valueDatefirst, valueDatelast , days) { 
         var expires; 
         
         if (days) { 
@@ -115,7 +116,7 @@ $dynElems = ['nip' => ['label' => __('NIP')]] +
         } 
         
         document.cookie = escape(name) + "=" +
-            valueNat + "," + valueNip
+            valueNat + "," + valueNip + "," + valueDatefirst + "," + valueDatelast
             + expires + "; path=/"; 
     } 
 
