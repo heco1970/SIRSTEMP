@@ -83,7 +83,7 @@ class PessoasController extends AppController
         $crimes = $this->Crimes->find()->where(['pessoa_id' => $id]);
 
         $this->set('pessoa', $pessoa);
-        $this->set(compact('contactos','crimes', 'pais'));
+        $this->set(compact('contactos','crimes'));
 
     }
 
