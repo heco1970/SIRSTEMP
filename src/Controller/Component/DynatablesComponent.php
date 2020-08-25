@@ -37,21 +37,26 @@ class DynatablesComponent extends Component {
             if (in_array($index, $validOps)) {
                 if (in_array($index, $strings)) {
                     $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($value) . '%');
-                } elseif (in_array($index, $date_start)) {
-                    if(in_array($index, $date_end)){
-                        $queriesValidated[] = array($convArray[$index] . ' >=' =>  h($value));
+                } 
+                elseif(in_array($index, $date_start)){
+                    if(isset($queries['createdfirst']) && isset($queries['createdlast'])){
+                        $queriesValidated[] = array($convArray[$index] . ' >=' =>  h($queries['createdfirst']));
+                        $queriesValidated[] = array($convArray[$index] . ' <=' =>  h($queries['createdlast']).' 23:59');
                     }
                     else{
-                        $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($value) . '%');
+                        $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($queries['createdfirst']) . '%');
                     }
-                } elseif (in_array($index, $date_end)) {
-                    if(in_array($index, $date_start)){
-                        $queriesValidated[] = array($convArray[$index] . ' <=' =>  h($value).' 23:59');
+                }
+                elseif(in_array($index, $date_end)){
+                    if(isset($queries['createdfirst']) && isset($queries['createdlast'])){
+                        $queriesValidated[] = array($convArray[$index] . ' >=' =>  h($queries['createdfirst']));
+                        $queriesValidated[] = array($convArray[$index] . ' <=' =>  h($queries['createdlast']).' 23:59');
                     }
                     else{
-                        $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($value) . '%');
-                    }
-                } else {
+                        $queriesValidated[] = array($convArray[$index] . ' LIKE' => '%' . h($queries['createdlast']) . '%');
+                    }        
+                }
+                else {
                     $queriesValidated[] = array($convArray[$index] => h($value));
                 }
             }

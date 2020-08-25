@@ -14,7 +14,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $datarecepcao
  * @property string $origem
  * @property int $pedidostypes_id
- * @property string $equiparesponsavel
+ * @property int $team_id
  * @property int $state_id
  * @property \Cake\I18n\FrozenDate $termino
  * @property int $numeropedido
@@ -61,7 +61,7 @@ class Pedido extends Entity
         'datarecepcao' => true,
         'origem' => true,
         'pedidostypes_id' => true,
-        'equiparesponsavel' => true,
+        'team_id' => true,
         'state_id' => true,
         'termino' => true,
         'numeropedido' => true,

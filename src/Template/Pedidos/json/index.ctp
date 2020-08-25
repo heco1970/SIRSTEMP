@@ -11,7 +11,7 @@ foreach ($records as $record) {
     'datarecepcao' => $record->datarecepcao->i18nFormat('dd/MM/yyyy'),
     'origem' => $record->origem,
     //'Pedidostypes' => $record->Pedidostypes->descricao,
-    'equiparesponsavel' => $record->equiparesponsavel,
+    'equiparesponsavel' => $record->team->nome,
     'state' => $record->state->designacao,
     'termino' => $record->termino->i18nFormat('dd/MM/yyyy'),
     'numeropedido' => $record->numeropedido,

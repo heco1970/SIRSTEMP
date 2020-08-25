@@ -130,7 +130,7 @@ class UnitsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $unit = $this->Units->get($id);
         if ($this->Units->delete($unit)) {
             $this->Flash->success(__('O registo foi apagado.'));

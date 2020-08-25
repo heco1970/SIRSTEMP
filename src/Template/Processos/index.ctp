@@ -4,16 +4,15 @@
 
 <div class="card shadow mb-2">
     <div class="card-header py-3">
-        <a class="btn btn-success btn-circle btn-lg" href="/processos/add"><i class="fas fa-plus"></i></a>
+        <a class="btn btn-success btn-circle btn-lg" href="/processos/add" title="Novo Processo"><i class="fas fa-plus"></i></a>
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']) 
+            ['escape' => false, 'title' => __('Obter listagem em formato excel'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']) 
         ?>
-        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
+        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2" title="Filtros"><i class="fas fa-filter"></i></button>
     </div>
 </div>
-
 
 <?php
 $dynElems =
@@ -50,7 +49,7 @@ $dynElems = ['nip' => ['label' => __('NIP')]] +
     $(document).ready(function() {
         var writers = {
             ação: function(row) {
-                var view = '<a class="btn btn-info" href="/processos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+                var view = '<a class="btn btn-info" href="/processos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Detalhes')?>"><i class="far fa-eye fa-fw"></i></a>'
 
                 return '<div class="btn-group btn-group-sm" role="group">' + view +  '</div>';
             }
@@ -62,9 +61,6 @@ $dynElems = ['nip' => ['label' => __('NIP')]] +
         document.getElementById('createdlast').type = 'date';
         document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
 
-        document.getElementById('createdfirst').type = 'date';
-        document.getElementById('createdlast').type = 'date';
-
         document.getElementById("createdfirst").onchange = function() {
             if(document.getElementById('createdfirst').value != ""){
             datefirst = new Date(document.getElementById('createdfirst').value);
@@ -74,6 +70,7 @@ $dynElems = ['nip' => ['label' => __('NIP')]] +
             else{
             document.getElementById('createdlast').min = null;
             }
+            createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, document.getElementById("createdfirst").value, document.getElementById("createdlast").value, "1");
         };
 
         document.getElementById("createdlast").onchange = function() {
@@ -85,31 +82,28 @@ $dynElems = ['nip' => ['label' => __('NIP')]] +
             else{
             document.getElementById('createdfirst').max = null;
             }
+            createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, document.getElementById("createdfirst").value, document.getElementById("createdlast").value, "1");
         };
 
         deleteCookie("Filtro");
-        createCookie("Filtro", "", "", "","1"); 
+        createCookie("Filtro", "", "", "", "","1"); 
 
         // function removeElement(url)
     });
 
-    document.getElementById("entjudicial").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1");
-    };
-
     document.getElementById("natureza").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1");
+        createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, document.getElementById("createdfirst").value, document.getElementById("createdlast").value, "1");
     };
 
     document.getElementById("nip").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value , document.getElementById("entjudicial").value, document.getElementById("natureza").value, document.getElementById("nip").value, "1");
+        createCookie("Filtro", document.getElementById("natureza").value, document.getElementById("nip").value, document.getElementById("createdfirst").value, document.getElementById("createdlast").value, "1");
     };
 
     function deleteCookie(name) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
     
-    function createCookie(name, valueEnt, valueNat, valueNip, days) { 
+    function createCookie(name, valueNat, valueNip, valueDatefirst, valueDatelast , days) { 
         var expires; 
         
         if (days) { 
@@ -122,7 +116,7 @@ $dynElems = ['nip' => ['label' => __('NIP')]] +
         } 
         
         document.cookie = escape(name) + "=" +
-            valueEnt + "," + valueNat + "," + valueNip
+            valueNat + "," + valueNip + "," + valueDatefirst + "," + valueDatelast
             + expires + "; path=/"; 
     } 
 

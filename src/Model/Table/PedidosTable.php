@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
  * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsTo $Pessoas
  * @property \App\Model\Table\PedidostypesTable|\Cake\ORM\Association\BelongsTo $Pedidostypes
+ * @property |\Cake\ORM\Association\BelongsTo $Teams
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
  * @property \App\Model\Table\PedidosmotivesTable|\Cake\ORM\Association\BelongsTo $Pedidosmotives
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
@@ -57,6 +58,10 @@ class PedidosTable extends Table
         ]);
         $this->belongsTo('Pedidostypes', [
             'foreignKey' => 'pedidostypes_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Teams', [
+            'foreignKey' => 'team_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('States', [
@@ -110,12 +115,6 @@ class PedidosTable extends Table
             ->maxLength('origem', 20)
             ->requirePresence('origem', 'create')
             ->notEmpty('origem');
-
-        $validator
-            ->scalar('equiparesponsavel')
-            ->maxLength('equiparesponsavel', 20)
-            ->requirePresence('equiparesponsavel', 'create')
-            ->notEmpty('equiparesponsavel');
 
         $validator
             ->date('termino')
@@ -197,6 +196,7 @@ class PedidosTable extends Table
         $rules->add($rules->existsIn(['processo_id'], 'Processos'));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
         $rules->add($rules->existsIn(['pedidostypes_id'], 'Pedidostypes'));
+        $rules->add($rules->existsIn(['team_id'], 'Teams'));
         $rules->add($rules->existsIn(['state_id'], 'States'));
         $rules->add($rules->existsIn(['pedidosmotives_id'], 'Pedidosmotives'));
         $rules->add($rules->existsIn(['pais_id'], 'Pais'));

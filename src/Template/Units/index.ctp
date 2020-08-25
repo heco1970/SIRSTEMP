@@ -41,9 +41,10 @@ $dynElems = ['designacao' => ['label' => __('Designação')]] +
     $(document).ready(function() {
         var writers = {
             ação: function(row) {
-                var view = '<a class="btn btn-info" href="/units/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a class="btn btn-warning mr-1" href="/units/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Deseja mesmo apagar?'"+')" href="/units/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
 
-                return '<div class="btn-group btn-group-sm" role="group">' + view +  '</div>';
+                return '<div class="btn-group btn-group-sm" role="group">' + edit + dele + '</div>';
             }
         }
         createDynatable("#dynatable","/units/",{created: -1}, writers);

@@ -9,10 +9,11 @@ use Cake\Validation\Validator;
 /**
  * Processos Model
  *
- * @property |\Cake\ORM\Association\BelongsTo $Entidadejudiciais
+ * @property \App\Model\Table\EntidadejudiciaisTable|\Cake\ORM\Association\BelongsTo $Entidadejudiciais
  * @property \App\Model\Table\UnitsTable|\Cake\ORM\Association\BelongsTo $Units
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
- * @property |\Cake\ORM\Association\HasMany $Pedidos
+ * @property |\Cake\ORM\Association\HasMany $Crimes
+ * @property \App\Model\Table\PedidosTable|\Cake\ORM\Association\HasMany $Pedidos
  *
  * @method \App\Model\Entity\Processo get($primaryKey, $options = [])
  * @method \App\Model\Entity\Processo newEntity($data = null, array $options = [])
@@ -56,6 +57,9 @@ class ProcessosTable extends Table
             'foreignKey' => 'state_id',
             'joinType' => 'INNER'
         ]);
+        $this->hasMany('Crimes', [
+            'foreignKey' => 'processo_id'
+        ]);
         $this->hasMany('Pedidos', [
             'foreignKey' => 'processo_id'
         ]);
@@ -87,8 +91,7 @@ class ProcessosTable extends Table
 
         $validator
             ->scalar('observacoes')
-            ->requirePresence('observacoes', 'create')
-            ->notEmpty('observacoes');
+            ->allowEmpty('observacoes');
 
         $validator
             ->date('dataconclusao')

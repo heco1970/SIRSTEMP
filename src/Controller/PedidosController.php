@@ -41,7 +41,7 @@ class PedidosController extends AppController
             $date_end = ['createdlast'];  //data final
 
             // $contain = ['Types'];
-            $contain = ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Pais'];
+            $contain = ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Pais', 'Teams'];
             $conditions = [];
 
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
@@ -92,9 +92,9 @@ class PedidosController extends AppController
 
             $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
             $pedido->pessoa_id = $pessoa_id;
-            $this->log($processo_nome);
-            $pedido->processo_id = $this->Pedidos->Processos->find()->where(['entjudicial' => $processo_nome])->select('id');;
-            $this->log($pedido);
+
+            $pedido->processo_id = $this->Pedidos->Processos->find()->where(['nip' => $processo_nome])->select('id');;
+
 
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
@@ -120,8 +120,9 @@ class PedidosController extends AppController
         $states = $this->Pedidos->States->find('list', ['limit' => 200]);
         $pedidostypes = $this->Pedidos->PedidosTypes->find('list', ['limit' => 200]);
         $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['limit' => 200]);
+        $teams = $this->Pedidos->Teams->find('list', ['limit' => 200]);
         $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
-        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'states'));
+        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }
     public function search()
     {
@@ -129,7 +130,6 @@ class PedidosController extends AppController
         $this->request->allowMethod('ajax');
 
         $keyword = $this->request->getQuery('term');
-        $this->log($keyword);
 
         $terms = $this->Pedidos->Pessoas->find('list', array(
             'conditions' => array(
@@ -144,18 +144,26 @@ class PedidosController extends AppController
         $this->request->allowMethod('ajax');
 
         $keyword = $this->request->getQuery('term');
-        $this->log($keyword);
 
         $terms = $this->Pedidos->Processos->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'entjudicial'
-        ])->where([
-
-            'Processos.nip LIKE' => trim($keyword) . '%'
-
+            'conditions' => ['Processos.nip LIKE' => trim($keyword) . '%']
         ]);
-        
+
         echo json_encode($terms);
+    }
+
+    public function gestor()
+    {
+        $this->request->allowMethod('ajax');
+        $id = $this->request->getQuery('keyword');
+        $this->loadModel('UsersTeams');
+        $gestor = $this->UsersTeams->find('list', ['keyField' => function ($row) {
+            return $row->user->id;
+        }, 'valueField' => function ($row) {
+            return $row->user->username;
+        }])->contain(['Users'])->where(['UsersTeams.team_id' => $id]);
+
+        $this->set(compact('gestor'));
     }
 
     /**

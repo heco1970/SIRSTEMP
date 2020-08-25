@@ -94,7 +94,8 @@ class PessoasController extends AppController
         ])->contain('Processos');
         
         $this->set('pessoa', $pessoa);
-        $this->set(compact('contactos','PessoasCrimes','crimes','pais'));
+        $this->set(compact('contactos','crimes'));
+
     }
 
     /**

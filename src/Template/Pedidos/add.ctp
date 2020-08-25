@@ -19,16 +19,20 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Processo')?></h4></label>
-                                <?= $this->Form->text('processo', ['id'=>'processo_id','class' => 'form-control',  'label' => false, 'required']); ?>
+                                <label for="processo_id">
+                                    <h4><?= __('Processo') ?></h4>
+                                </label>
+                                <?= $this->Form->text('processo', ['id' => 'processo_id', 'class' => 'form-control',  'label' => false, 'required']); ?>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group ui-widget">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Nome da Pessoa')?></h4></label>
-                                <?= $this->Form->text('pessoa', ['id'=>'pessoa_id','class' => 'form-control',  'label' => false, 'required']); ?>
+                                <label for="pessoa_id">
+                                    <h4><?= __('Nome da Pessoa') ?></h4>
+                                </label>
+                                <?= $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control',  'label' => false, 'required']); ?>
                             </div>
                         </div>
                     </div>
@@ -41,7 +45,9 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Data de recepção')?></h4></label>
+                                <label for="name">
+                                    <h4><?= __('Data de recepção') ?></h4>
+                                </label>
                                 <?php echo $this->Form->text('datarecepcao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                             </div>
                         </div>
@@ -91,10 +97,11 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name">
+                                <label for="team_id">
                                     <h4><?= __('Equipa Responsável') ?></h4>
                                 </label>
-                                <?= $this->Form->control('equiparesponsavel', ['class' => 'form-control',  'label' => false]); ?>
+                                <?= $this->Form->control('team_id', [
+                                    'id' => 'team_id', 'class' => 'form-control','empty' => 'Escolha uma equipa...',  'label' => false, 'options' => $teams]); ?>
                             </div>
                         </div>
                     </div>
@@ -117,7 +124,9 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Termino')?></h4></label>
+                                <label for="name">
+                                    <h4><?= __('Termino') ?></h4>
+                                </label>
                                 <?php echo $this->Form->text('termino', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
 
                             </div>
@@ -138,7 +147,9 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Data de criação')?></h4></label>
+                                <label for="name">
+                                    <h4><?= __('Data de criação') ?></h4>
+                                </label>
                                 <?php echo $this->Form->text('datacriacao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                             </div>
                         </div>
@@ -146,7 +157,9 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Data de atribuição')?></h4></label>
+                                <label for="name">
+                                    <h4><?= __('Data de atribuição') ?></h4>
+                                </label>
                                 <?php echo $this->Form->text('dataatribuicao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                             </div>
                         </div>
@@ -156,7 +169,9 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Data de Inicio Efetivo')?></h4></label>
+                                <label for="name">
+                                    <h4><?= __('Data de Inicio Efetivo') ?></h4>
+                                </label>
                                 <?php echo $this->Form->text('datainicioefectivo', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                             </div>
                         </div>
@@ -164,7 +179,9 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Data de termo previsto')?></h4></label>
+                                <label for="name">
+                                    <h4><?= __('Data de termo previsto') ?></h4>
+                                </label>
                                 <?php echo $this->Form->text('datatermoprevisto', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                             </div>
                         </div>
@@ -172,7 +189,9 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('Data de efetivo termo')?></h4></label>
+                                <label for="name">
+                                    <h4><?= __('Data de efetivo termo') ?></h4>
+                                </label>
                                 <?php echo $this->Form->text('dataefectivatermo', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                             </div>
                         </div>
@@ -192,7 +211,9 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="name"><h4><?=__('País')?></h4></label>
+                                <label for="name">
+                                    <h4><?= __('País') ?></h4>
+                                </label>
                                 <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
                             </div>
                         </div>
@@ -219,13 +240,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" id="gestor">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="name">
                                     <h4><?= __('Gestor') ?></h4>
                                 </label>
-                                <?= $this->Form->control('gestor', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
+                                <?= $this->Form->control('gestor', ['class' => 'form-control',  'label' => false, 'type' => 'select', 'disabled']); ?>
                             </div>
                         </div>
                     </div>
@@ -310,6 +331,32 @@
                 });
             }
         });
+    });
+    $('document').ready(function() {
+        $('#team_id').change(function() {
+
+            var searchkey = $('#team_id').val();
+
+            searchTags(searchkey);
+        });
+
+
+        function searchTags(keyword) {
+            var data = keyword;
+
+            $.ajax({
+                method: 'get',
+                url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'Gestor']); ?>",
+                data: {
+                    keyword: data,
+
+                },
+
+                success: function(response) {
+                    $('#gestor').html(response);
+                }
+            });
+        };
     });
 </script>
 <?php $this->end(); ?>
