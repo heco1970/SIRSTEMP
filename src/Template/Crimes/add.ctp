@@ -1,5 +1,4 @@
 <link href="/css/style.css" rel="stylesheet">
-
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Crime') ?></h6>
@@ -16,16 +15,6 @@
                                 <h4><?= __('Tipo de crime') ?></h4>
                             </label>
                             <?= $this->Form->control('descricao', ['class' => 'form-control', 'descricao' => 'descricao', 'label' => false, 'required']); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="nome">
-                                <h4><?= __('Nome') ?></h4>
-                            </label>
-                            <?= $this->Form->control('pessoa_id', ['class' => 'form-control', 'nome' => 'nome', 'label' => false, 'required']); ?>
                         </div>
                     </div>
                 </div>

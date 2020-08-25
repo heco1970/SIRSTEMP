@@ -20,7 +20,6 @@
 $dynElems =
     [
         'descricao' => ['label' => __('Descricao')],
-        'pessoa' => ['label' => __('Nome')],
         'processo' => ['label' => __('NIP')],
         'ocorrencia' => ['label' => __('Ocorrencia')],
         'registo' => ['label' => __('Registo')],
@@ -31,7 +30,6 @@ $dynElems =
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
 $dynElems = ['descricao' => ['label' => __('Descricao')]] +
-$dynElems = ['pessoa' => ['label' => __('Nome')]] +
 $dynElems = ['processo' => ['label' => __('NIP')]] +
 $dynElems = ['ocorrencia' => ['label' => __('Ocorrencia')]] +
 $dynElems = ['registo' => ['label' => __('Registo')]] +
@@ -59,10 +57,8 @@ $dynElems = ['apenaspre' => ['label' => __('Apenas')]]
         var writers = {
             ação: function(row) {
                 var view = '<a class="btn btn-info" href="/crimes/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
-                var edit = '<a class="btn btn-warning mr-1" href="/crimes/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
-                var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Quer mesmo apagar?'"+')" href="/crimes/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
 
-                return '<div class="btn-group btn-group-sm" role="group">'+ view + edit + dele +  '</div>';
+                return '<div class="btn-group btn-group-sm" role="group">'+ view + '</div>';
             }
         }
         createDynatable("#dynatable","/crimes/",{created: -1}, writers);

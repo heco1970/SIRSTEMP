@@ -62,8 +62,6 @@ class UsersTeamsController extends AppController
         $model = 'UsersTeams';
         $this->loadComponent('Dynatables');
 
-        $this->log($id);
-  
         $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
       
         $validOps = ['user_id', 'team_id'];

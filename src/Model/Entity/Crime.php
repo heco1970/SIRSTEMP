@@ -10,7 +10,6 @@ use Cake\ORM\Entity;
  * @property string $descricao
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
- * @property string $pessoa_id
  * @property int $processo_id
  * @property string $ocorrencia
  * @property string $registo
@@ -19,6 +18,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Processo $processo
  * @property \App\Model\Entity\Pessoa[] $pessoas
+ * @property \App\Model\Entity\PessoasCrime[] $pessoas_crimes
  */
 class Crime extends Entity
 {
@@ -36,13 +36,13 @@ class Crime extends Entity
         'descricao' => true,
         'created' => true,
         'modified' => true,
-        'pessoa_id' => true,
         'processo_id' => true,
         'ocorrencia' => true,
         'registo' => true,
         'qte' => true,
         'apenaspre' => true,
         'processo' => true,
-        'pessoas' => true
+        'pessoas' => true,
+        'pessoas_crimes' => true
     ];
 }

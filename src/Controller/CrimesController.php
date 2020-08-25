@@ -94,7 +94,7 @@ class CrimesController extends AppController
     public function view($id = null)
     {
         $crime = $this->Crimes->get($id, [
-            'contain' => ['Processos', 'Pessoas']
+            'contain' => ['Pessoas','PessoasCrimes']
         ]);
 
         $this->set('crime', $crime);
@@ -127,6 +127,7 @@ class CrimesController extends AppController
         $this->set(compact('crime','pessoas'));
     }*/
 
+    /*
     public function edit($id = null)
     {
         $crime = $this->Crimes->get($id, [
@@ -144,7 +145,63 @@ class CrimesController extends AppController
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
         $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('crime','processos','pessoas'));
+    }*/
+
+
+    public function edit($id = null)
+    { 
+        $crime = $this->Crimes->get($id, [
+        'contain' => ['Pessoas', 'PessoasCrimes']
+        ]);
+        
+        $subquery = $this->Crimes->PessoasCrimes
+        ->find()
+        ->select(['PessoasCrimes.pessoa_id'])
+        ->where(['PessoasCrimes.crime_id' => $id]);
+        
+        $pessoas1 = $this->Crimes->Pessoas
+        ->find('list', ['keyField' => 'id', 'valueField' => 'name'])
+        ->where([
+            'Pessoas.id IN' => $subquery
+        ]);
+
+        $pessoas = $this->Crimes->Pessoas
+        ->find('list', ['keyField' => 'id', 'valueField' => 'name'])
+        ->where([
+            'Pessoas.id NOT IN' => $subquery
+        ]);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+        $crime = $this->Crimes->patchEntity($crime, $this->request->getData(), ['associated' => ['Pessoas', 'PessoasCrimes']]);
+        $this->loadModel('PessoasCrimes');
+
+        $select = $this->request->getData('pessoa_id');
+        $select1 = $this->request->getData('multiselect');
+
+        if ($this->Crimes->save($crime)) {
+            if (!empty($select)) {
+            $delete = $this->PessoasCrimes->deleteAll(['PessoasCrimes.crime_id' => $id]);
+            foreach ($select as $row) {
+                $pessoaCrime = $this->PessoasCrimes->newEntity();
+                $pessoaCrime->pessoa_id = $row;
+                $pessoaCrime->crime_id = $id;
+                $this->PessoasCrimes->save($pessoaCrime);
+            }
+            } else {
+            $this->PessoasCrimes->deleteAll(['PessoasCrimes.crime_id' => $id]);
+            }
+
+            $this->Flash->success(__('O registo foi gravado.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+        }
+        $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
+        $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
+        $this->set(compact('crime', 'pessoas1', 'pessoas','processos'));
     }
+
    
     /**
      * Delete method

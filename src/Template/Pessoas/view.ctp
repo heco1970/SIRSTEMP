@@ -188,6 +188,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php $this->log($contactos); ?>
                                 <?php foreach ($contactos as $contacto) : ?>
                                     <tr>
                                         <th scope="row"><?= h($contacto->nome) ?></th>
@@ -206,28 +207,7 @@
                         </table>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
                     </li>
@@ -237,12 +217,10 @@
                         <div class="card-header py-3">
                             <a class="btn btn-success btn-circle btn-lg" href="/crimes/add/<?= h($pessoa->id);?>"><i class="fas fa-plus"></i></a>
                         </div>
-
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Tipo de Crime</th>
-                                    <th scope="col">Nome</th>
                                     <th scope="col">Nip</th>
                                     <th scope="col">Ocorrencia</th>
                                     <th scope="col">Registo</th>
@@ -254,40 +232,16 @@
                                 <?php foreach ($crimes as $crime) : ?>
                                     <tr>
                                         <th scope="row"><?= h($crime->descricao) ?></th>
-                                        <td><?= h($crime->nome) ?></td>
-                                        <td><?= h($crime->nip) ?></td>
+                                        <td><?= h($crime->processo->nip) ?></td>
                                         <td><?= h($crime->ocorrencia) ?></td>
+                                        <td><?= h($crime->registo) ?></td>
                                         <td><?= h($crime->qte) ?></td>
                                         <td><?= h($crime->apenaspre) ?></td>
-                                        <td><a class="btn btn-info" href="/crimes/view/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
-                                            <a class="btn btn-warning" href="/crimes/edit/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
-                                            <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    
 
                     <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
