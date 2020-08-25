@@ -7,20 +7,22 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Pedidostypes Model
+ * Units Model
  *
- * @method \App\Model\Entity\Pedidostype get($primaryKey, $options = [])
- * @method \App\Model\Entity\Pedidostype newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Pedidostype[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Pedidostype|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Pedidostype|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Pedidostype patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Pedidostype[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Pedidostype findOrCreate($search, callable $callback = null, $options = [])
+ * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\HasMany $Processos
+ *
+ * @method \App\Model\Entity\Unit get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Unit newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Unit[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Unit|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Unit|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Unit patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Unit[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Unit findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class PedidostypesTable extends Table
+class UnitsTable extends Table
 {
 
     /**
@@ -33,11 +35,15 @@ class PedidostypesTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('pedidostypes');
-        $this->setDisplayField('descricao');
+        $this->setTable('units');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->hasMany('Processos', [
+            'foreignKey' => 'unit_id'
+        ]);
     }
 
     /**
@@ -54,11 +60,11 @@ class PedidostypesTable extends Table
             ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('descricao')
-            ->maxLength('descricao', 45)
-            ->requirePresence('descricao', 'create')
-            ->notEmpty('descricao')
-            ->add('descricao', 'unique', 
+            ->scalar('designacao')
+            ->maxLength('designacao', 255)
+            ->requirePresence('designacao', 'create')
+            ->notEmpty('designacao')
+            ->add('designacao', 'unique', 
             [
                 'rule' => 'validateUnique', 
                 'provider' => 'table',
@@ -77,8 +83,8 @@ class PedidostypesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['designacao']));
         $rules->add($rules->isUnique(['id']));
-        $rules->add($rules->isUnique(['descricao']));
 
         return $rules;
     }

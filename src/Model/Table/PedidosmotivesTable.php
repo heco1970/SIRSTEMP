@@ -57,7 +57,13 @@ class PedidosmotivesTable extends Table
             ->scalar('descricao')
             ->maxLength('descricao', 45)
             ->requirePresence('descricao', 'create')
-            ->notEmpty('descricao');
+            ->notEmpty('descricao')
+            ->add('descricao', 'unique', 
+            [
+                'rule' => 'validateUnique', 
+                'provider' => 'table',
+                'message' => 'O valor introduzido é inválido.'
+            ]);
 
         return $validator;
     }
@@ -72,6 +78,7 @@ class PedidosmotivesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['id']));
+        $rules->add($rules->isUnique(['descricao']));
 
         return $rules;
     }

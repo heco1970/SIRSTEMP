@@ -39,7 +39,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="state_id">Estado</label>
-                        <?php echo $this->Form->control('state_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $states, 'required']); ?>
+                        <?php echo $this->Form->control('state_id', ['label' => false, 'class' => 'form-control', 'options' => $states, 'required']); ?>
                     </div>
                 </div>
             </div>
