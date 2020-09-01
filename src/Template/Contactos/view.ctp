@@ -82,7 +82,7 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Html->link(__('Voltar'), $this->request->referer(), ['class' => 'btn btn-secondary']) ?>
+        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id], ['class' => 'btn btn-secondary']) ?>
     </div>
 
 </div>

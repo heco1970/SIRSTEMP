@@ -114,7 +114,7 @@
     </div>
     <div class="card-footer card-footer-fixed">
         <button class="btn btn-success" type="submit">Gravar</button>
-        <?= $this->Html->link(__('Voltar'), $this->request->referer(), ['class' => 'btn btn-secondary']) ?>
+        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $id], ['class' => 'btn btn-secondary']) ?>
    
     </div>
     <?= $this->Form->end() ?>
