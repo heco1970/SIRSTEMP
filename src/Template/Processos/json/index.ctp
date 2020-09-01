@@ -6,6 +6,7 @@ foreach ($records as $record) {
     'entjudicial' => $record->entidadejudiciai->descricao,
     'natureza' => $record->natureza,
     'nip' => $record->nip,
+    'ultima' => $record->ultimaalteracao,
     'id' => $record->id,
   ];
 }

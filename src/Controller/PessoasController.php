@@ -291,7 +291,6 @@ class PessoasController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
         $pessoa = $this->Pessoas->get($id);
         if ($this->Pessoas->delete($pessoa)) {
             $this->Flash->success(__('O registro foi apagado.'));
