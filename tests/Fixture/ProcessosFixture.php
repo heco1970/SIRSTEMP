@@ -18,6 +18,7 @@ class ProcessosFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'processo_id' => ['type' => 'integer', 'length' => 20, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'entidadejudiciai_id' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'unit_id' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'natureza' => ['type' => 'string', 'length' => 200, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -47,6 +48,7 @@ class ProcessosFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
+                'processo_id' => 1,
                 'entidadejudiciai_id' => 1,
                 'unit_id' => 1,
                 'natureza' => 'Lorem ipsum dolor sit amet',
@@ -54,8 +56,8 @@ class ProcessosFixture extends TestFixture
                 'observacoes' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
                 'dataconclusao' => '2020-08-18',
                 'state_id' => 1,
-                'created' => 1597757425,
-                'modified' => 1597757425
+                'created' => 1598955955,
+                'modified' => 1598955955
             ],
         ];
         parent::init();

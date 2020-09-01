@@ -7,11 +7,15 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-4">
+                        <h6 class="text-primary"><?= __('ID') ?></h6>
+                        <p><?= h($processo->processo_id) ?></p>
+                    </div>
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Nip') ?></h6>
                         <p><?= h($processo->nip) ?></p>
                     </div>
-                    <div class="col-5">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Entidade judicial') ?></h6>
                         <td><?= $processo->has('entidadejudiciai') ? $this->Html->link($processo->entidadejudiciai->descricao, ['controller' => 'Entidadejudiciais', 'action' => 'view', $processo->entidadejudiciai->id]) : '' ?></td>
                     </div>
@@ -32,15 +36,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Natureza') ?></h6>
                         <td><?= h($processo->natureza) ?></td>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Data de Conclusão') ?></h6>
                         <td><?= h($processo->dataconclusao->i18nFormat('dd/MM/yyyy')) ?></td>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Criado') ?></h6>
                         <td><?= h($processo->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
                     </div>

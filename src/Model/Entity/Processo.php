@@ -7,6 +7,7 @@ use Cake\ORM\Entity;
  * Processo Entity
  *
  * @property int $id
+ * @property int $processo_id
  * @property int $entidadejudiciai_id
  * @property int $unit_id
  * @property string $natureza
@@ -33,6 +34,7 @@ class Processo extends Entity
      * @var array
      */
     protected $_accessible = [
+        'processo_id' => true,
         'entidadejudiciai_id' => true,
         'unit_id' => true,
         'natureza' => true,

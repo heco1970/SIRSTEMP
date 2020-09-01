@@ -6,6 +6,10 @@
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
             <div class="form-group">
+                <label for="processo_id">ID do Processo</label>
+                <?php echo $this->Form->text('processo_id', ['label' => false, 'class' => 'form-control','required']); ?>
+            </div>
+            <div class="form-group">
                 <label for="entidadejudiciai_id">Entidade Judicial</label>
                 <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
             </div>

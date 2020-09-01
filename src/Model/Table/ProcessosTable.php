@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -76,6 +77,10 @@ class ProcessosTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
+        $validator
+            ->integer('processo_id')
+            ->requirePresence('processo_id', 'create')
+            ->notEmpty('processo_id');
 
         $validator
             ->scalar('natureza')
