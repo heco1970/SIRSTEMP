@@ -104,7 +104,7 @@
                     <div class="form-group">
                         <label for="estado">Estado</label>
 
-                        <?= $this->Form->control('estado', ['options' => ['0' => 'Não Ativo', '1' => 'Ativo'], 'label' => false, 'class' => "form-control"]); ?>
+                        <?= $this->Form->control('estado', ['options' => ['0' => 'Não Ativo', '1' => 'Ativo'], 'default'=>[1],'label' => false, 'class' => "form-control"]); ?>
 
 
                     </div>
