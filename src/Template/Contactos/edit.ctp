@@ -25,10 +25,25 @@
 
 
             <div class="form-row">
-                <div class="col">
+                <div class="col-6">
                     <div class="form-group">
                         <label for="localidade">Localidade</label>
                         <?= $this->Form->control('localidade', ['label' => false, 'class' => "form-control", 'required']); ?>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="pais_id">País</label>
+                        <?= $this->Form->control('pais_id', ['label' => false, 'options' => $pais, 'class' => "form-control", 'required']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="morada">Morada</label>
+                        <?= $this->Form->control('morada', [ 'label' => false, 'class' => "form-control"]); ?>
+
                     </div>
                 </div>
             </div>

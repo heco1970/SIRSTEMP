@@ -39,7 +39,7 @@ class ContactosController extends AppController
     public function view($id = null)
     {
         $contacto = $this->Contactos->get($id, [
-            'contain' => ['Pessoas']
+            'contain' => ['Pessoas','Pais']
         ]);
 
         $this->set('contacto', $contacto);
@@ -67,6 +67,7 @@ class ContactosController extends AppController
             }
             $this->Flash->error(__('Não foi possível guardar o contacto. Por favor tente novamente'));
         }
+        $this->set('pais', $this->Contactos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('contacto', 'pessoas'));
     }
@@ -92,6 +93,8 @@ class ContactosController extends AppController
             }
             $this->Flash->error(__('Não foi possível guardar o contacto. Por favor tente novamente'));
         }
+        $this->set('pais', $this->Contactos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
+        
         $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('contacto', 'pessoas'));
     }

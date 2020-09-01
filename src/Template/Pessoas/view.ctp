@@ -7,7 +7,7 @@
 ?>
 <?= $this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]); ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="/js/multiselect.js"></script>
 
 <div class="card shadow mb-4">
@@ -113,12 +113,12 @@
                 <div class="row">
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
-                        <p><?= !empty($pessoa->centro_educ->designacao)? h($pessoa->centro_educ->designacao):'' ?></p>
+                        <p><?= !empty($pessoa->centro_educ->designacao) ? h($pessoa->centro_educ->designacao) : '' ?></p>
 
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
-                        <p><?= !empty($pessoa->estb_pri->designacao) ? h($pessoa->estb_pri->designacao):'' ?></p>
+                        <p><?= !empty($pessoa->estb_pri->designacao) ? h($pessoa->estb_pri->designacao) : '' ?></p>
 
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                 <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                     <div class="card shadow mb-2">
                         <div class="card-header py-3">
-                            <a class="btn btn-success btn-circle btn-lg" href="/contactos/add/<?= h($pessoa->id);?>"><i class="fas fa-plus"></i></a>
+                            <a class="btn btn-success btn-circle btn-lg" href="/contactos/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
                         </div>
 
                         <table class="table">
@@ -188,7 +188,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php $this->log($contactos); ?>
+
                                 <?php foreach ($contactos as $contacto) : ?>
                                     <tr>
                                         <th scope="row"><?= h($contacto->nome) ?></th>
@@ -207,152 +207,152 @@
                         </table>
                     </div>
 
-                <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
-                    </li>
-                </ul>
-                <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    <div class="card shadow mb-2">
-                        <div class="card-header py-3">
-                            <a class="btn btn-success btn-circle btn-lg" href="/crimes/add/<?= h($pessoa->id);?>"><i class="fas fa-plus"></i></a>
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Tipo de Crime</th>
-                                    <th scope="col">Nip</th>
-                                    <th scope="col">Ocorrencia</th>
-                                    <th scope="col">Registo</th>
-                                    <th scope="col">Quantidade</th>
-                                    <th scope="col">Apenas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($crimes as $crime) : ?>
-                                    <tr>
-                                        <th scope="row"><?= h($crime->descricao) ?></th>
-                                        <td><?= h($crime->processo->nip) ?></td>
-                                        <td><?= h($crime->ocorrencia) ?></td>
-                                        <td><?= h($crime->registo) ?></td>
-                                        <td><?= h($crime->qte) ?></td>
-                                        <td><?= h($crime->apenaspre) ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-
                     <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="pills-processos-tab" data-toggle="pill" href="#pills-processos" role="tab" aria-controls="pills-processos" aria-selected="true">Processos</a>
+                            <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
                         </li>
                     </ul>
-                    <div class="tab-pane fade show active" id="pills-processos" role="tabpanel" aria-labelledby="pills-processos-tab">
+                    <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                         <div class="card shadow mb-2">
                             <div class="card-header py-3">
-                                <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-                                <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+                                <a class="btn btn-success btn-circle btn-lg" href="/crimes/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
                             </div>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Natureza</th>
-                                        <th scope="col">NIP</th>
-                                        <th scope="col">Ultima Alteração</th>
-
+                                        <th scope="col">Tipo de Crime</th>
+                                        <th scope="col">Nip</th>
+                                        <th scope="col">Ocorrencia</th>
+                                        <th scope="col">Registo</th>
+                                        <th scope="col">Quantidade</th>
+                                        <th scope="col">Apenas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    <?php foreach ($crimes as $crime) : ?>
+                                        <tr>
+                                            <th scope="row"><?= h($crime->descricao) ?></th>
+                                            <td><?= h($crime->processo->nip) ?></td>
+                                            <td><?= h($crime->ocorrencia) ?></td>
+                                            <td><?= h($crime->registo) ?></td>
+                                            <td><?= h($crime->qte) ?></td>
+                                            <td><?= h($crime->apenaspre) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
 
-                    <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-pedidos-tab" data-toggle="pill" href="#pills-pedidos" role="tab" aria-controls="pills-pedidos" aria-selected="true">Pedidos</a>
-                        </li>
-                    </ul>
-                    <div class="tab-pane fade show active" id="pills-pedidos" role="tabpanel" aria-labelledby="pills-pedidos-tab">
-                        <div class="card shadow mb-2">
-                            <div class="card-header py-3">
-                                <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-                                <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+                        <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-processos-tab" data-toggle="pill" href="#pills-processos" role="tab" aria-controls="pills-processos" aria-selected="true">Processos</a>
+                            </li>
+                        </ul>
+                        <div class="tab-pane fade show active" id="pills-processos" role="tabpanel" aria-labelledby="pills-processos-tab">
+                            <div class="card shadow mb-2">
+                                <div class="card-header py-3">
+                                    <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
+                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Natureza</th>
+                                            <th scope="col">NIP</th>
+                                            <th scope="col">Ultima Alteração</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Referência</th>
-                                        <th scope="col">Utente</th>
-                                        <th scope="col">Processo</th>
-                                        <th scope="col">Equipa de Registo</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col">Data Recepção</th>
-                                        <th scope="col">Data Termo</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>31841</td>
-                                        <td>1661012</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Ep Lisboa Penal 8</td>
-                                        <td>Executado</td>
-                                        <td>05-02-2010</td>
-                                        <td>05-05-2018</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                    </div>
 
-                    <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-verbete-tab" data-toggle="pill" href="#pills-verbete" role="tab" aria-controls="pills-verbete" aria-selected="true">Verbetes</a>
-                        </li>
-                    </ul>
-                    <div class="tab-pane fade show active" id="pills-verbete" role="tabpanel" aria-labelledby="pills-verbete-tab">
-                        <div class="card shadow mb-2">
-                            <div class="card-header py-3">
-                                <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-                                <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+                        <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-pedidos-tab" data-toggle="pill" href="#pills-pedidos" role="tab" aria-controls="pills-pedidos" aria-selected="true">Pedidos</a>
+                            </li>
+                        </ul>
+                        <div class="tab-pane fade show active" id="pills-pedidos" role="tabpanel" aria-labelledby="pills-pedidos-tab">
+                            <div class="card shadow mb-2">
+                                <div class="card-header py-3">
+                                    <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
+                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Referência</th>
+                                            <th scope="col">Utente</th>
+                                            <th scope="col">Processo</th>
+                                            <th scope="col">Equipa de Registo</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Data Recepção</th>
+                                            <th scope="col">Data Termo</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>31841</td>
+                                            <td>1661012</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Ep Lisboa Penal 8</td>
+                                            <td>Executado</td>
+                                            <td>05-02-2010</td>
+                                            <td>05-05-2018</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col">Tipo Pedido</th>
-                                        <th scope="col">NIP</th>
-                                        <th scope="col">Equipa Atual</th>
-                                        <th scope="col">Data Entrada</th>
+                        </div>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-verbete-tab" data-toggle="pill" href="#pills-verbete" role="tab" aria-controls="pills-verbete" aria-selected="true">Verbetes</a>
+                            </li>
+                        </ul>
+                        <div class="tab-pane fade show active" id="pills-verbete" role="tabpanel" aria-labelledby="pills-verbete-tab">
+                            <div class="card shadow mb-2">
+                                <div class="card-header py-3">
+                                    <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
+                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Tipo Pedido</th>
+                                            <th scope="col">NIP</th>
+                                            <th scope="col">Equipa Atual</th>
+                                            <th scope="col">Data Entrada</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

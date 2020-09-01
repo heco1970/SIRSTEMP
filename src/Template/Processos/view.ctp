@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Data de Conclusão') ?></h6>
-                        <td><?= h($processo->dataconclusao->i18nFormat('dd/MM/yyyy')) ?></td>
+                        <td><?= !empty($processo->dataconclusao)?h($processo->dataconclusao->i18nFormat('dd/MM/yyyy')):'' ?></td>
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Criado') ?></h6>

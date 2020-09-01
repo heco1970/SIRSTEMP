@@ -21,6 +21,8 @@ class ContactosFixture extends TestFixture
         'pessoa_id' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'nome' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'localidade' => ['type' => 'string', 'length' => 250, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'pais_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'morada' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'telefone' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'fax' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'telemovel' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -52,14 +54,16 @@ class ContactosFixture extends TestFixture
                 'pessoa_id' => 1,
                 'nome' => 'Lorem ipsum dolor sit amet',
                 'localidade' => 'Lorem ipsum dolor sit amet',
+                'pais_id' => 1,
+                'morada' => 'Lorem ipsum dolor sit amet',
                 'telefone' => 1,
                 'fax' => 1,
                 'telemovel' => 1,
                 'email' => 'Lorem ipsum dolor sit amet',
                 'descricao' => 'Lorem ipsum dolor sit amet',
                 'estado' => 1,
-                'created' => 1597679097,
-                'modified' => 1597679097
+                'created' => 1598972927,
+                'modified' => 1598972927
             ],
         ];
         parent::init();

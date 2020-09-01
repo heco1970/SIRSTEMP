@@ -26,10 +26,25 @@
 
 
             <div class="form-row">
-                <div class="col">
+                <div class="col-6">
                     <div class="form-group">
                         <label for="localidade">Localidade</label>
                         <?= $this->Form->control('localidade', ['label' => false, 'class' => "form-control", 'required']); ?>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="pais_id">País</label>
+                        <?= $this->Form->control('pais_id', ['label' => false,'default' => 193, 'options' => $pais, 'class' => "form-control", 'required']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="morada">Morada</label>
+                        <?= $this->Form->control('morada', [ 'label' => false, 'class' => "form-control"]); ?>
+
                     </div>
                 </div>
             </div>
@@ -38,7 +53,7 @@
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
 
-                        <?= $this->Form->control('telefone', ['label' => false, 'class' => "form-control"]); ?>
+                        <?= $this->Form->control('telefone', ['type'=>'text','label' => false, 'class' => "form-control"]); ?>
 
                     </div>
                 </div>
@@ -47,7 +62,7 @@
                     <div class="form-group">
                         <label for="fax">Fax</label>
 
-                        <?= $this->Form->control('fax', ['label' => false, 'class' => "form-control"]); ?>
+                        <?= $this->Form->control('fax', ['type'=>'text','label' => false, 'class' => "form-control"]); ?>
 
                     </div>
                 </div>
@@ -56,7 +71,7 @@
                     <div class="form-group">
                         <label for="telemovel">Telemóvel</label>
 
-                        <?= $this->Form->control('telemovel', ['label' => false, 'class' => "form-control"]); ?>
+                        <?= $this->Form->control('telemovel', ['type'=>'text','label' => false, 'class' => "form-control"]); ?>
 
 
                     </div>
