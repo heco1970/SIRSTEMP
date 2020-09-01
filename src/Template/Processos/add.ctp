@@ -7,7 +7,7 @@
         <div id='my-form-body'>
             <div class="form-group">
                 <label for="processo_id">ID do Processo</label>
-                <?php echo $this->Form->text('processo_id', ['label' => false, 'class' => 'form-control','required']); ?>
+                <?php echo $this->Form->control('processo_id', ['type'=>'text','label' => false, 'class' => 'form-control','required']); ?>
             </div>
             <div class="form-group">
                 <label for="entidadejudiciai_id">Entidade Judicial</label>
