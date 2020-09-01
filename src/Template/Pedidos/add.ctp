@@ -101,7 +101,7 @@
                                     <h4><?= __('Equipa Responsável') ?></h4>
                                 </label>
                                 <?= $this->Form->control('team_id', [
-                                    'id' => 'team_id', 'class' => 'form-control','empty' => 'Escolha uma equipa...',  'label' => false, 'options' => $teams]); ?>
+                                    'id' => 'team_id', 'class' => 'form-control','empty' => 'Escolha uma equipa...','default'=>[''],'disabled'=>[''],'label' => false, 'options' => $teams]); ?>
                             </div>
                         </div>
                     </div>
