@@ -7,12 +7,8 @@ foreach ($records as $record) {
     'natureza' => $record->natureza,
     'nip' => $record->nip,
     'ultima' => $record->ultimaalteracao,
-<<<<<<< HEAD
     'processo' => $record->processo_id,
     'id' => $record->id,
-=======
-    'id' => $record->processo_id,
->>>>>>> 80ce1419f0d6761a36dd578858d27e3190ceeaa2
   ];
 }
 

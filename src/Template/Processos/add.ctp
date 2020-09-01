@@ -11,7 +11,7 @@
             </div>
             <div class="form-group">
                 <label for="ultimaalteracao">Ultima Alteração</label>
-                <?php echo $this->Form->text('ultimaalteracao', ['label' => false, 'class' => 'form-control','required']); ?>
+                <?php echo $this->Form->control('ultimaalteracao', ['label' => false, 'class' => 'form-control','required']); ?>
             </div>
             <div class="form-group">
                 <label for="entidadejudiciai_id">Entidade Judicial</label>

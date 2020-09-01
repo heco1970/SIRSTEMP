@@ -122,7 +122,8 @@ class ProcessosTable extends Table
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules)
-    {   $rules->add($rules->isUnique(['processo_id'], 'Já existe um processo com o mesmo ID.'));
+    {   
+        $rules->add($rules->isUnique(['processo_id'], 'Já existe um processo com o mesmo ID.'));
         $rules->add($rules->existsIn(['entidadejudiciai_id'], 'Entidadejudiciais'));
         $rules->add($rules->existsIn(['unit_id'], 'Units'));
         $rules->add($rules->existsIn(['state_id'], 'States'));
