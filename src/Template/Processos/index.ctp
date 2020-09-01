@@ -17,21 +17,20 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Id')],
+        'processo' => ['label' => __('Id')],
         'nip' => ['label' => __('NIP')],
         'natureza' => ['label' => __('Natureza')],
-        'entjudicial' => ['label' => __('entjudicial')],
-        'ultima' => ['label' => __('Ultima Alteração')],
+        'entjudicial' => ['label' => __('Entidade Judicial')],
         'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
         'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['id' => ['label' => __('Id')]] +
+$dynElems = ['processo' => ['label' => __('Id')]] +
             ['nip' => ['label' => __('NIP')]] +
             ['natureza' => ['label' => __('Natureza')]] +
-            ['entjudicial' => ['label' => __('entjudicial')]] +
+            ['entjudicial' => ['label' => __('Entidade Judicial')]] +
             ['ultima' => ['label' => __('Ultima Alteração')]] +
             ['created' => ['label' => __('Data de Criação')]];
 ?>

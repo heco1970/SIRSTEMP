@@ -28,18 +28,19 @@ class ProcessosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['natureza', 'nip', 'createdfirst', 'createdlast'];
+            $validOps = ['processo', 'nip', 'natureza', 'entjudicial', 'createdfirst', 'createdlast'];
             $convArray = [
-                'natureza' => $model.'.natureza',
+                'processo' => $model.'.processo_id',
                 'nip' => $model.'.nip',
+                'natureza' => $model.'.natureza',
+                'entjudicial' => 'Entidadejudiciais.descricao',
                 'createdfirst' => $model.'.created',
                 'createdlast' => $model.'.created'
             ];
-            $strings = ['natureza', 'nip'];
+            $strings = ['nip', 'natureza', 'entjudicial'];
             $date_start = ['createdfirst']; //data inicial
             $date_end = ['createdlast'];  //data final
 
-            // $contain = ['Types'];
             $contain = ['Entidadejudiciais'];
             $conditions = [];
       

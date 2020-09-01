@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -10,11 +9,13 @@ use Cake\Validation\Validator;
 /**
  * Processos Model
  *
+ * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
  * @property \App\Model\Table\EntidadejudiciaisTable|\Cake\ORM\Association\BelongsTo $Entidadejudiciais
  * @property \App\Model\Table\UnitsTable|\Cake\ORM\Association\BelongsTo $Units
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
- * @property |\Cake\ORM\Association\HasMany $Crimes
+ * @property \App\Model\Table\CrimesTable|\Cake\ORM\Association\HasMany $Crimes
  * @property \App\Model\Table\PedidosTable|\Cake\ORM\Association\HasMany $Pedidos
+ * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\HasMany $Processos
  *
  * @method \App\Model\Entity\Processo get($primaryKey, $options = [])
  * @method \App\Model\Entity\Processo newEntity($data = null, array $options = [])
@@ -64,6 +65,7 @@ class ProcessosTable extends Table
         $this->hasMany('Pedidos', [
             'foreignKey' => 'processo_id'
         ]);
+        
     }
 
     /**
@@ -77,6 +79,7 @@ class ProcessosTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
+
         $validator
             ->integer('processo_id')
             ->requirePresence('processo_id', 'create')
@@ -100,8 +103,13 @@ class ProcessosTable extends Table
 
         $validator
             ->date('dataconclusao')
-            ->requirePresence('dataconclusao', 'create')
-            ->notEmpty('dataconclusao');
+            ->allowEmpty('dataconclusao');
+
+        $validator
+            ->scalar('ultimaalteracao')
+            ->maxLength('ultimaalteracao', 45)
+            ->requirePresence('ultimaalteracao', 'create')
+            ->notEmpty('ultimaalteracao');
 
         return $validator;
     }

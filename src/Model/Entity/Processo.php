@@ -12,14 +12,19 @@ use Cake\ORM\Entity;
  * @property int $unit_id
  * @property string $natureza
  * @property string $nip
- * @property string $observacoes
- * @property \Cake\I18n\FrozenDate $dataconclusao
+ * @property string|null $observacoes
+ * @property \Cake\I18n\FrozenDate|null $dataconclusao
  * @property int $state_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property string $ultimaalteracao
  *
+ * @property \App\Model\Entity\Processo[] $processos
+ * @property \App\Model\Entity\Entidadejudiciai $entidadejudiciai
  * @property \App\Model\Entity\Unit $unit
  * @property \App\Model\Entity\State $state
+ * @property \App\Model\Entity\Crime[] $crimes
+ * @property \App\Model\Entity\Pedido[] $pedidos
  */
 class Processo extends Entity
 {
@@ -44,7 +49,12 @@ class Processo extends Entity
         'state_id' => true,
         'created' => true,
         'modified' => true,
+        'ultimaalteracao' => true,
+        'processos' => true,
+        'entidadejudiciai' => true,
         'unit' => true,
-        'state' => true
+        'state' => true,
+        'crimes' => true,
+        'pedidos' => true
     ];
 }

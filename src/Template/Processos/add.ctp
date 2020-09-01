@@ -10,6 +10,10 @@
                 <?php echo $this->Form->text('processo_id', ['label' => false, 'class' => 'form-control','required']); ?>
             </div>
             <div class="form-group">
+                <label for="ultimaalteracao">Ultima Alteração</label>
+                <?php echo $this->Form->text('ultimaalteracao', ['label' => false, 'class' => 'form-control','required']); ?>
+            </div>
+            <div class="form-group">
                 <label for="entidadejudiciai_id">Entidade Judicial</label>
                 <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
             </div>
@@ -31,7 +35,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="dataconclusao">Data de Conclusão</label>
-                        <?php echo $this->Form->text('dataconclusao', ['label' => false, 'class' => 'form-control', 'type' => 'date', 'required']); ?>
+                        <?php echo $this->Form->text('dataconclusao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
                 <div class="col">
