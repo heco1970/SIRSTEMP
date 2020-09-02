@@ -58,7 +58,6 @@ class ContactosController extends AppController
         if ($this->request->is('post')) {
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
             $contacto->pessoa_id=$id;
-            $this->log($contacto);
             if ($save = $this->Contactos->save($contacto)) {
 
                 $this->Flash->success(__('O contacto foi guardado com sucesso.'));

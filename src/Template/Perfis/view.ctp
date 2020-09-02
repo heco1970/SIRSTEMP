@@ -38,41 +38,40 @@
 
                     </div>
                 </div>
-
-                <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                        <p class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Utilizadores</p>
-                    </li>
-                </ul>
-                <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    <div class="card shadow mb-2">
-
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Nome</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <?php foreach ($perfi->users as $row) : ?>
-                                    <tr>
-                                        <td><?= h($row->username) ?></th>
-                                        <td><?= h($row->name) ?></td>
-
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-
             </div>
-        </div>
-        <div class="card-footer py-3">
-            <a href="/perfis/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
+            <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <p class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Utilizadores</p>
+                </li>
+            </ul>
+            <div class="card mb-2">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Nome</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php foreach ($perfi->users as $row) : ?>
+                            <tr>
+                                <td><?= h($row->username) ?></th>
+                                <td><?= h($row->name) ?></td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+
+
         </div>
     </div>
+    <div class="card-footer py-3">
+        <a href="/perfis/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
+    </div>
+</div>
