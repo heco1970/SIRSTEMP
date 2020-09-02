@@ -20,7 +20,8 @@ $dynElems =
         'processo' => ['label' => __('Id')],
         'nip' => ['label' => __('NIP')],
         'natureza' => ['label' => __('Natureza')],
-        'entjudicial' => ['label' => __('Entidade Judicial')],
+        //'entjudicial' => ['label' => __('Entidade Judicial')],
+        'entjudicial' => ['label' => __('Entidade Judicial'), 'options' => $entidadesjudiciais, 'empty' => ' '],
         'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
         'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
     ];

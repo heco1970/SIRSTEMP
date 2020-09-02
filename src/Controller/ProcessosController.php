@@ -33,11 +33,12 @@ class ProcessosController extends AppController
                 'processo' => $model.'.processo_id',
                 'nip' => $model.'.nip',
                 'natureza' => $model.'.natureza',
-                'entjudicial' => 'Entidadejudiciais.descricao',
+                'entjudicial' => $model . '.entidadejudiciai_id',
+                //'entjudicial' => 'Entidadejudiciais.descricao',
                 'createdfirst' => $model.'.created',
                 'createdlast' => $model.'.created'
             ];
-            $strings = ['nip', 'natureza', 'entjudicial'];
+            $strings = ['nip', 'natureza'];
             $date_start = ['createdfirst']; //data inicial
             $date_end = ['createdlast'];  //data final
 
@@ -56,8 +57,11 @@ class ProcessosController extends AppController
             
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
-            //$types = $this->Users->Types->find('list', ['limit' => 200]);
-            //$this->set(compact('types'));
+            $entidadesjudiciais = $this->Processos->Entidadejudiciais->find('list', array(
+                'keyField' => 'id',
+                'valueField' => 'descricao'
+            ))->toArray();
+            $this->set(compact('entidadesjudiciais'));
         }
     }
 
