@@ -3,11 +3,8 @@ $data = [];
 foreach ($records as $record) {
   $data[] = [
     'created' => $record->created->i18nFormat('dd/MM/yyyy HH:mm:ss'),
-    'entjudicial' => $record->entidadejudiciai->descricao,
-    'natureza' => $record->natureza->designacao,
-    'nip' => $record->nip,
-    'ultima' => $record->ultimaalteracao,
-    'processo' => $record->processo_id,
+    'modified' => $record->modified->i18nFormat('dd/MM/yyyy HH:mm:ss'),
+    'designacao' => $record->designacao,
     'id' => $record->id,
   ];
 }

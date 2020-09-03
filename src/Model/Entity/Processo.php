@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  * @property int $processo_id
  * @property int $entidadejudiciai_id
  * @property int $unit_id
- * @property string $natureza
+ * @property int $natureza_id
  * @property string $nip
  * @property string|null $observacoes
  * @property \Cake\I18n\FrozenDate|null $dataconclusao
@@ -19,7 +19,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  * @property string $ultimaalteracao
  *
- * @property \App\Model\Entity\Processo[] $processos
  * @property \App\Model\Entity\Entidadejudiciai $entidadejudiciai
  * @property \App\Model\Entity\Unit $unit
  * @property \App\Model\Entity\State $state
@@ -42,7 +41,7 @@ class Processo extends Entity
         'processo_id' => true,
         'entidadejudiciai_id' => true,
         'unit_id' => true,
-        'natureza' => true,
+        'natureza_id' => true,
         'nip' => true,
         'observacoes' => true,
         'dataconclusao' => true,
@@ -50,7 +49,6 @@ class Processo extends Entity
         'created' => true,
         'modified' => true,
         'ultimaalteracao' => true,
-        'processos' => true,
         'entidadejudiciai' => true,
         'unit' => true,
         'state' => true,

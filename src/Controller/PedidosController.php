@@ -29,18 +29,22 @@ class PedidosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'pessoa_id', 'createdfirst', 'createdlast'];
+            $validOps = ['id', 'pessoa', 'processo','equiparesponsavel','state','createdfirst', 'createdlast'];
             $convArray = [
                 'id' => $model . '.id',
-                'pessoa_id' => $model . '.pessoa_id',
-                'createdfirst' => $model . '.created',
-                'createdlast' => $model . '.created'
+                'pessoa' => 'Pessoas.nome',
+                'processo' => 'Processos.nip',
+                'equiparesponsavel' => 'Teams.nome',
+                'state' => $model.'.state_id',
+                'datarecepcao' => $model . '.datarecepcao',
+                'datatermoprevisto' => $model . '.datatermoprevisto',
+                'dataefectivatermo' => $model . '.dataefectivatermo'
             ];
-            $strings = ['pessoa_id'];
-            $date_start = ['createdfirst']; //data inicial
-            $date_end = ['createdlast'];  //data final
+            $strings = ['pessoa','processo','equiparesponsavel'];
+            $date_start = []; //data inicial
+            $date_end = [];  //data final
 
-            // $contain = ['Types'];
+            
             $contain = ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Pais', 'Teams'];
             $conditions = [];
 
@@ -55,8 +59,11 @@ class PedidosController extends AppController
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
-            //$types = $this->Users->Types->find('list', ['limit' => 200]);
-            //$this->set(compact('types'));
+            $estados = $this->Pedidos->States->find('list', array(
+                'keyField' => 'id',
+                'valueField' => 'designacao'
+            ))->toArray();
+            $this->set(compact('estados'));
         }
     }
 

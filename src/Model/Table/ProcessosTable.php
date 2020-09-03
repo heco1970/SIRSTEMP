@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
  * @property \App\Model\Table\EntidadejudiciaisTable|\Cake\ORM\Association\BelongsTo $Entidadejudiciais
  * @property \App\Model\Table\UnitsTable|\Cake\ORM\Association\BelongsTo $Units
+ * @property |\Cake\ORM\Association\BelongsTo $Naturezas
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
  * @property \App\Model\Table\CrimesTable|\Cake\ORM\Association\HasMany $Crimes
  * @property \App\Model\Table\PedidosTable|\Cake\ORM\Association\HasMany $Pedidos
@@ -55,6 +56,10 @@ class ProcessosTable extends Table
             'foreignKey' => 'unit_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Naturezas', [
+            'foreignKey' => 'natureza_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('States', [
             'foreignKey' => 'state_id',
             'joinType' => 'INNER'
@@ -79,17 +84,6 @@ class ProcessosTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
-
-        $validator
-            ->integer('processo_id')
-            ->requirePresence('processo_id', 'create')
-            ->notEmpty('processo_id');
-
-        $validator
-            ->scalar('natureza')
-            ->maxLength('natureza', 200)
-            ->requirePresence('natureza', 'create')
-            ->notEmpty('natureza');
 
         $validator
             ->scalar('nip')
@@ -126,6 +120,7 @@ class ProcessosTable extends Table
         $rules->add($rules->isUnique(['processo_id'], 'Já existe um processo com o mesmo ID.'));
         $rules->add($rules->existsIn(['entidadejudiciai_id'], 'Entidadejudiciais'));
         $rules->add($rules->existsIn(['unit_id'], 'Units'));
+        $rules->add($rules->existsIn(['natureza_id'], 'Naturezas'));
         $rules->add($rules->existsIn(['state_id'], 'States'));
 
         return $rules;
