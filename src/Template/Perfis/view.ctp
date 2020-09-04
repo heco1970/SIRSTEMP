@@ -15,13 +15,13 @@
         <div class="tab-content" id="pills-tabContent">
             <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Perfil - <?= h($perfi->perfil) ?> </a>
+                    <p class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Perfil - <?= h($perfi->perfil) ?> </p>
                 </li>
             </ul>
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="row">
                     <div class="col">
-                        <h6 class="text-primary"><?= __('Nome') ?></h6>
+                        <h6 class="text-primary"><?= __('Designação') ?></h6>
                         <p><?= h($perfi->perfil) ?></p>
                         <hr>
                     </div>
@@ -38,20 +38,36 @@
 
                     </div>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col">
-                        <h6 class="text-primary"><?= __('Utilizadores') ?></h6>
-                        <?php foreach ($perfi->users as $row) : ?>
-
-                            <p><?= h($row->username) ?></p>
-                            
-                        <?php endforeach ?>
-
-                    </div>
-                </div>
-
             </div>
+            <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <p class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Utilizadores</p>
+                </li>
+            </ul>
+            <div class="card mb-2">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Nome</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php foreach ($perfi->users as $row) : ?>
+                            <tr>
+                                <td><?= h($row->username) ?></th>
+                                <td><?= h($row->name) ?></td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+
 
         </div>
     </div>

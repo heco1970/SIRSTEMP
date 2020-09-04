@@ -26,12 +26,24 @@
         </div>
 
         <div class="row">
-            <div class="col">
+            <div class="col-4">
                 <h6 class="text-primary"><?= __('Localidade') ?></h6>
                 <p><?= h($contacto->localidade) ?></p>
-                <hr>
+                
+            </div>
+            <div class="col-4">
+                <h6 class="text-primary"><?= __('País') ?></h6>
+                <p><?= h($contacto->pai->paisNome) ?></p>
+                
+            </div>
+            <div class="col-4">
+                <h6 class="text-primary"><?= __('Morada') ?></h6>
+                <p><?= h($contacto->morada) ?></p>
+                
             </div>
         </div>
+        <hr>
+       
         <div class="row">
 
             <div class="col-4">
@@ -70,7 +82,7 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Html->link(__('Voltar'), $this->request->referer(), ['class' => 'btn btn-secondary']) ?>
+        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id], ['class' => 'btn btn-secondary']) ?>
     </div>
 
 </div>

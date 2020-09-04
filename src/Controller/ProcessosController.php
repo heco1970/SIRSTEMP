@@ -32,16 +32,16 @@ class ProcessosController extends AppController
             $convArray = [
                 'processo' => $model.'.processo_id',
                 'nip' => $model.'.nip',
-                'natureza' => $model.'.natureza',
-                'entjudicial' => 'Entidadejudiciais.descricao',
+                'natureza' => $model.'.natureza_id',
+                'entjudicial' => $model . '.entidadejudiciai_id',
                 'createdfirst' => $model.'.created',
                 'createdlast' => $model.'.created'
             ];
-            $strings = ['nip', 'natureza', 'entjudicial'];
+            $strings = ['nip'];
             $date_start = ['createdfirst']; //data inicial
             $date_end = ['createdlast'];  //data final
 
-            $contain = ['Entidadejudiciais'];
+            $contain = ['Entidadejudiciais','Naturezas'];
             $conditions = [];
       
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
@@ -56,8 +56,16 @@ class ProcessosController extends AppController
             
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
-            //$types = $this->Users->Types->find('list', ['limit' => 200]);
-            //$this->set(compact('types'));
+            $entidadesjudiciais = $this->Processos->Entidadejudiciais->find('list', array(
+                'keyField' => 'id',
+                'valueField' => 'descricao'
+            ))->toArray();
+           
+            $natureza = $this->Processos->Naturezas->find('list', array(
+                'keyField' => 'id',
+                'valueField' => 'designacao'
+            ))->toArray();
+            $this->set(compact('entidadesjudiciais','natureza'));
         }
     }
 
@@ -71,7 +79,7 @@ class ProcessosController extends AppController
     public function view($id = null)
     {
         $processo = $this->Processos->get($id, [
-            'contain' => ['Units', 'States', 'Entidadejudiciais']
+            'contain' => ['Units', 'States', 'Entidadejudiciais','Naturezas']
         ]);
 
         $this->set('processo', $processo);
@@ -98,6 +106,8 @@ class ProcessosController extends AppController
         $this->set('units', $this->Processos->Units->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('states', $this->Processos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('entidades', $this->Processos->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
+        $this->set('naturezas', $this->Processos->Naturezas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
+        
         $this->set(compact('processo'));
     }
 

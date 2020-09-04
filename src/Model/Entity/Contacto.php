@@ -10,6 +10,8 @@ use Cake\ORM\Entity;
  * @property int $pessoa_id
  * @property string $nome
  * @property string $localidade
+ * @property int $pais_id
+ * @property string $morada
  * @property int|null $telefone
  * @property int|null $fax
  * @property int|null $telemovel
@@ -37,6 +39,8 @@ class Contacto extends Entity
         'pessoa_id' => true,
         'nome' => true,
         'localidade' => true,
+        'pais_id' => true,
+        'morada' => true,
         'telefone' => true,
         'fax' => true,
         'telemovel' => true,

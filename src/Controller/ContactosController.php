@@ -39,7 +39,7 @@ class ContactosController extends AppController
     public function view($id = null)
     {
         $contacto = $this->Contactos->get($id, [
-            'contain' => ['Pessoas']
+            'contain' => ['Pessoas','Pais']
         ]);
 
         $this->set('contacto', $contacto);
@@ -53,12 +53,11 @@ class ContactosController extends AppController
     public function add($id = null)
     {
         $contacto = $this->Contactos->newEntity();
-        
+        $id=$id;
 
         if ($this->request->is('post')) {
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
             $contacto->pessoa_id=$id;
-            $this->log($contacto);
             if ($save = $this->Contactos->save($contacto)) {
 
                 $this->Flash->success(__('O contacto foi guardado com sucesso.'));
@@ -67,8 +66,9 @@ class ContactosController extends AppController
             }
             $this->Flash->error(__('Não foi possível guardar o contacto. Por favor tente novamente'));
         }
+        $this->set('pais', $this->Contactos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('contacto', 'pessoas'));
+        $this->set(compact('contacto', 'pessoas','id'));
     }
 
     /**
@@ -81,7 +81,7 @@ class ContactosController extends AppController
     public function edit($id = null)
     {
         $contacto = $this->Contactos->get($id, [
-            'contain' => []
+            'contain' => ['Pessoas']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
@@ -92,6 +92,8 @@ class ContactosController extends AppController
             }
             $this->Flash->error(__('Não foi possível guardar o contacto. Por favor tente novamente'));
         }
+        $this->set('pais', $this->Contactos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
+        
         $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
         $this->set(compact('contacto', 'pessoas'));
     }

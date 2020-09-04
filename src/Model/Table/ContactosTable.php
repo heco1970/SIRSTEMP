@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Contactos Model
  *
  * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsTo $Pessoas
+ * @property |\Cake\ORM\Association\BelongsTo $Pais
  *
  * @method \App\Model\Entity\Contacto get($primaryKey, $options = [])
  * @method \App\Model\Entity\Contacto newEntity($data = null, array $options = [])
@@ -45,6 +46,10 @@ class ContactosTable extends Table
             'foreignKey' => 'pessoa_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Pais', [
+            'foreignKey' => 'pais_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -70,6 +75,12 @@ class ContactosTable extends Table
             ->maxLength('localidade', 250)
             ->requirePresence('localidade', 'create')
             ->notEmpty('localidade');
+
+        $validator
+            ->scalar('morada')
+            ->maxLength('morada', 255)
+            ->requirePresence('morada', 'create')
+            ->notEmpty('morada');
 
         $validator
             ->integer('telefone')
@@ -111,6 +122,7 @@ class ContactosTable extends Table
     {
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
+        $rules->add($rules->existsIn(['pais_id'], 'Pais'));
 
         return $rules;
     }

@@ -27,7 +27,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="natureza">Natureza</label>
-                        <?php echo $this->Form->control('natureza', ['label' => false, 'class' => 'form-control', 'required']); ?>
+                        <?php echo $this->Form->control('natureza_id', ['label' => false, 'class' => 'form-control', 'options' => $naturezas,'required','empty' => ['' => '']]); ?>
                     </div>
                 </div>
             </div>

@@ -66,7 +66,9 @@ $active = $show = '';
                     <?= $this->Html->link(__('Equipas'), '/teams/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Estados'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Motivos de Pedidos'), '/pedidosmotives/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Motivos Verbete'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
+                    <?= $this->Html->link(__('Motivos Verbete'), '/verbetes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
+                    <?= $this->Html->link(__('Naturezas'), '/naturezas/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
+                   
                     <?= $this->Html->link(__('Perfil de Utilizador'), '/user-perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                     <?= $this->Html->link(__('Perfis'), '/perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                     <?= $this->Html->link(__('Tipos de Pedidos'), '/pedidostypes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
