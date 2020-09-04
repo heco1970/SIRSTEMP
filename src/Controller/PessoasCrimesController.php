@@ -166,7 +166,7 @@ class PessoasCrimesController extends AppController
    */
   public function delete($id = null)
   {
-      $this->request->allowMethod(['post', 'delete']);
+      //$this->request->allowMethod(['post', 'delete']);
       $pessoasCrime = $this->PessoasCrimes->get($id);
       if ($this->PessoasCrimes->delete($pessoasCrime)) {
           $this->Flash->success(__('The pessoas crime has been deleted.'));

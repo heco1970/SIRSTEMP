@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Crimes Model
  *
  * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
+ * @property \App\Model\Table\TipocrimesTable|\Cake\ORM\Association\BelongsTo $Tipocrimes
  * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsToMany $Pessoas
  *
  * @method \App\Model\Entity\Crime get($primaryKey, $options = [])
@@ -46,13 +47,17 @@ class CrimesTable extends Table
             'foreignKey' => 'processo_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Tipocrimes', [
+            'foreignKey' => 'tipocrime_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsToMany('Pessoas', [
             'foreignKey' => 'crime_id',
             'targetForeignKey' => 'pessoa_id',
             'joinTable' => 'pessoas_crimes'
         ]);
-        $this->hasMany('PessoasCrimes');
 
+        $this->hasMany('Tipocrime');
     }
 
     /**
@@ -66,12 +71,6 @@ class CrimesTable extends Table
         $validator
             ->nonNegativeInteger('id')
             ->allowEmpty('id', 'create');
-
-        $validator
-            ->scalar('descricao')
-            ->maxLength('descricao', 50)
-            ->requirePresence('descricao', 'create')
-            ->notEmpty('descricao');
 
         $validator
             ->scalar('ocorrencia')
@@ -109,6 +108,7 @@ class CrimesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['processo_id'], 'Processos'));
+        $rules->add($rules->existsIn(['tipocrime_id'], 'Tipocrimes'));
 
         return $rules;
     }

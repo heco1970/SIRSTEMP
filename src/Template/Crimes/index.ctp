@@ -19,7 +19,7 @@
 <?php
 $dynElems =
     [
-        'descricao' => ['label' => __('Descricao')],
+        'tipocrime' => ['label' => __('Tipo de Crime')],
         'processo' => ['label' => __('NIP')],
         'ocorrencia' => ['label' => __('Ocorrencia')],
         'registo' => ['label' => __('Registo')],
@@ -29,7 +29,7 @@ $dynElems =
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['descricao' => ['label' => __('Descricao')]] +
+$dynElems = ['tipocrime' => ['label' => __('Tipo de Crime')]] +
 $dynElems = ['processo' => ['label' => __('NIP')]] +
 $dynElems = ['ocorrencia' => ['label' => __('Ocorrencia')]] +
 $dynElems = ['registo' => ['label' => __('Registo')]] +

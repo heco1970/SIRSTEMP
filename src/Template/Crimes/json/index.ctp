@@ -3,9 +3,8 @@ $data = [];
 foreach ($records as $record) {
   $data[] = [
     'created' => $record->created->i18nFormat('dd/MM/yyyy'),
-    'modified' => $record->modified->i18nFormat('dd/MM/yyyy'),
-    'descricao' => $record->descricao,
-    //'pessoa' => $record->pessoa->nome,
+    //'modified' => $record->modified->i18nFormat('dd/MM/yyyy'),
+    'tipocrime' => $record->tipocrime->descricao,
     'processo' => $record->processo->nip,
     'ocorrencia' => $record->ocorrencia,
     'registo' => $record->registo,
@@ -13,6 +12,7 @@ foreach ($records as $record) {
     'apenaspre' => $record->descricao,
     'id' => $record->id,
   ];
+  $this->log($record);
 }
 
 echo json_encode([

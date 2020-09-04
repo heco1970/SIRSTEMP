@@ -47,7 +47,7 @@ class CrimesController extends AppController
         $date_start = ['createdfirst']; //data inicial
         $date_end = ['createdlast'];  //data final
   
-        $contain = ['Pessoas','Processos'];
+        $contain = ['Pessoas','Processos','Tipocrimes'];
         $conditions = [];
       
         $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
@@ -78,10 +78,10 @@ class CrimesController extends AppController
             }
             $this->Flash->error(__('The crime could not be saved. Please, try again.'));
         }
-        $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
+        $tipocrime = $this->Crimes->Tipocrime->find('list', ['limit' => 200]);
         
-        $this->set(compact('crime', 'pessoas','processos'));
+        $this->set(compact('crime','processos','tipocrime'));
     }
 
     /**

@@ -14,7 +14,7 @@
                             <label for="descricao">
                                 <h4><?= __('Tipo de crime') ?></h4>
                             </label>
-                            <?= $this->Form->control('descricao', ['class' => 'form-control', 'descricao' => 'descricao', 'label' => false, 'required']); ?>
+                            <?= $this->Form->control('tipocrime_id', ['class' => 'form-control', 'tipocrime' => 'tipocrime', 'label' => false, 'required']); ?>
                         </div>
                     </div>
                 </div>

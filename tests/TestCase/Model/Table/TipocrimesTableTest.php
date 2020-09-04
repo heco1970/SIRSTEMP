@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\CrimesTable;
+use App\Model\Table\TipocrimesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CrimesTable Test Case
+ * App\Model\Table\TipocrimesTable Test Case
  */
-class CrimesTableTest extends TestCase
+class TipocrimesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CrimesTable
+     * @var \App\Model\Table\TipocrimesTable
      */
-    public $Crimes;
+    public $Tipocrimes;
 
     /**
      * Fixtures
@@ -24,11 +24,8 @@ class CrimesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.crimes',
-        'app.processos',
         'app.tipocrimes',
-        'app.pessoas',
-        'app.tipocrime'
+        'app.crimes'
     ];
 
     /**
@@ -39,8 +36,8 @@ class CrimesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Crimes') ? [] : ['className' => CrimesTable::class];
-        $this->Crimes = TableRegistry::getTableLocator()->get('Crimes', $config);
+        $config = TableRegistry::getTableLocator()->exists('Tipocrimes') ? [] : ['className' => TipocrimesTable::class];
+        $this->Tipocrimes = TableRegistry::getTableLocator()->get('Tipocrimes', $config);
     }
 
     /**
@@ -50,7 +47,7 @@ class CrimesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Crimes);
+        unset($this->Tipocrimes);
 
         parent::tearDown();
     }
@@ -71,16 +68,6 @@ class CrimesTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
