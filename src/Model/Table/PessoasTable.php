@@ -109,6 +109,7 @@ class PessoasTable extends Table
             'targetForeignKey' => 'processos_id',
             'joinTable' => 'pessoas_processos'
         ]);
+        $this->hasMany('PessoasProcessos');
     }
 
     /**

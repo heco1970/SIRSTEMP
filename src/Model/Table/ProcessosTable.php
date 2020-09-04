@@ -70,7 +70,7 @@ class ProcessosTable extends Table
         $this->hasMany('Pedidos', [
             'foreignKey' => 'processo_id'
         ]);
-        
+        $this->hasMany('PessoasProcessos');
     }
 
     /**

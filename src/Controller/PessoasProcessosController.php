@@ -108,38 +108,18 @@ class PessoasProcessosController extends AppController
      */
     public function add($id = null)
     {
-        /*
-        $this->log($id);
-        $pessoasProcesso = $this->PessoasProcessos->newEntity();
-        if ($this->request->is('post')) {
-            $pessoasProcesso = $this->PessoasProcessos->patchEntity($pessoasProcesso, $this->request->getData());
-            if ($this->PessoasProcessos->save($pessoasProcesso)) {
-                //$this->Flash->success(__('The users team has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            //$this->Flash->error(__('The users team could not be saved. Please, try again.'));
-        }
-        $pessoas = $this->PessoasProcessos->Pessoas->find('list', ['limit' => 200]);
-        $processos = $this->PessoasProcessos->Processos->find('list', ['limit' => 200]);
-        $this->set(compact('pessoasProcesso', 'pessoas', 'processos'));
-        */
-
         $this->loadModel('Processos');
+        $this->loadModel('Pessoas');
 
         $subquery = $this->PessoasProcessos
             ->find()
             ->select(['PessoasProcessos.processo_id'])
             ->where(['PessoasProcessos.pessoa_id' => $id]);
 
-        $subquery1 = $this->PessoasProcessos
-            ->find()
-            ->select(['PessoasProcessos.processo_id']);
-
         $processos = $this->Processos
             ->find('list', ['keyField' => 'id', 'valueField' => 'processo_id'])
             ->where([
-                'Processos.id NOT IN' => $subquery1
+                'Processos.id NOT IN' => $subquery
             ]);
 
         $processos1 = $this->Processos
@@ -148,32 +128,28 @@ class PessoasProcessosController extends AppController
                 'Processos.id IN' => $subquery
             ]);
 
-        $this->log($processos);
+        $pessoa = $this->Pessoas->get($id);
 
-        /*
-        $pessoasProcesso = $this->PessoasProcessos->newEntity();
-        if ($this->request->is('post')) {
-            $select = $this->request->getData('multiselect_to');
-            $perfi = $this->Perfis->patchEntity($perfi, $this->request->getData());
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $select = $this->request->getData('processo_id');
+            $select1 = $this->request->getData('multiselect');
 
-            if ($perfi = $this->Perfis->save($perfi)) {
-                $lastId = $perfi->id;
-                $this->loadModel('UserPerfis');
+            if (!empty($select)) {
+                $delete = $this->PessoasProcessos->deleteAll(['PessoasProcessos.pessoa_id' => $id]);
                 foreach ($select as $row) {
-                    $userPerfi = $this->UserPerfis->newEntity();
-                    $userPerfi->user_id = $row;
-                    $userPerfi->perfi_id = $lastId;
-                    $this->UserPerfis->save($userPerfi);
+                    $pessoaprocesso = $this->PessoasProcessos->newEntity();
+                    $pessoaprocesso->processo_id = $row;
+                    $pessoaprocesso->pessoa_id = $id;
+                    $this->PessoasProcessos->save($pessoaprocesso);
                 }
-                $this->Flash->success(__('Perfil guardado com sucesso.'));
-
-                return $this->redirect(['action' => 'index']);
+            } 
+            else 
+            {
+                $this->PessoasProcessos->deleteAll(['PessoasProcessos.pessoa_id' => $id]);
             }
-            $this->Flash->error(__('Não foi possível guardar o Perfil. Por favor tente novamente.'));
+            $this->redirect(array('controller' => 'Pessoas', 'action' => 'index'));
         }
-        */
-
-        $this->set(compact('pessoasProcesso', 'processos', 'processos1'));
+        $this->set(compact('pessoasProcesso', 'pessoa', 'processos', 'processos1'));
     }
 
     /**

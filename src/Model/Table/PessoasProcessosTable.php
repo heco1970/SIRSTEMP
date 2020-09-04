@@ -35,8 +35,8 @@ class PessoasProcessosTable extends Table
         parent::initialize($config);
 
         $this->setTable('pessoas_processos');
-        $this->setDisplayField('pessoas_id');
-        $this->setPrimaryKey(['pessoas_id', 'processos_id']);
+        $this->setDisplayField('pessoa_id');
+        $this->setPrimaryKey(['pessoa_id', 'processo_id']);
 
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id',

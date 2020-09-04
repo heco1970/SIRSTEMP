@@ -108,7 +108,7 @@ class PessoasController extends AppController
         ->find()
         ->where([
             'Processos.id IN' => $subquery
-        ]);
+        ])->contain('Naturezas');
         
         $this->set('pessoa', $pessoa);
         $this->set(compact('contactos', 'crimes', 'processos'));

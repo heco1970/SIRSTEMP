@@ -7,15 +7,13 @@
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Associar Processo a Pessoa') ?></h6>
     </div>
-    <?= $this->Form->create($pessoasProcesso) ?>
+    <?= $this->Form->create() ?>
     <div class='ml-4 mt-4 mr-4'>
         <div class="form-row">
             <div class="col-6">
                 <div class="form-group">
-                    <label for="username">
-                        <h4><?= __('Nome da Pessoa') ?></h4>
-                    </label>
-                    <?= $this->Form->control('nome', ['class' => 'form-control', 'nome' => 'nome', 'label' => false, 'required']); ?>
+                    <h6 class="text-primary"><?= __('Pessoa') ?></h6>
+                    <td><?= h($pessoa->nome) ?></td>
                 </div>
             </div>
         </div>

@@ -268,7 +268,7 @@
                                         <?php foreach ($processos as $processo) : ?>
                                             <tr>
                                                 <th scope="row"><?= h($processo->processo_id) ?></th>
-                                                <td><?= h($processo->natureza) ?></td>
+                                                <td><?= h($processo->natureza->designacao) ?></td>
                                                 <td><?= h($processo->nip) ?></td>
                                                 <td><?= h($processo->ultimaalteracao) ?></td>
                                             </tr>
