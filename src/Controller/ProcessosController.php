@@ -34,7 +34,6 @@ class ProcessosController extends AppController
                 'nip' => $model.'.nip',
                 'natureza' => $model.'.natureza',
                 'entjudicial' => $model . '.entidadejudiciai_id',
-                //'entjudicial' => 'Entidadejudiciais.descricao',
                 'createdfirst' => $model.'.created',
                 'createdlast' => $model.'.created'
             ];

@@ -2,10 +2,10 @@
 $data = [];
 foreach ($records as $record) {
   $data[] = [
-    'user_id' => $record->user_id,
-    'team_id' => $record->team_id,
-    'username' => $record->user->username,
-    'name' => $record->user->name,
+    'pessoa_id' => $record->pessoa_id,
+    'processo_id' => $record->processo_id,
+    //'username' => $record->user->username,
+    //'name' => $record->user->name,
   ];
 }
 

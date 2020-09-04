@@ -251,7 +251,7 @@
                         <div class="tab-pane fade show active" id="pills-processos" role="tabpanel" aria-labelledby="pills-processos-tab">
                             <div class="card shadow mb-2">
                                 <div class="card-header py-3">
-                                    <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
+                                    <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-processos/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
                                     <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
                                 </div>
                                 <table class="table">
@@ -265,12 +265,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+                                        <?php foreach ($processos as $processo) : ?>
+                                            <tr>
+                                                <th scope="row"><?= h($processo->processo_id) ?></th>
+                                                <td><?= h($processo->natureza) ?></td>
+                                                <td><?= h($processo->nip) ?></td>
+                                                <td><?= h($processo->ultimaalteracao) ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
