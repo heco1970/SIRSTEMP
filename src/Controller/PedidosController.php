@@ -29,7 +29,7 @@ class PedidosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'pessoa', 'processo','equiparesponsavel','state','createdfirst', 'createdlast'];
+            $validOps = ['id', 'pessoa', 'processo','equiparesponsavel','state','datarecepcao','datatermoprevisto','dataefectivatermo'];
             $convArray = [
                 'id' => $model . '.id',
                 'pessoa' => 'Pessoas.nome',
@@ -40,7 +40,7 @@ class PedidosController extends AppController
                 'datatermoprevisto' => $model . '.datatermoprevisto',
                 'dataefectivatermo' => $model . '.dataefectivatermo'
             ];
-            $strings = ['pessoa','processo','equiparesponsavel'];
+            $strings = ['pessoa','processo','equiparesponsavel','datarecepcao','datarecepcao','datatermoprevisto','dataefectivatermo'];
             $date_start = []; //data inicial
             $date_end = [];  //data final
 

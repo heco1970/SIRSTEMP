@@ -26,7 +26,7 @@ $dynElems =
         'equiparesponsavel' => ['label' => __('Equipa Responsável')],
         'state' => ['label' => __('Estado'), 'options' => $estados, 'empty' => ' '],
         'datatermoprevisto' => ['label' => __('Data termo previsto')],
-        'dataefectivatermo' => ['label' => __('Data efetiva termo')],
+        'dataefectivatermo' => ['label' => __('Data termo efetivo')],
 
     ];
 ?>
@@ -40,7 +40,7 @@ $dynElems =
     ['equiparesponsavel' => ['label' => __('Equipa Responsável')]] +
     ['state' => ['label' => __('Estado')]] +
     ['datatermoprevisto' => ['label' => __('Data termo previsto')]] +
-    ['dataefectivatermo' => ['label' => __('Data termo efetivo ')]]
+    ['dataefectivatermo' => ['label' => __('Data termo efetivo')]]
 
 ?>
 <div class="card shadow mb-4">
@@ -62,7 +62,7 @@ $dynElems =
     $(document).ready(function() {
         var writers = {
             ação: function(row) {
-                var view = '<a class="btn btn-info" href="/pedidos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
+                var view = '<a class="btn btn-info mr-1" href="/pedidos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
                 var edit = '<a class="btn btn-warning mr-1" href="/pedidos/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
                 var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" + ')" href="/pedidos/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
 
