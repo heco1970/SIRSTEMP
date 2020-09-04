@@ -29,7 +29,6 @@ foreach ($records as $record) {
     'periocidaderelatorios' => $record->periocidaderelatorios,
     'id' => $record->id,
   ];
-  $this->log($record);
 }
 
 echo json_encode([
