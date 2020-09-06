@@ -94,7 +94,6 @@ class TipocrimesController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
         $tipocrime = $this->Tipocrimes->get($id);
         if ($this->Tipocrimes->delete($tipocrime)) {
             $this->Flash->success(__('The tipocrime has been deleted.'));

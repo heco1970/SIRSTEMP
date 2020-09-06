@@ -114,6 +114,7 @@ class PessoasCrimesController extends AppController
    *
    * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
    */
+  /*
   public function add()
   {
       $pessoasCrime = $this->PessoasCrimes->newEntity();
@@ -129,6 +130,52 @@ class PessoasCrimesController extends AppController
       $pessoas = $this->PessoasCrimes->Pessoas->find('list', ['limit' => 200]);
       $crimes = $this->PessoasCrimes->Crimes->find('list', ['limit' => 200]);
       $this->set(compact('pessoasCrime', 'pessoas', 'crimes'));
+  }*/
+
+  public function add($id = null)
+  {
+    $this->loadModel('Crimes');
+    $this->loadModel('Pessoas');
+
+    $subquery = $this->PessoasCrimes
+      ->find()
+      ->select(['PessoasCrimes.crime_id'])
+      ->where(['PessoasCrimes.pessoa_id' => $id]);
+
+    $crimes = $this->Crimes
+      ->find('list', ['keyField' => 'id', 'valueField' => 'ocorrencia'])
+      ->where([
+          'Crimes.id NOT IN' => $subquery
+      ]);
+
+    $crimes1 = $this->Crimes
+      ->find('list', ['keyField' => 'id', 'valueField' => 'ocorrencia'])
+      ->where([
+          'Crimes.id IN' => $subquery
+      ]);
+
+    $pessoa = $this->Pessoas->get($id);
+
+    if ($this->request->is(['patch', 'post', 'put'])) {
+      $select = $this->request->getData('crime_id');
+      $select1 = $this->request->getData('multiselect');
+
+      if (!empty($select)) {
+        $delete = $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
+        foreach ($select as $row) {
+          $pessoacrime = $this->PessoasCrimes->newEntity();
+          $pessoacrime->crime_id = $row;
+          $pessoacrime->pessoa_id = $id;
+          $this->PessoasCrimes->save($pessoacrime);
+        }
+      } 
+      else 
+      {
+        $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
+      }
+      $this->redirect(array('controller' => 'Pessoas', 'action' => 'index'));
+    }
+    $this->set(compact('pessoasCrime', 'pessoa', 'crimes', 'crimes1'));
   }
 
   /**

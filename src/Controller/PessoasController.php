@@ -95,7 +95,7 @@ class PessoasController extends AppController
         ->find()
         ->where([
             'Crimes.id IN' => $subquery
-        ])->contain('Processos');
+        ])->contain('Processos','Tipocrimes');
 
 
         $subquery = $this->PessoasProcessos
@@ -109,7 +109,7 @@ class PessoasController extends AppController
         ->where([
             'Processos.id IN' => $subquery
         ])->contain('Naturezas');
-        
+        $this->log($crimes->toArray());
         $this->set('pessoa', $pessoa);
         $this->set(compact('contactos', 'crimes', 'processos'));
     }

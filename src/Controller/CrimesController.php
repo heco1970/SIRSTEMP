@@ -94,7 +94,7 @@ class CrimesController extends AppController
     public function view($id = null)
     {
         $crime = $this->Crimes->get($id, [
-            'contain' => ['Pessoas','PessoasCrimes']
+            'contain' => ['Pessoas','PessoasCrimes','Tipocrimes']
         ]);
 
         $this->set('crime', $crime);

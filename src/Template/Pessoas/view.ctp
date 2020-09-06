@@ -215,12 +215,12 @@
                     <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                         <div class="card shadow mb-2">
                             <div class="card-header py-3">
+                                <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-crimes/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
                                 <a class="btn btn-success btn-circle btn-lg" href="/crimes/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
                             </div>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Tipo de Crime</th>
                                         <th scope="col">Nip</th>
                                         <th scope="col">Ocorrencia</th>
                                         <th scope="col">Registo</th>
@@ -231,7 +231,6 @@
                                 <tbody>
                                     <?php foreach ($crimes as $crime) : ?>
                                         <tr>
-                                            <th scope="row"><?= h($crime->descricao) ?></th>
                                             <td><?= h($crime->processo->nip) ?></td>
                                             <td><?= h($crime->ocorrencia) ?></td>
                                             <td><?= h($crime->registo) ?></td>

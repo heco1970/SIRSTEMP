@@ -34,7 +34,7 @@ class TipocrimesTable extends Table
         parent::initialize($config);
 
         $this->setTable('tipocrimes');
-        $this->setDisplayField('id');
+        $this->setDisplayField('descricao');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Crimes', [
