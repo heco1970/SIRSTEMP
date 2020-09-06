@@ -28,6 +28,7 @@ class PedidosTableTest extends TestCase
         'app.processos',
         'app.pessoas',
         'app.pedidostypes',
+        'app.teams',
         'app.states',
         'app.pedidosmotives',
         'app.pais',

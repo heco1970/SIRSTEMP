@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Pedidosmotives Model
  *
+ * @property |\Cake\ORM\Association\HasMany $Pedidos
+ *
  * @method \App\Model\Entity\Pedidosmotive get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pedidosmotive newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Pedidosmotive[] newEntities(array $data, array $options = [])
@@ -58,12 +60,7 @@ class PedidosmotivesTable extends Table
             ->maxLength('descricao', 45)
             ->requirePresence('descricao', 'create')
             ->notEmpty('descricao')
-            ->add('descricao', 'unique', 
-            [
-                'rule' => 'validateUnique', 
-                'provider' => 'table',
-                'message' => 'O valor introduzido é inválido.'
-            ]);
+            ->add('descricao', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
     }

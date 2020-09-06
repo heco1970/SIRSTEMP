@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property string $canalentrada
  * @property \Cake\I18n\FrozenDate $datarecepcao
  * @property string $origem
- * @property int $pedidostypes_id
+ * @property int $pedidostype_id
  * @property int $team_id
  * @property int $state_id
  * @property \Cake\I18n\FrozenDate $termino
@@ -23,7 +23,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $datainicioefectivo
  * @property \Cake\I18n\FrozenDate $datatermoprevisto
  * @property \Cake\I18n\FrozenDate $dataefectivatermo
- * @property int $pedidosmotives_id
+ * @property int $pedidosmotive_id
  * @property int $pais_id
  * @property string $concelho
  * @property string $transferencias
@@ -36,6 +36,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Processo $processo
  * @property \App\Model\Entity\Pessoa $pessoa
  * @property \App\Model\Entity\Pedidostype $pedidostype
+ * @property \App\Model\Entity\Team $team
  * @property \App\Model\Entity\State $state
  * @property \App\Model\Entity\Pedidosmotive $pedidosmotive
  * @property \App\Model\Entity\Pai $pai
@@ -60,7 +61,7 @@ class Pedido extends Entity
         'canalentrada' => true,
         'datarecepcao' => true,
         'origem' => true,
-        'pedidostypes_id' => true,
+        'pedidostype_id' => true,
         'team_id' => true,
         'state_id' => true,
         'termino' => true,
@@ -70,7 +71,7 @@ class Pedido extends Entity
         'datainicioefectivo' => true,
         'datatermoprevisto' => true,
         'dataefectivatermo' => true,
-        'pedidosmotives_id' => true,
+        'pedidosmotive_id' => true,
         'pais_id' => true,
         'concelho' => true,
         'transferencias' => true,
@@ -82,6 +83,7 @@ class Pedido extends Entity
         'processo' => true,
         'pessoa' => true,
         'pedidostype' => true,
+        'team' => true,
         'state' => true,
         'pedidosmotive' => true,
         'pai' => true,

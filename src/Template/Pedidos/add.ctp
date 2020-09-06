@@ -90,7 +90,7 @@
                                 <label for="name">
                                     <h4><?= __('Tipos de Pedidos') ?></h4>
                                 </label>
-                                <?= $this->Form->control('pedidostypes_id', ['class' => 'form-control', 'options' => $pedidostypes, 'label' => false]); ?>
+                                <?= $this->Form->control('pedidostype_id', ['class' => 'form-control', 'options' => $pedidostypes, 'label' => false]); ?>
                             </div>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
                                 <label for="name">
                                     <h4><?= __('Motivos dos pedidos') ?></h4>
                                 </label>
-                                <?= $this->Form->control('pedidosmotives_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
+                                <?= $this->Form->control('pedidosmotive_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
                             </div>
                         </div>
                     </div>

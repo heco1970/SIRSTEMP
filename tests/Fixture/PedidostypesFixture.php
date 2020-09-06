@@ -24,6 +24,7 @@ class PedidostypesFixture extends TestFixture
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'id_UNIQUE' => ['type' => 'unique', 'columns' => ['id'], 'length' => []],
+            'descricao_UNIQUE' => ['type' => 'unique', 'columns' => ['descricao'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -43,8 +44,8 @@ class PedidostypesFixture extends TestFixture
             [
                 'id' => 1,
                 'descricao' => 'Lorem ipsum dolor sit amet',
-                'created' => 1598027245,
-                'modified' => 1598027245
+                'created' => 1599219082,
+                'modified' => 1599219082
             ],
         ];
         parent::init();

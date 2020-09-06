@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
  * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsTo $Pessoas
  * @property \App\Model\Table\PedidostypesTable|\Cake\ORM\Association\BelongsTo $Pedidostypes
- * @property |\Cake\ORM\Association\BelongsTo $Teams
+ * @property \App\Model\Table\TeamsTable|\Cake\ORM\Association\BelongsTo $Teams
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
  * @property \App\Model\Table\PedidosmotivesTable|\Cake\ORM\Association\BelongsTo $Pedidosmotives
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
@@ -57,7 +57,7 @@ class PedidosTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Pedidostypes', [
-            'foreignKey' => 'pedidostypes_id',
+            'foreignKey' => 'pedidostype_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Teams', [
@@ -69,7 +69,7 @@ class PedidosTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Pedidosmotives', [
-            'foreignKey' => 'pedidosmotives_id',
+            'foreignKey' => 'pedidosmotive_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Pais', [
@@ -195,10 +195,10 @@ class PedidosTable extends Table
     {
         $rules->add($rules->existsIn(['processo_id'], 'Processos'));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['pedidostypes_id'], 'Pedidostypes'));
+        $rules->add($rules->existsIn(['pedidostype_id'], 'Pedidostypes'));
         $rules->add($rules->existsIn(['team_id'], 'Teams'));
         $rules->add($rules->existsIn(['state_id'], 'States'));
-        $rules->add($rules->existsIn(['pedidosmotives_id'], 'Pedidosmotives'));
+        $rules->add($rules->existsIn(['pedidosmotive_id'], 'Pedidosmotives'));
         $rules->add($rules->existsIn(['pais_id'], 'Pais'));
 
         return $rules;

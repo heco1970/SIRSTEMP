@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Pedidostypes Model
  *
+ * @property |\Cake\ORM\Association\HasMany $Pedidos
+ *
  * @method \App\Model\Entity\Pedidostype get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pedidostype newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Pedidostype[] newEntities(array $data, array $options = [])
@@ -58,12 +60,7 @@ class PedidostypesTable extends Table
             ->maxLength('descricao', 45)
             ->requirePresence('descricao', 'create')
             ->notEmpty('descricao')
-            ->add('descricao', 'unique', 
-            [
-                'rule' => 'validateUnique', 
-                'provider' => 'table',
-                'message' => 'O valor introduzido é inválido.'
-            ]);
+            ->add('descricao', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
     }
