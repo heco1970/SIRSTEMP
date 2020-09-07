@@ -194,13 +194,13 @@ class PedidosController extends AppController
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         
-        $this->set('processos', $this->Pedidos->Processos->find('list', ['keyField' => 'id', 'valueField' => 'processo_id']));
-        $this->set('pessoas', $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome']));
-        $this->set('states', $this->Pedidos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
-        $this->set('pedidostypes', $this->Pedidos->PedidosTypes->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
-        $this->set('pedidosmotives', $this->Pedidos->PedidosMotives->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
-        $this->set('teams', $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']));
-        $this->set('pais', $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
+        $processos = $this->Pedidos->Processos->find('list', ['keyField' => 'id', 'valueField' => 'processo_id']);
+        $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
+        $states = $this->Pedidos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']);
+        $pedidostypes = $this->Pedidos->PedidosTypes->find('list', ['keyField' => 'id', 'valueField' => 'descricao']);
+        $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['keyField' => 'id', 'valueField' => 'descricao']);
+        $teams = $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
+        $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
 
         $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }

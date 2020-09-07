@@ -54,7 +54,7 @@ $dynElems = ['processo' => ['label' => __('Id')]] +
     $(document).ready(function() {
         var writers = {
             ação: function(row) {
-                var view = '<a class="btn btn-info" href="/processos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Detalhes')?>"><i class="far fa-eye fa-fw"></i></a>'
+                var view = '<a class="btn btn-info mr-1" href="/processos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Detalhes')?>"><i class="far fa-eye fa-fw"></i></a>'
                 var edit = '<a class="btn btn-warning mr-1" href="/processos/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
                 var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Deseja mesmo apagar?'"+')" href="/processos/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
 

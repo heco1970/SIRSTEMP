@@ -132,9 +132,13 @@ class ProcessosController extends AppController
             }
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
-        $units = $this->Processos->Units->find('list', ['limit' => 200]);
-        $states = $this->Processos->States->find('list', ['limit' => 200]);
-        $this->set(compact('processo', 'units', 'states'));
+
+        $entidadejudiciais = $this->Processos->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']);
+        $units = $this->Processos->Units->find('list', ['keyField' => 'id', 'valueField' => 'designacao']);
+        $naturezas = $this->Processos->Naturezas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']);
+        $states = $this->Processos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']);
+
+        $this->set(compact('processo', 'entidadejudiciais', 'units', 'states', 'naturezas'));
     }
 
     /**
