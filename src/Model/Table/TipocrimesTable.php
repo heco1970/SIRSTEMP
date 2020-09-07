@@ -9,8 +9,6 @@ use Cake\Validation\Validator;
 /**
  * Tipocrimes Model
  *
- * @property \App\Model\Table\CrimesTable|\Cake\ORM\Association\HasMany $Crimes
- *
  * @method \App\Model\Entity\Tipocrime get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tipocrime newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Tipocrime[] newEntities(array $data, array $options = [])
@@ -36,10 +34,6 @@ class TipocrimesTable extends Table
         $this->setTable('tipocrimes');
         $this->setDisplayField('descricao');
         $this->setPrimaryKey('id');
-
-        $this->hasMany('Crimes', [
-            'foreignKey' => 'tipocrime_id'
-        ]);
     }
 
     /**
@@ -57,7 +51,8 @@ class TipocrimesTable extends Table
         $validator
             ->scalar('descricao')
             ->maxLength('descricao', 45)
-            ->allowEmpty('descricao');
+            ->requirePresence('descricao', 'create')
+            ->notEmpty('descricao');
 
         return $validator;
     }

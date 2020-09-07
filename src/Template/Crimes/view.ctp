@@ -7,8 +7,7 @@
     <?php
         $dynElems =
             ['ocorrencia' => ['label' => __('ocorrencia')]] +
-            ['nome' => ['label' => __('Nome')]] +
-            ['data_nascimento' => ['label' => __('Data de Nascimento')]];
+            ['nome' => ['label' => __('Nome')]] 
     ?>
     <div class="card shadow mb-4">
         <div class="card-header py-3">

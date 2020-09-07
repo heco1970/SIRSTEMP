@@ -1,18 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <link href="/css/style.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -56,9 +41,7 @@
                     <label for="multiselect_to">
                         <h4><?= __('Crimes seleccionados: ') ?></h4>
                     </label>
-                    
                     <?= $this->Form->control('crime_id',array('id'=>"multiselect_to",'label'=>false,'size'=>8,'class'=>"form-control",'type' => 'select', 'multiple' => true, 'options' => $crimes1));?>
-              
                 </div>
             </div>
         </div>

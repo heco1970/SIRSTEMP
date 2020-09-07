@@ -14,8 +14,6 @@
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe da Pessoa') ?></h6>
         <?= $this->Form->create($pessoa, ['id' => 'myForm']) ?>
-
-
     </div>
     <div class="ml-3 mr-3 mb-3 mt-3">
 
@@ -216,7 +214,6 @@
                         <div class="card shadow mb-2">
                             <div class="card-header py-3">
                                 <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-crimes/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
-                                <a class="btn btn-success btn-circle btn-lg" href="/crimes/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
                             </div>
                             <table class="table">
                                 <thead>

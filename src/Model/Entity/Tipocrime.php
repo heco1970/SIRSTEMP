@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Tipocrime Entity
  *
  * @property int $id
- * @property string|null $descricao
+ * @property string $descricao
  *
  * @property \App\Model\Entity\Crime[] $crimes
  */

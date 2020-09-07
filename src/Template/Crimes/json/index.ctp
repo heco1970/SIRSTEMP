@@ -9,10 +9,9 @@ foreach ($records as $record) {
     'ocorrencia' => $record->ocorrencia,
     'registo' => $record->registo,
     'qte' => $record->qte,
-    'apenaspre' => $record->descricao,
+    'apenaspre' => $record->apenaspre,
     'id' => $record->id,
   ];
-  $this->log($record);
 }
 
 echo json_encode([

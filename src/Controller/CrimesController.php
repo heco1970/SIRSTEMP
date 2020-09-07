@@ -79,9 +79,9 @@ class CrimesController extends AppController
             $this->Flash->error(__('The crime could not be saved. Please, try again.'));
         }
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
-        $tipocrime = $this->Crimes->Tipocrime->find('list', ['limit' => 200]);
+        $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
         
-        $this->set(compact('crime','processos','tipocrime'));
+        $this->set(compact('crime','processos','tipocrimes'));
     }
 
     /**
@@ -94,7 +94,7 @@ class CrimesController extends AppController
     public function view($id = null)
     {
         $crime = $this->Crimes->get($id, [
-            'contain' => ['Pessoas','PessoasCrimes','Tipocrimes']
+            'contain' => ['Pessoas','Tipocrimes']
         ]);
 
         $this->set('crime', $crime);
