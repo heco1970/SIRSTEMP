@@ -147,9 +147,9 @@ class PessoasProcessosController extends AppController
             {
                 $this->PessoasProcessos->deleteAll(['PessoasProcessos.pessoa_id' => $id]);
             }
-            $this->redirect(array('controller' => 'Pessoas', 'action' => 'index'));
+            $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/'.$id));
         }
-        $this->set(compact('pessoasProcesso', 'pessoa', 'processos', 'processos1'));
+        $this->set(compact('pessoa', 'processos', 'processos1'));
     }
 
     /**

@@ -21,10 +21,8 @@
             <div class="col-5">
                 <div class="form-group">
                     <label for="multiselect">
-                    
                         <h4><?= __('Processos por seleccionar: ') ?></h4>
                     </label>
-                   
                    <?= $this->Form->control('multiselect',array('label'=>false,'size'=>8,'class'=>"form-control",'type' => 'select', 'multiple' => true, 'options' => $processos));?>
                 </div>
             </div>
@@ -41,16 +39,14 @@
                     <label for="multiselect_to">
                         <h4><?= __('Processos seleccionados: ') ?></h4>
                     </label>
-                    
                     <?= $this->Form->control('processo_id',array('id'=>"multiselect_to",'label'=>false,'size'=>8,'class'=>"form-control",'type' => 'select', 'multiple' => true, 'options' => $processos1));?>
-              
                 </div>
             </div>
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
-        <a href="/processos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <a href="/pessoas/view/<?= h($pessoa->id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 </div>
