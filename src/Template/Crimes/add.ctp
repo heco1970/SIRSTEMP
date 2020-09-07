@@ -38,7 +38,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <div class="col-xs-12">
-                        <label for="nome">Registo</label>
+                            <label for="nome">Registo</label>
                             <?= $this->Form->control('registo', ['class' => 'form-control', 'registo' => 'registo', 'label' => false, 'required']); ?>
                         </div>
                     </div>

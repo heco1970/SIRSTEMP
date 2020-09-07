@@ -218,6 +218,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Tipo crime</th>
                                         <th scope="col">Nip</th>
                                         <th scope="col">Ocorrencia</th>
                                         <th scope="col">Registo</th>
@@ -228,6 +229,7 @@
                                 <tbody>
                                     <?php foreach ($crimes as $crime) : ?>
                                         <tr>
+                                            <td><?= h($crime->tipocrime->descricao) ?></td>
                                             <td><?= h($crime->processo->nip) ?></td>
                                             <td><?= h($crime->ocorrencia) ?></td>
                                             <td><?= h($crime->registo) ?></td>
@@ -257,7 +259,6 @@
                                             <th scope="col">Natureza</th>
                                             <th scope="col">NIP</th>
                                             <th scope="col">Ultima Alteração</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>

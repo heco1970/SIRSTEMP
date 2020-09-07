@@ -84,6 +84,7 @@ class PessoasController extends AppController
         $this->loadModel('PessoasProcessos');
 
         $contactos = $this->Contactos->find()->where(['pessoa_id' => $id]);
+        $tipo = $this->Crimes->find()->where(['tipocrime_id' => $id]);
 
 
         $subquery = $this->PessoasCrimes
@@ -95,7 +96,7 @@ class PessoasController extends AppController
         ->find()
         ->where([
             'Crimes.id IN' => $subquery
-        ])->contain('Processos','Tipocrimes');
+        ])->contain(['Processos','Tipocrimes']);
 
 
         $subquery = $this->PessoasProcessos
@@ -111,7 +112,7 @@ class PessoasController extends AppController
         ])->contain('Naturezas');
         $this->log($crimes->toArray());
         $this->set('pessoa', $pessoa);
-        $this->set(compact('contactos', 'crimes', 'processos'));
+        $this->set(compact('contactos', 'crimes', 'processos','tipo'));
     }
 
     /**
@@ -187,9 +188,6 @@ class PessoasController extends AppController
         $this->set('_serialize', ['distritos']);
     }
 
-
-
-
     /**
      * Edit method
      *
@@ -238,65 +236,6 @@ class PessoasController extends AppController
 
         $this->set(compact('pessoa'));
     }
-
-
-    // public function edit($id = null)
-    // {
-    //     $pessoa = $this->Pessoas->get($id, [
-    //         'contain' => ['Crimes']
-    //     ]);
-
-    //     //$pessoa = $this->Pessoas->get($id, ['contain' => ['Users','UsersTeams']]);
-
-    //     $subquery = $this->Pessoas->PessoasCrimes
-    //         ->find()
-    //         ->select(['PessoasCrimes.crime_id'])
-    //         ->where(['PessoasCrimes.pessoa_id' => $id]);
-
-
-    //     $crimes1 = $this->Pessoas->Crimes
-    //         ->find('list', ['keyField' => 'id', 'valueField' => 'descricao'])
-    //         ->where([
-    //             'Crimes.id IN' => $subquery
-    //         ]);
-
-    //     $crimes = $this->Pessoas->Crimes
-    //         ->find('list', ['keyField' => 'id', 'valueField' => 'descricao'])
-    //         ->where([
-    //             'Crimes.id NOT IN' => $subquery
-    //         ]);
-
-    //     if ($this->request->is(['patch', 'post', 'put'])) {
-    //         $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData(), ['associated' => ['Crimes', 'PessoasCrimes']]);
-
-    //         $this->loadModel('PessoasCrimes');
-
-    //         $select = $this->request->getData('crime_id');
-    //         $select1 = $this->request->getData('multiselect');
-
-    //         if ($this->Pessoas->save($pessoa)) {
-    //             if (!empty($select)) {
-    //                 $delete = $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
-    //                 foreach ($select as $row) {
-    //                     $pessoaCrime = $this->PessoasCrimes->newEntity();
-    //                     $pessoaCrime->crime_id = $row;
-    //                     $pessoaCrime->pessoa_id = $id;
-    //                     $this->PessoasCrimes->save($pessoaCrime);
-    //                 }
-    //             } else {
-    //                 $this->PessoasCrimes->deleteAll(['PessoasCrimes.pessoa_id' => $id]);
-    //             }
-
-    //             $this->Flash->success(__('Crime guardada com sucesso.'));
-
-    //             return $this->redirect(['action' => 'index']);
-    //         }
-    //         $this->Flash->error(__('Não foi possível guardar o Crime. Por favor tente novamente.'));
-    //     }
-
-    //     $pais = $this->Pessoas->Pais->find('list', ['limit' => 200]);
-    //     $this->set(compact('pessoa', 'crimes1', 'crimes', 'pais'));
-    // }
 
     /**
      * Delete method

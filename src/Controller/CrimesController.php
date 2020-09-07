@@ -72,11 +72,11 @@ class CrimesController extends AppController
             $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
             $this->log($crime);
             if ($this->Crimes->save($crime)) {
-                $this->Flash->success(__('The crime has been saved.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The crime could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
         $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
@@ -99,54 +99,6 @@ class CrimesController extends AppController
 
         $this->set('crime', $crime);
     }
-
-    /*
-    public function add()
-    {
-        $crime = $this->Crimes->newEntity();
-        if ($this->request->is('post')) {
-            $select = $this->request->getData('multiselect_to');
-            $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
-            if ($crime=$this->Crimes->save($crime)) {
-                $lastId=$crime->id;
-                $this->loadModel('PessoasCrimes');
-                $pessoasCrimesTable = TableRegistry::getTableLocator()->get('PessoasCrimes');
-                foreach ($select as $row) {
-                    $pessoaCrime = $pessoasCrimesTable->newEntity();
-                    $pessoaCrime->pessoa_id = $row;
-                    $pessoaCrime->crime_id = $lastId;
-                    $this->PessoasCrimes->save($pessoaCrime);
-                }
-                $this->Flash->success(('Perfil guardado com sucesso.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(('Não foi possível guardar o Perfil. Por favor tente novamente.'));
-        }
-        $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('crime','pessoas'));
-    }*/
-
-    /*
-    public function edit($id = null)
-    {
-        $crime = $this->Crimes->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
-            if ($this->Crimes->save($crime)) {
-                $this->Flash->success(__('O registro foi gravado.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
-        }
-        $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
-        $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('crime','processos','pessoas'));
-    }*/
-
 
     public function edit($id = null)
     { 
@@ -199,7 +151,8 @@ class CrimesController extends AppController
         }
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
         $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('crime', 'pessoas1', 'pessoas','processos'));
+        $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
+        $this->set(compact('crime', 'pessoas1', 'pessoas','processos','tipocrimes'));
     }
 
    
@@ -215,9 +168,9 @@ class CrimesController extends AppController
         //$this->request->allowMethod(['post', 'delete']);
         $crime = $this->Crimes->get($id);
         if ($this->Crimes->delete($crime)) {
-            $this->Flash->success(__('The crime has been deleted.'));
+            $this->Flash->success(__('O registro foi apagado.'));
         } else {
-            $this->Flash->error(__('The crime could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

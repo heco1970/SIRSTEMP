@@ -18,6 +18,14 @@
             </div>
         </div>
         <div class="form-row">
+            <div class="col-6">
+                <div class="form-group">
+                    <h6 class="text-primary"><?= __('Data de Nascimento') ?></h6>
+                    <td><?= h($pessoa->data_nascimento) ?></td>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
             <div class="col-5">
                 <div class="form-group">
                     <label for="multiselect">
