@@ -314,40 +314,7 @@
                             </div>
                         </div>
 
-                        <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="pills-verbete-tab" data-toggle="pill" href="#pills-verbete" role="tab" aria-controls="pills-verbete" aria-selected="true">Verbetes</a>
-                            </li>
-                        </ul>
-                        <div class="tab-pane fade show active" id="pills-verbete" role="tabpanel" aria-labelledby="pills-verbete-tab">
-                            <div class="card shadow mb-2">
-                                <div class="card-header py-3">
-                                    <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
-                                </div>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Estado</th>
-                                            <th scope="col">Tipo Pedido</th>
-                                            <th scope="col">NIP</th>
-                                            <th scope="col">Equipa Atual</th>
-                                            <th scope="col">Data Entrada</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
