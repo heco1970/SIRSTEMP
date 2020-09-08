@@ -32,7 +32,14 @@
                                 <label for="pessoa_id">
                                     <h4><?= __('Nome da Pessoa') ?></h4>
                                 </label>
-                                <?= $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control',  'label' => false, 'required']); ?>
+                                <?php 
+                                    if($pessoa != null){
+                                        echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
+                                    }
+                                    else{
+                                        echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']); 
+                                    }  
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -101,7 +108,7 @@
                                     <h4><?= __('Equipa Responsável') ?></h4>
                                 </label>
                                 <?= $this->Form->control('team_id', [
-                                    'id' => 'team_id', 'class' => 'form-control','empty' => 'Escolha uma equipa...','default'=>[''],'disabled'=>[''],'label' => false, 'options' => $teams]); ?>
+                                    'id' => 'team_id', 'class' => 'form-control','empty' => 'Escolha uma equipa...','default'=>[''],'disabled'=>[''],'label' => false, 'options' => $teams, 'required']); ?>
                             </div>
                         </div>
                     </div>

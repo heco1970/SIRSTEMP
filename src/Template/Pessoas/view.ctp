@@ -283,7 +283,7 @@
                         <div class="tab-pane fade show active" id="pills-pedidos" role="tabpanel" aria-labelledby="pills-pedidos-tab">
                             <div class="card shadow mb-2">
                                 <div class="card-header py-3">
-                                    <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
+                                    <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pedidos/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
                                     <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
                                 </div>
                                 <table class="table">
