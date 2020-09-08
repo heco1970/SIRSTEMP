@@ -27,8 +27,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class='ml-4 mt-4 mr-4'>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -49,9 +47,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class='ml-4 mt-4 mr-4'>
-            <div class="form-row">
+            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label for="observacoes">Observações</label>

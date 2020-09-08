@@ -23,10 +23,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class='ml-4 mt-4 mr-4'>
-            <div id='my-form-body'>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -67,10 +63,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class='ml-4 mt-4 mr-4'>
-            <div id='my-form-body'>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -86,7 +78,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="numeropedido">Número do pedido</label>
+                            <label for="numeropedido">Número do Pedido</label>
                             <?php echo $this->Form->control('numeropedido', ['class' => 'form-control',  'label' => false, 'type' => 'number']); ?>
                         </div>
                     </div>
@@ -94,13 +86,13 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="datacriacao">Data de criação</label>
+                            <label for="datacriacao">Data de Criação</label>
                             <?php echo $this->Form->text('datacriacao', ['label' => false, 'value'=>h($pedido->datacriacao->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date']); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="dataatribuicao">Data de atribuição</label>
+                            <label for="dataatribuicao">Data de Atribuição</label>
                             <?php echo $this->Form->text('dataatribuicao', ['label' => false, 'value'=>h($pedido->dataatribuicao->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date']); ?>
                         </div>
                     </div>
@@ -114,13 +106,13 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="datatermoprevisto">Data de termo previsto</label>
+                            <label for="datatermoprevisto">Data de Termo Previsto</label>
                             <?php echo $this->Form->text('datatermoprevisto', ['label' => false, 'value'=>h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date']); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="dataefectivatermo">Data de efetivo termo</label>
+                            <label for="dataefectivatermo">Data de Efetivo Termo</label>
                             <?php echo $this->Form->text('dataefectivatermo', ['label' => false, 'value'=>h($pedido->dataefectivatermo->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date']); ?>
                         </div>
                     </div>
@@ -128,7 +120,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="pedidosmotives_id">Motivos dos pedidos</label>
+                            <label for="pedidosmotives_id">Motivos dos Pedidos</label>
                             <?php echo $this->Form->text('pedidosmotives_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
                         </div>
                     </div>
@@ -148,7 +140,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="transferencias">Transferencias</label>
+                            <label for="transferencias">Transferências</label>
                             <?php echo $this->Form->control('transferencias', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
                         </div>
                     </div>
