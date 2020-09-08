@@ -81,8 +81,32 @@ class ProcessosController extends AppController
         $processo = $this->Processos->get($id, [
             'contain' => ['Units', 'States', 'Entidadejudiciais','Naturezas']
         ]);
+        
+        
+        $this->loadModel('PessoasProcessos');
+        $this->loadModel('Pessoas');
+        $this->loadModel('Crimes');
+
+        $subquery = $this->PessoasProcessos
+        ->find()
+        ->select(['PessoasProcessos.pessoa_id'])
+        ->where(['PessoasProcessos.processo_id' => $id]
+        );
+    
+        $pessoas = $this->Pessoas
+        ->find()
+        ->where([
+            'Pessoas.id IN' => $subquery
+        ]);
+
+
+        $crimes = $this->Crimes
+        ->find()
+        ->where(['processo_id' => $id])
+        ->contain(['Tipocrimes']);
 
         $this->set('processo', $processo);
+        $this->set(compact('pessoas','crimes'));
     }
 
     /**
