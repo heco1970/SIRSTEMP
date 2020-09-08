@@ -87,7 +87,7 @@ class PedidosController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $pedido = $this->Pedidos->newEntity();
         if ($this->request->is('post')) {
@@ -105,9 +105,16 @@ class PedidosController extends AppController
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
-                return $this->redirect(['action' => 'index']);
+                if($id != null){
+                    $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/'.$id));
+                }
+                else{
+                    return $this->redirect(['action' => 'index']);
+                }
             }
-            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            else{
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            }
         } else if ($this->request->is('ajax')) {
             $this->autoRender = false;
             if (!empty($this->request->query['term'])) {
@@ -121,6 +128,13 @@ class PedidosController extends AppController
                 return;
             }
         }
+
+        $pessoa = [];
+
+        if($id != null){
+            $pessoa = $this->Pedidos->Pessoas->get($id);
+        }
+
         $processos = $this->Pedidos->Processos->find('list', ['limit' => 200]);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
         $states = $this->Pedidos->States->find('list', ['limit' => 200]);
@@ -128,7 +142,8 @@ class PedidosController extends AppController
         $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['limit' => 200]);
         $teams = $this->Pedidos->Teams->find('list', ['limit' => 200]);
         $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
-        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
+
+        $this->set(compact('pedido', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }
     public function search()
     {
