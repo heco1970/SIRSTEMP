@@ -28,7 +28,7 @@ class CrimesTableTest extends TestCase
         'app.processos',
         'app.tipocrimes',
         'app.pessoas',
-        'app.tipocrime'
+        'app.pessoas_crimes'
     ];
 
     /**

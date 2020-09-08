@@ -229,8 +229,6 @@
                                 <tbody>
                                     <?php foreach ($crimes as $crime) : ?>
                                         <tr>
-                                            <td><?= h($crime->tipocrime->descricao) ?></td>
-                                            <td><?= h($crime->processo->nip) ?></td>
                                             <td><?= h($crime->ocorrencia) ?></td>
                                             <td><?= h($crime->registo) ?></td>
                                             <td><?= h($crime->qte) ?></td>

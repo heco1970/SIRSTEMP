@@ -15,10 +15,12 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property int $tipocrime_id
+ * @property string $pessoa_id
  *
  * @property \App\Model\Entity\Processo $processo
- * @property \App\Model\Entity\Tipocrime[] $tipocrime
+ * @property \App\Model\Entity\Tipocrime $tipocrime
  * @property \App\Model\Entity\Pessoa[] $pessoas
+ * @property \App\Model\Entity\PessoasCrime[] $pessoas_crimes
  */
 class Crime extends Entity
 {
@@ -41,8 +43,10 @@ class Crime extends Entity
         'created' => true,
         'modified' => true,
         'tipocrime_id' => true,
+        'pessoa_id' => true,
         'processo' => true,
         'tipocrime' => true,
-        'pessoas' => true
+        'pessoas' => true,
+        'pessoas_crimes' => true
     ];
 }

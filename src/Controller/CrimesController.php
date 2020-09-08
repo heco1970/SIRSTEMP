@@ -64,7 +64,7 @@ class CrimesController extends AppController
       }
     }
 
-    
+    /*
     public function add()
     {
         $crime = $this->Crimes->newEntity();
@@ -78,10 +78,33 @@ class CrimesController extends AppController
             }
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
+        $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
         $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
         
-        $this->set(compact('crime','processos','tipocrimes'));
+        $this->set(compact('crime','processos','tipocrimes','pessoas'));
+    }*/
+
+    public function add($id = null)
+    {
+        $crime = $this->Crimes->newEntity();
+        $id=$id;
+
+        if ($this->request->is('post')) {
+            $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
+            $crime->pessoa_id=$id;
+            if ($save = $this->Crimes->save($crime)) {
+
+                $this->Flash->success(__('O Crime foi guardado com sucesso.'));
+
+                return $this->redirect($this->referer());
+            }
+            $this->Flash->error(__('Não foi possível guardar o Crime. Por favor tente novamente'));
+        }
+        $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
+        $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
+        $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
+        $this->set(compact('crime','processos','tipocrimes' ,'pessoas','id'));
     }
 
     /**

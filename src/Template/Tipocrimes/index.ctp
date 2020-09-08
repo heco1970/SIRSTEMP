@@ -1,49 +1,55 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Tipocrime[]|\Cake\Collection\CollectionInterface $tipocrimes
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Tipocrime'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Crimes'), ['controller' => 'Crimes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Crime'), ['controller' => 'Crimes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="tipocrimes index large-9 medium-8 columns content">
-    <h3><?= __('Tipocrimes') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('descricao') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($tipocrimes as $tipocrime): ?>
-            <tr>
-                <td><?= $this->Number->format($tipocrime->id) ?></td>
-                <td><?= h($tipocrime->descricao) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $tipocrime->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tipocrime->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $tipocrime->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tipocrime->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<?=$this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]);?>
+
+<h1 class="h3 mb-2 text-gray-800"><?=__('Tipos de Crimes')?></h1>
+
+<div class="card shadow mb-2">
+    <div class="card-header py-3">
+        <a class="btn btn-success btn-circle btn-lg" href="/tipocrimes/add"><i class="fas fa-plus"></i></a>
+        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
     </div>
 </div>
+
+<?php
+$dynElems =
+    [
+        'descricao' => ['label' => __('Descrição')],
+    ];
+?>
+<?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
+<?php
+$dynElems = ['descricao' => ['label' => __('Descrição')]] +
+            ['created' => ['label' => __('Data de Criação')]];
+?>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Tipos de Crimes')?></h6>
+    </div>
+    <div class="card-body">
+        <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
+    </div>
+</div>
+
+<?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text' ]); ?>
+
+<?=$this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]);?>
+<?=$this->Html->script('/js/dynatable-helper.js', ['block' => true]);?>
+
+<?php $this->start('scriptBottom') ?>
+<script>
+    $(document).ready(function() {
+        var writers = {
+            ação: function(row) {
+                //var view = '<a class="btn btn-info mr-1" href="/tipocrimes/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a  class="btn btn-warning mr-1" href="/tipocrimes/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Tem a certeza que quer apagar?'"+')" href="/tipocrimes/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
+
+                return '<div class="btn-group btn-group-sm" role="group">' + edit + dele +'</div>';
+            }
+        }
+        createDynatable("#dynatable","/tipocrimes/",{created: -1}, writers);
+
+        // function removeElement(url)
+    });
+</script>
+<?php $this->end(); ?>
+
