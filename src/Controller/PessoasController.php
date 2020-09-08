@@ -82,10 +82,10 @@ class PessoasController extends AppController
         $this->loadModel('PessoasCrimes');
         $this->loadModel('Processos');
         $this->loadModel('PessoasProcessos');
+        $this->loadModel('Pedidos');
 
         $contactos = $this->Contactos->find()->where(['pessoa_id' => $id]);
         $tipo = $this->Crimes->find()->where(['tipocrime_id' => $id]);
-
 
         $subquery = $this->PessoasCrimes
         ->find()
@@ -110,9 +110,11 @@ class PessoasController extends AppController
         ->where([
             'Processos.id IN' => $subquery
         ])->contain('Naturezas');
-        $this->log($crimes->toArray());
+
+        $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos','Teams','States']);;
+
         $this->set('pessoa', $pessoa);
-        $this->set(compact('contactos', 'crimes', 'processos','tipo'));
+        $this->set(compact('contactos', 'crimes', 'processos','tipo','pedidos'));
     }
 
     /**
