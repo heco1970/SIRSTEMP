@@ -17,10 +17,22 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
+                <div class="form-row">
+        </div>
+                </div>
+                <div class="col-sm-6">
                     <div class="form-group">
                         <div class="col-xs-12">
                             <label for="nome">Processo</label>
                             <?= $this->Form->control('processo_id', ['class' => 'form-control', 'nip' => 'nip', 'label' => false, 'required']); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="nome">Ocorrencia</label>
+                            <?= $this->Form->control('ocorrencia', ['class' => 'form-control', 'ocorrencia' => 'ocorrencia', 'label' => false, 'required']); ?>
                         </div>
                     </div>
                 </div>
@@ -30,21 +42,11 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <label for="nome">Ocorrencia</label>
-                            <?= $this->Form->control('ocorrencia', ['class' => 'form-control', 'ocorrencia' => 'ocorrencia', 'label' => false, 'required']); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <div class="col-xs-12">
                             <label for="nome">Registo</label>
                             <?= $this->Form->control('registo', ['class' => 'form-control', 'registo' => 'registo', 'label' => false, 'required']); ?>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <div class="col-xs-12">
@@ -53,6 +55,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <div class="col-xs-12">
@@ -66,7 +70,7 @@
     </div>
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
-        <a href="/crimes/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <a href="/pessoas/view" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 </div>

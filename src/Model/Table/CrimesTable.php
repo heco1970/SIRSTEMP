@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ProcessosTable|\Cake\ORM\Association\BelongsTo $Processos
  * @property \App\Model\Table\TipocrimesTable|\Cake\ORM\Association\BelongsTo $Tipocrimes
+ * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsTo $Pessoas
  * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsToMany $Pessoas
  *
  * @method \App\Model\Entity\Crime get($primaryKey, $options = [])
@@ -51,13 +52,15 @@ class CrimesTable extends Table
             'foreignKey' => 'tipocrime_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Pessoas', [
+            'foreignKey' => 'pessoa_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsToMany('Pessoas', [
             'foreignKey' => 'crime_id',
             'targetForeignKey' => 'pessoa_id',
             'joinTable' => 'pessoas_crimes'
         ]);
-        $this->hasMany('PessoasCrimes');
-
     }
 
     /**
@@ -109,6 +112,7 @@ class CrimesTable extends Table
     {
         $rules->add($rules->existsIn(['processo_id'], 'Processos'));
         $rules->add($rules->existsIn(['tipocrime_id'], 'Tipocrimes'));
+        $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
 
         return $rules;
     }

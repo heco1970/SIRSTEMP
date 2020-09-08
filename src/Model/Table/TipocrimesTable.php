@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Tipocrimes Model
  *
+ * @property \App\Model\Table\CrimesTable|\Cake\ORM\Association\HasMany $Crimes
+ *
  * @method \App\Model\Entity\Tipocrime get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tipocrime newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Tipocrime[] newEntities(array $data, array $options = [])
@@ -17,6 +19,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Tipocrime patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Tipocrime[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Tipocrime findOrCreate($search, callable $callback = null, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class TipocrimesTable extends Table
 {
@@ -34,6 +38,12 @@ class TipocrimesTable extends Table
         $this->setTable('tipocrimes');
         $this->setDisplayField('descricao');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
+
+        $this->hasMany('Crimes', [
+            'foreignKey' => 'tipocrime_id'
+        ]);
     }
 
     /**
@@ -52,8 +62,23 @@ class TipocrimesTable extends Table
             ->scalar('descricao')
             ->maxLength('descricao', 45)
             ->requirePresence('descricao', 'create')
-            ->notEmpty('descricao');
+            ->notEmpty('descricao')
+            ->add('descricao', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['descricao']));
+
+        return $rules;
     }
 }

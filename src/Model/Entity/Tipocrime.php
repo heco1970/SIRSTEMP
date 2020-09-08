@@ -8,6 +8,8 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $descricao
+ * @property string $created
+ * @property string $modified
  *
  * @property \App\Model\Entity\Crime[] $crimes
  */
@@ -25,6 +27,8 @@ class Tipocrime extends Entity
      */
     protected $_accessible = [
         'descricao' => true,
+        'created' => true,
+        'modified' => true,
         'crimes' => true
     ];
 }

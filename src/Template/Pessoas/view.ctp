@@ -229,8 +229,6 @@
                                 <tbody>
                                     <?php foreach ($crimes as $crime) : ?>
                                         <tr>
-                                            <td><?= h($crime->tipocrime->descricao) ?></td>
-                                            <td><?= h($crime->processo->nip) ?></td>
                                             <td><?= h($crime->ocorrencia) ?></td>
                                             <td><?= h($crime->registo) ?></td>
                                             <td><?= h($crime->qte) ?></td>
@@ -290,28 +288,26 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">Referência</th>
-                                            <th scope="col">Utente</th>
                                             <th scope="col">Processo</th>
-                                            <th scope="col">Equipa de Registo</th>
+                                            <th scope="col">Data de Receção</th>
+                                            <th scope="col">Equipa Responsável</th>
                                             <th scope="col">Estado</th>
-                                            <th scope="col">Data Recepção</th>
-                                            <th scope="col">Data Termo</th>
+                                            <th scope="col">Data termo previsto</th>
+                                            <th scope="col">Data termo efetivo</th>
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>31841</td>
-                                            <td>1661012</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>Ep Lisboa Penal 8</td>
-                                            <td>Executado</td>
-                                            <td>05-02-2010</td>
-                                            <td>05-05-2018</td>
-                                        </tr>
-                                    </tbody>
+                                    <?php foreach ($pedidos as $pedido) : ?>
+                                            <tr>
+                                                <th scope="row"><?= h($pedido->id) ?></th>
+                                                <td><?= h($pedido->processo->processo_id) ?></td>
+                                                <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
+                                                <td><?= h($pedido->team->nome) ?></td>
+                                                <td><?= h($pedido->state->designacao) ?></td>
+                                                <td><?= h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')) ?></td>
+                                                <td><?= h($pedido->datainicioefectivo->i18nFormat('yyyy-MM-dd')) ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                 </table>
                             </div>
                         </div>

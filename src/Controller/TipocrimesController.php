@@ -13,16 +13,48 @@ use App\Controller\AppController;
 class TipocrimesController extends AppController
 {
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
     public function index()
     {
-        $tipocrimes = $this->paginate($this->Tipocrimes);
+      $this->_index();
+    }
 
-        $this->set(compact('tipocrimes'));
+    public function admin(){
+      $this->_index(true);
+    }
+
+    private function _index($admin = false)
+    {
+      if ($this->request->is('ajax')) {
+        $model = 'Tipocrimes';
+        $this->loadComponent('Dynatables');
+
+        $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
+      
+        $validOps = ['descricao'];
+        $convArray = [
+          'descricao' => $model.'.descricao',
+        ];
+        $strings = ['descricao'];
+        $date_start = []; //data inicial
+        $date_end = [];  //data final
+
+        $contain = $conditions = [];
+      
+        $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+        
+        $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
+
+        $conditions = array_merge($conditions,$parsedQueries);
+        $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+
+        $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+        $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+
+        $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+      }
+
+      $this->set(compact('admin'));
+      $this->viewBuilder()->setTemplate('index');
     }
 
     /**

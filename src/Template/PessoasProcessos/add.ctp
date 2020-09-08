@@ -12,7 +12,7 @@
         <div class="form-row">
             <div class="col-6">
                 <div class="form-group">
-                    <h6 class="text-primary"><?= __('Pessoa') ?></h6>
+                    <h6 class="text-primary"><?= __('Nome') ?></h6>
                     <td><?= h($pessoa->nome) ?></td>
                 </div>
             </div>
