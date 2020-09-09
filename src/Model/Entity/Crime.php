@@ -45,6 +45,6 @@ class Crime extends Entity
         'pessoa_id' => true,
         'processo' => true,
         'tipocrime' => true,
-        'pessoas' => true
+        'pessoa' => true,
     ];
 }
