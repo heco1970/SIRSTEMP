@@ -100,9 +100,9 @@
                         <tbody>
                             <?php foreach ($crimes as $crime) : ?>
                                 <tr>
-                                    <td><?= h($crime->tipocrime->descricao) ?></td>
+                                    <td><?= $this->Html->link($crime->tipocrime->descricao, ['controller' => 'Crimes', 'action' => 'view', $crime->id]) ?></td>
                                     <td><?= h($crime->ocorrencia) ?></td>
-                                    <td><?= h($crime->modified) ?></td>
+                                    <td><?= h($crime->modified->i18nFormat('yyyy-MM-dd YY:MM')) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
