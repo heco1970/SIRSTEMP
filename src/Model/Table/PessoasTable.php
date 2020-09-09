@@ -99,19 +99,12 @@ class PessoasTable extends Table
         $this->hasMany('Verbetes', [
             'foreignKey' => 'pessoa_id'
         ]);
-        $this->belongsToMany('Crimes', [
-            'foreignKey' => 'pessoa_id',
-            'targetForeignKey' => 'crime_id',
-            'joinTable' => 'pessoas_crimes'
-        ]);
         $this->belongsToMany('Processos', [
             'foreignKey' => 'pessoa_id',
             'targetForeignKey' => 'processos_id',
             'joinTable' => 'pessoas_processos'
         ]);
         $this->hasMany('PessoasProcessos');
-        $this->hasMany('PessoasCrimes');
-        
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Perfi $perfi
@@ -66,7 +65,8 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                         <label for="nome">Apenas</label>
-                            <?= $this->Form->control('apenaspre', ['class' => 'form-control', 'apenaspre' => 'apenaspre', 'label' => false, 'required']); ?>
+                            <?= $this->Form->control('apenaspre', ['class' => 'form-control', 'apenaspre' => 'apenaspre', 'label' => false, 'type' => 'checkbox','required']); ?>
+
                         </div>
                     </div>
                 </div>
@@ -79,9 +79,3 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
-
-
-
-
-
-

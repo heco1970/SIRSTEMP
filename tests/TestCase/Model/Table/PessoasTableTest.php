@@ -35,7 +35,6 @@ class PessoasTableTest extends TestCase
         'app.pedidos',
         'app.verbetes',
         'app.crimes',
-        'app.pessoas_crimes'
     ];
 
     /**
