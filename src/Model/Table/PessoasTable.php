@@ -110,7 +110,7 @@ class PessoasTable extends Table
             'joinTable' => 'pessoas_processos'
         ]);
         $this->hasMany('PessoasProcessos');
-        $this->hasMany('PessoasCSrimes');
+        $this->hasMany('PessoasCrimes');
         
     }
 

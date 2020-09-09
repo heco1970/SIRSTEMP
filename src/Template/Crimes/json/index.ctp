@@ -7,7 +7,7 @@ foreach ($records as $record) {
     'tipocrime' => $record->tipocrime->descricao,
     'processo' => $record->processo->nip,
     'ocorrencia' => $record->ocorrencia,
-    'registo' => $record->registo,
+    'registo' => $record->registo->i18nFormat('dd/MM/yyyy'),
     'qte' => $record->qte,
     'apenaspre' => $record->apenaspre,
     'id' => $record->id,

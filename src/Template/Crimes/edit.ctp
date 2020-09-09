@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <label for="nome">Registo</label>
-                            <?= $this->Form->control('registo', ['class' => 'form-control', 'registo' => 'registo', 'label' => false, 'required']); ?>
+                            <?php echo $this->Form->text('registo', ['label' => false, 'value'=>h($crime->registo->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date']); ?>
                         </div>
                     </div>
                 </div>

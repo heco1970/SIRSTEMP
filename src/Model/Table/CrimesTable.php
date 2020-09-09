@@ -61,6 +61,8 @@ class CrimesTable extends Table
             'targetForeignKey' => 'pessoa_id',
             'joinTable' => 'pessoas_crimes'
         ]);
+        $this->hasMany('PessoasCrimes');
+
     }
 
     /**
@@ -82,8 +84,7 @@ class CrimesTable extends Table
             ->notEmpty('ocorrencia');
 
         $validator
-            ->scalar('registo')
-            ->maxLength('registo', 45)
+            ->date('registo')
             ->requirePresence('registo', 'create')
             ->notEmpty('registo');
 
@@ -93,10 +94,7 @@ class CrimesTable extends Table
             ->notEmpty('qte');
 
         $validator
-            ->scalar('apenaspre')
-            ->maxLength('apenaspre', 45)
-            ->requirePresence('apenaspre', 'create')
-            ->notEmpty('apenaspre');
+            ->allowEmpty('apenaspre');
 
         return $validator;
     }

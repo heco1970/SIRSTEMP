@@ -9,9 +9,9 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $processo_id
  * @property string $ocorrencia
- * @property string $registo
+ * @property \Cake\I18n\FrozenDate $registo
  * @property int $qte
- * @property string $apenaspre
+ * @property int|null $apenaspre
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property int $tipocrime_id
@@ -20,7 +20,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Processo $processo
  * @property \App\Model\Entity\Tipocrime $tipocrime
  * @property \App\Model\Entity\Pessoa[] $pessoas
- * @property \App\Model\Entity\PessoasCrime[] $pessoas_crimes
  */
 class Crime extends Entity
 {
@@ -46,7 +45,6 @@ class Crime extends Entity
         'pessoa_id' => true,
         'processo' => true,
         'tipocrime' => true,
-        'pessoas' => true,
-        'pessoas_crimes' => true
+        'pessoas' => true
     ];
 }

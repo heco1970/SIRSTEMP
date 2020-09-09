@@ -87,6 +87,26 @@ class CrimesController extends AppController
 
     public function add($id = null)
     {
+        $this->loadModel('Pessoas');
+
+        $subquery = $this->Crimes
+            ->find()
+            ->select(['Crimes.processo_id'])
+            ->where(['Crimes.pessoa_id' => $id]);
+
+        $pessoas = $this->Pessoas
+            ->find('list', ['keyField' => 'id', 'valueField' => 'pessoa_id'])
+            ->where([
+                'Pessoas.id NOT IN' => $subquery
+            ]);
+
+        $pessoas1 = $this->Pessoas
+            ->find('list', ['keyField' => 'id', 'valueField' => 'pessoa_id'])
+            ->where([
+                'Pessoas.id IN' => $subquery
+            ]);
+        $pessoa = $this->Pessoas->get($id);
+
         $crime = $this->Crimes->newEntity();
         $id=$id;
 
@@ -104,7 +124,7 @@ class CrimesController extends AppController
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
         $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
         $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('crime','processos','tipocrimes' ,'pessoas','id'));
+        $this->set(compact('crime','processos','pessoa','tipocrimes' ,'pessoas','id'));
     }
 
     /**
