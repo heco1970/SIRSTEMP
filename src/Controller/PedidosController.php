@@ -198,7 +198,7 @@ class PedidosController extends AppController
     public function edit($id = null)
     {
         $pedido = $this->Pedidos->get($id, [
-            'contain' => []
+            'contain' => ['Processos','Pessoas','States','PedidosTypes','PedidosMotives','Teams','Pais']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
@@ -210,6 +210,15 @@ class PedidosController extends AppController
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         
+
+        //$id1 = $this->request->getSession()->read('Auth.User.id');
+        //$this->loadModel('UsersTeams');
+
+        //$gestor = $this->UsersTeams->find('list', ['keyField' => 'id', 'valueField' => 'username'])->contain(['Users'])->where(['UsersTeams.team_id' => $pedido->team->id1]);
+
+        //$this->log();
+        //$this->log($gestor->toArray());
+
         $processos = $this->Pedidos->Processos->find('list', ['keyField' => 'id', 'valueField' => 'processo_id']);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $states = $this->Pedidos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']);

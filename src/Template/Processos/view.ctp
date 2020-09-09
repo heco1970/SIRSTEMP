@@ -64,7 +64,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Id</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Data Nascimento</th>
                                 <th scope="col">Cartão de Cidadão</th>
@@ -73,8 +72,7 @@
                         <tbody>
                             <?php foreach ($pessoas as $pessoa) : ?>
                                 <tr>
-                                    <th scope="row"><?= h($pessoa->id) ?></th>
-                                    <td><?= h($pessoa->nome) ?></td>
+                                    <td><?= $this->Html->link($pessoa->nome, ['controller' => 'Pessoas', 'action' => 'view', $pessoa->id]) ?></td>
                                     <td><?= h($pessoa->data_nascimento) ?></td>
                                     <td><?= h($pessoa->cc) ?></td>
                                 </tr>
@@ -94,7 +92,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Id</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Ocorrência</th>
                                 <th scope="col">Ultima Alteração</th>
@@ -103,7 +100,6 @@
                         <tbody>
                             <?php foreach ($crimes as $crime) : ?>
                                 <tr>
-                                    <th scope="row"><?= h($crime->id) ?></th>
                                     <td><?= h($crime->tipocrime->descricao) ?></td>
                                     <td><?= h($crime->ocorrencia) ?></td>
                                     <td><?= h($crime->modified) ?></td>
