@@ -132,7 +132,7 @@
         } 
     </style>
 
-    <?php if ($this->Session->read('Auth.User.show') == true): ?>
+    <?php if ($this->request->getSession()->read('Auth.User.show') == true): ?>
         <!-- The Modal -->
         <div id="myModal" class="modale">
 
@@ -148,10 +148,10 @@
                         <?php 
                             $session = $this->request->session();
                             $session->write('Auth.User.show', false); 
-                            echo "<h5><b>Nome: </b>".$this->Session->read('Auth.User.name')."</h5>";
-                            echo "<h5><b>Username: </b>".$this->Session->read('Auth.User.username')."</h5>";
-                            echo "<h5><b>Email: </b>".$this->Session->read('Auth.User.email')."</h5>";
-                            echo "<h5><b>Ultimo acesso: </b>".$this->Session->read('Auth.User.last')."</h5>";
+                            echo "<h5><b>Nome: </b>".$this->request->getSession()->read('Auth.User.name')."</h5>";
+                            echo "<h5><b>Username: </b>".$this->request->getSession()->read('Auth.User.username')."</h5>";
+                            echo "<h5><b>Email: </b>".$this->request->getSession()->read('Auth.User.email')."</h5>";
+                            echo "<h5><b>Ultimo acesso: </b>".$this->request->getSession()->read('Auth.User.last')."</h5>";
                         ?>
                         <script>
                             window.onload = function mod() {
