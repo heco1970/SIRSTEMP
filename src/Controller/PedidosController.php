@@ -145,6 +145,7 @@ class PedidosController extends AppController
 
         $this->set(compact('pedido', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }
+    
     public function search()
     {
 
