@@ -50,7 +50,6 @@
                     </div>
                 </div>
                 <div class="row">
-
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Estado Civil') ?></h6>
                         <p><?= h($pessoa->estadocivil->estado) ?></p>
@@ -62,9 +61,7 @@
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Nacionalidade') ?></h6>
                         <p><?= h(ucfirst(mb_strtolower($pessoa->pai->paisNome))) ?></p>
-
                     </div>
-
                 </div>
                 <hr>
                 <div class="row">
@@ -83,11 +80,8 @@
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Freguesia') ?></h6>
                         <p><?= h($pessoa->codigos_postai->NomeLocalidade) ?></p>
-
                     </div>
-
                 </div>
-
                 <hr>
                 <div class="row">
                     <div class="col-3">
@@ -146,7 +140,6 @@
                     </div>
                 </div>
 
-
                 <br>
                 <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item">
@@ -157,7 +150,6 @@
                     <div class="card shadow mb-2">
                         <div class="card-header py-3">
                             <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-
                         </div>
                     </div>
                 </div>
@@ -172,7 +164,6 @@
                         <div class="card-header py-3">
                             <a class="btn btn-success btn-circle btn-lg" href="/contactos/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
                         </div>
-
                         <table class="table">
                             <thead>
                                 <tr>
@@ -186,7 +177,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <?php foreach ($contactos as $contacto) : ?>
                                     <tr>
                                         <th scope="row"><?= h($contacto->nome) ?></th>
@@ -223,19 +213,19 @@
                                         <th scope="col">Ocorrencia</th>
                                         <th scope="col">Registo</th>
                                         <th scope="col">Quantidade</th>
-                                        <th scope="col">Apenas</th>
+                                        <th scope="col">Apenas Pré</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($crimes as $crime) : ?>
                                         <tr>
-                                            <td><?= h($crime->tipocrime->descricao) ?></td>
+                                            <th scope="row"><?= h($crime->tipocrime->descricao) ?></th>
                                             <td><?= h($crime->processo->nip) ?></td>
                                             <td><?= h($crime->ocorrencia) ?></td>
                                             <td><?= h($crime->registo) ?></td>
                                             <td><?= h($crime->qte) ?></td>
-                                            <td><?= h($crime->apenaspre) ?></td>
-                                            <td><a class="btn btn-info" href="/crimes/view/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                            <td><?= $crime->apenaspre == 1 ? __('✔') : __('✕') ?></td>
+                                            <td>
                                             <a class="btn btn-warning" href="/crimes/edit/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
                                             <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
                                         </tr>

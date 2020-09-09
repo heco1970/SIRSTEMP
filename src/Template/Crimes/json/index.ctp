@@ -9,7 +9,7 @@ foreach ($records as $record) {
     'ocorrencia' => $record->ocorrencia,
     'registo' => $record->registo->i18nFormat('dd/MM/yyyy'),
     'qte' => $record->qte,
-    'apenaspre' => $record->apenaspre,
+    'apenaspre' => $record->apenaspre == 1 ? __('✔') : __('✕'),
     'id' => $record->id,
   ];
 }

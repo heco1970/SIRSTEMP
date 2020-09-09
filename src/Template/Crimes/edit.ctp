@@ -65,8 +65,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                         <label for="nome">Apenas</label>
-                            <?= $this->Form->control('apenaspre', ['class' => 'form-control', 'apenaspre' => 'apenaspre', 'label' => false, 'type' => 'checkbox','required']); ?>
-
+                            <?= $this->Form->control('apenaspre', ['class' => 'form-control', 'apenaspre' => 'apenaspre', 'label' => false, 'type' => 'checkbox']); ?>
                         </div>
                     </div>
                 </div>

@@ -23,8 +23,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="form-row">
                 <div class="col-6">
                     <div class="form-group">
@@ -81,10 +79,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="email">Email</label>
-
                         <?= $this->Form->control('email', ['label' => false, 'class' => "form-control", 'required']); ?>
-
-
                     </div>
                 </div>
             </div>
@@ -92,10 +87,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="descricao">Descrição</label>
-
                         <?= $this->Form->control('descricao', ['label' => false, 'class' => "form-control"]); ?>
-
-
                     </div>
                 </div>
             </div>
@@ -103,10 +95,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="estado">Estado</label>
-
                         <?= $this->Form->control('estado', ['options' => ['0' => 'Não Ativo', '1' => 'Ativo'], 'default'=>[1],'label' => false, 'class' => "form-control"]); ?>
-
-
                     </div>
                 </div>
             </div>
@@ -115,7 +104,6 @@
     <div class="card-footer card-footer-fixed">
         <button class="btn btn-success" type="submit">Gravar</button>
         <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $id], ['class' => 'btn btn-secondary']) ?>
-   
     </div>
     <?= $this->Form->end() ?>
 

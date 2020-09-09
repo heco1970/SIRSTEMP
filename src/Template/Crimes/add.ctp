@@ -4,7 +4,6 @@
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Associação de um Crime a') ?> <td><?= h($pessoa->nome) ?></td></h6>
     </div>
     <?= $this->Form->create($crime) ?>
-
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
             <div class="form-row">
@@ -64,7 +63,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <label for="nome">Apenas Pré</label>
-                            <?= $this->Form->control('apenaspre', ['class' => 'form-control', 'apenaspre' => 'apenaspre', 'label' => false, 'type' => 'checkbox','required']); ?>
+                            <?php echo $this->Form->control('apenaspre', ['label' => false, 'class' => 'form-control', 'type' => 'checkbox']); ?>                           
                         </div>
                     </div>
                 </div>
@@ -73,7 +72,7 @@
     </div>
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
-        <a href="/pessoas/view<?= h($pessoa->id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $id], ['class' => 'btn btn-secondary']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>
