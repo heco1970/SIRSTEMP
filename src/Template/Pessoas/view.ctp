@@ -289,7 +289,6 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">ID</th>
                                             <th scope="col">Processo</th>
                                             <th scope="col">Data de Receção</th>
                                             <th scope="col">Equipa Responsável</th>
@@ -301,7 +300,6 @@
                                     </thead>
                                     <?php foreach ($pedidos as $pedido) : ?>
                                             <tr>
-                                                <th scope="row"><?= h($pedido->id) ?></th>
                                                 <td><?= h($pedido->processo->processo_id) ?></td>
                                                 <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
                                                 <td><?= h($pedido->team->nome) ?></td>
