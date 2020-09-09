@@ -40,7 +40,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Pedido[] $pedidos
  * @property \App\Model\Entity\Verbete[] $verbetes
  * @property \App\Model\Entity\Crime[] $crimes
- * @property \App\Model\Entity\PessoasCrime[] $pessoas_crimes
  */
 class Pessoa extends Entity
 {
@@ -87,7 +86,6 @@ class Pessoa extends Entity
         'pedidos' => true,
         'verbetes' => true,
         'crimes' => true,
-        'pessoas_crimes' => true,
         'processos' => true,
         'pessoas_processos' => true
     ];

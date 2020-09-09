@@ -18,7 +18,6 @@ class CrimesControllerTest extends IntegrationTestCase
     public $fixtures = [
         'app.crimes',
         'app.pessoas',
-        'app.pessoas_crimes'
     ];
 
     /**

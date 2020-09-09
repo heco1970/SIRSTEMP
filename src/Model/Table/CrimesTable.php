@@ -56,7 +56,6 @@ class CrimesTable extends Table
             'foreignKey' => 'pessoa_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('PessoasCrimes');
 
     }
 
