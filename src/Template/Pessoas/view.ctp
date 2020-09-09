@@ -203,7 +203,7 @@
                     <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                         <div class="card shadow mb-2">
                             <div class="card-header py-3">
-                                <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/crimes/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
+                                <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-crimes/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
                             </div>
                             <table class="table">
                                 <thead>
@@ -243,7 +243,6 @@
                             <div class="card shadow mb-2">
                                 <div class="card-header py-3">
                                     <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-processos/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
-                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
                                 </div>
                                 <table class="table">
                                     <thead>
@@ -276,70 +275,37 @@
                         <div class="tab-pane fade show active" id="pills-pedidos" role="tabpanel" aria-labelledby="pills-pedidos-tab">
                             <div class="card shadow mb-2">
                                 <div class="card-header py-3">
-                                    <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+                                    <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pedidos/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
                                 </div>
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Referência</th>
-                                            <th scope="col">Utente</th>
                                             <th scope="col">Processo</th>
-                                            <th scope="col">Equipa de Registo</th>
+                                            <th scope="col">Entidade Judicial</th>
+                                            <th scope="col">Data de Receção</th>
+                                            <th scope="col">Equipa Responsável</th>
                                             <th scope="col">Estado</th>
-                                            <th scope="col">Data Recepção</th>
-                                            <th scope="col">Data Termo</th>
+                                            <th scope="col">Data termo previsto</th>
+                                            <th scope="col">Data termo efetivo</th>
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>31841</td>
-                                            <td>1661012</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>Ep Lisboa Penal 8</td>
-                                            <td>Executado</td>
-                                            <td>05-02-2010</td>
-                                            <td>05-05-2018</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="pills-verbete-tab" data-toggle="pill" href="#pills-verbete" role="tab" aria-controls="pills-verbete" aria-selected="true">Verbetes</a>
-                            </li>
-                        </ul>
-                        <div class="tab-pane fade show active" id="pills-verbete" role="tabpanel" aria-labelledby="pills-verbete-tab">
-                            <div class="card shadow mb-2">
-                                <div class="card-header py-3">
-                                    <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
-                                </div>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Estado</th>
-                                            <th scope="col">Tipo Pedido</th>
-                                            <th scope="col">NIP</th>
-                                            <th scope="col">Equipa Atual</th>
-                                            <th scope="col">Data Entrada</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
+                                    <?php foreach ($pedidos as $pedido) : ?>
+                                            <tr>
+                                                <td><?= h($pedido->processo->processo_id) ?></td>
+                                                <td><?= h($pedido->processo->entidadejudiciai->descricao) ?></td>
+                                                <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
+                                                <td><?= h($pedido->team->nome) ?></td>
+                                                <td><?= h($pedido->state->designacao) ?></td>
+                                                <td><?= h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')) ?></td>
+                                                <td><?= h($pedido->datainicioefectivo->i18nFormat('yyyy-MM-dd')) ?></td>
+                                                <td>
+                                                    <a class="btn btn-info" href="/pedidos/view/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                                    <a class="btn btn-warning" href="/pedidos/edit/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                                    <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/pedidos/delete/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                 </table>
                             </div>
                         </div>
