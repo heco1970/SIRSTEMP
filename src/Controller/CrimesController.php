@@ -77,9 +77,16 @@ class CrimesController extends AppController
 
                 $this->Flash->success(__('O Crime foi guardado com sucesso.'));
 
-                return $this->redirect($this->referer());
+                if($id != null){
+                    $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/'.$id));
+                }
+                else{
+                    return $this->redirect(['action' => 'index']);
+                }
             }
-            $this->Flash->error(__('Não foi possível guardar o Crime. Por favor tente novamente'));
+            else{
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            }
         }
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
         $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
@@ -114,7 +121,6 @@ class CrimesController extends AppController
                 $this->Flash->success(__('O registo foi guardado com sucesso.'));
 
                 return $this->redirect($this->referer());
-
             }
             $this->Flash->error(__('O registo não pode ser guardado. Por favor tente novamente.'));
         }

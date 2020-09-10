@@ -174,7 +174,7 @@ class ProcessosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $processo = $this->Processos->get($id);
         if ($this->Processos->delete($processo)) {
             $this->Flash->success(__('O registo foi apagado.'));
