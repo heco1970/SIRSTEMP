@@ -11,7 +11,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="processo_id">Processo</label>
-                            <?php echo $this->Form->text('processo_id', ['id' => 'processo_id', 'class' => 'form-control', 'label' => false, 'value' => h($pedido->processo->processo_id), 'required']); ?>
+                            <?php echo $this->Form->text('processo_id', ['id' => 'processo_id', 'class' => 'form-control', 'label' => false, 'type' => 'number', 'value' => h($pedido->processo->processo_id), 'required']); ?>
                         </div>
                     </div>
                     <div class="col-sm-6">

@@ -123,6 +123,8 @@ class PedidosTable extends Table
 
         $validator
             ->integer('numeropedido')
+            ->maxLength('numeropedido', 9)
+            ->naturalNumber('numeropedido') 
             ->requirePresence('numeropedido', 'create')
             ->notEmpty('numeropedido');
 
