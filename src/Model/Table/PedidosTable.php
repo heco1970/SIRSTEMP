@@ -16,6 +16,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
  * @property \App\Model\Table\PedidosmotivesTable|\Cake\ORM\Association\BelongsTo $Pedidosmotives
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
+ * @property |\Cake\ORM\Association\BelongsTo $Concelhos
  * @property \App\Model\Table\VerbetesTable|\Cake\ORM\Association\HasMany $Verbetes
  *
  * @method \App\Model\Entity\Pedido get($primaryKey, $options = [])
@@ -74,6 +75,10 @@ class PedidosTable extends Table
         ]);
         $this->belongsTo('Pais', [
             'foreignKey' => 'pais_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Concelhos', [
+            'foreignKey' => 'concelho_id',
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Verbetes', [
@@ -154,12 +159,6 @@ class PedidosTable extends Table
             ->notEmpty('dataefectivatermo');
 
         $validator
-            ->scalar('concelho')
-            ->maxLength('concelho', 45)
-            ->requirePresence('concelho', 'create')
-            ->notEmpty('concelho');
-
-        $validator
             ->scalar('transferencias')
             ->maxLength('transferencias', 45)
             ->requirePresence('transferencias', 'create')
@@ -202,6 +201,7 @@ class PedidosTable extends Table
         $rules->add($rules->existsIn(['state_id'], 'States'));
         $rules->add($rules->existsIn(['pedidosmotive_id'], 'Pedidosmotives'));
         $rules->add($rules->existsIn(['pais_id'], 'Pais'));
+        $rules->add($rules->existsIn(['concelho_id'], 'Concelhos'));
 
         return $rules;
     }

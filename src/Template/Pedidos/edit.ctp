@@ -132,8 +132,8 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="concelho">Concelho</label>
-                            <?php echo $this->Form->control('concelho', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
+                            <label for="concelho_id">Concelho</label>
+                            <?php echo $this->Form->text('concelho_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                         </div>
                     </div>
                 </div>
