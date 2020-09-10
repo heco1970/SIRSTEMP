@@ -28,7 +28,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <label for="nome">Processo</label>
+                            <label for="nome">Nip</label>
                             <?= $this->Form->control('processo_id', ['class' => 'form-control', 'nip' => 'nip', 'label' => false, 'required']); ?>
                         </div>
                     </div>
