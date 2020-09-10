@@ -144,10 +144,12 @@
                             <?php echo $this->Form->control('transferencias', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
                         </div>
                     </div>
-                    <div class="col-sm-6" id="gestor">
-                        <div class="form-group">
-                            <label for="gestor">Gestor</label>
-                            <?php echo $this->Form->control('gestor', ['class' => 'form-control',  'label' => false, 'type' => 'select', 'disabled']); ?>
+                    <div class="col-sm-6" >
+                        <div class="form-group" >
+                            <label>Gestor</label>
+                            
+                                <?php echo $this->Form->control('gestor', [ 'class' => 'form-control',  'label' => false, 'type' => 'select', 'disabled']); ?>
+                            
                         </div>
                     </div>
                 </div>
@@ -225,13 +227,9 @@
         });
     });
     $('document').ready(function() {
-        $('#team_id').change(function() {
-
-            var searchkey = $('#team_id').val();
-
-            searchTags(searchkey);
-        });
-
+        
+        var searchkey = $('#team_id').val();
+        searchTags(searchkey);
 
         function searchTags(keyword) {
             var data = keyword;
@@ -241,11 +239,11 @@
                 url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'Gestor']); ?>",
                 data: {
                     keyword: data,
-
                 },
 
                 success: function(response) {
                     $('#gestor').html(response);
+                    $('#gestor').prop("disabled", false);
                 }
             });
         };
