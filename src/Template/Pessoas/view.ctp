@@ -213,7 +213,7 @@
                     <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                         <div class="card shadow mb-2">
                             <div class="card-header py-3">
-                                <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-crimes/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
+                                <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/crimes/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
                             </div>
                             <table class="table">
                                 <thead>

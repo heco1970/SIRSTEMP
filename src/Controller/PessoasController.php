@@ -87,22 +87,21 @@ class PessoasController extends AppController
         $contactos = $this->Contactos->find()->where(['pessoa_id' => $id]);
 
         $subquery = $this->PessoasProcessos
-        ->find()
-        ->select(['PessoasProcessos.processo_id'])
-        ->where(['PessoasProcessos.pessoa_id' => $id]
-        );
-    
-        $processos = $this->Processos
-        ->find()
-        ->where([
-            'Processos.id IN' => $subquery
-        ])->contain('Naturezas');
+            ->find()
+            ->select(['PessoasProcessos.processo_id'])
+            ->where(['PessoasProcessos.pessoa_id' => $id]);
 
-        $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos','Teams','States']);;
-        $crimes = $this->Crimes->find()->where(['pessoa_id' => $id])->contain(['Tipocrimes','Processos']);;
+        $processos = $this->Processos
+            ->find()
+            ->where([
+                'Processos.id IN' => $subquery
+            ])->contain('Naturezas');
+
+        $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos', 'Teams', 'States']);;
+        $crimes = $this->Crimes->find()->where(['pessoa_id' => $id])->contain(['Tipocrimes', 'Processos']);
 
         $this->set('pessoa', $pessoa);
-        $this->set(compact('contactos', 'crimes', 'processos','pedidos'));
+        $this->set(compact('contactos', 'crimes', 'processos', 'pedidos'));
     }
 
     /**
@@ -210,11 +209,11 @@ class PessoasController extends AppController
             $pessoa->concelhos_id = $concelho;
             $pessoa->freguesias_id = $freguesia;
             if ($this->Pessoas->save($pessoa)) {
-                $this->Flash->success(__('O registro foi gravado.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registro não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
@@ -236,11 +235,26 @@ class PessoasController extends AppController
      */
     public function delete($id = null)
     {
-        $pessoa = $this->Pessoas->get($id);
-        if ($this->Pessoas->delete($pessoa)) {
-            $this->Flash->success(__('O registro foi apagado.'));
-        } else {
-            $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
+        
+        $this->loadModel('Crimes');
+        $this->loadModel('PessoasProcessos');
+        $this->loadModel('Pedidos');
+        $this->loadModel('Contactos');
+        
+        $crimes = $this->Crimes->find('all')->where(['pessoa_id' => $id])->count();
+        $processos = $this->PessoasProcessos->find('all')->where(['pessoa_id' => $id])->count();
+        $pedidos = $this->Pedidos->find('all')->where(['pessoa_id' => $id])->count();
+        $contactos = $this->Contactos->find('all')->where(['pessoa_id' => $id])->count();
+        
+        if ($crimes<1 &&  $processos<1 &&  $pedidos<1 &&  $contactos<1) {
+            $pessoa = $this->Pessoas->get($id);
+            if ($this->Pessoas->delete($pessoa)) {
+                $this->Flash->success(__('O registo foi apagado.'));
+            } else {
+                $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
+            }
+        }else{
+            $this->Flash->error(__('Não é possível apagar o registo, pois este está associado a outras tabelas.'));
         }
 
         return $this->redirect(['action' => 'index']);
