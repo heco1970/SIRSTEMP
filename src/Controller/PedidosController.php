@@ -208,16 +208,15 @@ class PedidosController extends AppController
             $processo_nome = $this->request->getData('processo_id');
 
             $pessoa_id = $this->Pedidos->Pessoas->find('all', ['conditions' => ['nome' => $pessoa_nome]])->first();
-            $pedido->pessoa_id = $pessoa_id->id;
-
+            if(isset($pessoa_id->id)){
+                $pedido->pessoa_id = $pessoa_id->id;
+            }
 
             $processo_id = $this->Pedidos->Processos->find('all', ['conditions' => ['processo_id' => $processo_nome]])->first();
-            $pedido->processo_id = $processo_id->id;
-
+            if(isset($processo_id->id)){
+                $pedido->processo_id = $processo_id->id;
+            }
             
-            $this->log($pedido);
-            
-
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
@@ -248,8 +247,9 @@ class PedidosController extends AppController
         $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['keyField' => 'id', 'valueField' => 'descricao']);
         $teams = $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
+        $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
 
-        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
+        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 
     /**
