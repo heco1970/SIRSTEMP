@@ -71,8 +71,8 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
-        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $id], ['class' => 'btn btn-secondary']) ?>
+        <?= $this->Form->button(__('Adicionar'), ['class' => 'btn btn-success float-right']) ?>
+        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $id], ['class' => 'btn btn-secondary float-right']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>

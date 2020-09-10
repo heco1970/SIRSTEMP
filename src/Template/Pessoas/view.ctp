@@ -226,8 +226,9 @@
                                             <td><?= h($crime->qte) ?></td>
                                             <td><?= $crime->apenaspre == 1 ? __('✔') : __('✕') ?></td>
                                             <td>
-                                            <a class="btn btn-warning" href="/crimes/edit/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
-                                            <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
+                                                <a class="btn btn-warning" href="/crimes/edit/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -255,13 +256,18 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($processos as $processo) : ?>
-                                            <tr>
-                                                <th scope="row"><?= h($processo->processo_id) ?></th>
-                                                <td><?= h($processo->natureza->designacao) ?></td>
-                                                <td><?= h($processo->nip) ?></td>
-                                                <td><?= h($processo->ultimaalteracao) ?></td>
-                                            </tr>
+                                        <tr>
+                                            <th scope="row"><?= h($processo->processo_id) ?></th>
+                                            <td><?= h($processo->natureza->designacao) ?></td>
+                                            <td><?= h($processo->nip) ?></td>
+                                            <td><?= h($processo->ultimaalteracao) ?></td>
+                                            <td>
+                                                <a class="btn btn-info" href="/processos/view/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                                <a class="btn btn-warning" href="/processos/edit/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/processos/delete/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                            </td>
                                         <?php endforeach; ?>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -291,21 +297,21 @@
                                         </tr>
                                     </thead>
                                     <?php foreach ($pedidos as $pedido) : ?>
-                                            <tr>
-                                                <td><?= h($pedido->processo->processo_id) ?></td>
-                                                <td><?= h($pedido->processo->entidadejudiciai->descricao) ?></td>
-                                                <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
-                                                <td><?= h($pedido->team->nome) ?></td>
-                                                <td><?= h($pedido->state->designacao) ?></td>
-                                                <td><?= h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')) ?></td>
-                                                <td><?= h($pedido->datainicioefectivo->i18nFormat('yyyy-MM-dd')) ?></td>
-                                                <td>
-                                                    <a class="btn btn-info" href="/pedidos/view/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
-                                                    <a class="btn btn-warning" href="/pedidos/edit/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
-                                                    <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/pedidos/delete/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                        <tr>
+                                            <td><?= h($pedido->processo->processo_id) ?></td>
+                                            <td><?= h($pedido->processo->entidadejudiciai->descricao) ?></td>
+                                            <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
+                                            <td><?= h($pedido->team->nome) ?></td>
+                                            <td><?= h($pedido->state->designacao) ?></td>
+                                            <td><?= h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')) ?></td>
+                                            <td><?= h($pedido->datainicioefectivo->i18nFormat('yyyy-MM-dd')) ?></td>
+                                            <td>
+                                                <a class="btn btn-info" href="/pedidos/view/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                                <a class="btn btn-warning" href="/pedidos/edit/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/pedidos/delete/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                         </div>

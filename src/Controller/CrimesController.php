@@ -106,21 +106,21 @@ class CrimesController extends AppController
     public function edit($id = null)
     {
         $crime = $this->Crimes->get($id, [
-            'contain' => []
+            'contain' => ['Pessoas']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
             if ($this->Crimes->save($crime)) {
                 $this->Flash->success(__('O registo foi guardado com sucesso.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect($this->referer());
+
             }
             $this->Flash->error(__('O registo não pode ser guardado. Por favor tente novamente.'));
         }
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
         $pessoas = $this->Crimes->Pessoas->find('list', ['limit' => 200]);
         $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
-        $this->log($crime);
         $this->set(compact('crime','processos','pessoas','tipocrimes'));
     }
    
