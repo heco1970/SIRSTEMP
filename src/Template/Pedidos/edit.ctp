@@ -146,10 +146,8 @@
                     </div>
                     <div class="col-sm-6" >
                         <div class="form-group" >
-                            <label>Gestor</label>
-                            
-                                <?php echo $this->Form->control('gestor', [ 'class' => 'form-control',  'label' => false, 'type' => 'select', 'disabled']); ?>
-                            
+                            <label for="gestor">Gestor</label>
+                            <?php echo $this->Form->control('gestor', [ 'class' => 'form-control', 'label' => false, 'type' => 'select', 'disabled']); ?>
                         </div>
                     </div>
                 </div>
@@ -227,9 +225,12 @@
         });
     });
     $('document').ready(function() {
-        
-        var searchkey = $('#team_id').val();
-        searchTags(searchkey);
+        $('#team_id').click(function() {
+            var searchkey = $('#team_id').val();
+            searchTags(searchkey);
+        });
+
+        $('#team_id').trigger("click");
 
         function searchTags(keyword) {
             var data = keyword;
