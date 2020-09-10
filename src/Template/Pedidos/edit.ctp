@@ -1,6 +1,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Pedido') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Alterar Registo de Pedido') ?></h6>
     </div>
 
     <?= $this->Form->create($pedido) ?>
@@ -11,14 +11,14 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="processo_id">Processo</label>
-                            <?php echo $this->Form->control('processo_id', ['label' => false, 'class' => 'form-control']); ?>
+                            <?php echo $this->Form->text('processo_id', ['id' => 'processo_id', 'class' => 'form-control', 'label' => false, 'value' => h($pedido->processo->processo_id), 'required']); ?>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group ui-widget">
                             <div class="form-group">
-                                <label for="pessoa">Nome da Pessoa</label>
-                                <?php echo $this->Form->control('pessoa', ['label' => false, 'class' => 'form-control']); ?>
+                                <label for="pessoa_id">Nome da Pessoa</label>
+                                <?php echo $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pedido->pessoa->nome), 'required']); ?>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="state_id">Estado</label>
-                            <?php echo $this->Form->control('state_id', ['class' => 'form-control', 'options' => $states, 'label' => false]); ?>
+                            <?php echo $this->Form->control('state_id', ['class' => 'form-control', 'options' => $states, 'value' => h($pedido->state->id), 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -120,14 +120,14 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="pedidosmotives_id">Motivos dos Pedidos</label>
-                            <?php echo $this->Form->text('pedidosmotives_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
+                            <label for="pedidosmotives_id">Motivos dos pedidos</label>
+                            <?php echo $this->Form->control('pedidosmotive_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="pais_id">País</label>
-                            <?php echo $this->Form->text('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
+                            <?php echo $this->Form->text('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pais, 'class' => 'form-control']); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -144,10 +144,10 @@
                             <?php echo $this->Form->control('transferencias', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
                         </div>
                     </div>
-                    <div class="col-sm-6" id="gestor">
-                        <div class="form-group">
+                    <div class="col-sm-6" >
+                        <div class="form-group" >
                             <label for="gestor">Gestor</label>
-                            <?php echo $this->Form->control('gestor', ['class' => 'form-control',  'label' => false, 'type' => 'select', 'disabled']); ?>
+                            <?php echo $this->Form->control('gestor', [ 'class' => 'form-control', 'label' => false, 'type' => 'select', 'disabled']); ?>
                         </div>
                     </div>
                 </div>
@@ -225,13 +225,12 @@
         });
     });
     $('document').ready(function() {
-        $('#team_id').change(function() {
-
+        $('#team_id').click(function() {
             var searchkey = $('#team_id').val();
-
             searchTags(searchkey);
         });
 
+        $('#team_id').trigger("click");
 
         function searchTags(keyword) {
             var data = keyword;
@@ -241,11 +240,11 @@
                 url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'Gestor']); ?>",
                 data: {
                     keyword: data,
-
                 },
 
                 success: function(response) {
                     $('#gestor').html(response);
+                    $('#gestor').prop("disabled", false);
                 }
             });
         };

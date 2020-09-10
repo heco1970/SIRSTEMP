@@ -50,7 +50,6 @@
                     </div>
                 </div>
                 <div class="row">
-
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Estado Civil') ?></h6>
                         <p><?= h($pessoa->estadocivil->estado) ?></p>
@@ -62,9 +61,7 @@
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Nacionalidade') ?></h6>
                         <p><?= h(ucfirst(mb_strtolower($pessoa->pai->paisNome))) ?></p>
-
                     </div>
-
                 </div>
                 <hr>
                 <div class="row">
@@ -83,11 +80,8 @@
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Freguesia') ?></h6>
                         <p><?= h($pessoa->codigos_postai->NomeLocalidade) ?></p>
-
                     </div>
-
                 </div>
-
                 <hr>
                 <div class="row">
                     <div class="col-3">
@@ -146,7 +140,6 @@
                     </div>
                 </div>
 
-
                 <br>
                 <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item">
@@ -157,7 +150,6 @@
                     <div class="card shadow mb-2">
                         <div class="card-header py-3">
                             <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
-
                         </div>
                     </div>
                 </div>
@@ -172,7 +164,6 @@
                         <div class="card-header py-3">
                             <a class="btn btn-success btn-circle btn-lg" href="/contactos/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
                         </div>
-
                         <table class="table">
                             <thead>
                                 <tr>
@@ -186,7 +177,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <?php foreach ($contactos as $contacto) : ?>
                                     <tr>
                                         <th scope="row"><?= h($contacto->nome) ?></th>
@@ -223,18 +213,22 @@
                                         <th scope="col">Ocorrencia</th>
                                         <th scope="col">Registo</th>
                                         <th scope="col">Quantidade</th>
-                                        <th scope="col">Apenas</th>
+                                        <th scope="col">Apenas Pré</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($crimes as $crime) : ?>
                                         <tr>
-                                            <td><?= h($crime->tipocrime->descricao) ?></td>
+                                            <th scope="row"><?= h($crime->tipocrime->descricao) ?></th>
                                             <td><?= h($crime->processo->nip) ?></td>
                                             <td><?= h($crime->ocorrencia) ?></td>
                                             <td><?= h($crime->registo) ?></td>
                                             <td><?= h($crime->qte) ?></td>
-                                            <td><?= h($crime->apenaspre) ?></td>
+                                            <td><?= $crime->apenaspre == 1 ? __('✔') : __('✕') ?></td>
+                                            <td>
+                                                <a class="btn btn-warning" href="/crimes/edit/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -250,7 +244,6 @@
                             <div class="card shadow mb-2">
                                 <div class="card-header py-3">
                                     <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-processos/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
-                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
                                 </div>
                                 <table class="table">
                                     <thead>
@@ -263,13 +256,18 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($processos as $processo) : ?>
-                                            <tr>
-                                                <th scope="row"><?= h($processo->processo_id) ?></th>
-                                                <td><?= h($processo->natureza->designacao) ?></td>
-                                                <td><?= h($processo->nip) ?></td>
-                                                <td><?= h($processo->ultimaalteracao) ?></td>
-                                            </tr>
+                                        <tr>
+                                            <th scope="row"><?= h($processo->processo_id) ?></th>
+                                            <td><?= h($processo->natureza->designacao) ?></td>
+                                            <td><?= h($processo->nip) ?></td>
+                                            <td><?= h($processo->ultimaalteracao) ?></td>
+                                            <td>
+                                                <a class="btn btn-info" href="/processos/view/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                                <a class="btn btn-warning" href="/processos/edit/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/processos/delete/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                            </td>
                                         <?php endforeach; ?>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -284,12 +282,12 @@
                             <div class="card shadow mb-2">
                                 <div class="card-header py-3">
                                     <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pedidos/add/'. h($pessoa->id) .'" ><i class="fas fa-plus"></i></a>' ?>
-                                    <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
                                 </div>
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th scope="col">Processo</th>
+                                            <th scope="col">Entidade Judicial</th>
                                             <th scope="col">Data de Receção</th>
                                             <th scope="col">Equipa Responsável</th>
                                             <th scope="col">Estado</th>
@@ -299,15 +297,21 @@
                                         </tr>
                                     </thead>
                                     <?php foreach ($pedidos as $pedido) : ?>
-                                            <tr>
-                                                <td><?= h($pedido->processo->processo_id) ?></td>
-                                                <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
-                                                <td><?= h($pedido->team->nome) ?></td>
-                                                <td><?= h($pedido->state->designacao) ?></td>
-                                                <td><?= h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')) ?></td>
-                                                <td><?= h($pedido->datainicioefectivo->i18nFormat('yyyy-MM-dd')) ?></td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                        <tr>
+                                            <td><?= h($pedido->processo->processo_id) ?></td>
+                                            <td><?= h($pedido->processo->entidadejudiciai->descricao) ?></td>
+                                            <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
+                                            <td><?= h($pedido->team->nome) ?></td>
+                                            <td><?= h($pedido->state->designacao) ?></td>
+                                            <td><?= h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')) ?></td>
+                                            <td><?= h($pedido->datainicioefectivo->i18nFormat('yyyy-MM-dd')) ?></td>
+                                            <td>
+                                                <a class="btn btn-info" href="/pedidos/view/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                                <a class="btn btn-warning" href="/pedidos/edit/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/pedidos/delete/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                         </div>

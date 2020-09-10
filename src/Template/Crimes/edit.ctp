@@ -65,8 +65,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                         <label for="nome">Apenas</label>
-                            <?= $this->Form->control('apenaspre', ['class' => 'form-control', 'apenaspre' => 'apenaspre', 'label' => false, 'type' => 'checkbox','required']); ?>
-
+                            <?= $this->Form->control('apenaspre', ['class' => 'form-control', 'apenaspre' => 'apenaspre', 'label' => false, 'type' => 'checkbox']); ?>
                         </div>
                     </div>
                 </div>
@@ -74,8 +73,8 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar alterações'), ['class' => 'btn btn-success float-right']) ?>
-        <a href="/crimes/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
+        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $crime->pessoa->id], ['class' => 'btn btn-secondary float-right']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>

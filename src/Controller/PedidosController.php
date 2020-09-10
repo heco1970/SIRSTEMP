@@ -198,18 +198,49 @@ class PedidosController extends AppController
     public function edit($id = null)
     {
         $pedido = $this->Pedidos->get($id, [
-            'contain' => []
+            'contain' => ['Processos','Pessoas','States','PedidosTypes','PedidosMotives','Teams','Pais']
         ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
+
+            $pessoa_nome = $this->request->getData('pessoa_id');
+            $processo_nome = $this->request->getData('processo_id');
+
+            $pessoa_id = $this->Pedidos->Pessoas->find('all', ['conditions' => ['nome' => $pessoa_nome]])->first();
+            $pedido->pessoa_id = $pessoa_id->id;
+
+
+            $processo_id = $this->Pedidos->Processos->find('all', ['conditions' => ['processo_id' => $processo_nome]])->first();
+            $pedido->processo_id = $processo_id->id;
+
+            
+            $this->log($pedido);
+            
+
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            else{
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            }
+            
+        } else if ($this->request->is('ajax')) {
+            $this->autoRender = false;
+            if (!empty($this->request->query['term'])) {
+                $term = h($this->request->query['term']);
+                $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome', 'conditions' => ['nome LIKE' => '%' . $term . '%'], 'limit' => 20]);
+                $result = [];
+                foreach ($pessoas as $id => $name) {
+                    $result[] = ['text' => $name, 'id' => $id];
+                }
+                echo json_encode(['results' => $result]);
+                return;
+            }
         }
-        
+
         $processos = $this->Pedidos->Processos->find('list', ['keyField' => 'id', 'valueField' => 'processo_id']);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $states = $this->Pedidos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']);

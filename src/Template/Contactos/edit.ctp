@@ -112,8 +112,8 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <button class="btn btn-success" type="submit">Gravar</button>
-        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id], ['class' => 'btn btn-secondary']) ?>
+        <button class="btn btn-success float-right" type="submit">Gravar</button>
+        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id], ['class' => 'btn btn-secondary float-right']) ?>
    
     </div>
     <?= $this->Form->end() ?>
