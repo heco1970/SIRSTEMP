@@ -29,22 +29,22 @@ class PedidosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'pessoa', 'processo','equiparesponsavel','state','datarecepcao','datatermoprevisto','dataefectivatermo'];
+            $validOps = ['id', 'pessoa', 'processo', 'equiparesponsavel', 'state', 'datarecepcao', 'datatermoprevisto', 'dataefectivatermo'];
             $convArray = [
                 'id' => $model . '.id',
                 'pessoa' => 'Pessoas.nome',
                 'processo' => 'Processos.nip',
                 'equiparesponsavel' => 'Teams.nome',
-                'state' => $model.'.state_id',
+                'state' => $model . '.state_id',
                 'datarecepcao' => $model . '.datarecepcao',
                 'datatermoprevisto' => $model . '.datatermoprevisto',
                 'dataefectivatermo' => $model . '.dataefectivatermo'
             ];
-            $strings = ['pessoa','processo','equiparesponsavel','datarecepcao','datarecepcao','datatermoprevisto','dataefectivatermo'];
+            $strings = ['pessoa', 'processo', 'equiparesponsavel', 'datarecepcao', 'datarecepcao', 'datatermoprevisto', 'dataefectivatermo'];
             $date_start = []; //data inicial
             $date_end = [];  //data final
 
-            
+
             $contain = ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Pais', 'Teams'];
             $conditions = [];
 
@@ -76,10 +76,13 @@ class PedidosController extends AppController
      */
     public function view($id = null)
     {
+        $value = $this->request->getQuery('pessoa');
+
         $pedido = $this->Pedidos->get($id, [
             'contain' => ['Processos', 'Pessoas', 'States', 'Pedidostypes', 'Pedidosmotives', 'Pais', 'Teams']
         ]);
         $this->set('pedido', $pedido);
+        $this->set(compact('value'));
     }
 
     /**
@@ -90,6 +93,7 @@ class PedidosController extends AppController
     public function add($id = null)
     {
         $pedido = $this->Pedidos->newEntity();
+        $id = $id;
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
 
@@ -105,14 +109,12 @@ class PedidosController extends AppController
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
-                if($id != null){
-                    $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/'.$id));
-                }
-                else{
+                if ($id != null) {
+                    $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/' . $id));
+                } else {
                     return $this->redirect(['action' => 'index']);
                 }
-            }
-            else{
+            } else {
                 $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
             }
         } else if ($this->request->is('ajax')) {
@@ -131,7 +133,7 @@ class PedidosController extends AppController
 
         $pessoa = [];
 
-        if($id != null){
+        if ($id != null) {
             $pessoa = $this->Pedidos->Pessoas->get($id);
         }
 
@@ -143,9 +145,9 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['limit' => 200]);
         $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
 
-        $this->set(compact('pedido', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
+        $this->set(compact('pedido', 'id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }
-    
+
     public function search()
     {
 
@@ -197,8 +199,9 @@ class PedidosController extends AppController
      */
     public function edit($id = null)
     {
+        $value = $this->request->getQuery('pessoa');
         $pedido = $this->Pedidos->get($id, [
-            'contain' => ['Processos','Pessoas','States','PedidosTypes','PedidosMotives','Teams','Pais']
+            'contain' => ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Teams', 'Pais']
         ]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -208,24 +211,22 @@ class PedidosController extends AppController
             $processo_nome = $this->request->getData('processo_id');
 
             $pessoa_id = $this->Pedidos->Pessoas->find('all', ['conditions' => ['nome' => $pessoa_nome]])->first();
-            if(isset($pessoa_id->id)){
+            if (isset($pessoa_id->id)) {
                 $pedido->pessoa_id = $pessoa_id->id;
             }
 
             $processo_id = $this->Pedidos->Processos->find('all', ['conditions' => ['processo_id' => $processo_nome]])->first();
-            if(isset($processo_id->id)){
+            if (isset($processo_id->id)) {
                 $pedido->processo_id = $processo_id->id;
             }
-            
+
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
-            }
-            else{
+            } else {
                 $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
             }
-            
         } else if ($this->request->is('ajax')) {
             $this->autoRender = false;
             if (!empty($this->request->query['term'])) {
@@ -249,7 +250,7 @@ class PedidosController extends AppController
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
 
-        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
+        $this->set(compact('pedido', 'value', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 
     /**

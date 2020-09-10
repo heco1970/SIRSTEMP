@@ -187,7 +187,7 @@
                                         <td><?= $contacto->estado == 1 ? __('Ativo') : __('Não Ativo') ?></td>
                                         <td><a class="btn btn-info" href="/contactos/view/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
                                             <a class="btn btn-warning" href="/contactos/edit/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
-                                            <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/contactos/delete/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
+                                            <a class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar?')" href="/contactos/delete/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
 
                                     </tr>
                                 <?php endforeach; ?>
@@ -227,7 +227,7 @@
                                             <td><?= $crime->apenaspre == 1 ? __('✔') : __('✕') ?></td>
                                             <td>
                                                 <a class="btn btn-warning" href="/crimes/edit/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
-                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                                <a class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -264,7 +264,7 @@
                                             <td>
                                                 <a class="btn btn-info" href="/processos/view/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
                                                 <a class="btn btn-warning" href="/processos/edit/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
-                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/processos/delete/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                                <a class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar?')" href="/processos/delete/<?= h($processo->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
                                             </td>
                                         <?php endforeach; ?>
                                     </tr>
@@ -306,9 +306,9 @@
                                             <td><?= h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')) ?></td>
                                             <td><?= h($pedido->datainicioefectivo->i18nFormat('yyyy-MM-dd')) ?></td>
                                             <td>
-                                                <a class="btn btn-info" href="/pedidos/view/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
-                                                <a class="btn btn-warning" href="/pedidos/edit/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
-                                                <a class="btn btn-danger" nclick="return confirm('Tem a certeza que quer apagar?')" href="/pedidos/delete/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                                <a class="btn btn-info" href="/pedidos/view/<?= h($pedido->id) ?>?pessoa=<?=h($pessoa->id)?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                                <a class="btn btn-warning" href="/pedidos/edit/<?= h($pedido->id)?>?pessoa=<?=h($pessoa->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                                <a class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar?')" href="/pedidos/delete/<?= h($pedido->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

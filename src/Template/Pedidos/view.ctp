@@ -123,4 +123,11 @@
             </div>
         </div>
     </div>
+    <div class="card-footer card-footer-fixed">
+        <?php if (empty($value)) { ?>
+            <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?php } else { ?>
+            <a href="/pessoas/view/<?= h($pedido->pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?php } ?>
+    </div>
 </div>

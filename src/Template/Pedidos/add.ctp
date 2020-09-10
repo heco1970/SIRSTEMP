@@ -32,13 +32,12 @@
                                 <label for="pessoa_id">
                                     <h4><?= __('Nome da Pessoa') ?></h4>
                                 </label>
-                                <?php 
-                                    if($pessoa != null){
-                                        echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
-                                    }
-                                    else{
-                                        echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']); 
-                                    }  
+                                <?php
+                                if ($pessoa != null) {
+                                    echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
+                                } else {
+                                    echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
+                                }
                                 ?>
                             </div>
                         </div>
@@ -108,7 +107,8 @@
                                     <h4><?= __('Equipa Responsável') ?></h4>
                                 </label>
                                 <?= $this->Form->control('team_id', [
-                                    'id' => 'team_id', 'class' => 'form-control','empty' => 'Escolha uma equipa...','default'=>[''],'disabled'=>[''],'label' => false, 'options' => $teams, 'required']); ?>
+                                    'id' => 'team_id', 'class' => 'form-control', 'empty' => 'Escolha uma equipa...', 'default' => [''], 'disabled' => [''], 'label' => false, 'options' => $teams, 'required'
+                                ]); ?>
                             </div>
                         </div>
                     </div>
@@ -231,7 +231,7 @@
                                 <label for="name">
                                     <h4><?= __('Concelho') ?></h4>
                                 </label>
-                                <?= $this->Form->control('concelho', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
+                                <?= $this->Form->control('concelho_id', ['class' => 'form-control',  'label' => false]); ?>
                             </div>
                         </div>
                     </div>
@@ -285,7 +285,13 @@
     </fieldset>
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
-        <a href="/perfis/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?php if (empty($id)) { ?>
+            <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+
+        <?php } else { ?>
+            <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $id], ['class' => 'btn btn-secondary space-right float-right']) ?>
+
+        <?php } ?>
     </div> <?= $this->Form->end() ?>
 </div>
 <?= $this->Html->css('/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css', ['block' => true]); ?>
