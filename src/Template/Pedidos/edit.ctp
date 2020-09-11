@@ -170,10 +170,10 @@
     </fieldset>
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
-        <?php if(empty($value)){?>
+        <?php if(!isset($_GET['pessoa'])){?>
         <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php }else{?>
-        <a href="/pessoas/view/<?= h($pedido->pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <a href="/pessoas/view/<?= $_GET['pessoa'] ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php }?>
     </div> <?= $this->Form->end() ?>
 </div>

@@ -97,7 +97,7 @@ class PessoasController extends AppController
             'Processos.id IN' => $subquery
         ])->contain(['Naturezas','Entidadejudiciais']);
 
-        $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos','Teams','States','Processos.Entidadejudiciais']);
+        $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos','Teams','States']);
         $crimes = $this->Crimes->find()->where(['pessoa_id' => $id])->contain(['Tipocrimes','Processos']);
 
         $this->set('pessoa', $pessoa);
