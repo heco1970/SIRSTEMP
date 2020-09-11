@@ -220,6 +220,10 @@ class PedidosController extends AppController
                 $pedido->processo_id = $processo_id->id;
             }
 
+            if ($pedido->pais_id != 193) {
+                $pedido->concelho_id = null;
+            }
+
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 

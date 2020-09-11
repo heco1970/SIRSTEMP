@@ -25,7 +25,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $dataefectivatermo
  * @property int $pedidosmotive_id
  * @property int $pais_id
- * @property int $concelho_id
+ * @property int|null $concelho_id
  * @property string $transferencias
  * @property string $gestor
  * @property string $seguro
@@ -40,6 +40,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\State $state
  * @property \App\Model\Entity\Pedidosmotive $pedidosmotive
  * @property \App\Model\Entity\Pai $pai
+ * @property \App\Model\Entity\Concelho $concelho
  * @property \App\Model\Entity\Verbete[] $verbetes
  */
 class Pedido extends Entity
@@ -87,6 +88,7 @@ class Pedido extends Entity
         'state' => true,
         'pedidosmotive' => true,
         'pai' => true,
+        'concelho' => true,
         'verbetes' => true
     ];
 }

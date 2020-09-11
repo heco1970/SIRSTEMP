@@ -16,7 +16,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\StatesTable|\Cake\ORM\Association\BelongsTo $States
  * @property \App\Model\Table\PedidosmotivesTable|\Cake\ORM\Association\BelongsTo $Pedidosmotives
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
- * @property |\Cake\ORM\Association\BelongsTo $Concelhos
+ * @property \App\Model\Table\ConcelhosTable|\Cake\ORM\Association\BelongsTo $Concelhos
  * @property \App\Model\Table\VerbetesTable|\Cake\ORM\Association\HasMany $Verbetes
  *
  * @method \App\Model\Entity\Pedido get($primaryKey, $options = [])
@@ -78,8 +78,7 @@ class PedidosTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Concelhos', [
-            'foreignKey' => 'concelho_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'concelho_id'
         ]);
         $this->hasMany('Verbetes', [
             'foreignKey' => 'pedido_id'
