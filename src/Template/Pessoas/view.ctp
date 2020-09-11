@@ -282,7 +282,6 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Processo</th>
-                                            <th scope="col">Entidade Judicial</th>
                                             <th scope="col">Data de Receção</th>
                                             <th scope="col">Equipa Responsável</th>
                                             <th scope="col">Estado</th>
@@ -293,7 +292,6 @@
                                     <?php foreach ($pedidos as $pedido) : ?>
                                         <tr>
                                             <td><?= h($pedido->processo->processo_id) ?></td>
-                                            <td><?= h($pedido->processo->entidadejudiciai->descricao) ?></td>
                                             <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
                                             <td><?= h($pedido->team->nome) ?></td>
                                             <td><?= h($pedido->state->designacao) ?></td>

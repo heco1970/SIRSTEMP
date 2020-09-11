@@ -199,7 +199,6 @@ class PedidosController extends AppController
      */
     public function edit($id = null)
     {
-        $value = $this->request->getQuery('pessoa');
         $pedido = $this->Pedidos->get($id, [
             'contain' => ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Teams', 'Pais']
         ]);
@@ -220,10 +219,19 @@ class PedidosController extends AppController
                 $pedido->processo_id = $processo_id->id;
             }
 
+            if ($pedido->pais_id != 193) {
+                $pedido->concelho_id = null;
+            }
+
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
-                return $this->redirect(['action' => 'index']);
+                if(isset($_GET['pessoa'])){
+                    $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/' . $_GET['pessoa']));
+                }
+                else{
+                    return $this->redirect(['action' => 'index']);
+                }
             } else {
                 $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
             }
@@ -250,7 +258,7 @@ class PedidosController extends AppController
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
 
-        $this->set(compact('pedido', 'value', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
+        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 
     /**

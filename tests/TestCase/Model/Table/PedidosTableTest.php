@@ -32,6 +32,7 @@ class PedidosTableTest extends TestCase
         'app.states',
         'app.pedidosmotives',
         'app.pais',
+        'app.concelhos',
         'app.verbetes'
     ];
 

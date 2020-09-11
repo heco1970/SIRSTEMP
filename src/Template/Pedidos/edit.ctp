@@ -127,11 +127,11 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="pais_id">País</label>
-                            <?php echo $this->Form->text('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pais, 'class' => 'form-control']); ?>
+                            <?php echo $this->Form->text('pais_id', ['id'=>'pais_id', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pais, 'class' => 'form-control']); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="form-group">
+                        <div class="form-group" id="concelho_id">
                             <label for="concelho_id">Concelho</label>
                             <?php echo $this->Form->text('concelho_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                         </div>
@@ -170,10 +170,10 @@
     </fieldset>
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
-        <?php if(empty($value)){?>
+        <?php if(!isset($_GET['pessoa'])){?>
         <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php }else{?>
-        <a href="/pessoas/view/<?= h($pedido->pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <a href="/pessoas/view/<?= $_GET['pessoa'] ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php }?>
     </div> <?= $this->Form->end() ?>
 </div>
@@ -253,5 +253,16 @@
             });
         };
     });
+    
+    $('#pais_id').change(function() {
+        if($('#pais_id').val() != 193){
+            $('#concelho_id').hide("slow");
+        }
+        else{
+            $('#concelho_id').show("slow"); 
+        }
+    });
+    $('#pais_id').trigger("change");
+
 </script>
 <?php $this->end(); ?>
