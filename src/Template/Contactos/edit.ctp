@@ -112,9 +112,8 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <button class="btn btn-success float-right" type="submit">Gravar</button>
-        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id], ['class' => 'btn btn-secondary float-right']) ?>
-   
+        <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
+        <a href="/pessoas/view/<?= h($contacto->pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 

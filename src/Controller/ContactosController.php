@@ -52,6 +52,8 @@ class ContactosController extends AppController
      */
     public function add($id = null)
     {
+        $this->loadModel('Pessoas');
+        $pessoa = $this->Pessoas->get($id);
         $contacto = $this->Contactos->newEntity();
         $id=$id;
 
@@ -68,7 +70,7 @@ class ContactosController extends AppController
         }
         $this->set('pais', $this->Contactos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('contacto', 'pessoas','id'));
+        $this->set(compact('contacto', 'pessoas','pessoa','id'));
     }
 
     /**

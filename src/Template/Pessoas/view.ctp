@@ -171,7 +171,7 @@
                                     <th scope="col">Localidade</th>
                                     <th scope="col">Telefone</th>
                                     <th scope="col">Fax</th>
-                                    <th scope="col">Telemovel</th>
+                                    <th scope="col">Telemóvel</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col"></th>
                                 </tr>

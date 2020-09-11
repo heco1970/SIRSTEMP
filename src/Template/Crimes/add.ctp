@@ -1,7 +1,7 @@
 <link href="/css/style.css" rel="stylesheet">
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Associação de um Crime a') ?> <td><?= h($pessoa->nome) ?></td></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Registo de um Crime a') ?> <td><?= h($pessoa->nome) ?></td></h6>
     </div>
     <?= $this->Form->create($crime) ?>
     <div class='ml-4 mt-4 mr-4'>
@@ -71,8 +71,8 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Adicionar'), ['class' => 'btn btn-success float-right']) ?>
-        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $id], ['class' => 'btn btn-secondary float-right']) ?>
+        <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
+        <a href="/pessoas/view/<?= h($pessoa->id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 </div>
