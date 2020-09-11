@@ -78,7 +78,8 @@ class PedidosTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Concelhos', [
-            'foreignKey' => 'concelho_id'
+            'foreignKey' => 'concelho_id',
+            'joinType' => 'INNER'
         ]);
         $this->hasMany('Verbetes', [
             'foreignKey' => 'pedido_id'

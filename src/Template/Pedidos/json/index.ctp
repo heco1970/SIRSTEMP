@@ -4,7 +4,7 @@ foreach ($records as $record) {
   $data[] = [
     'created' => $record->created->i18nFormat('dd/MM/yyyy'),
     //'modified' => $record->modified->i18nFormat('dd/MM/yyyy HH:mm:ss'),
-    'processo' => $record->processo->nip,
+    'processo' => $record->processo->processo_id,
     'pessoa' => $record->pessoa->nome,
     'referencia' => $record->referencia,
     'canalentrada' => $record->canalentrada,

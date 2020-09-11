@@ -33,7 +33,7 @@ class PedidosController extends AppController
             $convArray = [
                 'id' => $model . '.id',
                 'pessoa' => 'Pessoas.nome',
-                'processo' => 'Processos.nip',
+                'processo' => 'Processos.processo_id',
                 'equiparesponsavel' => 'Teams.nome',
                 'state' => $model . '.state_id',
                 'datarecepcao' => $model . '.datarecepcao',
@@ -103,7 +103,7 @@ class PedidosController extends AppController
             $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
             $pedido->pessoa_id = $pessoa_id;
 
-            $pedido->processo_id = $this->Pedidos->Processos->find()->where(['nip' => $processo_nome])->select('id');;
+            $pedido->processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');;
 
 
             if ($this->Pedidos->save($pedido)) {
@@ -137,6 +137,7 @@ class PedidosController extends AppController
             $pessoa = $this->Pedidos->Pessoas->get($id);
         }
 
+        $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
         $processos = $this->Pedidos->Processos->find('list', ['limit' => 200]);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
         $states = $this->Pedidos->States->find('list', ['limit' => 200]);
@@ -145,7 +146,7 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['limit' => 200]);
         $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
 
-        $this->set(compact('pedido', 'id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
+        $this->set(compact('pedido', 'concelhos','id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }
 
     public function search()
@@ -168,10 +169,11 @@ class PedidosController extends AppController
         $this->request->allowMethod('ajax');
 
         $keyword = $this->request->getQuery('term');
-
-        $terms = $this->Pedidos->Processos->find('list', [
-            'conditions' => ['Processos.nip LIKE' => trim($keyword) . '%']
-        ]);
+        $this->Pedidos->Processos->setDisplayField('processo_id');
+        $terms = $this->Pedidos->Processos->find('list')->where(
+            ['Processos.processo_id LIKE' => trim($keyword) . '%'],
+            ['Processos.processo_id' => 'string']
+        )->setTypeMap(['Processos.processo_id'=>'string']);
 
         echo json_encode($terms);
     }
