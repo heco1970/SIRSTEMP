@@ -129,7 +129,6 @@ class TeamsController extends AppController
         } else {
           $this->UsersTeams->deleteAll(['UsersTeams.team_id' => $id]);
         }
-
         $this->Flash->success(__('O registo foi gravado.'));
 
         return $this->redirect(['action' => 'index']);
@@ -155,7 +154,6 @@ class TeamsController extends AppController
     } else {
       $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
     }
-
     return $this->redirect(['action' => 'index']);
   }
 }

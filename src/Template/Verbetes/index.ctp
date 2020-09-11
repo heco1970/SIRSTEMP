@@ -14,7 +14,6 @@
     </div>
 </div>
 
-
 <?php
 $dynElems =
     [
@@ -67,7 +66,6 @@ $dynElems = ['pessoa' => ['label' => __('Pessoa')]] +
 
         deleteCookie("Filtro");
         createCookie("Filtro", "", "", "", "","1");
-
         // function removeElement(url)
     });
 
@@ -107,6 +105,5 @@ $dynElems = ['pessoa' => ['label' => __('Pessoa')]] +
             valuePessoa + "," + valueCria + "," + valueDis + "," + valueEfe
             + expires + "; path=/"; 
     } 
-
 </script>
 <?php $this->end(); ?>

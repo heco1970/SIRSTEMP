@@ -47,7 +47,6 @@ $dynElems = ['descricao' => ['label' => __('Descrição')]] +
             }
         }
         createDynatable("#dynatable","/tipocrimes/",{created: -1}, writers);
-
         // function removeElement(url)
     });
 </script>

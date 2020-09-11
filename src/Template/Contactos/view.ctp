@@ -29,23 +29,19 @@
             <div class="col-4">
                 <h6 class="text-primary"><?= __('Localidade') ?></h6>
                 <p><?= h($contacto->localidade) ?></p>
-                
             </div>
             <div class="col-4">
                 <h6 class="text-primary"><?= __('País') ?></h6>
                 <p><?= h($contacto->pai->paisNome) ?></p>
-                
             </div>
             <div class="col-4">
                 <h6 class="text-primary"><?= __('Morada') ?></h6>
                 <p><?= h($contacto->morada) ?></p>
-                
             </div>
         </div>
         <hr>
        
         <div class="row">
-
             <div class="col-4">
                 <h6 class="text-primary"><?= __('Telefone') ?></h6>
                 <p><?= h($contacto->telefone) ?></p>
@@ -72,17 +68,14 @@
             <div class="col-8">
                 <h6 class="text-primary"><?= __('Descrição') ?></h6>
                 <p><?= h($contacto->descricao) ?></p>
-
             </div>
             <div class="col-4">
                 <h6 class="text-primary"><?= __('Estado') ?></h6>
                 <p><?= $contacto->estado == 1 ? __('Ativo') : __('Não Ativo') ?></p>
-
             </div>
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
         <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id], ['class' => 'btn btn-secondary']) ?>
     </div>
-
 </div>

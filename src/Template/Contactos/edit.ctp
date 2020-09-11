@@ -18,11 +18,9 @@
                     <div class="form-group">
                         <label for="nome">Nome do Contacto</label>
                         <?= $this->Form->control('nome', [ 'label' => false, 'class' => "form-control"]); ?>
-
                     </div>
                 </div>
             </div>
-
 
             <div class="form-row">
                 <div class="col-6">
@@ -51,28 +49,21 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
-
                         <?= $this->Form->control('telefone', ['label' => false, 'class' => "form-control"]); ?>
-
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="form-group">
                         <label for="fax">Fax</label>
-
                         <?= $this->Form->control('fax', ['label' => false, 'class' => "form-control"]); ?>
-
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="form-group">
                         <label for="telemovel">Telemóvel</label>
-
                         <?= $this->Form->control('telemovel', ['label' => false, 'class' => "form-control"]); ?>
-
-
                     </div>
                 </div>
             </div>
@@ -80,10 +71,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="email">Email</label>
-
                         <?= $this->Form->control('email', ['label' => false, 'class' => "form-control", 'required']); ?>
-
-
                     </div>
                 </div>
             </div>
@@ -91,10 +79,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="descricao">Descrição</label>
-
                         <?= $this->Form->control('descricao', ['label' => false, 'class' => "form-control"]); ?>
-
-
                     </div>
                 </div>
             </div>
@@ -102,10 +87,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="estado">Estado</label>
-
                         <?= $this->Form->control('estado', ['options' => ['0' => 'Não Ativo', '1' => 'Ativo'], 'label' => false, 'class' => "form-control"]); ?>
-
-
                     </div>
                 </div>
             </div>
@@ -116,5 +98,4 @@
         <a href="/pessoas/view/<?= h($contacto->pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
-
 </div>

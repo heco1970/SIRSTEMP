@@ -181,22 +181,15 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="observacoes">Observações</label>
-
                         <?php echo $this->Form->control('observacoes', ['type' => 'textarea','label' => false, 'class' => 'form-control']); ?>
-
-
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success"]) ?>
-        <a href="/pessoas/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
+        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success float-right"]) ?>
+        <a href="/pessoas/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 </div>
@@ -215,7 +208,6 @@
             var searchkey1 = $('#codigo_postal1').val();
             searchTags(searchkey, searchkey1);
         });
-
 
         function searchTags(keyword, keyword1) {
             var data = keyword;

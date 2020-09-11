@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pessoa $pessoa
@@ -51,7 +50,6 @@
                     <div class="form-group">
                         <label for="nomemaae">Nome da Mâe</label>
                         <?php echo $this->Form->control('nomemae', ['label' => false, 'class' => 'form-control']); ?>
-
                     </div>
                 </div>
             </div>
@@ -65,17 +63,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="id_genero">Genero</label>
-
                         <?php echo $this->Form->control('id_genero', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $generos, 'class' => 'form-control']); ?>
-
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="pais_id">Nacionalidade</label>
-
                         <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
-
                     </div>
                 </div>
                 <div class="col">
@@ -97,32 +91,24 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-
                         <select class='form-control' id="distritos" disabled></select>
-
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-
                         <select class='form-control' id="concelhos" disabled></select>
-
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
-
                         <select class='form-control' id="freguesias" disabled></select>
-
                     </div>
                 </div>
             </div>
 
             <div class="form-row">
-
-
                 <div class="col">
                     <div class="form-group">
                         <label for="hea">Data de Nascimento</label>
@@ -161,34 +147,24 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="estb_pri">Estabelecimento Prisional</label>
-
                         <?php echo $this->Form->control('estb_pris_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $estb_pris]); ?>
-
                     </div>
                 </div>
-
             </div>
 
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
                         <label for="observacoes">Observações</label>
-
                         <?php echo $this->Form->control('observacoes', ['type' => 'textarea','label' => false, 'class' => 'form-control']); ?>
-
-
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success"]) ?>
-        <a href="/pessoas/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
+        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success float-right"]) ?>
+        <a href="/pessoas/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 </div>
@@ -208,7 +184,6 @@
             searchTags(searchkey, searchkey1);
         });
 
-
         function searchTags(keyword, keyword1) {
             var data = keyword;
             var data1 = keyword1;
@@ -218,9 +193,7 @@
                 data: {
                     keyword: data,
                     keyword1: data1,
-
                 },
-
                 success: function(response) {
                     $('#distrito').html(response);
                 }

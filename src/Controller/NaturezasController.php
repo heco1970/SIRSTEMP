@@ -12,7 +12,6 @@ use App\Controller\AppController;
  */
 class NaturezasController extends AppController
 {
-
     /**
      * Index method
      *

@@ -74,12 +74,17 @@ class CrimesController extends AppController
             $crime = $this->Crimes->patchEntity($crime, $this->request->getData());
             $crime->pessoa_id=$id;
             if ($save = $this->Crimes->save($crime)) {
+                
+                $this->Flash->success(__('O registo foi gravado.'));
 
-                $this->Flash->success(__('O Crime foi guardado com sucesso.'));
-
-                return $this->redirect($this->referer());
+                if ($id != null) {
+                    $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/' . $id));
+                } else {
+                    return $this->redirect(['action' => 'index']);
+                }
+            } else {
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
             }
-            $this->Flash->error(__('O registo não pode ser guardado. Por favor tente novamente.'));
         }
         $processos = $this->Crimes->Processos->find('list', ['limit' => 200]);
         $tipocrimes = $this->Crimes->Tipocrimes->find('list', ['limit' => 200]);
@@ -99,7 +104,6 @@ class CrimesController extends AppController
         $crime = $this->Crimes->get($id, [
             'contain' => ['Pessoas','Tipocrimes','Processos']
         ]);
-
         $this->set('crime', $crime);
     }
 
@@ -139,6 +143,6 @@ class CrimesController extends AppController
         } else {
             $this->Flash->error(__('O registro não foi apagado. Tente novamente.'));
         }
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
 }

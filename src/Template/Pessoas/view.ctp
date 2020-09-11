@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pessoa $pessoa
@@ -106,7 +105,6 @@
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
                         <p><?= !empty($pessoa->centro_educ->designacao) ? h($pessoa->centro_educ->designacao) : '' ?></p>
-
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
@@ -117,7 +115,6 @@
                 <hr>
 
                 <div class="row">
-
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Criado') ?></h6>
                         <p><?= h($pessoa->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
@@ -136,7 +133,6 @@
                     <div class="col">
                         <h6 class="text-primary"><?= __('Observações') ?></h6>
                         <p><?= h($pessoa->observacoes) ?></p>
-
                     </div>
                 </div>
 
@@ -188,7 +184,6 @@
                                         <td><a class="btn btn-info" href="/contactos/view/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
                                             <a class="btn btn-warning" href="/contactos/edit/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
                                             <a class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar?')" href="/contactos/delete/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
-
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -293,7 +288,6 @@
                                             <th scope="col">Estado</th>
                                             <th scope="col">Data termo previsto</th>
                                             <th scope="col">Data termo efetivo</th>
-
                                         </tr>
                                     </thead>
                                     <?php foreach ($pedidos as $pedido) : ?>

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Contacto $contacto
@@ -11,15 +10,12 @@
     </div>
     <div class='ml-4 mt-4 mr-4'>
         <?= $this->Form->create($contacto) ?>
-
         <div id='my-form-body'>
-            
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
                         <label for="nome">Nome</label>
                         <?= $this->Form->control('nome', [ 'label' => false, 'class' => "form-control"]); ?>
-
                     </div>
                 </div>
             </div>
@@ -106,5 +102,4 @@
         <a href="/pessoas/view/<?= h($pessoa->id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
-
 </div>

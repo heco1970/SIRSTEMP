@@ -44,12 +44,9 @@
                     <label for="multiselect_to">
                         <h4><?= __('Utilizadores seleccionados: ') ?></h4>
                     </label>
-                    
                     <?= $this->Form->control('user_id',array('id'=>"multiselect_to",'label'=>false,'size'=>8,'class'=>"form-control",'type' => 'select', 'multiple' => true, 'options' => $users1));?>
-              
                 </div>
             </div>
-
         </div>
     </div>
     <div class="card-footer card-footer-fixed">

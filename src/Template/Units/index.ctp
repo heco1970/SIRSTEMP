@@ -53,8 +53,6 @@ $dynElems = ['designacao' => ['label' => __('Designação')]] +
         document.getElementById('createdfirst').max = new Date().toISOString().split("T")[0];
         document.getElementById('createdlast').type = 'date';
         document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
-
-
         document.getElementById('createdfirst').type = 'date';
         document.getElementById('createdlast').type = 'date';
 
@@ -79,7 +77,6 @@ $dynElems = ['designacao' => ['label' => __('Designação')]] +
             document.getElementById('createdfirst').max = null;
             }
         };
-
         // function removeElement(url)
     });
 </script>

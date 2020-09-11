@@ -3,7 +3,6 @@
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe do Processo') ?></h6>
     </div>
     <div class="ml-3 mr-3 mb-3 mt-3">
-
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="row">
@@ -49,7 +48,6 @@
                         <td><?= h($processo->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></td>
                     </div>
                 </div>
-
                 <?php $this->end(); ?>
             </div>
             <br>

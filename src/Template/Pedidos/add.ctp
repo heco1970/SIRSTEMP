@@ -305,7 +305,6 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
 
-
 <?php $this->start('scriptBottom') ?>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -347,16 +346,12 @@
     });
     $('document').ready(function() {
         $('#team_id').change(function() {
-
             var searchkey = $('#team_id').val();
-
             searchTags(searchkey);
         });
 
-
         function searchTags(keyword) {
             var data = keyword;
-
             $.ajax({
                 method: 'get',
                 url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'Gestor']); ?>",

@@ -9,7 +9,6 @@
     </div>
 </div>
 
-
 <?php
 $dynElems =
     [
@@ -51,7 +50,6 @@ $dynElems = ['nome' => ['label' => __('Designação')]] +
         }
             
         createDynatable("#dynatable","/teams/",{created: -1}, writers);
-
         
         document.getElementById('createdfirst').type = 'date';
         document.getElementById('createdlast').type = 'date';
@@ -78,9 +76,6 @@ $dynElems = ['nome' => ['label' => __('Designação')]] +
             }
         };
     });
-    
-
-
 </script>
 <?php $this->end(); ?>
 

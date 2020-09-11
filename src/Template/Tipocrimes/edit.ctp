@@ -3,7 +3,6 @@
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Tipo de Crime') ?></h6>
     </div>
     <?= $this->Form->create($tipocrime, ['id' => 'myForm']) ?>
-
     <div class='ml-4 mr-4 mt-4'>
         <div class="form-row">
             <div class="col">

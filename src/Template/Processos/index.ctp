@@ -126,6 +126,5 @@ $dynElems = ['processo' => ['label' => __('Id')]] +
             valueNat + "," + valueNip + "," + valueDatefirst + "," + valueDatelast
             + expires + "; path=/"; 
     } 
-
 </script>
 <?php $this->end(); ?>

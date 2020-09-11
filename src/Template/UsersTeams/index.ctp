@@ -6,7 +6,6 @@
     </div>
 </div>
 
-
 <?php
 $dynElems =
     [
@@ -45,10 +44,8 @@ $dynElems = ['user_id' => ['label' => __('User')]] +
                 return '<div class="btn-group btn-group-sm" role="group">'+ view + edit + dele + '</div>';
             }
         }
-            
         createDynatable("#dynatable","/users-teams/",{created: -1}, writers);
     });
-
 </script>
 <?php $this->end(); ?>
 
