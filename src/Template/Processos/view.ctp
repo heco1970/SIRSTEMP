@@ -110,4 +110,11 @@
         </div>
 
     </div>
+    <div class="card-footer card-footer-fixed">
+    <?php if (empty($pessoa_id)) { ?>
+            <a href="/processos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?php } else { ?>
+            <a href="/pessoas/view/<?= h($pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?php } ?>
+    </div>
 </div>
