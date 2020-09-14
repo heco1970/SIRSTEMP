@@ -233,12 +233,12 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="form-group">
+                        <div class="form-group" id="concelho_id">
                             <div class="col-xs-12">
                                 <label for="name">
                                     <h4><?= __('Concelho') ?></h4>
                                 </label>
-                                <?= $this->Form->control('concelho_id', ['id' => 'concelho_id', 'class' => 'form-control',  'label' => false]); ?>
+                                <?= $this->Form->control('concelho_id', [ 'class' => 'form-control',  'label' => false]); ?>
                             </div>
                         </div>
                     </div>
