@@ -23,6 +23,10 @@
                                     <h4><?= __('Processo') ?></h4>
                                 </label>
                                 <?= $this->Form->text('processo', ['id' => 'processo_id', 'class' => 'form-control',  'label' => false, 'required']); ?>
+                                <?php
+                                if (!empty($errors1)) {
+                                    echo "<div class='error-message' style='color:red; font-weight: bold;'> Processo inexistente.</div>";
+                                } ?>
                             </div>
                         </div>
                     </div>
@@ -37,6 +41,9 @@
                                     echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
                                 } else {
                                     echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
+                                }
+                                if (!empty($errors)) {
+                                    echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa inexistente.</div>";
                                 }
                                 ?>
                             </div>
