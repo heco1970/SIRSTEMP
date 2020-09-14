@@ -228,7 +228,7 @@
                                 <label for="name">
                                     <h4><?= __('País') ?></h4>
                                 </label>
-                                <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
+                                <?php echo $this->Form->control('pais_id', ['id' => 'pais_id', 'label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
                             </div>
                         </div>
                     </div>
@@ -238,7 +238,7 @@
                                 <label for="name">
                                     <h4><?= __('Concelho') ?></h4>
                                 </label>
-                                <?= $this->Form->control('concelho_id', ['class' => 'form-control',  'label' => false]); ?>
+                                <?= $this->Form->control('concelho_id', ['id' => 'concelho_id', 'class' => 'form-control',  'label' => false]); ?>
                             </div>
                         </div>
                     </div>
@@ -372,6 +372,14 @@
                 }
             });
         };
+        $('#pais_id').change(function() {
+            if ($('#pais_id').val() != 193) {
+                $('#concelho_id').hide("slow");
+            } else {
+                $('#concelho_id').show("slow");
+            }
+        });
+        $('#pais_id').trigger("change");
     });
 </script>
 <?php $this->end(); ?>
