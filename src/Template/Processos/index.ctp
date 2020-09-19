@@ -18,22 +18,17 @@
 $dynElems =
     [
         'processo' => ['label' => __('Id')],
-        'nip' => ['label' => __('NIP')],
         'natureza' => ['label' => __('Natureza'),'options' => $natureza, 'empty' => ' '],
-        //'entjudicial' => ['label' => __('Entidade Judicial')],
-        'entjudicial' => ['label' => __('Entidade Judicial'), 'options' => $entidadesjudiciais, 'empty' => ' '],
-        'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
-        'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
+        'nip' => ['label' => __('NIP')],
+        'ultima' => ['label' => __('Ultima Alteração')],
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
 $dynElems = ['processo' => ['label' => __('Id')]] +
+            ['natureza' => ['label' => __('Natureza')]] +   
             ['nip' => ['label' => __('NIP')]] +
-            ['natureza' => ['label' => __('Natureza')]] +
-            ['entjudicial' => ['label' => __('Entidade Judicial')]] +
-            ['ultima' => ['label' => __('Ultima Alteração')]] +
-            ['created' => ['label' => __('Data de Criação')]];
+            ['ultima' => ['label' => __('Ultima Alteração')]] 
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
