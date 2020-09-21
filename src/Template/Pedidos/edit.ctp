@@ -25,7 +25,7 @@
                                 <?= $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pedido->pessoa->nome), 'required']); ?>
                                 <?php                               
                                 if (!empty($errors)) {
-                                    echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa inexistente.</div>";
+                                    echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa que tinha selecionado não existe.</div>";
                                 }
                                 ?>
                             </div>
