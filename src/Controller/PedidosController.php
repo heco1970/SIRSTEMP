@@ -154,7 +154,7 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['limit' => 200]);
         $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
 
-        $this->set(compact('pedido', 'errors','errors1', 'concelhos', 'id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
+        $this->set(compact('pedido', 'concelhos', 'id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }
 
     public function search()

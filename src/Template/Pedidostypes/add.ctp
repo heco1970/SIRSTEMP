@@ -17,7 +17,7 @@
     </div>
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success"]) ?>
-        <a href="/pessoas/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
+        <a href="/pedidostypes/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 </div>

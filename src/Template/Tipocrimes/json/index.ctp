@@ -7,7 +7,6 @@ foreach ($records as $record) {
     'descricao' => $record->descricao,
     'id' => $record->id,
   ];
-  $this->log($record);
 }
 
 echo json_encode([
