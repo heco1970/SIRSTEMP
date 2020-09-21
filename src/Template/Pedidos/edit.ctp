@@ -10,15 +10,24 @@
                 <div class="row ">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="processo_id">Processo</label>
-                            <?php echo $this->Form->text('processo_id', ['id' => 'processo_id', 'class' => 'form-control', 'label' => false, 'type' => 'number', 'value' => h($pedido->processo->processo_id), 'required']); ?>
+                            <label for="processo_id">Processo</label> 
+                            <?= $this->Form->text('processo_id', ['id' => 'processo_id', 'label' => false, 'class' => 'form-control', 'type' => 'number', 'value' => h($pedido->processo->processo_id), 'required']); ?>
+                            <?php
+                            if (!empty($errors1)) {
+                                echo "<div class='error-message' style='color:red; font-weight: bold;'> Processo que tinha selecionado não existe.</div>";
+                            } ?>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group ui-widget">
                             <div class="form-group">
                                 <label for="pessoa_id">Nome da Pessoa</label>
-                                <?php echo $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pedido->pessoa->nome), 'required']); ?>
+                                <?= $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pedido->pessoa->nome), 'required']); ?>
+                                <?php                               
+                                if (!empty($errors)) {
+                                    echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa inexistente.</div>";
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>

@@ -94,25 +94,30 @@ class PedidosController extends AppController
     {
         $pedido = $this->Pedidos->newEntity();
         $id = $id;
+
+        $errors = null;
+        $errors1 = null;
+
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
 
             $pessoa_nome = $this->request->getData('pessoa');
             $processo_nome = $this->request->getData('processo');
+            
 
             $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
             if ($pessoa_id->isEmpty()) {
                 $errors = 1;
             }
-                $pedido->pessoa_id = $pessoa_id;
-            
+
+            $pedido->pessoa_id = $pessoa_id;
 
             $processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');
             if ($processo_id->isEmpty()) {
                 $errors1 = 1;
             } 
-                $pedido->processo_id = $processo_id;
-            
+
+            $pedido->processo_id = $processo_id;
 
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
@@ -154,7 +159,7 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['limit' => 200]);
         $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
 
-        $this->set(compact('pedido', 'concelhos', 'id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
+        $this->set(compact('pedido', 'errors','errors1', 'concelhos', 'id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }
 
     public function search()
@@ -213,12 +218,32 @@ class PedidosController extends AppController
             'contain' => ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Teams', 'Pais']
         ]);
 
+        $errors = null;
+        $errors1 = null;
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
 
             $pessoa_nome = $this->request->getData('pessoa_id');
             $processo_nome = $this->request->getData('processo_id');
 
+            //
+            $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
+            if ($pessoa_id->isEmpty()) {
+                $errors = 1;
+            }
+
+            $pedido->pessoa_id = $pessoa_id;
+
+            $processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');
+            if ($processo_id->isEmpty()) {
+                $errors1 = 1;
+            } 
+
+            $pedido->processo_id = $processo_id;
+            //
+
+            /*
             $pessoa_id = $this->Pedidos->Pessoas->find('all', ['conditions' => ['nome' => $pessoa_nome]])->first();
             if (isset($pessoa_id->id)) {
                 $pedido->pessoa_id = $pessoa_id->id;
@@ -228,6 +253,7 @@ class PedidosController extends AppController
             if (isset($processo_id->id)) {
                 $pedido->processo_id = $processo_id->id;
             }
+            */
 
             if ($pedido->pais_id != 193) {
                 $pedido->concelho_id = null;
@@ -267,7 +293,7 @@ class PedidosController extends AppController
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
 
-        $this->set(compact('pedido', 'processos', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
+        $this->set(compact('pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 
     /**
