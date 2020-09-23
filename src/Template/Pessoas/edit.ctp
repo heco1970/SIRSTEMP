@@ -101,7 +101,7 @@
                         <label for="distrito">Distrito</label>
 
                         <select class='form-control' id="distritos" disabled>
-                            <option><?= h($pessoa->distrito->Designacao) ?></option>
+                            <option></option>
                         </select>
 
                     </div>
@@ -111,7 +111,7 @@
                         <label for="concelho">Concelho</label>
 
                         <select class='form-control' id="concelhos" disabled>
-                            <option><?= h($pessoa->concelho->Designacao) ?></option>
+                            <option></option>
                         </select>
 
                     </div>
@@ -163,14 +163,14 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="centro_edu">Centro Educacional</label>
-                        <?php echo $this->Form->control('centro_educs_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $centro_educs]); ?>
+                        <?php echo $this->Form->control('centro_educ_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $centro_educs]); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="estb_pri">Estabelecimento Prisional</label>
 
-                        <?php echo $this->Form->control('estb_pris_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $estb_pris]); ?>
+                        <?php echo $this->Form->control('estb_pri_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $estb_pris]); ?>
 
                     </div>
                 </div>
@@ -226,5 +226,6 @@
                 }
             });
         };
+        $('#codigo_postal1').trigger("keyup");
     });
 </script>

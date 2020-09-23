@@ -70,11 +70,11 @@
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Distrito') ?></h6>
-                        <p><?= h($pessoa->distrito->Designacao) ?></p>
+                        <p><?= h($distrito->distrito->Designacao) ?></p>
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Concelho') ?></h6>
-                        <p><?= h($pessoa->concelho->Designacao) ?></p>
+                        <p><?= h($concelho->Designacao) ?></p>
                     </div>
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Freguesia') ?></h6>

@@ -12,34 +12,33 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $data_nascimento
  * @property string $nomepai
  * @property string $nomemae
- * @property int $id_estadocivil
- * @property int $id_genero
- * @property int $pais_id
- * @property string $distritos_id
- * @property string $freguesias_id
- * @property int $codigos_postais_id
- * @property string $concelhos_id
- * @property int $centro_educs_id
- * @property int $estb_pris_id
+ * @property int $estadocivil_id
+ * @property int $genero_id
+ * @property int $pai_id
+ * @property int $codigos_postai_id
+ * @property int|null $centro_educ_id
+ * @property int|null $estb_pri_id
  * @property string $cc
  * @property int $nif
- * @property string $outroidentifica
- * @property int $id_unidadeopera
+ * @property string|null $outroidentifica
+ * @property int $unidadeopera_id
  * @property bool $estado
- * @property string $observacoes
+ * @property string|null $observacoes
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\Pai $pai
- * @property \App\Model\Entity\CentroEduc $centro_educ
- * @property \App\Model\Entity\EstbPri $estb_pri
  * @property \App\Model\Entity\Estadocivil $estadocivil
  * @property \App\Model\Entity\Genero $genero
+ * @property \App\Model\Entity\Pai $pai
+ * @property \App\Model\Entity\CodigosPostai $codigos_postai
+ * @property \App\Model\Entity\Concelho $concelho
+ * @property \App\Model\Entity\CentroEduc $centro_educ
+ * @property \App\Model\Entity\EstbPri $estb_pri
  * @property \App\Model\Entity\Unidadeopera $unidadeopera
  * @property \App\Model\Entity\Contacto[] $contactos
- * @property \App\Model\Entity\Pedido[] $pedidos
- * @property \App\Model\Entity\Verbete[] $verbetes
  * @property \App\Model\Entity\Crime[] $crimes
+ * @property \App\Model\Entity\Pedido[] $pedidos
+ * @property \App\Model\Entity\Processo[] $processos
  */
 class Pessoa extends Entity
 {
@@ -59,34 +58,31 @@ class Pessoa extends Entity
         'data_nascimento' => true,
         'nomepai' => true,
         'nomemae' => true,
-        'id_estadocivil' => true,
-        'id_genero' => true,
-        'pais_id' => true,
-        'distritos_id' => true,
-        'freguesias_id' => true,
-        'codigos_postais_id' => true,
-        'concelhos_id' => true,
-        'centro_educs_id' => true,
-        'estb_pris_id' => true,
+        'estadocivil_id' => true,
+        'genero_id' => true,
+        'pai_id' => true,
+        'codigos_postai_id' => true,
+        'centro_educ_id' => true,
+        'estb_pri_id' => true,
         'cc' => true,
         'nif' => true,
         'outroidentifica' => true,
-        'id_unidadeopera' => true,
+        'unidadeopera_id' => true,
         'estado' => true,
         'observacoes' => true,
         'created' => true,
         'modified' => true,
-        'pai' => true,
-        'centro_educ' => true,
-        'estb_pri' => true,
         'estadocivil' => true,
         'genero' => true,
+        'pai' => true,
+        'codigos_postai' => true,
+        'concelho' => true,
+        'centro_educ' => true,
+        'estb_pri' => true,
         'unidadeopera' => true,
         'contactos' => true,
-        'pedidos' => true,
-        'verbetes' => true,
         'crimes' => true,
-        'processos' => true,
-        'pessoas_processos' => true
+        'pedidos' => true,
+        'processos' => true
     ];
 }

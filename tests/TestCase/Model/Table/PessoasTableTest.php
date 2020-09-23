@@ -25,16 +25,18 @@ class PessoasTableTest extends TestCase
      */
     public $fixtures = [
         'app.pessoas',
-        'app.pais',
-        'app.centro_educs',
-        'app.estb_pris',
         'app.estadocivils',
         'app.generos',
+        'app.pais',
+        'app.codigos_postais',
+        'app.concelhos',
+        'app.centro_educs',
+        'app.estb_pris',
         'app.unidadeoperas',
         'app.contactos',
-        'app.pedidos',
-        'app.verbetes',
         'app.crimes',
+        'app.pedidos',
+        'app.processos'
     ];
 
     /**

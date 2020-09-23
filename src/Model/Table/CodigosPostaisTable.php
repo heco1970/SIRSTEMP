@@ -34,6 +34,16 @@ class CodigosPostaisTable extends Table
         $this->setTable('codigos_postais');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('Distritos', [
+            'foreignKey' => 'CodigoDistrito',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->belongsTo('Concelhos', [
+            'foreignKey' => 'CodigoConcelho',
+            'joinType' => 'INNER'
+        ]);
         
     }
 
@@ -142,5 +152,20 @@ class CodigosPostaisTable extends Table
             ->allowEmpty('Longitude');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['CodigoDistrito'], 'Distritos'));
+        $rules->add($rules->existsIn(['CodigoConcelho'], 'Concelhos'));
+
+        return $rules;
     }
 }
