@@ -61,14 +61,14 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="id_estadocivil">Estado Civil</label>
-                        <?php echo $this->Form->control('id_estadocivil', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $estadocivils, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('estadocivil_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $estadocivils, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="id_genero">Genero</label>
 
-                        <?php echo $this->Form->control('id_genero', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $generos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('genero_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $generos, 'class' => 'form-control']); ?>
 
                     </div>
                 </div>
