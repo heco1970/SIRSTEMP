@@ -172,6 +172,7 @@ class PessoasTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['nome'], 'Nome já existente nos registos.'));
         $rules->add($rules->existsIn(['estadocivil_id'], 'Estadocivils'));
         $rules->add($rules->existsIn(['genero_id'], 'Generos'));
         $rules->add($rules->existsIn(['pai_id'], 'Pais'));
