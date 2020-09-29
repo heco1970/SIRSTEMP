@@ -51,7 +51,7 @@
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="nomemaae">Nome da Mâe</label>
+                        <label for="nomemaae">Nome da Mãe</label>
                         <?php echo $this->Form->control('nomemae', ['label' => false, 'class' => 'form-control']); ?>
 
                     </div>
