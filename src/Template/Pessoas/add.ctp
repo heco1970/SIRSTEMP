@@ -62,7 +62,7 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="genero_id">Genero</label>
+                        <label for="genero_id">Género</label>
                         <?php echo $this->Form->control('genero_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $generos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="nif">Numero de Contribuinte</label>
+                        <label for="nif">Número de Contribuinte</label>
                         <?php echo $this->Form->control('nif', ['label' => false, 'class' => 'form-control', 'type' => 'text']); ?>
 
                     </div>

@@ -49,8 +49,9 @@ $dynElems = ['nome' => ['label' => __('Nome')]] +
 <div class="modal fade" id="theModal">
     <div class="modal-dialog modal-lg" style="max-width: 80%;">
         <div class="modal-content">
-           
+            <div class="modal-body">
 
+            </div>
         </div>
     </div>
 
