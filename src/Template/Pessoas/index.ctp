@@ -47,133 +47,128 @@ $dynElems = ['nome' => ['label' => __('Nome')]] +
 
 <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text']); ?>
 <div class="modal fade" id="theModal">
-    <div class="modal-dialog modal-lg" style="max-width: 80%;">
+    <div class="modal-dialog modal-lg" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; max-width: 80%; margin-bottom:50px;">
         <div class="modal-content">
-            <div class="modal-body">
-
-            </div>
         </div>
     </div>
+</div>
 
 
 
-    <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
-    <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
+<?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-    <?php $this->start('scriptBottom') ?>
-    <script>
-        $(document).ready(function() {
-            var writers = {
-                ação: function(row) {
-                    var view = '<a data-target="#theModal" data-toggle="modal" class="btn btn-info mr-1 openmodal" href="/pessoas/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
-                    var edit = '<a class="btn btn-warning mr-1" href="/pessoas/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
-                    var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" + ')" href="/pessoas/delete/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
+<?php $this->start('scriptBottom') ?>
+<script>
+    $(document).ready(function() {
+        var writers = {
+            ação: function(row) {
+                var view = '<a data-backdrop="static" data-keyboard="false" data-target="#theModal" data-toggle="modal" class="btn btn-info mr-1 openmodal" href="/pessoas/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a class="btn btn-warning mr-1" href="/pessoas/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" + ')" href="/pessoas/delete/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
 
-                    return '<div class="btn-group btn-group-sm" role="group">' + view + edit + dele + '</div>';
-                }
+                return '<div class="btn-group btn-group-sm" role="group">' + view + edit + dele + '</div>';
             }
-            createDynatable("#dynatable", "/pessoas/", {
-                created: -1
-            }, writers);
-
-            document.getElementById('datanascimento').type = 'date';
-            document.getElementById('createdfirst').type = 'date';
-            document.getElementById('createdlast').type = 'date';
-
-            document.getElementById("createdfirst").onchange = function() {
-                if (document.getElementById('createdfirst').value != "") {
-                    datefirst = new Date(document.getElementById('createdfirst').value);
-                    datefirst.setDate(datefirst.getDate() + 1)
-                    document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
-                } else {
-                    document.getElementById('createdlast').min = null;
-                }
-            };
-
-            document.getElementById("createdlast").onchange = function() {
-                if (document.getElementById('createdlast').value != "") {
-                    datelast = new Date(document.getElementById('createdlast').value);
-                    datelast.setDate(datelast.getDate() - 1)
-                    document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
-                } else {
-                    document.getElementById('createdfirst').max = null;
-                }
-            };
-
-            deleteCookie("Filtro");
-            createCookie("Filtro", "", "", "", "", "1");
-
-            $('#openmodal').on('click', function(e) {
-                e.preventDefault();
-                $('#theModal').modal('show').find('.modal-content').load($(this).attr('href'));
-            });
-        });
-
-
-        document.getElementById("nome").onkeyup = function() {
-            createCookie(
-                "Filtro",
-                document.getElementById("nome").value,
-                document.getElementById("cc").value,
-                document.getElementById("nif").value,
-                document.getElementById("datanascimento").value,
-                "1"
-            );
-        };
-
-        document.getElementById("cc").onkeyup = function() {
-            createCookie(
-                "Filtro",
-                document.getElementById("nome").value,
-                document.getElementById("cc").value,
-                document.getElementById("nif").value,
-                document.getElementById("datanascimento").value,
-                "1"
-            );
-        };
-
-        document.getElementById("nif").onkeyup = function() {
-            createCookie(
-                "Filtro",
-                document.getElementById("nome").value,
-                document.getElementById("cc").value,
-                document.getElementById("nif").value,
-                document.getElementById("datanascimento").value,
-                "1"
-            );
-        };
-
-        document.getElementById("datanascimento").onchange = function() {
-            createCookie(
-                "Filtro",
-                document.getElementById("nome").value,
-                document.getElementById("cc").value,
-                document.getElementById("nif").value,
-                document.getElementById("datanascimento").value,
-                "1"
-            );
-        };
-
-        function deleteCookie(name) {
-            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
         }
+        createDynatable("#dynatable", "/pessoas/", {
+            created: -1
+        }, writers);
 
-        function createCookie(name, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
-            var expires;
+        document.getElementById('datanascimento').type = 'date';
+        document.getElementById('createdfirst').type = 'date';
+        document.getElementById('createdlast').type = 'date';
 
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toGMTString();
+        document.getElementById("createdfirst").onchange = function() {
+            if (document.getElementById('createdfirst').value != "") {
+                datefirst = new Date(document.getElementById('createdfirst').value);
+                datefirst.setDate(datefirst.getDate() + 1)
+                document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
             } else {
-                expires = "";
+                document.getElementById('createdlast').min = null;
             }
+        };
 
-            document.cookie = escape(name) + "=" +
-                valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
-                expires + "; path=/";
+        document.getElementById("createdlast").onchange = function() {
+            if (document.getElementById('createdlast').value != "") {
+                datelast = new Date(document.getElementById('createdlast').value);
+                datelast.setDate(datelast.getDate() - 1)
+                document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
+            } else {
+                document.getElementById('createdfirst').max = null;
+            }
+        };
+
+        deleteCookie("Filtro");
+        createCookie("Filtro", "", "", "", "", "1");
+
+
+    });
+
+
+    document.getElementById("nome").onkeyup = function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1"
+        );
+    };
+
+    document.getElementById("cc").onkeyup = function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1"
+        );
+    };
+
+    document.getElementById("nif").onkeyup = function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1"
+        );
+    };
+
+    document.getElementById("datanascimento").onchange = function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1"
+        );
+    };
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+    }
+
+    function createCookie(name, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
+        var expires;
+
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        } else {
+            expires = "";
         }
-    </script>
-    <?php $this->end(); ?>
+
+        document.cookie = escape(name) + "=" +
+            valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
+            expires + "; path=/";
+    }
+</script>
+<?php $this->end(); ?>
