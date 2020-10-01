@@ -47,7 +47,7 @@ $dynElems = ['nome' => ['label' => __('Nome')]] +
 
 <?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text']); ?>
 <div class="modal fade" id="theModal">
-    <div class="modal-dialog modal-lg" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; max-width: 80%; margin-bottom:50px;">
+    <div class="modal-dialog modal-lg" style=" max-height:85%;  margin-top: 50px; max-width: 80%; margin-bottom:50px;">
         <div class="modal-content">
         </div>
     </div>

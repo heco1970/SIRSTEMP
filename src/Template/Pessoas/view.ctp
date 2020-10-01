@@ -15,7 +15,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="ml-3 mr-3 mb-3 mt-3 modal-body" >
+<div class="ml-3 mr-3 mb-3 mt-3 modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;" >
 
     <div class="tab-content" id="pills-tabContent">
         <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
