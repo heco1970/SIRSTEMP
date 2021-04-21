@@ -140,11 +140,11 @@
             <br>
             <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">Dados Adicionais</a>
+                    <a data-toggle="collapse" data-target="#demo2" class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">Dados Adicionais</a>
                 </li>
             </ul>
             <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="card shadow mb-2">
+                <div id="demo2" class="card shadow mb-2">
                     <div class="card-header py-3">
                         <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
                     </div>
@@ -153,11 +153,11 @@
 
             <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Contactos</a>
+                    <a class="nav-link active" data-toggle="collapse" data-target="#demo3" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Contactos</a>
                 </li>
             </ul>
             <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                <div class="card shadow mb-2">
+                <div id="demo3" class="card shadow mb-2">
                     <div class="card-header py-3">
                         <a class="btn btn-success btn-circle btn-lg" href="/contactos/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
                     </div>
@@ -193,11 +193,11 @@
 
                 <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
+                        <a class="nav-link active" data-toggle="collapse" data-target="#demo" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
                     </li>
-                </ul>
-                <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    <div class="card shadow mb-2">
+                </ul>                
+                <div class="collapse tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div id="demo" class="card shadow mb-2">
                         <div class="card-header py-3">
                             <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/crimes/add/' . h($pessoa->id) . '" ><i class="fas fa-plus"></i></a>' ?>
                         </div>
@@ -233,11 +233,11 @@
 
                     <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="pills-processos-tab" data-toggle="pill" href="#pills-processos" role="tab" aria-controls="pills-processos" aria-selected="true">Processos</a>
+                            <a data-toggle="collapse" data-target="#demo4" class="nav-link active" id="pills-processos-tab" data-toggle="pill" href="#pills-processos" role="tab" aria-controls="pills-processos" aria-selected="true">Processos</a>
                         </li>
                     </ul>
                     <div class="tab-pane fade show active" id="pills-processos" role="tabpanel" aria-labelledby="pills-processos-tab">
-                        <div class="card shadow mb-2">
+                        <div id="demo4" class="card shadow mb-2">
                             <div class="card-header py-3">
                                 <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-processos/add/' . h($pessoa->id) . '" ><i class="fas fa-plus"></i></a>' ?>
                             </div>
@@ -271,11 +271,11 @@
 
                     <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="pills-pedidos-tab" data-toggle="pill" href="#pills-pedidos" role="tab" aria-controls="pills-pedidos" aria-selected="true">Pedidos</a>
+                            <a class="nav-link active" data-toggle="collapse" data-target="#demo5" id="pills-pedidos-tab" data-toggle="pill" href="#pills-pedidos" role="tab" aria-controls="pills-pedidos" aria-selected="true">Pedidos</a>
                         </li>
                     </ul>
                     <div class="tab-pane fade show active" id="pills-pedidos" role="tabpanel" aria-labelledby="pills-pedidos-tab">
-                        <div class="card shadow mb-2">
+                        <div id="demo5" class="card shadow mb-2">
                             <div class="card-header py-3">
                                 <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pedidos/add/' . h($pessoa->id) . '" ><i class="fas fa-plus"></i></a>' ?>
                             </div>
