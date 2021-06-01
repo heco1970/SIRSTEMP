@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <label for="nome">Quantidade</label>
-                            <?php echo $this->Form->control('qte', ['label' => false, 'class' => 'form-control', 'type' => 'number']); ?>                           
+                            <?php echo $this->Form->control('qte', ['label' => false, 'class' => 'form-control', 'type' => 'number', 'style' => 'width: 80px;']); ?>                           
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <label for="nome">Apenas Pré</label>
-                            <?php echo $this->Form->control('apenaspre', ['label' => false, 'class' => 'form-control', 'type' => 'checkbox']); ?>                           
+                            <?php echo $this->Form->control('apenaspre', ['label' => false, 'class' => '', 'type' => 'checkbox']); ?>
                         </div>
                     </div>
                 </div>
