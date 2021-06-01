@@ -26,8 +26,8 @@
             <div class="form-group">
                 <label for="entidadejudiciai_id">Comarca Judicial</label>
                 <?php 
-                    $entidadejudiciai = array('mp' => 'Ministério Publico', 'j' => 'Judicial');
-                    echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidadejudiciai, 'required']);
+                    $entidadejudicial = array('1' => 'Ministério Publico', '2' => 'Judicial');
+                    echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidadejudicial, 'required']);
                 ?>
             </div>
             <div class="form-group">

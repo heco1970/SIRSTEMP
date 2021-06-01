@@ -21,12 +21,15 @@
             </div>
             <div class="form-group">
                 <label for="ultimaalteracao">Tribunal</label>
-                <?php echo $this->Form->control('ultimaalteracao', ['label' => false, 'class' => 'form-control', 'options' => $entidadejudiciais]); ?> 
+                <?php 
+                    $tribunal = array('' => '');
+                    echo $this->Form->control('ultimaalteracao', ['label' => false, 'class' => 'form-control', 'options' => $tribunal]); 
+                ?> 
             </div>
             <div class="form-group">
                 <label for="entidadejudiciai_id"> Comarca Judicial</label>
                 <?php 
-                    $entidadejudiciai = array('mp' => 'Ministério Publico', 'j' => 'Judicial');
+                    $entidadejudiciai = array('1' => 'Ministério Publico', '2' => 'Judicial');
                     echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'options' => $entidadejudiciai]); 
                 ?>
             </div>
