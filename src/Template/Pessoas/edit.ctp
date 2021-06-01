@@ -24,6 +24,14 @@
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
 
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
+                <label for="nmrPessoa" style="margin-right: 30px; padding-top: 8px;">ID da pessoa</label>                        
+                <?php echo $this->Form->control('nmrPessoa', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;']); ?>
+                
+                <label for="localDos" style="margin-right: 30px; padding-top: 8px;">Localização do dossier</label>
+                <?php echo $this->Form->control('localDos', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>                
+            </div>
+
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
@@ -79,63 +87,67 @@
                         <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
 
                     </div>
-                </div>
+                </div>               
+            </div>
+
+            <div class="form-row">
                 <div class="col">
                     <div class="form-group">
+                        <label for="morada">Morada</label>
+                        <?php echo $this->Form->control('morada', ['label' => false, 'class' => 'form-control']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    <label for="codigo_postal" style="margin-left: 5px;">Código Postal</label>
+                    <div class="form-row">  
 
-                        <label for="codigo_postal">Código Postal</label>
-                        <div class="form-row">
-                            <div class="col-7">
-                                <?php echo $this->Form->number('codigo_postal', ['id' => 'codigo_postal', 'value' => h($pessoa->codigos_postai->NumCodigoPostal), 'max' => 9999, 'min' => 1, 'label' => false, 'class' => 'form-control', 'required']); ?>
-                            </div>
-                            <div class="col-5">
-                                <?php echo $this->Form->number('codigo_postal1', ['id' => 'codigo_postal1', 'value' => h($pessoa->codigos_postai->ExtCodigoPostal), 'max' => 999, 'min' => 1, 'label' => false, 'class' => 'form-control', 'required']); ?>
-                            </div>
+                        <div class="input number" style="width: 20%; margin-left: 2%; margin-right: 5%;">
+                            <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min'=>1,'label' => false, 'class' => 'form-control', 'required']); ?>
+                        </div>                  
+                        
+                        <div class="input number" style="width: 15%;">    
+                            <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min'=>1,'label' => false, 'class' => 'form-control', 'required']); ?>                       
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="form-row" id="distrito">
+            <div class="form-row">
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-
-                        <select class='form-control' id="distritos" disabled>
-                            <option></option>
-                        </select>
-
+                        <?php echo $this->Form->control('distrito', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $estadocivils, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-
-                        <select class='form-control' id="concelhos" disabled>
-                            <option></option>
-                        </select>
-
+                        <?php echo $this->Form->control('concelho', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $generos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
-
-                        <select class='form-control' id="freguesias" disabled>
-                            <option><?= h($pessoa->codigos_postai->NomeLocalidade) ?></option>
-                        </select>
-
+                        <?php echo $this->Form->control('freguesia', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
                     </div>
-                </div>
-            </div>
+                </div>                
+            </div>            
 
             <div class="form-row">
-
 
                 <div class="col">
                     <div class="form-group">
                         <label for="hea">Data de Nascimento</label>
-                        <?php echo $this->Form->text('data_nascimento', ['label' => false, 'value'=>h($pessoa->data_nascimento->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data_nascimento', ['id' => "dataNasc", 'label' => false, 'value'=>h($pessoa->data_nascimento->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date', 'onChange' => 'submitBday()']); ?>
                     </div>
+                </div>
+                <div class="col">                                           
+                        <div id="container" style="padding-left: 30%;">
+                            <label for="age">Idade</label>
+                            <?php echo $this->Form->control('age', ['id' => "idade",'label' => false, 'class' => 'form-control', 'style' => 'width: 50%;', 'disabled' => true]); ?>
+                        </div>
+                        
                 </div>
                 <div class="col">
                     <div class="form-group">
@@ -159,22 +171,30 @@
                     </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="centro_edu">Centro Educacional</label>
-                        <?php echo $this->Form->control('centro_educ_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $centro_educs]); ?>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="estb_pri">Estabelecimento Prisional</label>
+            
+            <h5 style="color: #0000009c;">Contacto</h5>
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
+                <label for="nomeContact" style="margin-right: 30px; padding-top: 8px;">Nome</label>
+                <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control']); ?>
+                
+                <label for="tel" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
+                <?php echo $this->Form->control('tel', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>                
+            </div>
 
-                        <?php echo $this->Form->control('estb_pri_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $estb_pris]); ?>
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
+            <label for="nomeContact2" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
+                <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control']); ?>
+                
+                <label for="tel2" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
+                <?php echo $this->Form->control('tel2', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>             
+            </div>
 
-                    </div>
-                </div>
-
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
+            <label for="nomeContact3" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
+                <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control']); ?>
+                
+                <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
+                <?php echo $this->Form->control('tel3', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>            
             </div>
 
             <div class="form-row">
@@ -195,6 +215,16 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
+    function submitBday() {  
+        
+        var Bdate = document.getElementById('dataNasc').value;
+        var Bday = +new Date(Bdate);
+        var idade = ~~ ((Date.now() - Bday) / (31557600000));
+        var theBday = document.getElementById('idade');
+        theBday.setAttribute('value',idade);
+    } 
+
     $('document').ready(function() {
         $('#codigo_postal1').keyup(function() {
 

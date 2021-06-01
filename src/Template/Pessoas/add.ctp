@@ -215,8 +215,6 @@
         var idade = ~~ ((Date.now() - Bday) / (31557600000));
         var theBday = document.getElementById('idade');
         theBday.setAttribute('value',idade);
-
-        alert(idade);
     }    
 
     $('document').ready(function() {
