@@ -20,7 +20,6 @@ $pessoaNome = "";
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Nª de pessoa')],
         'nome' => ['label' => __('Nome')],
         'cc' => ['label' => __('CC/BI')],
         'nif' => ['label' => __('NIF')],
@@ -31,8 +30,7 @@ $dynElems =
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
-    ['nome' => ['label' => __('Nome')]] +
+$dynElems = ['nome' => ['label' => __('Nome')]] +
     ['cc' => ['label' => __('CC/BI')]] +
     ['nif' => ['label' => __('NIF')]] +
     ['datanascimento' => ['label' => __('Data de nascimento')]] +
@@ -103,7 +101,7 @@ $dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
         };
 
         deleteCookie("Filtro");
-        createCookie("Filtro", "", "", "", "", "","1");
+        createCookie("Filtro", "", "", "", "","1");
 
 
     });
@@ -111,7 +109,6 @@ $dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
     document.getElementById("id").onkeyup = function() {
         createCookie(
             "Filtro",
-            document.getElementById("id").value,
             document.getElementById("nome").value,
             document.getElementById("cc").value,
             document.getElementById("nif").value,
@@ -123,7 +120,6 @@ $dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
     document.getElementById("nome").onkeyup = function() {
         createCookie(
             "Filtro",
-            document.getElementById("id").value,
             document.getElementById("nome").value,
             document.getElementById("cc").value,
             document.getElementById("nif").value,
@@ -135,7 +131,6 @@ $dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
     document.getElementById("cc").onkeyup = function() {
         createCookie(
             "Filtro",
-            document.getElementById("id").value,
             document.getElementById("nome").value,
             document.getElementById("cc").value,
             document.getElementById("nif").value,
@@ -147,7 +142,6 @@ $dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
     document.getElementById("nif").onkeyup = function() {
         createCookie(
             "Filtro",
-            document.getElementById("id").value,
             document.getElementById("nome").value,
             document.getElementById("cc").value,
             document.getElementById("nif").value,
@@ -159,7 +153,6 @@ $dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
     document.getElementById("datanascimento").onchange = function() {
         createCookie(
             "Filtro",
-            document.getElementById("id").value,
             document.getElementById("nome").value,
             document.getElementById("cc").value,
             document.getElementById("nif").value,
@@ -172,7 +165,7 @@ $dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
 
-    function createCookie(name,valuePessoa, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
+    function createCookie(name, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
         var expires;
 
         if (days) {
@@ -184,7 +177,7 @@ $dynElems = ['id' => ['label' => __('Nª de pessoa')]] +
         }
 
         document.cookie = escape(name) + "=" +
-            valuePessoa + "," + valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
+            valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
             expires + "; path=/";
     }
 </script>
