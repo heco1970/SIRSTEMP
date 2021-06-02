@@ -13,7 +13,7 @@
 }
 
 </style>
-
+<?php echo $this->Html->css('https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.1.1/dist/css/autoComplete.min.css'); ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Pessoa') ?></h6>
@@ -23,7 +23,7 @@
         <div id='my-form-body'>
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
                 <label for="nmrPessoa" style="margin-right: 30px; padding-top: 8px;">ID da pessoa</label>                        
-                <?php echo $this->Form->control('nmrPessoa', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;']); ?>
+                <?php echo $this->Form->control('nmrPessoa', ['id' => 'nmrPessoaID','label' => false, 'class' => 'form-control', 'style' => 'width: 65%;', 'disabled' => true]); ?>
                 
                 <label for="localDos" style="margin-right: 30px; padding-top: 8px;">Localização do dossier</label>
                 <?php echo $this->Form->control('localDos', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>                
@@ -162,32 +162,13 @@
 
                     </div>
                 </div>
-            </div>            
+            </div>                    
 
-            <h5 style="color: #0000009c;">Contacto</h5>
-            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
-                <label for="nomeContact" style="margin-right: 30px; padding-top: 8px;">Nome</label>
-                <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control']); ?>
-                
-                <label for="tel" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>                
+            <div class="autoComplete_wrapper">
+                <input type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">
             </div>
 
-            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
-            <label for="nomeContact2" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
-                <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control']); ?>
-                
-                <label for="tel2" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel2', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>             
-            </div>
-
-            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
-            <label for="nomeContact3" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
-                <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control']); ?>
-                
-                <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel3', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>            
-            </div>
+            <div class="selection" style="display: none;"></div>
 
             <div class="form-row">
                 <div class="col">
@@ -206,7 +187,107 @@
     <?= $this->Form->end() ?>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.1.1/dist/autoComplete.min.js"></script>
 <script>
+    const autoCompleteJS = new autoComplete({
+        data: {
+            src: async () => {
+            try {
+                // Loading placeholder text
+                document
+                .getElementById("autoComplete")
+                .setAttribute("placeholder", "Loading...");
+                // Fetch External Data Source
+                const source = await fetch(
+                    "https://tarekraafat.github.io/autoComplete.js/demo/db/generic.json"
+                );
+                const data = await source.json();
+                // Post Loading placeholder text
+                document
+                .getElementById("autoComplete")
+                .setAttribute("placeholder", autoCompleteJS.placeHolder);
+                // Returns Fetched data
+                return data;
+            } catch (error) {
+                return error;
+            }
+            },
+            keys: ["food", "cities", "animals"],
+            cache: true,
+            filter: (list) => {
+            // Filter duplicates
+            // incase of multiple data keys usage
+            const filteredResults = Array.from(
+                new Set(list.map((value) => value.match))
+            ).map((food) => {
+                return list.find((value) => value.match === food);
+            });
+
+            return filteredResults;
+            }
+        },
+        placeHolder: "Search for Food & Drinks!",
+        resultsList: {
+            element: (list, data) => {
+            const info = document.createElement("p");
+            if (data.results.length > 0) {
+                info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+            } else {
+                info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong>`;
+            }
+            list.prepend(info);
+            },
+            noResults: true,
+            maxResults: 15,
+            tabSelect: true
+        },
+        resultItem: {
+            element: (item, data) => {
+            // Modify Results Item Style
+            item.style = "display: flex; justify-content: space-between;";
+            // Modify Results Item Content
+            item.innerHTML = `
+            <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                ${data.match}
+            </span>
+            <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                ${data.key}
+            </span>`;
+            },
+            highlight: true
+        },
+        events: {
+            input: {
+            focus: () => {
+                if (autoCompleteJS.input.value.length) autoCompleteJS.start();
+            }
+            }
+        }
+        });
+
+    autoCompleteJS.input.addEventListener("selection", function (event) {
+        const feedback = event.detail;
+        autoCompleteJS.input.blur();
+        // Prepare User's Selected Value
+        const selection = feedback.selection.value[feedback.selection.key];
+        // Render selected choice to selection div
+        document.querySelector(".selection").innerHTML = selection;
+        // Replace Input value with the selected value
+        autoCompleteJS.input.value = selection;
+        // Console log autoComplete data feedback
+        console.log(feedback);
+    });
+</script>
+
+<script>    
+
+    function randomIDGen() {
+        var x = Math.floor(Math.random() * 90000) + 10000;;
+        var generatedNum = document.getElementById('nmrPessoaID');
+        generatedNum.setAttribute('value',x);
+    }
+
+    window.onload = randomIDGen;
 
     // Código usado em: http://www.java2s.com/Tutorials/Javascript/Javascript_Form_How_to/Date_Input/Get_the_age_from_input_type_date_.htm
     function submitBday() {  
