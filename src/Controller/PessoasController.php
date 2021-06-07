@@ -109,6 +109,17 @@ class PessoasController extends AppController
         $this->set(compact('contactos', 'crimes', 'processos', 'pedidos', 'distrito', 'concelho'));
     }
 
+    public function fregAutoComplete(){
+        $this->autoRender = false;
+        $freguesias = $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']);
+        $data = [];
+        foreach($freguesias as $index=>$freg){
+            $data[] = ['ID' => $index, 'NomeLocalidade' => $freg];
+        }
+
+        echo json_encode($data);
+    }
+
     /**
      * Add method
      *
