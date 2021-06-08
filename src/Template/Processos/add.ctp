@@ -6,37 +6,44 @@
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
             <div class="form-row">
-                <div class="col">
+                <div class="col-sm-4">
                     <div class="form-group">
                         <label for="nip">NIP</label>
                         <?php echo $this->Form->control('nip', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm-4">
                     <div class="form-group">
                         <label for="processo_id">ID Processo</label>
                         <?php echo $this->Form->control('processo_id', ['type'=>'text','label' => false, 'class' => 'form-control','required']); ?>
                     </div>
                 </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="ultimaalteracao">Tribunal</label>
+                        <?php echo $this->Form->control('ultimaalteracao', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="ultimaalteracao">Tribunal</label>
-                <?php echo $this->Form->control('ultimaalteracao', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
-            </div>
-            <div class="form-group">
-                <label for="entidadejudiciai_id">Comarca Judicial</label>
-                <?php 
-                    $entidadejudicial = array('1' => 'Ministério Publico', '2' => 'Judicial');
-                    echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidadejudicial, 'required']);
-                ?>
-            </div>
-            <div class="form-group">
-                <label for="unit_id">Entidade Solicitante</label>
-                <?php echo $this->Form->control('unit_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $units, 'required']); ?>
-            </div>
-            <div class="form-group">
-                <label for="natureza">Natureza</label>
-                <?php echo $this->Form->control('natureza_id', ['label' => false, 'class' => 'form-control', 'options' => $naturezas,'required','empty' => ['' => '']]); ?>
+            <div class="form-row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="entidadejudiciai_id">Comarca Judicial</label>
+                        <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']);?>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="unit_id">Entidade Solicitante</label>
+                        <?php echo $this->Form->control('unit_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $units, 'required']); ?>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="natureza">Natureza</label>
+                        <?php echo $this->Form->control('natureza_id', ['label' => false, 'class' => 'form-control', 'options' => $naturezas,'required','empty' => ['' => '']]); ?>
+                    </div>
+                </div>
             </div>
             <div class="form-row">
                 <div class="col">
