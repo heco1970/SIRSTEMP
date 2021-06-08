@@ -109,6 +109,17 @@ class PessoasController extends AppController
         $this->set(compact('contactos', 'crimes', 'processos', 'pedidos', 'distrito', 'concelho'));
     }
 
+    public function fregAutoComplete(){
+        $this->autoRender = false;
+        $freguesias = $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']);
+        $data = [];
+        foreach($freguesias as $index=>$freg){
+            $data[] = ['ID' => $index, 'NomeLocalidade' => $freg];
+        }
+
+        echo json_encode($data);
+    }
+
     /**
      * Add method
      *
@@ -141,6 +152,9 @@ class PessoasController extends AppController
             }
         }
 
+        $this->set('concelhos', $this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
+        $this->set('distritos', $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
+        $this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $this->set('centro_educs', $this->Pessoas->CentroEducs->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('estb_pris', $this->Pessoas->EstbPris->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
