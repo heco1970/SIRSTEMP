@@ -162,9 +162,37 @@
 
                     </div>
                 </div>
-            </div>                    
+            </div>      
 
-            <select id="mySelect2" class="js-data-example-ajax"></select>
+            <h5 style="color: #0000009c;">Contacto</h5>
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
+                <label for="nomeContact" style="margin-right: 30px; padding-top: 8px;">Nome</label>
+                <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control']); ?>
+
+                <label for="tel" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
+                <?php echo $this->Form->control('tel', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>                
+            </div>
+
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
+                <label for="nomeContact2" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
+                <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control']); ?>
+
+                <label for="tel2" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
+                <?php echo $this->Form->control('tel2', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>             
+            </div>
+
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
+                <label for="nomeContact3" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
+                <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control']); ?>
+
+                <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
+                <?php echo $this->Form->control('tel3', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>            
+            </div>
+
+            <div class="form-row">            
+            </div>              
+
+            <select id="mySelect2" style="width: 50%" class="js-data-example-ajax"></select>
 
             <div class="form-row">
                 <div class="col">
@@ -189,13 +217,13 @@
         ajax: {
             url: '/Pessoas/fregAutoComplete',
             data: function (params) {
-            var query = {
-                search: params.term,
-                type: 'public'
-            }
+                var query = {
+                    search: params.term,
+                    type: 'public'
+                }
 
-            // Query parameters will be ?search=[term]&type=public
-            return query;
+                // Query parameters will be ?search=[term]&type=public
+                return query;
             }
         }
     });
