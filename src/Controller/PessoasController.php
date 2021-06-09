@@ -113,7 +113,7 @@ class PessoasController extends AppController
         $this->autoRender = false;
 
         $search = h($this->request->query['search']);
-        $freguesias = $this->Pessoas->CodigosPostais->find()->where('NomeLocalidade like'=>$search.'%');
+        $freguesias = $this->Pessoas->CodigosPostais->find()->where(['NomeLocalidade like'=>$search.'%']);
         
         $data = [];
         

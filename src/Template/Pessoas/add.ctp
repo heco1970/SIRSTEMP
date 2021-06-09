@@ -215,15 +215,8 @@
 <script>
    $('#mySelect2').select2({
         ajax: {
-            url: '/Pessoas/fregAutoComplete',
-            data: function (params) {
-                var query = {
-                    search: params.term,
-                    type: 'public'
-                }
-
-                // Query parameters will be ?search=[term]&type=public
-                return query;
+            url: function (params) {
+                return '/Pessoas/fregAutoComplete/' + params.term;
             }
         }
     });
