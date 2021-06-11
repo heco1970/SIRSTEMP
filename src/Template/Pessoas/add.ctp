@@ -24,9 +24,13 @@
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
                 <label for="nmrPessoa" style="margin-right: 30px; padding-top: 8px;">ID da pessoa</label>                        
                 <?php echo $this->Form->control('nmrPessoa', ['id' => 'nmrPessoaID','label' => false, 'class' => 'form-control', 'style' => 'width: 65%;', 'disabled' => true]); ?>
-                
+                                
                 <label for="localDos" style="margin-right: 30px; padding-top: 8px;">Localização do dossier</label>
-                <?php echo $this->Form->control('localDos', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>                
+                <div id="input select" style="width: 15%;">
+                    <?php echo $this->Form->control('localDos', ['label' => false, 'class' => 'form-control', 'type' => 'select']); ?>
+                </div>
+                
+                
             </div>
             
             <div class="form-row">
@@ -120,7 +124,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
-                        <?php echo $this->Form->control('freguesia', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $freguesias, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('freguesia', ['id'=> 'mySelect2','style'=>'height: 37px;','label' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>                
             </div>
@@ -192,7 +196,7 @@
             <div class="form-row">            
             </div>              
 
-            <select id="mySelect2" style="width: 50%" class="js-data-example-ajax"></select>
+           <!-- <select id="mySelect2" style="width: 50%" class="js-data-example-ajax"></select>-->
 
             <div class="form-row">
                 <div class="col">
@@ -215,9 +219,9 @@
 <script>
    $('#mySelect2').select2({
         ajax: {
-            url: function (params) {
-                return '/Pessoas/fregAutoComplete/' + params.term;
-            }
+            url: '/Pessoas/fregAutoComplete',
+            dataType: 'json',
+            delay: 250,            
         }
     });
 </script>

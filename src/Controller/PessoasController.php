@@ -112,18 +112,18 @@ class PessoasController extends AppController
     public function fregAutoComplete(){
         $this->autoRender = false;
 
-        $search = h($this->request->query['search']);
-        $freguesias = $this->Pessoas->CodigosPostais->find()->where(['NomeLocalidade like'=>$search.'%']);
+        $search = h($this->request->query['term']);
+        $freguesias = $this->Pessoas->CodigosPostais->find()->where(['NomeLocalidade like'=>$search.'%'])->limit(20);
         
         $data = [];
         
-        foreach($freguesias as $index=>$freg){
-            $data[] = ['ID' => $index, 'NomeLocalidade' => $freg];
+        foreach($freguesias as $freg){
+            $data[] = ['id' => $freg->id, 'text' => $freg->NomeLocalidade];
         }
 
         $data = ['results'=>$data];
 
-        //$this->log($this->request->query);
+        $this->log($this->request->query);
         echo json_encode($data);
     }
 
