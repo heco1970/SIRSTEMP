@@ -9,13 +9,13 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="pedido_id">ID Pedido</label>
-                        <?= $this->Form->text('processo_id', ['id' => 'processo_id', 'label' => false, 'class' => 'form-control', 'type' => 'number', 'value' => h($pedido->processo->processo_id), 'required']); ?>
+                        <?= $this->Form->text('id', ['id' => 'id', 'label' => false, 'disabled' => true, 'class' => 'form-control', 'value' => h($pedido->processo->id), 'required']); ?>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="processo_id">Processo</label>
-                        <?= $this->Form->text('processo_id', ['id' => 'processo_id', 'label' => false, 'class' => 'form-control', 'type' => 'number', 'value' => h($pedido->processo->processo_id), 'required']); ?>
+                        <?= $this->Form->text('processo_id', ['id' => 'processo_id', 'label' => false, 'class' => 'form-control', 'value' => h($pedido->processo->processo_id), 'required']); ?>
                         <?php
                             if (!empty($errors1)) {
                                 echo "<div class='error-message' style='color:red; font-weight: bold;'> Processo que tinha selecionado não existe.</div>";
