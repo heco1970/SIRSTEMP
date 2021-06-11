@@ -120,6 +120,7 @@ class ProcessosController extends AppController
         $processo = $this->Processos->newEntity();
         if ($this->request->is('post')) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
+            $this->log($processo);
             if ($this->Processos->save($processo)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 

@@ -1,306 +1,67 @@
-<?php
-
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Pedido $pedido
- */
-?>
-
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Pedido') ?></h6>
     </div>
-
     <?= $this->Form->create($pedido) ?>
-    <fieldset>
-        <div class='ml-4 mt-4 mr-4'>
-            <div id='my-form-body'>
-                <div class="row ">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="processo_id">
-                                    <h4><?= __('Processo') ?></h4>
-                                </label>
-                                <?= $this->Form->text('processo', ['id' => 'processo_id', 'class' => 'form-control',  'label' => false, 'required']); ?>
-                                <?php
-                                if (!empty($errors1)) {
-                                    echo "<div class='error-message' style='color:red; font-weight: bold;'> Processo inexistente.</div>";
-                                } ?>
-                            </div>
-                        </div>
+    <div class='ml-4 mt-4 mr-4'>
+        <div id='my-form-body'>
+            <div class="form-row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="pedido_id">ID Pedido</label>
+                        <?= $this->Form->text('id', ['id' => 'id', 'class' => 'form-control',  'label' => false, 'required']); ?>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group ui-widget">
-                            <div class="col-xs-12">
-                                <label for="pessoa_id">
-                                    <h4><?= __('Nome da Pessoa') ?></h4>
-                                </label>
-                                <?php
-                                if ($pessoa != null) {
-                                    echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
-                                } else {
-                                    echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
-                                }
-                                if (!empty($errors)) {
-                                    echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa inexistente.</div>";
-                                }
-                                ?>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="processo_id">Processo</label>
+                        <?= $this->Form->text('processo', ['id' => 'processo_id', 'class' => 'form-control',  'label' => false, 'required']); ?>
+                        <?php
+                            if (!empty($errors1)) {
+                                echo "<div class='error-message' style='color:red; font-weight: bold;'> Processo inexistente.</div>";
+                            } 
+                        ?>
+                    </div> 
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="nome_pessoa">Nome Pessoa</label>
+                        <?php
+                            if ($pessoa != null) {
+                                echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
+                            } else {
+                                echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
+                            }
+                            if (!empty($errors)) {
+                                echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa inexistente.</div>";
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="equipa_responsavel">Equipa Responsável</label>
+                        <?php echo $this->Form->control('team_id', ['label' => false, 'class' => 'form-control', 'options' => $teams,'required','empty' => ['' => '']]); ?>
+                    </div>    
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="tipo_pedido">Tipo de Pedido de código</label>
+                        <?php echo $this->Form->control('pedidostype_id', ['label' => false, 'class' => 'form-control', 'options' => $pedidostypes,'required','empty' => ['' => '']]); ?>
                     </div>
                 </div>
             </div>
         </div>
-        <div class='ml-4 mt-4 mr-4'>
-            <div id='my-form-body'>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Data de recepção') ?></h4>
-                                </label>
-                                <?php echo $this->Form->text('datarecepcao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Referência') ?></h4>
-                                </label>
-                                <?= $this->Form->control('referencia', ['class' => 'form-control',  'label' => false]); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Canal de Entrada') ?></h4>
-                                </label>
-                                <?= $this->Form->control('canalentrada', ['class' => 'form-control',  'label' => false]); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Origem') ?></h4>
-                                </label>
-                                <?= $this->Form->control('origem', ['class' => 'form-control',  'label' => false]); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Tipos de Pedidos') ?></h4>
-                                </label>
-                                <?= $this->Form->control('pedidostype_id', ['class' => 'form-control', 'options' => $pedidostypes, 'label' => false]); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="team_id">
-                                    <h4><?= __('Equipa Responsável') ?></h4>
-                                </label>
-                                <?= $this->Form->control('team_id', [
-                                    'id' => 'team_id', 'class' => 'form-control', 'empty' => 'Escolha uma equipa...', 'default' => [''], 'disabled' => [''], 'label' => false, 'options' => $teams, 'required'
-                                ]); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='ml-4 mt-4 mr-4'>
-            <div id='my-form-body'>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Estado') ?></h4>
-                                </label>
-                                <?= $this->Form->control('state_id', ['class' => 'form-control', 'options' => $states, 'label' => false]); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Termino') ?></h4>
-                                </label>
-                                <?php echo $this->Form->text('termino', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Número do pedido') ?></h4>
-                                </label>
-                                <?= $this->Form->control('numeropedido', ['class' => 'form-control',  'label' => false, 'type' => 'number']); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Data de criação') ?></h4>
-                                </label>
-                                <?php echo $this->Form->text('datacriacao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Data de atribuição') ?></h4>
-                                </label>
-                                <?php echo $this->Form->text('dataatribuicao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Data de Inicio Efetivo') ?></h4>
-                                </label>
-                                <?php echo $this->Form->text('datainicioefectivo', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Data de termo previsto') ?></h4>
-                                </label>
-                                <?php echo $this->Form->text('datatermoprevisto', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Data de efetivo termo') ?></h4>
-                                </label>
-                                <?php echo $this->Form->text('dataefectivatermo', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Motivos dos pedidos') ?></h4>
-                                </label>
-                                <?= $this->Form->control('pedidosmotive_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('País') ?></h4>
-                                </label>
-                                <?php echo $this->Form->control('pais_id', ['id' => 'pais_id', 'label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group" id="concelho_id">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Concelho') ?></h4>
-                                </label>
-                                <?= $this->Form->control('concelho_id', [ 'class' => 'form-control',  'label' => false]); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Transferencias') ?></h4>
-                                </label>
-                                <?= $this->Form->control('transferencias', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6" id="gestor">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Gestor') ?></h4>
-                                </label>
-                                <?= $this->Form->control('gestor', ['class' => 'form-control',  'label' => false, 'type' => 'select', 'disabled']); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Seguro') ?></h4>
-                                </label>
-                                <?= $this->Form->control('seguro', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="name">
-                                    <h4><?= __('Periocidade de Relatorios') ?></h4>
-                                </label>
-                                <?= $this->Form->control('periocidaderelatorios', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </fieldset>
+    </div>    
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
-        <?php if (empty($id)) { ?>
-            <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
-
-        <?php } else { ?>
-            <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $id], ['class' => 'btn btn-secondary space-right float-right']) ?>
-
-        <?php } ?>
-    </div> <?= $this->Form->end() ?>
+        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success float-right"]) ?>
+        <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+    </div>
+    <?= $this->Form->end() ?>
 </div>
+
 <?= $this->Html->css('/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css', ['block' => true]); ?>
 <?= $this->Html->css('/vendor/select2/select2.min', ['block' => true]); ?>
 <?= $this->Html->css('/vendor/select2/select2-bootstrap4.min', ['block' => true]); ?>

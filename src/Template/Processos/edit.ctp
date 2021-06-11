@@ -15,7 +15,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="nip">ID Processo</label>
-                        <?php echo $this->Form->control('processo_id', ['type'=>'text', 'label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('processo_id', ['type'=>'text', 'label' => false,'disabled' => true, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
