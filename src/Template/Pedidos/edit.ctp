@@ -9,7 +9,7 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="pedido_id">ID Pedido</label>
-                        <?= $this->Form->text('id', ['id' => 'id', 'label' => false, 'disabled' => true, 'class' => 'form-control', 'value' => h($pedido->processo->id), 'required']); ?>
+                        <?= $this->Form->text('id', ['id' => 'id', 'label' => false, 'disabled' => true, 'class' => 'form-control', 'value' => h($pedido->id), 'required']); ?>
                     </div>
                 </div>
                 <div class="col-sm-3">
