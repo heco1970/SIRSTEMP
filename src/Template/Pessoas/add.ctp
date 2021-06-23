@@ -112,13 +112,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-                        <?php echo $this->Form->control('distrito', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('distrito', ['id' => 'testeSel', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-                        <?php echo $this->Form->control('concelho', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('concelho', ['id' => 'testeSel2', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
@@ -247,6 +247,40 @@
     }    
 
     $('document').ready(function() {
+
+        $("#testeSel").change(function (event) {
+            var data = $(this).val();
+            $.ajax({
+                method: 'get',
+                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'add']); ?>",
+                data: {
+                    keyword: data,                   
+                },                                                
+            });            
+        })        
+
+        $("#testeSel2").change(function (event) {
+            var data = $(this).val();
+            $.ajax({
+                method: 'get',
+                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'add']); ?>",
+                data: {
+                    keyword2: data,                   
+                },                
+            });
+        })
+
+        $("#mySelect2").change(function (event) {
+            var data = $(this).val();
+            $.ajax({
+                method: 'get',
+                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'add']); ?>",
+                data: {
+                    keyword3: data,                   
+                },                
+            });
+        })
+
         $('#codigo_postal1').keyup(function() {
 
             var searchkey = $('#codigo_postal').val();

@@ -159,8 +159,18 @@ class PessoasController extends AppController
             }
         }
 
-        $this->set('concelhos', $this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
         $this->set('distritos', $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
+
+        
+
+        $distritoSelecionadoID = $this->request->getQuery('keyword');     
+        //$distritoSelecionado = $this->request->getData('distrito');
+        $this->log($distritoSelecionadoID);
+
+        $this->set('concelhos', $this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
+
+        $this->log($this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
+
         $this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $this->set('centro_educs', $this->Pessoas->CentroEducs->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
@@ -184,7 +194,6 @@ class PessoasController extends AppController
         $codigo = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['ExtCodigoPostal' => $keyword1, 'NumCodigoPostal' => $keyword]);
         $coddistrito = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]);
         $codconcelho = $this->Pessoas->CodigosPostais->find()->select('CodigoConcelho')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]);
-
 
         $this->set('distritos', $this->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito' => $codigo]));
         $this->set('concelhos', $this->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoConcelho' => $codconcelho, 'CodigoDistrito' => $coddistrito]));
