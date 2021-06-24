@@ -127,6 +127,31 @@ class PessoasController extends AppController
         echo json_encode($data);
     }
 
+    public function concelhosByDistritos(){
+        $this->autoRender = false;
+
+        $distritoSelecionadoID = h($this->request->query['keyword']);
+
+        $distritos = $this->Pessoas->CodigosPostais->Distritos
+        ->find()
+        ->where(['id like'=> $distritoSelecionadoID.'%']);
+
+        $concelhos = $this->Pessoas->CodigosPostais->Concelhos
+        ->find()
+        ->where(['CodigoDistrito like'=> $distritos->CodigoDistrito.'%']);
+        
+        $data = [];
+        
+        foreach($concelhos as $conc){
+            $data[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
+        }
+
+        //$data = ['results'=>$data];
+
+        $this->log($data);
+        echo json_encode($data);
+    }
+
     /**
      * Add method
      *
@@ -163,13 +188,15 @@ class PessoasController extends AppController
 
         
 
-        $distritoSelecionadoID = $this->request->getQuery('keyword');     
+        /*$distritoSelecionadoID = $this->request->getQuery('keyword');     
         //$distritoSelecionado = $this->request->getData('distrito');
         $this->log($distritoSelecionadoID);
 
-        $this->set('concelhos', $this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
+        $this->set('concelhos', $this->Pessoas->CodigosPostais->Concelhos
+        ->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])
+        ->where(['CodigoDistrito like'=> $distritoSelecionadoID.'%']));*/
 
-        $this->log($this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
+        //$this->log($this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
 
         $this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
@@ -180,6 +207,21 @@ class PessoasController extends AppController
         $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
 
         $this->set(compact('pessoa'));
+    }
+
+    public function concelhosDistrit()
+    {
+        $this->loadModel('Distritos');
+        $this->loadModel('Concelhos');
+        $this->request->allowMethod('ajax');
+
+        $keyword = $this->request->getQuery('keyword');       
+
+        $this->set('concelhos', $this->Pessoas->CodigosPostais->Concelhos
+        ->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])
+        ->where(['CodigoDistrito like'=> $keyword.'%']));
+
+        $this->set('_serialize', ['concelhos']);
     }
 
     public function search()

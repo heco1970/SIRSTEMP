@@ -118,7 +118,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-                        <?php echo $this->Form->control('concelho', ['id' => 'testeSel2', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('concelho', ['id' => 'testeSel2', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
@@ -252,34 +252,15 @@
             var data = $(this).val();
             $.ajax({
                 method: 'get',
-                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'add']); ?>",
+                url: '/Pessoas/concelhosByDistritos',
                 data: {
-                    keyword: data,                   
-                },                                                
-            });            
-        })        
-
-        $("#testeSel2").change(function (event) {
-            var data = $(this).val();
-            $.ajax({
-                method: 'get',
-                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'add']); ?>",
-                data: {
-                    keyword2: data,                   
-                },                
-            });
-        })
-
-        $("#mySelect2").change(function (event) {
-            var data = $(this).val();
-            $.ajax({
-                method: 'get',
-                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'add']); ?>",
-                data: {
-                    keyword3: data,                   
-                },                
-            });
-        })
+                    keyword: data,     
+                },
+                success: function(response) {
+                    $('#testeSel2').html(response);
+                }
+            });   
+        })       
 
         $('#codigo_postal1').keyup(function() {
 
@@ -292,7 +273,7 @@
             var searchkey = $('#codigo_postal').val();
             var searchkey1 = $('#codigo_postal1').val();
             searchTags(searchkey, searchkey1);
-        });
+        });        
 
         function searchTags(keyword, keyword1) {
             var data = keyword;
