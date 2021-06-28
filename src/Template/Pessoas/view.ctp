@@ -25,118 +25,33 @@
         </ul>
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
             <div class="row">
-                <div class="col-7">
+                <div class="col-6">
+                    <h6 class="text-primary"><?= __('Id Pessoa') ?></h6>
+                    <p><?= h($pessoa->id) ?></p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-6">
                     <h6 class="text-primary"><?= __('Nome') ?></h6>
                     <p><?= h($pessoa->nome) ?></p>
                 </div>
-                <div class="col-5">
-                    <h6 class="text-primary"><?= __('Nome Alternativo') ?></h6>
-                    <p><?= h($pessoa->nome_alt) ?></p>
+                <div class="col-6">
+                    <h6 class="text-primary"><?= __('CC/BI') ?></h6>
+                    <p><?= h($pessoa->cc) ?></p>
                 </div>
             </div>
             <hr>
             <div class="row">
-                <div class="col">
-                    <h6 class="text-primary"><?= __('Nome do Pai') ?></h6>
-                    <p><?= h($pessoa->nomepai) ?></p>
-                    <hr>
+                <div class="col-6">
+                    <h6 class="text-primary"><?= __('NIF') ?></h6>
+                    <p><?= h($pessoa->nif) ?></p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <h6 class="text-primary"><?= __('Nome da Mãe') ?></h6>
-                    <p><?= h($pessoa->nomemae) ?></p>
-                    <hr>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Estado Civil') ?></h6>
-                    <p><?= h($pessoa->estadocivil->estado) ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Género') ?></h6>
-                    <p><?= h($pessoa->genero->genero) ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Nacionalidade') ?></h6>
-                    <p><?= h(ucfirst(mb_strtolower($pessoa->pai->paisNome))) ?></p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Código Postal') ?></h6>
-                    <p><?= h($pessoa->codigos_postai->NumCodigoPostal) ?> - <?= h($pessoa->codigos_postai->ExtCodigoPostal) ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Distrito') ?></h6>
-                    <p><?= h($distrito->distrito->Designacao) ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Concelho') ?></h6>
-                    <p><?= h($concelho->Designacao) ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Freguesia') ?></h6>
-                    <p><?= h($pessoa->codigos_postai->NomeLocalidade) ?></p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-3">
+                <div class="col-6">
                     <h6 class="text-primary"><?= __('Data de Nascimento') ?></h6>
                     <p><?= h($pessoa->data_nascimento->i18nFormat('dd/MM/yyyy')) ?></p>
                 </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Cartão de Cidadão') ?></h6>
-                    <p><?= h($pessoa->cc) ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Número de Contribuinte') ?></h6>
-                    <p><?= h($pessoa->nif) ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Outra Identificação') ?></h6>
-                    <p><?= h($pessoa->outroidentifica) ?></p>
-                </div>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
-                    <p><?= !empty($pessoa->centro_educ->designacao) ? h($pessoa->centro_educ->designacao) : '' ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
-                    <p><?= !empty($pessoa->estb_pri->designacao) ? h($pessoa->estb_pri->designacao) : '' ?></p>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class="row">
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Criado') ?></h6>
-                    <p><?= h($pessoa->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Modificado') ?></h6>
-                    <p><?= !empty($pessoa->modified) ? h($pessoa->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) : '' ?></p>
-                </div>
-                <div class="col-3">
-                    <h6 class="text-primary"><?= __('Estado') ?></h6>
-                    <p><?= $pessoa->estado ? __('Sim') : __('Não'); ?></p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col">
-                    <h6 class="text-primary"><?= __('Observações') ?></h6>
-                    <p><?= h($pessoa->observacoes) ?></p>
-                </div>
-            </div>
-
             <br>
             <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
