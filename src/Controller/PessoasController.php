@@ -141,14 +141,20 @@ class PessoasController extends AppController
         ->where(['CodigoDistrito like'=> $distritos->CodigoDistrito.'%']);
         
         $data = [];
-        
+        $data2 = [];
+
+        foreach($distritos as $distrit){
+            $data2[] = ['id' => $distrit->id, 'Designacao' => $distrit->Designacao, 
+            'CodigoDistrito' => $distrit->CodigoDistrito];
+        }
+
         foreach($concelhos as $conc){
             $data[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
         }
 
         //$data = ['results'=>$data];
 
-        $this->log($data);
+        $this->log($data2);
         echo json_encode($data);
     }
 
