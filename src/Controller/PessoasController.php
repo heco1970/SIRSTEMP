@@ -136,16 +136,15 @@ class PessoasController extends AppController
         ->find()
         ->where(['id like'=> $distritoSelecionadoID.'%']);
 
-        $concelhos = $this->Pessoas->CodigosPostais->Concelhos
-        ->find()
-        ->where(['CodigoDistrito like'=> $distritos->CodigoDistrito.'%']);
+        $concelhos;
         
         $data = [];
         $data2 = [];
 
         foreach($distritos as $distrit){
-            $data2[] = ['id' => $distrit->id, 'Designacao' => $distrit->Designacao, 
-            'CodigoDistrito' => $distrit->CodigoDistrito];
+            $concelhos = $this->Pessoas->CodigosPostais->Concelhos
+            ->find()
+            ->where(['CodigoDistrito like'=> $distrit->CodigoDistrito.'%']);
         }
 
         foreach($concelhos as $conc){
@@ -154,7 +153,7 @@ class PessoasController extends AppController
 
         //$data = ['results'=>$data];
 
-        $this->log($data2);
+        $this->log($data);
         echo json_encode($data);
     }
 
