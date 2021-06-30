@@ -257,7 +257,9 @@
                     keyword: data,     
                 },
                 success: function(response) {
-                    $('#testeSel2').html(response);
+                    $(response).each(function() {
+                        $('#testeSel2').append($("<option>").attr('value',response.id).text(response.Designacao));
+                    });
                 }
             });   
         })       
