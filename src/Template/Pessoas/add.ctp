@@ -124,7 +124,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
-                        <?php echo $this->Form->control('freguesia', ['id'=> 'mySelect2','style'=>'height: 37px;','label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('freguesia', ['id'=> 'testSel3','style'=>'height: 37px;','type'=>'select','label' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>                
             </div>
@@ -251,15 +251,41 @@
         $("#testeSel").change(function (event) {
             var data = $(this).val();
             $.ajax({
-                method: 'get',
+                //method: 'ajax',
                 url: '/Pessoas/concelhosByDistritos',
+                dataType: 'json',
                 data: {
                     keyword: data,     
                 },
                 success: function(response) {
-                    $(response).each(function() {
+                    $('#testeSel2').html("");                    
+                    //response = JSON.parse(response);
+                    //console.log(response);
+                    response.forEach(element => $('#testeSel2').append($("<option>").attr('value',element.id).text(element.Designacao)));
+                    /*$(response).each(function() {
                         $('#testeSel2').append($("<option>").attr('value',response.id).text(response.Designacao));
-                    });
+                    });*/
+                }
+            });   
+        })
+
+        $("#testeSel2").change(function (event) {
+            var data = $(this).val();         
+            $.ajax({
+                //method: 'ajax',
+                url: '/Pessoas/fregByConc',
+                dataType: 'json',
+                data: {
+                    keyword: data,     
+                },
+                success: function(response) {
+                    $('#testSel3').html("");                    
+                    //response = JSON.parse(response);
+                    //console.log(response);
+                    response.forEach(element => $('#testSel3').append($("<option>").attr('value',element.id).text(element.Designacao)));
+                    /*$(response).each(function() {
+                        $('#testeSel2').append($("<option>").attr('value',response.id).text(response.Designacao));
+                    });*/
                 }
             });   
         })       

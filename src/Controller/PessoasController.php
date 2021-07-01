@@ -130,7 +130,7 @@ class PessoasController extends AppController
     public function concelhosByDistritos(){
         $this->autoRender = false;
 
-        $distritoSelecionadoID = h($this->request->query['keyword']);
+        $distritoSelecionadoID = h($this->request->getQuery('keyword'));
 
         $distritos = $this->Pessoas->CodigosPostais->Distritos
         ->find()
@@ -153,7 +153,28 @@ class PessoasController extends AppController
 
         //$data = ['results'=>$data];
 
-        $this->log($data);
+        //$this->log($data);
+        echo json_encode($data);
+    }
+
+    public function fregByConc(){
+        $this->autoRender = false;
+
+        $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
+
+        $freguesia = $this->Pessoas->CodigosPostais
+        ->find()
+        ->where(['CodigoConcelho like'=> $concelhoSelecionadoID.'%']);
+
+        $data = [];
+
+        foreach($freguesia as $freg){
+            $data[] = ['id' => $freg->id, 'NomeLocalidade' => $freg->NomeLocalidade];
+        }
+
+        //$data = ['results'=>$data];
+
+        $this->log($concelhoSelecionadoID);
         echo json_encode($data);
     }
 
@@ -203,7 +224,7 @@ class PessoasController extends AppController
 
         //$this->log($this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
 
-        $this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
+        //$this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $this->set('centro_educs', $this->Pessoas->CentroEducs->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('estb_pris', $this->Pessoas->EstbPris->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
