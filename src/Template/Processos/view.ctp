@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-6">
                         <h6 class="text-primary"><?= __('Nome') ?></h6>
-                        <p><?= h($processo->processo_id) ?></p>
+                        <p><?= h($processo->nome) ?></p>
                     </div>
                     <div class="col-6">
                         <h6 class="text-primary"><?= __('Id') ?></h6>

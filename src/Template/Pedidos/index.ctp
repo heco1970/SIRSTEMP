@@ -19,15 +19,11 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('ID')],
+        'id' => ['label' => __('ID Pedido')],
         'processo' => ['label' => __('Processo')],
-        'pessoa' => ['label' => __('Pessoa')],
-        'datarecepcao' => ['label' => __('Data de Receção')],
-        'equiparesponsavel' => ['label' => __('Equipa Responsável')],
-        'state' => ['label' => __('Estado'), 'options' => $estados, 'empty' => ' '],
-        'datatermoprevisto' => ['label' => __('Data termo previsto')],
-        'dataefectivatermo' => ['label' => __('Data termo efetivo')],
-
+        'pessoa' => ['label' => __('Nome Pessoa')],
+        'equiparesponsavel' => ['label' => __('Equipa Responsável'),'options' => $teams, 'empty' => ' '],
+        'pedidostype' => ['label' => __('Tipo de Pedido de código'),'options' => $PedidosTypes, 'empty' => ' '],
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>

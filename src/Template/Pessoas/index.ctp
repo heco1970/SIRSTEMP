@@ -20,13 +20,11 @@ $pessoaNome = "";
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('Nº de pessoa')],
+        'id' => ['label' => __('ID Pessoa')],
         'nome' => ['label' => __('Nome')],
         'cc' => ['label' => __('CC/BI')],
         'nif' => ['label' => __('NIF')],
         'datanascimento' => ['label' => __('Data de nascimento'), 'type' => 'text'],
-        'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
-        'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
