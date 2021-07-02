@@ -26,40 +26,123 @@
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
             <div class="row">
                 <div class="col-6">
-                    <h6 class="text-primary"><?= __('Id Pessoa') ?></h6>
-                    <p><?= h($pessoa->id) ?></p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-6">
                     <h6 class="text-primary"><?= __('Nome') ?></h6>
                     <p><?= h($pessoa->nome) ?></p>
                 </div>
                 <div class="col-6">
-                    <h6 class="text-primary"><?= __('CC/BI') ?></h6>
-                    <p><?= h($pessoa->cc) ?></p>
+                    <h6 class="text-primary"><?= __('Nome Alternativo') ?></h6>
+                    <p><?= h($pessoa->nome_alt) ?></p>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-6">
-                    <h6 class="text-primary"><?= __('NIF') ?></h6>
-                    <p><?= h($pessoa->nif) ?></p>
+                    <h6 class="text-primary"><?= __('Nome do Pai') ?></h6>
+                    <p><?= h($pessoa->nomepai) ?></p>
+                    <hr>
                 </div>
                 <div class="col-6">
+                    <h6 class="text-primary"><?= __('Nome da Mãe') ?></h6>
+                    <p><?= h($pessoa->nomemae) ?></p>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Estado Civil') ?></h6>
+                    <p><?= h($pessoa->estadocivil->estado) ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Género') ?></h6>
+                    <p><?= h($pessoa->genero->genero) ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Nacionalidade') ?></h6>
+                    <p><?= h(ucfirst(mb_strtolower($pessoa->pai->paisNome))) ?></p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Código Postal') ?></h6>
+                    <p><?= h($pessoa->codigos_postai->NumCodigoPostal) ?> - <?= h($pessoa->codigos_postai->ExtCodigoPostal) ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Distrito') ?></h6>
+                    <p><?= h($distrito->distrito->Designacao) ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Concelho') ?></h6>
+                    <p><?= h($concelho->Designacao) ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Freguesia') ?></h6>
+                    <p><?= h($pessoa->codigos_postai->NomeLocalidade) ?></p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-3">
                     <h6 class="text-primary"><?= __('Data de Nascimento') ?></h6>
                     <p><?= h($pessoa->data_nascimento->i18nFormat('dd/MM/yyyy')) ?></p>
                 </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Cartão de Cidadão') ?></h6>
+                    <p><?= h($pessoa->cc) ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Número de Contribuinte') ?></h6>
+                    <p><?= h($pessoa->nif) ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Outra Identificação') ?></h6>
+                    <p><?= h($pessoa->outroidentifica) ?></p>
+                </div>
             </div>
+            <hr>
+            <div class="row">
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Centro Educacional') ?></h6>
+                    <p><?= !empty($pessoa->centro_educ->designacao) ? h($pessoa->centro_educ->designacao) : '' ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Estabelecimento Prisional') ?></h6>
+                    <p><?= !empty($pessoa->estb_pri->designacao) ? h($pessoa->estb_pri->designacao) : '' ?></p>
+
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Criado') ?></h6>
+                    <p><?= h($pessoa->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Modificado') ?></h6>
+                    <p><?= !empty($pessoa->modified) ? h($pessoa->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) : '' ?></p>
+                </div>
+                <div class="col-3">
+                    <h6 class="text-primary"><?= __('Estado') ?></h6>
+                    <p><?= $pessoa->estado ? __('Sim') : __('Não'); ?></p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <h6 class="text-primary"><?= __('Observações') ?></h6>
+                    <p><?= h($pessoa->observacoes) ?></p>
+                </div>
+            </div>
+
             <br>
             <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a data-toggle="collapse" data-target="#demo2" class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">Dados Adicionais</a>
+                    <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">Dados Adicionais</a>
                 </li>
             </ul>
             <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div id="demo2" class="card shadow mb-2">
+                <div class="card shadow mb-2">
                     <div class="card-header py-3">
                         <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
                     </div>
@@ -68,11 +151,11 @@
 
             <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="collapse" data-target="#demo3" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Contactos</a>
+                    <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Contactos</a>
                 </li>
             </ul>
             <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                <div id="demo3" class="card shadow mb-2">
+                <div class="card shadow mb-2">
                     <div class="card-header py-3">
                         <a class="btn btn-success btn-circle btn-lg" href="/contactos/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
                     </div>
@@ -108,11 +191,11 @@
 
                 <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="collapse" data-target="#demo" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
+                        <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
                     </li>
-                </ul>                
-                <div class="collapse tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    <div id="demo" class="card shadow mb-2">
+                </ul>
+                <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div class="card shadow mb-2">
                         <div class="card-header py-3">
                             <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/crimes/add/' . h($pessoa->id) . '" ><i class="fas fa-plus"></i></a>' ?>
                         </div>
@@ -148,11 +231,11 @@
 
                     <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a data-toggle="collapse" data-target="#demo4" class="nav-link active" id="pills-processos-tab" data-toggle="pill" href="#pills-processos" role="tab" aria-controls="pills-processos" aria-selected="true">Processos</a>
+                            <a class="nav-link active" id="pills-processos-tab" data-toggle="pill" href="#pills-processos" role="tab" aria-controls="pills-processos" aria-selected="true">Processos</a>
                         </li>
                     </ul>
                     <div class="tab-pane fade show active" id="pills-processos" role="tabpanel" aria-labelledby="pills-processos-tab">
-                        <div id="demo4" class="card shadow mb-2">
+                        <div class="card shadow mb-2">
                             <div class="card-header py-3">
                                 <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pessoas-processos/add/' . h($pessoa->id) . '" ><i class="fas fa-plus"></i></a>' ?>
                             </div>
@@ -186,11 +269,11 @@
 
                     <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="collapse" data-target="#demo5" id="pills-pedidos-tab" data-toggle="pill" href="#pills-pedidos" role="tab" aria-controls="pills-pedidos" aria-selected="true">Pedidos</a>
+                            <a class="nav-link active" id="pills-pedidos-tab" data-toggle="pill" href="#pills-pedidos" role="tab" aria-controls="pills-pedidos" aria-selected="true">Pedidos</a>
                         </li>
                     </ul>
                     <div class="tab-pane fade show active" id="pills-pedidos" role="tabpanel" aria-labelledby="pills-pedidos-tab">
-                        <div id="demo5" class="card shadow mb-2">
+                        <div class="card shadow mb-2">
                             <div class="card-header py-3">
                                 <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/pedidos/add/' . h($pessoa->id) . '" ><i class="fas fa-plus"></i></a>' ?>
                             </div>
