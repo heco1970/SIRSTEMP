@@ -10,7 +10,7 @@
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="/js/multiselect.js"></script>
 <div class="modal-header py-3 bg-light">
-    <h4 class="m-0 font-weight-bold text-primary"><?= __('Detalhe da Pessoa') ?></h4>
+    <h4 class="m-0 font-weight-bold text-primary"><?= __('Detalhes do registo de ')?> <?= h($pessoa->nome) ?></h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -148,46 +148,7 @@
                     </div>
                 </div>
             </div>
-
-            <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Contactos</a>
-                </li>
-            </ul>
             <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                <div class="card shadow mb-2">
-                    <div class="card-header py-3">
-                        <a class="btn btn-success btn-circle btn-lg" href="/contactos/add/<?= h($pessoa->id); ?>"><i class="fas fa-plus"></i></a>
-                    </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Localidade</th>
-                                <th scope="col">Telefone</th>
-                                <th scope="col">Fax</th>
-                                <th scope="col">Telemóvel</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($contactos as $contacto) : ?>
-                                <tr>
-                                    <th scope="row"><?= h($contacto->nome) ?></th>
-                                    <td><?= h($contacto->localidade) ?></td>
-                                    <td><?= h($contacto->telefone) ?></td>
-                                    <td><?= h($contacto->fax) ?></td>
-                                    <td><?= h($contacto->telemovel) ?></td>
-                                    <td><?= $contacto->estado == 1 ? __('Ativo') : __('Não Ativo') ?></td>
-                                    <td><a class="btn btn-info" href="/contactos/view/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
-                                        <a class="btn btn-warning" href="/contactos/edit/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
-                                        <a class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar?')" href="/contactos/delete/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
 
                 <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item">

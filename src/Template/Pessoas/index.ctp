@@ -65,7 +65,7 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
     $(document).ready(function() {
         var writers = {
             ação: function(row) {
-                var view = '<a data-backdrop="static" data-keyboard="false" data-target="#theModal" data-toggle="modal" class="btn btn-info mr-1 openmodal" href="/pessoas/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
+                var view = '<a class="btn btn-info mr-1" href="/pessoas/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Detalhes')?>"><i class="far fa-eye fa-fw"></i></a>'
                 var edit = '<a class="btn btn-warning mr-1" href="/pessoas/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
                 var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" + ')" href="/pessoas/delete/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
 
