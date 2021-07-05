@@ -271,4 +271,16 @@
             </div>
         </div>
     </div>
+    <div class="card-footer card-footer-fixed">        
+        <?php if (empty($value)) { ?>
+            <a href="/pessoas/edit/<?= h($pessoa->id) ?>" class="btn btn-warning float-right space-right"><?= __('Editar') ?></a>
+        <?php } else { ?>
+            <a href="/pessoas/edit/<?= h($pessoa->id) ?>" class="btn btn-warning float-right space-right"><?= __('Editar') ?></a>
+        <?php } ?>      
+        <?php if (empty($value)) { ?>
+            <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?php } else { ?>
+            <a href="/pessoas/view/<?= h($pessoa->pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <?php } ?>
+    </div>
 </div>
