@@ -80,7 +80,7 @@ class AppController extends Controller
                 'action' => 'login',
                 'prefix' => false
             ],
-            'authError' => 'Não está autorizado a acessar este local.',
+            'authError' => 'Não está autorizado a acessar a esta função.',
             'flash' => [
                 'element' => 'error'
             ]

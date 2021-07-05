@@ -113,17 +113,35 @@ class PessoasController extends AppController
         $this->autoRender = false;
 
         $search = h($this->request->query['term']);
-        $freguesias = $this->Pessoas->CodigosPostais->find()->where(['NomeLocalidade like'=>$search.'%'])->limit(20);
-        
+        $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
+
+        $concelhos = $this->Pessoas->CodigosPostais->Concelhos
+        ->find()
+        ->where(['id like'=> $concelhoSelecionadoID.'%']);
+
+        $freguesia;
+
         $data = [];
+
+        foreach($concelhos as $conc){
+            $freguesia = $this->Pessoas->CodigosPostais
+            ->find()
+            ->select(['id', 'NomeLocalidade'])
+            ->where(['CodigoConcelho like'=> $conc->CodigoConcelho.'%', 'NomeLocalidade like'=>$search.'%'])
+            ->group('NomeLocalidade')
+            ->order(['NomeLocalidade' => 'ASC']);
+            //$data2[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
+        }
+
+        //$freguesias = $this->Pessoas->CodigosPostais->find()->where(['NomeLocalidade like'=>$search.'%'])->limit(20);
         
-        foreach($freguesias as $freg){
+        foreach($freguesia as $freg){
             $data[] = ['id' => $freg->id, 'text' => $freg->NomeLocalidade];
         }
 
         $data = ['results'=>$data];
 
-        $this->log($this->request->query);
+        $this->log($data);
         echo json_encode($data);
     }
 
