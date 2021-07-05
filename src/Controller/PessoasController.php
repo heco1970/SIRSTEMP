@@ -130,22 +130,21 @@ class PessoasController extends AppController
     public function concelhosByDistritos(){
         $this->autoRender = false;
 
-        $distritoSelecionadoID = h($this->request->query['keyword']);
+        $distritoSelecionadoID = h($this->request->getQuery('keyword'));
 
         $distritos = $this->Pessoas->CodigosPostais->Distritos
         ->find()
         ->where(['id like'=> $distritoSelecionadoID.'%']);
 
-        $concelhos = $this->Pessoas->CodigosPostais->Concelhos
-        ->find()
-        ->where(['CodigoDistrito like'=> $distritos->CodigoDistrito.'%']);
+        $concelhos;
         
         $data = [];
         $data2 = [];
 
         foreach($distritos as $distrit){
-            $data2[] = ['id' => $distrit->id, 'Designacao' => $distrit->Designacao, 
-            'CodigoDistrito' => $distrit->CodigoDistrito];
+            $concelhos = $this->Pessoas->CodigosPostais->Concelhos
+            ->find()
+            ->where(['CodigoDistrito like'=> $distrit->CodigoDistrito.'%']);
         }
 
         foreach($concelhos as $conc){
@@ -154,7 +153,41 @@ class PessoasController extends AppController
 
         //$data = ['results'=>$data];
 
-        $this->log($data2);
+        //$this->log($data);
+        echo json_encode($data);
+    }
+
+    public function fregByConc(){
+        $this->autoRender = false;
+
+        $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
+
+        $concelhos = $this->Pessoas->CodigosPostais->Concelhos
+        ->find()
+        ->where(['id like'=> $concelhoSelecionadoID.'%']);
+
+        $freguesia;
+
+        $data = [];
+        $data2 = [];
+
+        foreach($concelhos as $conc){
+            $freguesia = $this->Pessoas->CodigosPostais
+            ->find()
+            ->select(['id', 'NomeLocalidade'])
+            ->where(['CodigoConcelho like'=> $conc->CodigoConcelho.'%'])
+            ->group('NomeLocalidade')
+            ->order(['NomeLocalidade' => 'ASC']);
+            //$data2[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
+        }
+
+        foreach($freguesia as $freg){
+            $data[] = ['id' => $freg->id, 'NomeLocalidade' => $freg->NomeLocalidade];
+        }
+
+        //$data = ['results'=>$data];
+
+        $this->log($data);
         echo json_encode($data);
     }
 
@@ -204,7 +237,7 @@ class PessoasController extends AppController
 
         //$this->log($this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
 
-        $this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
+        //$this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $this->set('centro_educs', $this->Pessoas->CentroEducs->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('estb_pris', $this->Pessoas->EstbPris->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
