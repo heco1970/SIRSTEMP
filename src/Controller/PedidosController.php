@@ -64,6 +64,16 @@ class PedidosController extends AppController
                 'valueField' => 'designacao'
             ))->toArray();
             $this->set(compact('estados'));
+            $teams = $this->Pedidos->teams->find('list', array(
+                'keyField' => 'id',
+                'valueField' => 'nome'
+            ))->toArray();
+            $this->set(compact('teams'));
+            $PedidosTypes = $this->Pedidos->PedidosTypes->find('list', array(
+                'keyField' => 'id',
+                'valueField' => 'descricao'
+            ))->toArray();
+            $this->set(compact('PedidosTypes'));
         }
     }
 

@@ -17,10 +17,10 @@
 <?php
 $dynElems =
     [
+        'Nome' => ['label' => __('Nome')],
         'processo' => ['label' => __('Id')],
         'natureza' => ['label' => __('Natureza'),'options' => $natureza, 'empty' => ' '],
         'nip' => ['label' => __('NIP')],
-        'ultima' => ['label' => __('Ultima Alteração')],
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
