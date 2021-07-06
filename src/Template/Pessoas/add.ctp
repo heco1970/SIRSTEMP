@@ -282,7 +282,7 @@
                     $('#mySelect2').html("");                    
                     //response = JSON.parse(response);
                     //console.log(response);
-                    response.forEach(element => $('#mySelect2').append($("<option>").attr('value',element.id).text(element.Designacao)));
+                    Object.keys(response).forEach(element => $('#mySelect2').append($("<option>").attr('value',element.id).text(element.NomeLocalidade)));
                     /*$(response).each(function() {
                         $('#testeSel2').append($("<option>").attr('value',response.id).text(response.Designacao));
                     });*/

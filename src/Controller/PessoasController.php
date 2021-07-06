@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -7,6 +6,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Table;
+
+ob_start();
 
 /**
  * Pessoas Controller
@@ -112,7 +113,7 @@ class PessoasController extends AppController
     public function fregAutoComplete(){
         $this->autoRender = false;
 
-        $search = h($this->request->query['term']);
+        $search = h($this->request->getQuery('term'));
         $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
