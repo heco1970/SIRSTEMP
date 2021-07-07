@@ -110,11 +110,16 @@ class PessoasController extends AppController
         $this->set(compact('contactos', 'crimes', 'processos', 'pedidos', 'distrito', 'concelho'));
     }
 
+    public function saveConcelhoID(){
+        $this->autoRender = false;
+        $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
+    }
+
     public function fregAutoComplete(){
         $this->autoRender = false;
 
         $search = h($this->request->getQuery('term'));
-        $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
+        $concelhoSelecionadoID = $this->request->getQuery('keyword');
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
         ->find()
@@ -142,7 +147,7 @@ class PessoasController extends AppController
 
         $data = ['results'=>$data];
 
-        $this->log($data);
+        $this->log($concelhoSelecionadoID);
         echo json_encode($data);
     }
 
@@ -175,7 +180,7 @@ class PessoasController extends AppController
         //$this->log($data);
         echo json_encode($data);
     }
-
+    
     public function fregByConc(){
         $this->autoRender = false;
 
