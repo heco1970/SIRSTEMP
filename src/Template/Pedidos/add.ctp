@@ -57,7 +57,7 @@
     </div>    
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success float-right"]) ?>
-        <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <a href="#" onclick="history.go(-1);" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 </div>
