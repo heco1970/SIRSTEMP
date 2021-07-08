@@ -138,10 +138,10 @@
                 </div>
 
                 <div class="col">                                           
-                        <div id="container" style="padding-left: 30%;">
-                            <label for="age">Idade</label>
-                            <?php echo $this->Form->control('age', ['id' => "idade",'label' => false, 'class' => 'form-control', 'style' => 'width: 50%;', 'disabled' => true]); ?>
-                        </div>
+                    <div id="container" style="padding-left: 30%;">
+                        <label for="age">Idade</label>
+                        <?php echo $this->Form->control('age', ['id' => "idade",'label' => false, 'class' => 'form-control', 'style' => 'width: 50%;', 'disabled' => true]); ?>
+                    </div>
                         
                 </div>
 
@@ -171,26 +171,26 @@
             <h5 style="color: #0000009c;">Contacto</h5>
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
                 <label for="nomeContact" style="margin-right: 30px; padding-top: 8px;">Nome</label>
-                <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control']); ?>
+                <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>                
+                <?php echo $this->Form->control('tel', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', "value"=>"+351 "]); ?>                
             </div>
 
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
                 <label for="nomeContact2" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
-                <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control']); ?>
+                <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel2" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel2', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>             
+                <?php echo $this->Form->control('tel2', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text',"value"=>"+351 "]); ?>             
             </div>
 
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
                 <label for="nomeContact3" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
-                <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control']); ?>
+                <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel3', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>            
+                <?php echo $this->Form->control('tel3', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', "value"=>"+351 "]); ?>            
             </div>
 
             <div class="form-row">            

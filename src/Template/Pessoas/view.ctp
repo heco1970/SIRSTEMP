@@ -11,9 +11,6 @@
 <script src="/js/multiselect.js"></script>
 <div class="modal-header py-3 bg-light">
     <h4 class="m-0 font-weight-bold text-primary"><?= __('Detalhes do registo de ')?> <?= h($pessoa->nome) ?></h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>
 <div class="ml-3 mr-3 mb-3 mt-3 modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;" >
 
@@ -181,6 +178,7 @@
                                         <td><?= h($crime->qte) ?></td>
                                         <td><?= $crime->apenaspre == 1 ? __('✔') : __('✕') ?></td>
                                         <td>
+                                            <a class="btn btn-info" href="/crimes/view/<?= h($crime->id) ?>?pessoa=<?= h($pessoa->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
                                             <a class="btn btn-warning" href="/crimes/edit/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
                                             <a class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar?')" href="/crimes/delete/<?= h($crime->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
                                         </td>
@@ -243,7 +241,6 @@
                                     <tr>
                                         <th scope="col">Processo</th>
                                         <th scope="col">Data de Receção</th>
-                                        <th scope="col">Equipa Responsável</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Data termo previsto</th>
                                         <th scope="col">Data termo efetivo</th>
@@ -253,7 +250,6 @@
                                     <tr>
                                         <td><?= h($pedido->processo->processo_id) ?></td>
                                         <td><?= h($pedido->datarecepcao->i18nFormat('yyyy-MM-dd')) ?></td>
-                                        <td><?= h($pedido->team->nome) ?></td>
                                         <td><?= h($pedido->state->designacao) ?></td>
                                         <td><?= h($pedido->datatermoprevisto->i18nFormat('yyyy-MM-dd')) ?></td>
                                         <td><?= h($pedido->datainicioefectivo->i18nFormat('yyyy-MM-dd')) ?></td>
@@ -278,7 +274,7 @@
             <a href="/pessoas/edit/<?= h($pessoa->id) ?>" class="btn btn-warning float-right space-right"><?= __('Editar') ?></a>
         <?php } ?>      
         <?php if (empty($value)) { ?>
-            <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+            <a href="/pessoas/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php } else { ?>
             <a href="/pessoas/view/<?= h($pessoa->pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php } ?>
