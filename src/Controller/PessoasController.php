@@ -18,6 +18,7 @@ ob_start();
  */
 class PessoasController extends AppController
 {
+   
 
     /**
      * Index method
@@ -147,7 +148,7 @@ class PessoasController extends AppController
 
         $data = ['results'=>$data];
 
-        $this->log($concelhoSelecionadoID);
+        $this->log($data);
         echo json_encode($data);
     }
 
