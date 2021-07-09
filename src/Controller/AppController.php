@@ -28,7 +28,7 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
-
+    public $globalConcID;
 
 
 
@@ -51,6 +51,7 @@ class AppController extends Controller
     {
         parent::initialize();
 
+        $this->globalConcID = 0;
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
         ]);

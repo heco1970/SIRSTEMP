@@ -119,12 +119,18 @@ class PessoasController extends AppController
     public function fregAutoComplete(){
         $this->autoRender = false;
 
+        $this->globalConcID = $this->request->getQuery('keyword');
+
         $search = h($this->request->getQuery('term'));
-        $concelhoSelecionadoID = $this->request->getQuery('keyword');
+        $concelhoSelecionadoID = $this->request->getQuery('keyword');        
+
+        if($this->request->getQuery('term')){
+            $concelhoSelecionadoID =  $this->globalConcID;
+        }
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
         ->find()
-        ->where(['id like'=> $concelhoSelecionadoID.'%']);
+        ->where(['id like'=> $this->concelhoSelecionadoID .'%']);
 
         $freguesia;
 
@@ -148,7 +154,7 @@ class PessoasController extends AppController
 
         $data = ['results'=>$data];
 
-        $this->log($data);
+        $this->log($this->globalConcID);
         echo json_encode($data);
     }
 
