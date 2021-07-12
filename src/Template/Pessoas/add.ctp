@@ -273,20 +273,20 @@
             var data = $(this).val();         
             $.ajax({
                 //method: 'ajax',
-                url: '/Pessoas/fregAutoComplete',
+                url: '/Pessoas/saveConcelhoID',
                 dataType: 'json',
                 data: {
                     keyword: data,     
                 },
-                success: function(response) {
+                /*success: function(response) {
                     $('#mySelect2').html("");                    
                     //response = JSON.parse(response);
                     //console.log(response);
                     Object.keys(response).forEach(element => $('#mySelect2').append($("<option>").attr('value',element.id).text(element.NomeLocalidade)));
-                    /*$(response).each(function() {
+                    $(response).each(function() {
                         $('#testeSel2').append($("<option>").attr('value',response.id).text(response.Designacao));
-                    });*/
-                }
+                    });
+                }*/
             });   
         })       
 

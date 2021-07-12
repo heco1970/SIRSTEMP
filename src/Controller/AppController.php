@@ -51,7 +51,8 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->globalConcID = 0;
+        //$this->globalConcID = "ola";  
+
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
         ]);

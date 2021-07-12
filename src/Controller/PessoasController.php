@@ -113,28 +113,31 @@ class PessoasController extends AppController
 
     public function saveConcelhoID(){
         $this->autoRender = false;
-        $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
+        //$this->globalConcID = $this->request->getQuery('keyword');
+        //$this->log($this->globalConcID);
+
+        $teste = $this->request->getQuery('keyword');
+        //$this->set('concID', $teste);
+
+        $this->set(compact('teste'));
+        return $teste;
+        //return $teste;
     }
 
     public function fregAutoComplete(){
-        $this->autoRender = false;
-
-        $this->globalConcID = $this->request->getQuery('keyword');
+        $this->autoRender = false;                
 
         $search = h($this->request->getQuery('term'));
-        $concelhoSelecionadoID = $this->request->getQuery('keyword');        
-
-        if($this->request->getQuery('term')){
-            $concelhoSelecionadoID =  $this->globalConcID;
-        }
+        $concelhoSelecionadoID = $this->saveConcelhoID();        
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
         ->find()
-        ->where(['id like'=> $this->concelhoSelecionadoID .'%']);
+        ->where(['id like'=> $concelhoSelecionadoID .'%']);
 
         $freguesia;
 
         $data = [];
+        $data2 = [];
 
         foreach($concelhos as $conc){
             $freguesia = $this->Pessoas->CodigosPostais
@@ -146,7 +149,14 @@ class PessoasController extends AppController
             //$data2[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
         }
 
-        //$freguesias = $this->Pessoas->CodigosPostais->find()->where(['NomeLocalidade like'=>$search.'%'])->limit(20);
+        /*foreach($concelhos as $conc){            
+            $data2[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
+        }*/
+
+        /*$freguesias = $this->Pessoas->CodigosPostais
+        ->find()
+        ->where(['NomeLocalidade like'=>$search.'%'])
+        ->limit(20);*/
         
         foreach($freguesia as $freg){
             $data[] = ['id' => $freg->id, 'text' => $freg->NomeLocalidade];
@@ -154,7 +164,7 @@ class PessoasController extends AppController
 
         $data = ['results'=>$data];
 
-        $this->log($this->globalConcID);
+        $this->log($concelhoSelecionadoID);
         echo json_encode($data);
     }
 
