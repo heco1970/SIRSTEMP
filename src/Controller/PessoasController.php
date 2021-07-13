@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Cake\ORM\TableRegistry;
@@ -113,22 +114,16 @@ class PessoasController extends AppController
 
     public function saveConcelhoID(){
         $this->autoRender = false;
-        //$this->globalConcID = $this->request->getQuery('keyword');
-        //$this->log($this->globalConcID);
-
-        $teste = $this->request->getQuery('keyword');
-        //$this->set('concID', $teste);
-
-        $this->set(compact('teste'));
-        return $teste;
-        //return $teste;
+        $this->globalConcID = $this->request->getQuery('keyword');
+        Configure::write('ConcID',$this->request->getQuery('keyword'));
+        $this->log(Configure::read('ConcID'));
     }
 
     public function fregAutoComplete(){
         $this->autoRender = false;                
 
         $search = h($this->request->getQuery('term'));
-        $concelhoSelecionadoID = $this->saveConcelhoID();        
+        $concelhoSelecionadoID = Configure::read('ConcID');       
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
         ->find()
@@ -164,7 +159,7 @@ class PessoasController extends AppController
 
         $data = ['results'=>$data];
 
-        $this->log($concelhoSelecionadoID);
+        $this->log(Configure::read('ConcID'));
         echo json_encode($data);
     }
 
