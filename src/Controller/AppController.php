@@ -27,11 +27,6 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
-    public $globalConcID;
-
-
-
     public $components = [
         'Acl' => [
             'className' => 'Acl.Acl'
@@ -50,8 +45,6 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
-
-        //$this->globalConcID = "ola";  
 
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,

@@ -114,16 +114,16 @@ class PessoasController extends AppController
 
     public function saveConcelhoID(){
         $this->autoRender = false;
-        $this->globalConcID = $this->request->getQuery('keyword');
-        Configure::write('ConcID',$this->request->getQuery('keyword'));
-        $this->log(Configure::read('ConcID'));
+        $this->globalConcID = $this->request->getQuery('keyword');        
     }
 
-    public function fregAutoComplete(){
+    public function fregAutoComplete($concID = 0){
         $this->autoRender = false;                
 
+        $this->log($concID);
+
         $search = h($this->request->getQuery('term'));
-        $concelhoSelecionadoID = Configure::read('ConcID');       
+        $concelhoSelecionadoID = $concID;       
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
         ->find()
@@ -158,8 +158,6 @@ class PessoasController extends AppController
         }
 
         $data = ['results'=>$data];
-
-        $this->log(Configure::read('ConcID'));
         echo json_encode($data);
     }
 

@@ -112,13 +112,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-                        <?php echo $this->Form->control('distrito', ['id' => 'testeSel', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('distrito', ['id' => 'testeSel', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-                        <?php echo $this->Form->control('concelho', ['id' => 'testeSel2', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('concelho', ['id' => 'testeSel2', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
@@ -217,9 +217,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+
+    var selData = 0;
+
    $('#mySelect2').select2({
         ajax: {
-            url: '/Pessoas/fregAutoComplete',
+            url: function (params) {
+            return '/Pessoas/FregAutoComplete/' + selData;
+            },
             dataType: 'json',
             delay: 250,            
         }
@@ -261,33 +266,15 @@
                     $('#testeSel2').html("");                    
                     //response = JSON.parse(response);
                     //console.log(response);
-                    response.forEach(element => $('#testeSel2').append($("<option>").attr('value',element.id).text(element.Designacao)));
-                    /*$(response).each(function() {
-                        $('#testeSel2').append($("<option>").attr('value',response.id).text(response.Designacao));
-                    });*/
+                    $('#testeSel2').append($("<option>").attr('value',"1").text(" "));
+                    response.forEach(element => $('#testeSel2').append($("<option>").attr('value',element.id).text(element.Designacao)));                    
                 }
             });   
         })
 
         $("#testeSel2").change(function (event) {
-            var data = $(this).val();         
-            $.ajax({
-                //method: 'ajax',
-                url: '/Pessoas/saveConcelhoID',
-                dataType: 'json',
-                data: {
-                    keyword: data,     
-                },
-                /*success: function(response) {
-                    $('#mySelect2').html("");                    
-                    //response = JSON.parse(response);
-                    //console.log(response);
-                    Object.keys(response).forEach(element => $('#mySelect2').append($("<option>").attr('value',element.id).text(element.NomeLocalidade)));
-                    $(response).each(function() {
-                        $('#testeSel2').append($("<option>").attr('value',response.id).text(response.Designacao));
-                    });
-                }*/
-            });   
+            var data = $(this).val();  
+            selData = data;          
         })       
 
         $('#codigo_postal1').keyup(function() {
