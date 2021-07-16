@@ -225,6 +225,12 @@ class PessoasController extends AppController
         echo json_encode($data);
     }
 
+    public function nextId() {
+        $result = $this->Pessoas->query("SELECT Auto_increment FROM information_schema.tables AS NextId  WHERE table_name='table-name' AND table_schema='db-name'");
+        return $result[0]['NextId']['Auto_increment'];
+    }
+    
+
     /**
      * Add method
      *
@@ -257,10 +263,12 @@ class PessoasController extends AppController
             }
         }
 
+        $nextUserID = $this->Pessoas->query("SELECT Auto_increment FROM information_schema.tables AS NextId  WHERE table_name='table-name' AND table_schema='db-name'");
         $this->set('distritos', $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
+        $this->set('nextUser', $nextUserID);
 
+        $this->log($nextUserID);
         
-
         /*$distritoSelecionadoID = $this->request->getQuery('keyword');     
         //$distritoSelecionado = $this->request->getData('distrito');
         $this->log($distritoSelecionadoID);

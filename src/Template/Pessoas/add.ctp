@@ -23,7 +23,7 @@
         <div id='my-form-body'>
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
                 <label for="nmrPessoa" style="margin-right: 30px; padding-top: 8px;">ID da pessoa</label>                        
-                <?php echo $this->Form->control('nmrPessoa', ['id' => 'nmrPessoaID','label' => false, 'class' => 'form-control', 'style' => 'width: 65%;', 'disabled' => true]); ?>
+                <?php echo $this->Form->control('nmrPessoa', ['value' => $nextUser,'label' => false, 'class' => 'form-control', 'style' => 'width: 65%;', 'disabled' => true]); ?>
                                 
                 <label for="localDos" style="margin-right: 30px; padding-top: 8px;">Localização do dossier</label>
                 <div id="input select" style="width: 15%;">
