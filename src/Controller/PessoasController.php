@@ -226,7 +226,7 @@ class PessoasController extends AppController
     }
 
     public function nextId() {
-        $result = $this->Pessoas->query("SELECT Auto_increment FROM information_schema.tables AS NextId  WHERE table_name='table-name' AND table_schema='db-name'");
+        $result = $this->Pessoas->query("SELECT Auto_increment FROM information_schema.tables AS NextId  WHERE table_name='pessoas' AND table_schema='cac3l'");
         return $result[0]['NextId']['Auto_increment'];
     }
     
@@ -264,11 +264,13 @@ class PessoasController extends AppController
         }
 
         $nextUserID = $this->Pessoas->query("SELECT Auto_increment FROM information_schema.tables AS NextId  WHERE table_name='table-name' AND table_schema='db-name'");
-        $this->set('distritos', $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
-        $this->set('nextUser', $nextUserID);
+        $newPlaylist = $this->Pessoas->find('all',['order' => ['Pessoas.id' => 'DESC']])->select(['id']);        
+        $lista = $this->Pessoas
+        ->find()
+        ->select(['id'])                
+        ->order(['id' => 'ASC']);
+        $this->set('nextUser', $this->nextId());
 
-        $this->log($nextUserID);
-        
         /*$distritoSelecionadoID = $this->request->getQuery('keyword');     
         //$distritoSelecionado = $this->request->getData('distrito');
         $this->log($distritoSelecionadoID);
@@ -280,6 +282,7 @@ class PessoasController extends AppController
         //$this->log($this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
 
         //$this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
+        $this->set('distritos', $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $this->set('centro_educs', $this->Pessoas->CentroEducs->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('estb_pris', $this->Pessoas->EstbPris->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
