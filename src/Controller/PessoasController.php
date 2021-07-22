@@ -263,13 +263,25 @@ class PessoasController extends AppController
             }
         }
 
-        $nextUserID = $this->Pessoas->query("SELECT Auto_increment FROM information_schema.tables AS NextId  WHERE table_name='table-name' AND table_schema='db-name'");
-        $newPlaylist = $this->Pessoas->find('all',['order' => ['Pessoas.id' => 'DESC']])->select(['id']);        
+        /* Demonstração do ID do registo atual a ser inserido*/
+        $data = [];
+
         $lista = $this->Pessoas
         ->find()
         ->select(['id'])                
-        ->order(['id' => 'ASC']);
-        $this->set('nextUser', $this->nextId());
+        ->order(['id' => 'DESC']);
+
+        foreach($lista as $pessoa){
+            $data[] = ['id' => $pessoa->id];
+        }
+
+        $idUltimoRegisto = array_sum($data[0]);
+
+        $idProximoRegisto = $idUltimoRegisto + 1;
+
+        $this->set('nextUser', $idProximoRegisto);
+
+        /**************************************************** */
 
         /*$distritoSelecionadoID = $this->request->getQuery('keyword');     
         //$distritoSelecionado = $this->request->getData('distrito');
