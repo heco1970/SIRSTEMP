@@ -155,7 +155,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="nif">Número de Contribuinte</label>
-                        <?php echo $this->Form->control('nif', ['label' => false, 'class' => 'form-control', 'type' => 'text']); ?>
+                        <?php echo $this->Form->control('nif', ['maxlength'=>'9', 'label' => false, 'class' => 'form-control', 'type' => 'text']); ?>
 
                     </div>
                 </div>
