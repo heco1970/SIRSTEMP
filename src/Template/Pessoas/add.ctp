@@ -174,7 +174,7 @@
                 <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', "value"=>"+351 "]); ?>                
+                <?php echo $this->Form->control('tel', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', "value"=>"+351 ", 'maxLength'=>'14']); ?>                
             </div>
 
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
@@ -182,7 +182,7 @@
                 <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel2" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel2', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text',"value"=>"+351 "]); ?>             
+                <?php echo $this->Form->control('tel2', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text',"value"=>"+351 ",'maxLength'=>'14']); ?>             
             </div>
 
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
@@ -190,7 +190,7 @@
                 <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel3', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', "value"=>"+351 "]); ?>            
+                <?php echo $this->Form->control('tel3', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', "value"=>"+351 ",'maxLength'=>'14']); ?>            
             </div>
 
             <div class="form-row">            
