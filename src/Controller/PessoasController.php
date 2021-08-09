@@ -161,7 +161,7 @@ class PessoasController extends AppController
         echo json_encode($data);
     }
 
-    public static function validateNIF($nif)
+    public function validateNIF($nif)
     {
         $nif = trim($nif);
         $nif_split = str_split($nif);
@@ -174,12 +174,12 @@ class PessoasController extends AppController
             $check_digit = 11 - ($check_digit % 11);
             $check_digit = $check_digit >= 10 ? 0 : $check_digit;
             if ($check_digit == $nif_split[8]) {
-                return true;
-                console.log("yay");
+                $this->log("yay");
+                return true;                
             }
         }
-        return false;
-        console.log("no");
+        $this->log("no");
+        return false;        
     }
 
     public function concelhosByDistritos(){
