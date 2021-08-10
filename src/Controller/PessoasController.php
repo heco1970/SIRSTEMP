@@ -447,6 +447,7 @@ class PessoasController extends AppController
 
     public function xls()
     {
+        /*
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
         $nome = 'nome LIKE "%' . $out[0] . '%"';
@@ -471,6 +472,9 @@ class PessoasController extends AppController
         } else {
             $pessoas = $this->Pessoas->find('all', array('conditions' => $arr));
         }
+        */
+
+        $pessoas = $this->Pessoas->find('all')->toArray();
 
         $this->autoRender = false;
         $path = TMP . "pessoas.xlsx";

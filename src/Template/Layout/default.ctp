@@ -1,5 +1,6 @@
     <?php
     $title = 'Direção-Geral de Reinserção e Serviços Prisionais ';
+    $currentYear = date('Y');
     ?>
 
     <!DOCTYPE html>
@@ -63,7 +64,7 @@
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
                             <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; <?= $title ?> 2020</span>
+                                <span>Copyright &copy; <?= $title ?> <?= $currentYear ?></span>
                             </div>
                         </div>
                     </footer>

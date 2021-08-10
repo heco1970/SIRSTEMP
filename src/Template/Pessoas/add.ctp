@@ -174,15 +174,15 @@
                 <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', "value"=>"+351 ", 'maxLength'=>'14']); ?>                
+                <?php echo $this->Form->control('tel', ['id'=>'telefone1','name' => 'telefone1','label' => false, 'class' => 'form-control telefone1', 'style' => 'width: 70%;','type' => 'text', 'placeholder'=>'+351 xxx xxx xxx', 'value'=>'+351', 'maxlengh'=>'14']); ?>                
             </div>
 
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
                 <label for="nomeContact2" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
-                <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
+                <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'telefone2 form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel2" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel2', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text',"value"=>"+351 ",'maxLength'=>'14']); ?>             
+                <?php echo $this->Form->control('tel2', ['id'=>'telefone2','name' => 'telefone2', 'label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text','placeholder'=>'+351 xxx xxx xxx', 'value'=>'+351', 'maxlengh'=>'14']); ?>             
             </div>
 
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
@@ -190,7 +190,7 @@
                 <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
 
                 <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel3', ['label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', "value"=>"+351 ",'maxLength'=>'14']); ?>            
+                <?php echo $this->Form->control('tel3', ['id' => 'telefone3', 'name' => 'telefone3','label' => false, 'class' => 'form-control', 'style' => 'width: 70%;', 'placeholder'=>'+351 xxx xxx xxx', 'value'=>'+351', 'maxlengh'=>'14']); ?>            
             </div>
 
             <div class="form-row">            
@@ -218,6 +218,7 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://raw.githubusercontent.com/igorescobar/jQuery-Mask-Plugin/master/src/jquery.mask.js"></script>
 <script>
 
     var selData = 0;
@@ -231,6 +232,7 @@
             delay: 250,            
         }
     });
+
 </script>
 
 <script> 
@@ -353,5 +355,21 @@
                 }
             });
         };
+
+        $('#telefone1').keypress(function(e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
+        e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+        });
+
+        $('#telefone2').keypress(function(e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
+        e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+        });
+
+        $('#telefone3').keypress(function(e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
+        e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+        });
+
     });
 </script>

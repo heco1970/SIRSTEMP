@@ -84,6 +84,7 @@ class ContactosTable extends Table
 
         $validator
             ->integer('telefone')
+            ->maxLength('telefone', 14)
             ->allowEmpty('telefone');
 
         $validator
