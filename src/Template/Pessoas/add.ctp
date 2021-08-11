@@ -320,18 +320,18 @@
         };
 
         $('#telefone1').keypress(function(e) {
-        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
-        e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
+            e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
         });
 
         $('#telefone2').keypress(function(e) {
-        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
-        e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
+            e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
         });
 
         $('#telefone3').keypress(function(e) {
-        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
-        e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
+            e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
         });
 
     });
