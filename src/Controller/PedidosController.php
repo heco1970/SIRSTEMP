@@ -111,23 +111,12 @@ class PedidosController extends AppController
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
 
-            $pessoa_nome = $this->request->getData('pessoa');
-            $processo_nome = $this->request->getData('processo');
-            
-
+            $pessoa_nome = $this->request->getData('pessoa_nome');
             $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
             if ($pessoa_id->isEmpty()) {
                 $errors = 1;
             }
-
             $pedido->pessoa_id = $pessoa_id;
-
-            $processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');
-            if ($processo_id->isEmpty()) {
-                $errors1 = 1;
-            } 
-
-            $pedido->processo_id = $processo_id;
 
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
