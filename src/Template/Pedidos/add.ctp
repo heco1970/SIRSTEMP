@@ -14,8 +14,8 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="processo_id">Processo</label>
-                        <?= $this->Form->text('processo', ['id' => 'processo_id', 'class' => 'form-control',  'label' => false, 'required']); ?>
+                        <label for="processo">Processo</label>
+                        <?php echo $this->Form->control('processo_id', ['label' => false, 'class' => 'form-control', 'options' => $processos,'required','empty' => ['' => '']]); ?>
                         <?php
                             if (!empty($errors1)) {
                                 echo "<div class='error-message' style='color:red; font-weight: bold;'> Processo inexistente.</div>";
@@ -25,12 +25,12 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="nome_pessoa">Nome Pessoa</label>
+                        <label for="pessoa_nome">Nome Pessoa</label>
                         <?php
                             if ($pessoa != null) {
-                                echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
+                                echo $this->Form->text('pessoa_nome', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
                             } else {
-                                echo $this->Form->text('pessoa', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
+                                echo $this->Form->text('pessoa_nome', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
                             }
                             if (!empty($errors)) {
                                 echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa inexistente.</div>";
