@@ -142,6 +142,8 @@ class PessoasTable extends Table
 
         $validator
             ->integer('nif')
+            ->minLength('nif', 9)
+            ->maxLength('nif', 9)
             ->requirePresence('nif', 'create')
             ->notEmpty('nif');
 
