@@ -447,24 +447,29 @@ class PessoasController extends AppController
 
     public function xls()
     {
-        /*
+        
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $nome = 'nome LIKE "%' . $out[0] . '%"';
-        $cc = 'cc LIKE "%' . $out[1] . '%"';
-        $nif = 'nif LIKE "%' . $out[2] . '%"';
-        $datanascimento = 'data_nascimento LIKE "%' . $out[3] . '%"';
+
+        $id = 'id LIKE "%' . $out[0] . '%"';
+        $nome = 'nome LIKE "%' . $out[1] . '%"';
+        $cc = 'cc LIKE "%' . $out[2] . '%"';
+        $nif = 'nif LIKE "%' . $out[3] . '%"';
+        $datanascimento = 'data_nascimento LIKE "%' . $out[4] . '%"';
 
         if ($out[0] != null) {
-            array_push($arr, $nome);
+            array_push($arr, $id);
         }
         if ($out[1] != null) {
-            array_push($arr, $cc);
+            array_push($arr, $nome);
         }
         if ($out[2] != null) {
-            array_push($arr, $nif);
+            array_push($arr, $cc);
         }
         if ($out[3] != null) {
+            array_push($arr, $nif);
+        }
+        if ($out[4] != null) {
             array_push($arr, $datanascimento);
         }
         if ($arr == null) {
@@ -472,10 +477,7 @@ class PessoasController extends AppController
         } else {
             $pessoas = $this->Pessoas->find('all', array('conditions' => $arr));
         }
-        */
-
-        $pessoas = $this->Pessoas->find('all')->toArray();
-
+        
         $this->autoRender = false;
         $path = TMP . "pessoas.xlsx";
 
