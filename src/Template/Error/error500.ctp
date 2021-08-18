@@ -9,7 +9,7 @@ if (empty($logged)):
   </script>
 <?php
 else:
-  $this->layout = 'default';
+  $this->layout = 'my_error';
 ?>
 <div class="text-center">
   <div class="error mx-auto" data-text="500">500</div>
