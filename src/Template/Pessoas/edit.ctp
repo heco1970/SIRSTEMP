@@ -178,7 +178,7 @@
                 <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
                 
                 <label for="tel" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel', ['id' => 'telefone1', 'name' => 'telefone1','label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', 'placeholder'=>'+351 xxx xxx xxx', 'maxlengh'=>'14']); ?>                
+                <?php echo $this->Form->control('tel', ['id' => 'telefone1', 'name' => 'telefone1','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>                
             </div>
 
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
@@ -186,7 +186,7 @@
                 <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
                 
                 <label for="tel2" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel2', ['id' => 'telefone2', 'name' => 'telefone2','label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', 'placeholder'=>'+351 xxx xxx xxx', 'maxlengh'=>'14']); ?>             
+                <?php echo $this->Form->control('tel2', ['id' => 'telefone2', 'name' => 'telefone2','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>             
             </div>
 
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
@@ -194,7 +194,7 @@
                 <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
                 
                 <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel3', ['id' => 'telefone3', 'name' => 'telefone3','label' => false, 'class' => 'form-control', 'style' => 'width: 70%;','type' => 'text', 'placeholder'=>'+351 xxx xxx xxx', 'maxlengh'=>'14']); ?>            
+                <?php echo $this->Form->control('tel3', ['id' => 'telefone3', 'name' => 'telefone3','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>            
             </div>
 
             <div class="form-row">
@@ -260,18 +260,18 @@
         $('#codigo_postal1').trigger("keyup");
 
         $('#telefone1').keypress(function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
-            e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+            e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
         });
 
         $('#telefone2').keypress(function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
-            e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+            e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
         });
 
         $('#telefone3').keypress(function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,3})/);
-            e.target.value = !x[2] ? x[1] :  '+' +'351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+            e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
         });
 
     });
