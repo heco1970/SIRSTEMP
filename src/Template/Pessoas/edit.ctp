@@ -1,19 +1,18 @@
 <?php
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pessoa $pessoa
  */
 ?>
 <style>
-    #distritos,
-    #concelhos,
-    #freguesias {
-        /* for Firefox */
-        -moz-appearance: none;
-        /* for Chrome */
-        -webkit-appearance: none;
-    }
+#distritos,
+#concelhos,
+#freguesias {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+}
 </style>
 
 <div class="card shadow mb-4">
@@ -23,15 +22,12 @@
     <?= $this->Form->create($pessoa) ?>
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
-
-            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
-                <label for="nmrPessoa" style="margin-right: 30px; padding-top: 8px;">ID da pessoa</label>                        
-                <?php echo $this->Form->control('nmrPessoa', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;']); ?>
-                
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">
+                <label for="id" style="margin-right: 30px; padding-top: 8px;">ID da pessoa</label>
+                <?php echo $this->Form->control('id', ['type'=>'text', 'label' => false,'disabled' => true, 'class' => 'form-control', 'style' => 'width: 65%;']); ?>
                 <label for="localDos" style="margin-right: 30px; padding-top: 8px;">Localização do dossier</label>
-                <?php echo $this->Form->control('localDos', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>                
+                <?php echo $this->Form->control('localDos', ['label' => false, 'class' => 'form-control', 'style' => 'width: 65%;','type' => 'text']); ?>
             </div>
-
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
@@ -61,7 +57,6 @@
                     <div class="form-group">
                         <label for="nomemaae">Nome da Mãe</label>
                         <?php echo $this->Form->control('nomemae', ['label' => false, 'class' => 'form-control']); ?>
-
                     </div>
                 </div>
             </div>
@@ -87,9 +82,8 @@
                         <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
 
                     </div>
-                </div>               
+                </div>
             </div>
-
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
@@ -98,17 +92,15 @@
                     </div>
                 </div>
             </div>
-            <div class="form-row">            
+            <div class="form-row">
                 <div class="form-group">
                     <label for="codigo_postal" style="margin-left: 5px;">Código Postal</label>
-                    <div class="form-row">  
-
-                        <div class="input number" style="width: 20%; margin-left: 2%; margin-right: 5%;">
-                            <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min'=>1,'label' => false, 'class' => 'form-control', 'required']); ?>
-                        </div>                  
-                        
-                        <div class="input number" style="width: 15%;">    
-                            <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min'=>1,'label' => false, 'class' => 'form-control', 'required']); ?>                       
+                    <div class="form-row">
+                        <div class="input number" style="width: 25%; margin-left: 2%; margin-right: 5%;">
+                            <?php echo $this->Form->number('codigo_postal', ['id' => 'codigo_postal', 'value' => h($pessoa->codigos_postai->NumCodigoPostal), 'max' => 9999, 'min' => 1, 'label' => false, 'class' => 'form-control', 'required']); ?>
+                        </div>
+                        <div class="input number" style="width: 20%;">
+                            <?php echo $this->Form->number('codigo_postal1', ['id' => 'codigo_postal1', 'value' => h($pessoa->codigos_postai->ExtCodigoPostal), 'max' => 999, 'min' => 1, 'label' => false, 'class' => 'form-control', 'required']); ?>
                         </div>
                     </div>
                 </div>
@@ -131,8 +123,8 @@
                         <label for="freguesia">Freguesia</label>
                         <?php echo $this->Form->control('freguesia', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
                     </div>
-                </div>                
-            </div>            
+                </div>
+            </div>
 
             <div class="form-row">
 
@@ -142,12 +134,12 @@
                         <?php echo $this->Form->text('data_nascimento', ['id' => "dataNasc", 'label' => false, 'value'=>h($pessoa->data_nascimento->i18nFormat('yyyy-MM-dd')),'class' => 'form-control', 'type' => 'date', 'onChange' => 'submitBday()']); ?>
                     </div>
                 </div>
-                <div class="col">                                           
-                        <div id="container" style="padding-left: 30%;">
-                            <label for="age">Idade</label>
-                            <?php echo $this->Form->control('age', ['id' => "idade",'label' => false, 'class' => 'form-control', 'style' => 'width: 50%;', 'disabled' => true]); ?>
-                        </div>
-                        
+                <div class="col">
+                    <div id="container" style="padding-left: 30%;">
+                        <label for="age">Idade</label>
+                        <?php echo $this->Form->control('age', ['id' => "idade",'label' => false, 'class' => 'form-control', 'style' => 'width: 50%;', 'disabled' => true]); ?>
+                    </div>
+
                 </div>
                 <div class="col">
                     <div class="form-group">
@@ -171,30 +163,30 @@
                     </div>
                 </div>
             </div>
-            
+
             <h5 style="color: #0000009c;">Contacto</h5>
-            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">
                 <label for="nomeContact" style="margin-right: 30px; padding-top: 8px;">Nome</label>
                 <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
-                
+
                 <label for="tel" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel', ['id' => 'telefone1', 'name' => 'telefone1','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>                
+                <?php echo $this->Form->control('tel', ['id' => 'telefone1', 'name' => 'telefone1','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>
             </div>
 
-            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
-            <label for="nomeContact2" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">
+                <label for="nomeContact2" style="margin-right: 30px; padding-top: 8px;">Nome</label>
                 <?php echo $this->Form->control('nomeContact2', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
-                
+
                 <label for="tel2" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel2', ['id' => 'telefone2', 'name' => 'telefone2','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>             
+                <?php echo $this->Form->control('tel2', ['id' => 'telefone2', 'name' => 'telefone2','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>
             </div>
 
-            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">                
-            <label for="nomeContact3" style="margin-right: 30px; padding-top: 8px;">Nome</label>                        
+            <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">
+                <label for="nomeContact3" style="margin-right: 30px; padding-top: 8px;">Nome</label>
                 <?php echo $this->Form->control('nomeContact3', ['label' => false, 'class' => 'form-control','style' => 'width: 450px;']); ?>
-                
+
                 <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
-                <?php echo $this->Form->control('tel3', ['id' => 'telefone3', 'name' => 'telefone3','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>            
+                <?php echo $this->Form->control('tel3', ['id' => 'telefone3', 'name' => 'telefone3','label' => false, 'class' => 'form-control', 'style' => 'width: 80%;','type' => 'text']); ?>
             </div>
 
             <div class="form-row">
@@ -215,64 +207,73 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+function submitBday() {
 
-    function submitBday() {  
-        
+    var Bdate = document.getElementById('dataNasc').value;
+    var Bday = +new Date(Bdate);
+    var idade = ~~((Date.now() - Bday) / (31557600000));
+    var theBday = document.getElementById('idade');
+    theBday.setAttribute('value', idade);
+}
+
+$('document').ready(function() {
+
+    $(function() {
         var Bdate = document.getElementById('dataNasc').value;
         var Bday = +new Date(Bdate);
-        var idade = ~~ ((Date.now() - Bday) / (31557600000));
+        var idade = ~~((Date.now() - Bday) / (31557600000));
         var theBday = document.getElementById('idade');
-        theBday.setAttribute('value',idade);
-    } 
-
-    $('document').ready(function() {
-        $('#codigo_postal1').keyup(function() {
-
-            var searchkey = $('#codigo_postal').val();
-            var searchkey1 = $('#codigo_postal1').val();
-            searchTags(searchkey, searchkey1);
-        });
-        $('#codigo_postal').keyup(function() {
-
-            var searchkey = $('#codigo_postal').val();
-            var searchkey1 = $('#codigo_postal1').val();
-            searchTags(searchkey, searchkey1);
-        });
-
-        function searchTags(keyword, keyword1) {
-            var data = keyword;
-            var data1 = keyword1;
-            $.ajax({
-                method: 'get',
-                url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'Search']); ?>",
-                data: {
-                    keyword: data,
-                    keyword1: data1,
-
-                },
-
-                success: function(response) {
-                    $('#distrito').html(response);
-                }
-            });
-        };
-
-        $('#codigo_postal1').trigger("keyup");
-
-        $('#telefone1').keypress(function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
-            e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
-        });
-
-        $('#telefone2').keypress(function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
-            e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
-        });
-
-        $('#telefone3').keypress(function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
-            e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
-        });
-
+        theBday.setAttribute('value', idade);
     });
+
+
+    $('#codigo_postal1').keyup(function() {
+
+        var searchkey = $('#codigo_postal').val();
+        var searchkey1 = $('#codigo_postal1').val();
+        searchTags(searchkey, searchkey1);
+    });
+    $('#codigo_postal').keyup(function() {
+
+        var searchkey = $('#codigo_postal').val();
+        var searchkey1 = $('#codigo_postal1').val();
+        searchTags(searchkey, searchkey1);
+    });
+
+    function searchTags(keyword, keyword1) {
+        var data = keyword;
+        var data1 = keyword1;
+        $.ajax({
+            method: 'get',
+            url: "<?php echo $this->Url->build(['controller' => 'Pessoas', 'action' => 'Search']); ?>",
+            data: {
+                keyword: data,
+                keyword1: data1,
+
+            },
+
+            success: function(response) {
+                $('#distrito').html(response);
+            }
+        });
+    };
+
+    $('#codigo_postal1').trigger("keyup");
+
+    $('#telefone1').keypress(function(e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+        e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+    });
+
+    $('#telefone2').keypress(function(e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+        e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+    });
+
+    $('#telefone3').keypress(function(e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+        e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
+    });
+
+});
 </script>

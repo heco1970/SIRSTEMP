@@ -251,7 +251,6 @@ class PessoasController extends AppController
         return $result[0]['NextId']['Auto_increment'];
     }
     
-
     /**
      * Add method
      *
@@ -260,7 +259,7 @@ class PessoasController extends AppController
     public function add()
     {
         $pessoa = $this->Pessoas->newEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is(array('post', 'put'))) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
             $pessoa->estado = 1; 
             $codigo_postal = $this->request->getData('codigo_postal');
@@ -284,9 +283,7 @@ class PessoasController extends AppController
             }
         }
 
-        /* Demonstração do ID do registo atual a ser inserido*/
         $data = [];
-
         $lista = $this->Pessoas
         ->find()
         ->select(['id'])                
@@ -297,24 +294,9 @@ class PessoasController extends AppController
         }
 
         $idUltimoRegisto = array_sum($data[0]);
-
         $idProximoRegisto = $idUltimoRegisto + 1;
-
         $this->set('nextUser', $idProximoRegisto);
 
-        /**************************************************** */
-
-        /*$distritoSelecionadoID = $this->request->getQuery('keyword');     
-        //$distritoSelecionado = $this->request->getData('distrito');
-        $this->log($distritoSelecionadoID);
-
-        $this->set('concelhos', $this->Pessoas->CodigosPostais->Concelhos
-        ->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])
-        ->where(['CodigoDistrito like'=> $distritoSelecionadoID.'%']));*/
-
-        //$this->log($this->Pessoas->CodigosPostais->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito like'=> $distritoSelecionadoID]));
-
-        //$this->set('freguesias', $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']));
         $this->set('distritos', $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
         $this->set('pais', $this->Pessoas->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
         $this->set('centro_educs', $this->Pessoas->CentroEducs->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
@@ -322,9 +304,11 @@ class PessoasController extends AppController
         $this->set('estadocivils', $this->Pessoas->Estadocivils->find('list', ['keyField' => 'id', 'valueField' => 'estado']));
         $this->set('generos', $this->Pessoas->Generos->find('list', ['keyField' => 'id', 'valueField' => 'genero']));
         $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
-
+  
         $this->set(compact('pessoa'));
     }
+
+
 
     public function concelhosDistrit()
     {
