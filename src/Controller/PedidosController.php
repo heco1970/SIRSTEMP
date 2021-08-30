@@ -108,8 +108,11 @@ class PedidosController extends AppController
         $errors = null;
         $errors1 = null;
 
-        if ($this->request->is('post')) {
+        if ($this->request->is(array('post', 'put'))) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
+
+            $this->log('1');
+            $this->log($pedido);
 
             $pessoa_nome = $this->request->getData('pessoa_nome');
             $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
@@ -117,6 +120,9 @@ class PedidosController extends AppController
                 $errors = 1;
             }
             $pedido->pessoa_id = $pessoa_id;
+
+            $this->log('2');
+            $this->log($pedido);
 
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
@@ -148,15 +154,35 @@ class PedidosController extends AppController
         if ($id != null) {
             $pessoa = $this->Pedidos->Pessoas->get($id);
         }
+        
+        $data = [];
+        $lista = $this->Pedidos
+        ->find()
+        ->select(['id'])                
+        ->order(['id' => 'DESC']);
+
+        foreach($lista as $pedido){
+            $data[] = ['id' => $pedido->id];
+        }
+
+        $idUltimoRegisto = array_sum($data[0]);
+        $idProximoRegisto = $idUltimoRegisto + 1;
+        $this->set('nextPedido', $idProximoRegisto);
 
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
-        $processos = $this->Pedidos->Processos->find('list', ['limit' => 200]);
+        //$freguesias = $this->Pedidos->Freguesias->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
+        $processos = $this->Pedidos->Processos->find('list', ['keyField' => 'id', 'valueField' => 'processo_id']);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
         $states = $this->Pedidos->States->find('list', ['limit' => 200]);
         $pedidostypes = $this->Pedidos->PedidosTypes->find('list', ['limit' => 200]);
         $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['limit' => 200]);
         $teams = $this->Pedidos->Teams->find('list', ['limit' => 200]);
         $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
+
+        $this->log('P');
+        $this->log($processos);
+        $this->log('2');
+        $this->log($pedido);
 
         $this->set(compact('pedido', 'errors','errors1', 'concelhos', 'id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
     }
