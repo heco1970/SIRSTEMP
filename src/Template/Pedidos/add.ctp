@@ -26,12 +26,12 @@
                 <div class="row ">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="pessoa_nome">Nome da pessoa</label>
+                            <label for="pessoa_id">Nome da pessoa</label>
                             <?php
                                 if ($pessoa != null) {
-                                    echo $this->Form->text('pessoa_nome', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
+                                    echo $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
                                 } else {
-                                    echo $this->Form->text('pessoa_nome', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
+                                    echo $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
                                 }
                                 if (!empty($errors)) {
                                     echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa inexistente.</div>";
@@ -47,7 +47,7 @@
                     <label for="processo_id" style="margin-right: 30px; padding-top: 8px;">N.Processo</label>
                     <div id="input select" style="width: 40%;">
                         <?php //echo $this->Form->text('processo_id', ['id' => 'processo_id','label' => false, 'class' => 'form-control', 'required']); ?>
-                        <?= $this->Form->text('processo_id', ['id' => 'processo_id', 'class' => 'form-control',  'label' => false, 'options' => $processos, 'required']); ?>
+                        <?php echo $this->Form->text('processo_id', ['id' => 'processo_id', 'class' => 'form-control',  'label' => false, 'options' => $processos, 'required']); ?>
                         <?php
                             if (!empty($errors1)) {
                                 echo "<div class='error-message' style='color:red; font-weight: bold;'> Processo inexistente.</div>";
@@ -59,7 +59,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="referencia">Referências</label>
-                            <?= $this->Form->control('referencia', ['class' => 'form-control',  'label' => false]); ?>
+                            <?php echo $this->Form->control('referencia', ['class' => 'form-control',  'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -71,7 +71,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="canalentrada">Canal de entrada</label>
-                            <?= $this->Form->control('canalentrada', ['class' => 'form-control', 'empty'=>' ' ,'options' => '', 'label' => false]); ?>
+                            <?php echo $this->Form->control('canalentrada', ['class' => 'form-control', 'empty'=>' ' ,'options' => '', 'label' => false]); ?>
                         </div>
                     </div>
                 </div>
@@ -79,25 +79,25 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="pedidostype_id">Tipo de Pedidos</label>
-                            <?= $this->Form->control('pedidostype_id', ['class' => 'form-control', 'options' => $pedidostypes, 'label' => false]); ?>
+                            <?php echo $this->Form->control('pedidostype_id', ['class' => 'form-control', 'options' => $pedidostypes, 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="designacao">Designação</label>
-                            <?= $this->Form->control('designacao', ['id' => 'designacao', 'class' => 'form-control','empty'=>' ' , 'options' => '', 'label' => false, 'required']); ?>
+                            <?php echo $this->Form->control('designacao', ['id' => 'designacao', 'class' => 'form-control','empty'=>' ' , 'options' => '', 'label' => false, 'required']); ?>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="descricao">Descrição</label>
-                            <?= $this->Form->control('descricao', ['id' => 'descricao', 'class' => 'form-control','empty'=>' ' , 'options' => '', 'label' => false, 'required']); ?>
+                            <?php echo $this->Form->control('descricao', ['id' => 'descricao', 'class' => 'form-control','empty'=>' ' , 'options' => '', 'label' => false, 'required']); ?>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="team_id">Equipa / Centro Educativo</label>
-                            <?= $this->Form->control('team_id', ['id' => 'team_id', 'class' => 'form-control', 'empty' => 'Escolha uma equipa...', 'default' => [''], 'disabled' => [''], 'label' => false, 'options' => $teams, 'required']); ?>
+                            <?php echo $this->Form->control('team_id', ['id' => 'team_id', 'class' => 'form-control', 'empty' => 'Escolha uma equipa...', 'default' => [''], 'disabled' => [''], 'label' => false, 'options' => $teams, 'required']); ?>
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="state_id">Estado</label>
-                            <?= $this->Form->control('state_id', ['class' => 'form-control', 'options' => $states, 'label' => false]); ?>
+                            <?php echo $this->Form->control('state_id', ['class' => 'form-control', 'options' => $states, 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -159,7 +159,7 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="pedidosmotive_id">Motivos dos pedidos</label>
-                            <?= $this->Form->control('pedidosmotive_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
+                            <?php echo $this->Form->control('pedidosmotive_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -185,13 +185,13 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="gestor">TRS Responsável / Gestor</label>
-                            <?= $this->Form->control('gestor', ['class' => 'form-control', 'options' => '', 'label' => false, 'type' => 'select']); ?>
+                            <?php echo $this->Form->control('gestor', ['class' => 'form-control', 'options' => '', 'label' => false, 'type' => 'select']); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="periocidaderelatorios">Periocidade de Relatorios</label>
-                            <?= $this->Form->control('periocidaderelatorios', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
+                            <?php echo $this->Form->control('periocidaderelatorios', ['class' => 'form-control',  'label' => false, 'type' => 'text']); ?>
                         </div>
                     </div>
                 </div>
@@ -199,19 +199,19 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="freguesia_id">Fatura</label>
-                            <?= $this->Form->control('canalentrada', ['class' => 'form-control', 'label' => false]); ?>
+                            <?php echo $this->Form->control('canalentrada', ['class' => 'form-control', 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="freguesia_id">Centro Educativo</label>
-                            <?= $this->Form->control('canalentrada', ['class' => 'form-control', 'label' => false]); ?>
+                            <?php echo $this->Form->control('canalentrada', ['class' => 'form-control', 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="freguesia_id">Estabelecimento Prisional</label>
-                            <?= $this->Form->control('canalentrada', ['class' => 'form-control', 'label' => false]); ?>
+                            <?php echo $this->Form->control('canalentrada', ['class' => 'form-control', 'label' => false]); ?>
                         </div>
                     </div>
                 </div>

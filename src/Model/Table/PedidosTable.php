@@ -115,12 +115,11 @@ class PedidosTable extends Table
             ->requirePresence('datarecepcao', 'create')
             ->notEmpty('datarecepcao');
 
-        $validator
+        /*$validator
             ->scalar('origem')
             ->maxLength('origem', 20)
-            ->requirePresence('origem', 'create')
-            ->notEmpty('origem');
-
+            ->requirePresence('origem', 'create'); */
+  
         $validator
             ->date('termino')
             ->requirePresence('termino', 'create')
@@ -158,11 +157,11 @@ class PedidosTable extends Table
             ->requirePresence('dataefectivatermo', 'create')
             ->notEmpty('dataefectivatermo');
 
-        $validator
+        /*$validator
             ->scalar('transferencias')
             ->maxLength('transferencias', 45)
-            ->requirePresence('transferencias', 'create')
-            ->notEmpty('transferencias');
+            ->requirePresence('transferencias', 'create'); */
+
 
         $validator
             ->scalar('gestor')
@@ -170,11 +169,10 @@ class PedidosTable extends Table
             ->requirePresence('gestor', 'create')
             ->notEmpty('gestor');
 
-        $validator
+        /* $validator
             ->scalar('seguro')
             ->maxLength('seguro', 45)
-            ->requirePresence('seguro', 'create')
-            ->notEmpty('seguro');
+            ->requirePresence('seguro', 'create'); */
 
         $validator
             ->scalar('periocidaderelatorios')

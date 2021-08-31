@@ -95,40 +95,49 @@ class PedidosController extends AppController
         $this->set(compact('value'));
     }
 
+  
+
     /**
      * Add method
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add($id = null)
-    {
+    public function add ($id = null){
         $pedido = $this->Pedidos->newEntity();
         $id = $id;
 
         $errors = null;
         $errors1 = null;
 
-        if ($this->request->is(array('post', 'put'))) {
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
 
-            $this->log('1');
-            $this->log($pedido);
+            $pessoa_nome = $this->request->getData('pessoa_id');
+            $processo_nome = $this->request->getData('processo_id');
 
-            $pessoa_nome = $this->request->getData('pessoa_nome');
-            $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
-            if ($pessoa_id->isEmpty()) {
+            $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome])->first();
+            if (empty($pessoa_id)) {
                 $errors = 1;
             }
-            $pedido->pessoa_id = $pessoa_id;
 
-            $this->log('2');
-            $this->log($pedido);
+            $pedido->pessoa_id = $pessoa_id['id'];
+
+            $processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id')->first();
+            if (empty($processo_id)) {
+                $errors1 = 1;
+            } 
+
+            $pedido->processo_id = $processo_id['id'];
+           
+            if ($pedido->pais_id != 193) {
+                $pedido->concelho_id = null;
+            }
 
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
-                if ($id != null) {
-                    $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/' . $id));
+                if (isset($_GET['pessoa'])) {
+                    $this->redirect(array('controller' => 'Pessoas', 'action' => 'view/' . $_GET['pessoa']));
                 } else {
                     return $this->redirect(['action' => 'index']);
                 }
@@ -154,6 +163,7 @@ class PedidosController extends AppController
         if ($id != null) {
             $pessoa = $this->Pedidos->Pessoas->get($id);
         }
+        $this->set('pessoa', $pessoa);
         
         $data = [];
         $lista = $this->Pedidos
@@ -168,24 +178,20 @@ class PedidosController extends AppController
         $idUltimoRegisto = array_sum($data[0]);
         $idProximoRegisto = $idUltimoRegisto + 1;
         $this->set('nextPedido', $idProximoRegisto);
-
-        $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
-        //$freguesias = $this->Pedidos->Freguesias->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
+        
         $processos = $this->Pedidos->Processos->find('list', ['keyField' => 'id', 'valueField' => 'processo_id']);
-        $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
-        $states = $this->Pedidos->States->find('list', ['limit' => 200]);
-        $pedidostypes = $this->Pedidos->PedidosTypes->find('list', ['limit' => 200]);
-        $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['limit' => 200]);
-        $teams = $this->Pedidos->Teams->find('list', ['limit' => 200]);
-        $pais = $this->Pedidos->Pais->find('list', ['limit' => 200]);
+        $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
+        $states = $this->Pedidos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']);
+        $pedidostypes = $this->Pedidos->PedidosTypes->find('list', ['keyField' => 'id', 'valueField' => 'descricao']);
+        $pedidosmotives = $this->Pedidos->PedidosMotives->find('list', ['keyField' => 'id', 'valueField' => 'descricao']);
+        $teams = $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
+        $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
+        $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
 
-        $this->log('P');
-        $this->log($processos);
-        $this->log('2');
-        $this->log($pedido);
-
-        $this->set(compact('pedido', 'errors','errors1', 'concelhos', 'id', 'processos', 'pessoas', 'pessoa', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states'));
+        $this->set(compact('pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
+
+
 
     public function search()
     {
