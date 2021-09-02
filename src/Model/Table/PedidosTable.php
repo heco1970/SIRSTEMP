@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -17,7 +18,9 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\PedidosmotivesTable|\Cake\ORM\Association\BelongsTo $Pedidosmotives
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
  * @property \App\Model\Table\ConcelhosTable|\Cake\ORM\Association\BelongsTo $Concelhos
+ * @property |\Cake\ORM\Association\BelongsTo $CodigosPostais
  * @property \App\Model\Table\VerbetesTable|\Cake\ORM\Association\HasMany $Verbetes
+
  *
  * @method \App\Model\Entity\Pedido get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pedido newEntity($data = null, array $options = [])
@@ -78,8 +81,10 @@ class PedidosTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Concelhos', [
-            'foreignKey' => 'concelho_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'concelho_id'
+        ]);
+        $this->belongsTo('CodigosPostais', [
+            'foreignKey' => 'codigos_postai_id'
         ]);
         $this->hasMany('Verbetes', [
             'foreignKey' => 'pedido_id'
@@ -115,11 +120,11 @@ class PedidosTable extends Table
             ->requirePresence('datarecepcao', 'create')
             ->notEmpty('datarecepcao');
 
-        /*$validator
+        /* $validator
             ->scalar('origem')
             ->maxLength('origem', 20)
-            ->requirePresence('origem', 'create'); */
-  
+            ->allowEmpty('origem'); */
+
         $validator
             ->date('termino')
             ->requirePresence('termino', 'create')
@@ -157,11 +162,10 @@ class PedidosTable extends Table
             ->requirePresence('dataefectivatermo', 'create')
             ->notEmpty('dataefectivatermo');
 
-        /*$validator
+        /* $validator
             ->scalar('transferencias')
             ->maxLength('transferencias', 45)
-            ->requirePresence('transferencias', 'create'); */
-
+            ->allowEmpty('transferencias'); */
 
         $validator
             ->scalar('gestor')
@@ -172,13 +176,28 @@ class PedidosTable extends Table
         /* $validator
             ->scalar('seguro')
             ->maxLength('seguro', 45)
-            ->requirePresence('seguro', 'create'); */
+            ->allowEmpty('seguro'); */
 
         $validator
             ->scalar('periocidaderelatorios')
             ->maxLength('periocidaderelatorios', 45)
             ->requirePresence('periocidaderelatorios', 'create')
             ->notEmpty('periocidaderelatorios');
+
+        $validator
+            ->scalar('fatura')
+            ->maxLength('fatura', 45)
+            ->allowEmpty('fatura');
+
+        $validator
+            ->scalar('establecimentopricional')
+            ->maxLength('establecimentopricional', 45)
+            ->allowEmpty('establecimentopricional');
+
+        $validator
+            ->scalar('centroeducativo')
+            ->maxLength('centroeducativo', 45)
+            ->allowEmpty('centroeducativo');
 
         return $validator;
     }
@@ -200,6 +219,7 @@ class PedidosTable extends Table
         $rules->add($rules->existsIn(['pedidosmotive_id'], 'Pedidosmotives'));
         $rules->add($rules->existsIn(['pais_id'], 'Pais'));
         $rules->add($rules->existsIn(['concelho_id'], 'Concelhos'));
+        $rules->add($rules->existsIn(['codigos_postai_id'], 'CodigosPostais'));
 
         return $rules;
     }

@@ -122,12 +122,12 @@ class PedidosController extends AppController
 
             $pedido->pessoa_id = $pessoa_id['id'];
 
-            $processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id')->first();
+            /*$processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id')->first();
             if (empty($processo_id)) {
                 $errors1 = 1;
             } 
 
-            $pedido->processo_id = $processo_id['id'];
+            $pedido->processo_id = $processo_id['id']; */
            
             if ($pedido->pais_id != 193) {
                 $pedido->concelho_id = null;
@@ -187,8 +187,10 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
+        $entradas = $this->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'canalentrada']);
+        $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']);
 
-        $this->set(compact('pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
+        $this->set(compact('codpostal','entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 
 
@@ -249,6 +251,8 @@ class PedidosController extends AppController
             'contain' => ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Teams', 'Pais']
         ]);
 
+        $this->log($pedido);
+
         $errors = null;
         $errors1 = null;
 
@@ -258,7 +262,6 @@ class PedidosController extends AppController
             $pessoa_nome = $this->request->getData('pessoa_id');
             $processo_nome = $this->request->getData('processo_id');
 
-            //
             $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
             if ($pessoa_id->isEmpty()) {
                 $errors = 1;
@@ -266,26 +269,15 @@ class PedidosController extends AppController
 
             $pedido->pessoa_id = $pessoa_id;
 
-            $processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');
+            $this->log($pedido);
+
+            /*$processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');
             if ($processo_id->isEmpty()) {
                 $errors1 = 1;
             } 
 
-            $pedido->processo_id = $processo_id;
-            //
-
-            /*
-            $pessoa_id = $this->Pedidos->Pessoas->find('all', ['conditions' => ['nome' => $pessoa_nome]])->first();
-            if (isset($pessoa_id->id)) {
-                $pedido->pessoa_id = $pessoa_id->id;
-            }
-
-            $processo_id = $this->Pedidos->Processos->find('all', ['conditions' => ['processo_id' => $processo_nome]])->first();
-            if (isset($processo_id->id)) {
-                $pedido->processo_id = $processo_id->id;
-            }
-            */
-
+            $pedido->processo_id = $processo_id; */
+ 
             if ($pedido->pais_id != 193) {
                 $pedido->concelho_id = null;
             }
@@ -315,6 +307,7 @@ class PedidosController extends AppController
             }
         }
 
+        $entradas = $this->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'canalentrada']);
         $processos = $this->Pedidos->Processos->find('list', ['keyField' => 'id', 'valueField' => 'processo_id']);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $states = $this->Pedidos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']);
@@ -323,8 +316,9 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
-
-        $this->set(compact('pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
+        $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']);
+$this->log($codpostal);
+        $this->set(compact('codpostal','entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 
     /**
