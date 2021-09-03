@@ -69,7 +69,7 @@
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label for="descricao">Descrição</label>
-                        <?= $this->Form->control('descricao', ['id' => 'processo_id', 'class' => 'form-control', 'empty'=>' ' , 'options' => '', 'label' => false, 'required']); ?>
+                        <?= $this->Form->control('descricao', ['id' => 'processo_id', 'class' => 'form-control', 'label' => false, 'required']); ?>
                     </div>
                 </div>
                 <div class="col-sm-3">

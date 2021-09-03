@@ -36,6 +36,8 @@ use Cake\ORM\Entity;
  * @property string|null $establecimentopricional
  * @property string|null $centroeducativo
  * @property int|null $codigos_postai_id
+ * @property int|null $designacao
+ * @property string|null $descricao
  *
  * @property \App\Model\Entity\Processo $processo
  * @property \App\Model\Entity\Pessoa $pessoa
@@ -45,6 +47,8 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Pedidosmotive $pedidosmotive
  * @property \App\Model\Entity\Pai $pai
  * @property \App\Model\Entity\Concelho $concelho
+ * @property \App\Model\Entity\CodigosPostai $codigos_postai
+ * @property \App\Model\Entity\Verbete[] $verbetes
  */
 class Pedido extends Entity
 {
@@ -88,6 +92,8 @@ class Pedido extends Entity
         'establecimentopricional' => true,
         'centroeducativo' => true,
         'codigos_postai_id' => true,
+        'designacao' => true,
+        'descricao' => true,
         'processo' => true,
         'pessoa' => true,
         'pedidostype' => true,
@@ -96,6 +102,7 @@ class Pedido extends Entity
         'pedidosmotive' => true,
         'pai' => true,
         'concelho' => true,
+        'codigos_postai' => true,
         'verbetes' => true
     ];
 }

@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -18,9 +17,10 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\PedidosmotivesTable|\Cake\ORM\Association\BelongsTo $Pedidosmotives
  * @property \App\Model\Table\PaisTable|\Cake\ORM\Association\BelongsTo $Pais
  * @property \App\Model\Table\ConcelhosTable|\Cake\ORM\Association\BelongsTo $Concelhos
+ * @property \App\Model\Table\CodigosPostaisTable|\Cake\ORM\Association\BelongsTo $CodigosPostais
  * @property |\Cake\ORM\Association\BelongsTo $CodigosPostais
  * @property \App\Model\Table\VerbetesTable|\Cake\ORM\Association\HasMany $Verbetes
-
+ 
  *
  * @method \App\Model\Entity\Pedido get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pedido newEntity($data = null, array $options = [])
@@ -198,6 +198,15 @@ class PedidosTable extends Table
             ->scalar('centroeducativo')
             ->maxLength('centroeducativo', 45)
             ->allowEmpty('centroeducativo');
+
+        $validator
+            ->integer('designacao')
+            ->allowEmpty('designacao');
+
+        $validator
+            ->scalar('descricao')
+            ->maxLength('descricao', 200)
+            ->allowEmpty('descricao');
 
         return $validator;
     }

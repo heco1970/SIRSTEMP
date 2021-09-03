@@ -162,6 +162,11 @@ class PessoasTable extends Table
             ->maxLength('observacoes', 255)
             ->allowEmpty('observacoes');
 
+        $validator
+            ->scalar('morada')
+            ->maxLength('morada', 200)
+            ->allowEmpty('morada');
+
         return $validator;
     }
 
