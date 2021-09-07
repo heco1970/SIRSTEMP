@@ -189,7 +189,6 @@ class PedidosController extends AppController
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
         $entradas = $this->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'canalentrada']);
         //$codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']);
-
         $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['CodigoConcelho' => $Pedidos->concelho_id]);
 
         $this->set(compact('codpostal','entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
