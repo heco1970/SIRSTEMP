@@ -250,7 +250,7 @@ class PedidosController extends AppController
     public function edit($id = null)
     {
         $pedido = $this->Pedidos->get($id, [
-            'contain' => ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Teams', 'Pais']
+            'contain' => ['CodigosPostais','Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Teams', 'Pais']
         ]);
 
         $this->log($pedido);
@@ -318,10 +318,14 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
-        //$codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']);
+        $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->limit(200);
 
-        $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['CodigoConcelho' => $Pedidos->concelho_id]);
+/*         $CodigoConcelho = $this->request->getData('concelho_id');
+        $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['CodigosPostais.CodigoConcelho' => $pedido->concelho_id])->first();
 
+        $this->log($CodigoConcelho);
+        $this->log($codpostal);
+ */
         $this->set(compact('codpostal','entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 

@@ -155,7 +155,7 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="codigos_postai_id">Freguesia</label>
-                        <?php //echo $this->Form->control('codigos_postai_id', ['label' => false, 'type' => 'select', 'multiple' => false,'empty'=>' ', 'options' => $codpostal, 'class' => 'form-control', 'required']); ?>
+                        <?php echo $this->Form->control('codigos_postai_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $codpostal, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
             </div>
