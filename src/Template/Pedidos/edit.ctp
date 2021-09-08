@@ -262,6 +262,17 @@ $(function() {
     });
 });
 $('document').ready(function() {
+
+    $('#designacao').change(function() {
+        if ($('#designacao').val() == 2) {
+            $('#descricao').removeAttr('disabled');
+        } else {
+            $('#descricao').attr('disabled', true);
+            $('#descricao').attr("required", true);
+            $('#descricao').val("");
+        }
+    });
+
     $('#team_id').click(function() {
         var searchkey = $('#team_id').val();
         searchTags(searchkey);

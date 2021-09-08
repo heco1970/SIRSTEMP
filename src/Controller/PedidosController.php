@@ -96,7 +96,6 @@ class PedidosController extends AppController
     }
 
   
-
     /**
      * Add method
      *
@@ -188,13 +187,11 @@ class PedidosController extends AppController
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
         $entradas = $this->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'canalentrada']);
-        //$codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade']);
-        $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['CodigoConcelho' => $Pedidos->concelho_id]);
+        $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->limit(200);
+        //$codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['CodigoConcelho' => $Pedidos->concelho_id]);
 
         $this->set(compact('codpostal','entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
-
-
 
     public function search()
     {
@@ -210,6 +207,7 @@ class PedidosController extends AppController
         ));
         echo json_encode($terms);
     }
+
     public function searchPedido()
     {
 
@@ -237,6 +235,37 @@ class PedidosController extends AppController
         }])->contain(['Users'])->where(['UsersTeams.team_id' => $id]);
 
         $this->set(compact('gestor'));
+    }
+
+    public function freguesiasByConselhos(){
+        $this->autoRender = false;
+
+        $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
+
+        $concelhos = $this->Pedidos->CodigosPostais->Concelhos
+        ->find()
+        ->where(['id like'=> $concelhoSelecionadoID.'%']);
+
+        $freguesia;
+
+        $data = [];
+
+        foreach($concelhos as $conc){
+            $freguesia = $this->Pedidos->CodigosPostais
+            ->find()
+            ->select(['id', 'NomeLocalidade'])
+            ->where(['CodigoConcelho like'=> $conc->CodigoConcelho.'%'])
+            ->group('NomeLocalidade')
+            ->order(['NomeLocalidade' => 'ASC']);
+        }
+
+        foreach($freguesia as $freg){
+            $data[] = ['id' => $freg->id, 'NomeLocalidade' => $freg->NomeLocalidade];
+        }
+
+        $this-log($freguesia);
+        $this->log($data);
+        echo json_encode($data);
     }
 
     /**
@@ -319,14 +348,11 @@ class PedidosController extends AppController
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
         $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->limit(200);
 
-/*         $CodigoConcelho = $this->request->getData('concelho_id');
-        $codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['CodigosPostais.CodigoConcelho' => $pedido->concelho_id])->first();
+        //$codpostal = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['CodigoConcelho'=> $pedido->concelho_id]);
 
-        $this->log($CodigoConcelho);
-        $this->log($codpostal);
- */
         $this->set(compact('codpostal','entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
+
 
     /**
      * Delete method

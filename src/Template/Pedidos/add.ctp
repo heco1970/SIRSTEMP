@@ -47,7 +47,7 @@
                     <label for="processo_id" style="margin-right: 30px; padding-top: 8px;">N.Processo</label>
                     <div id="input select" style="width: 40%;">
                         <?php //echo $this->Form->text('processo_id', ['id' => 'processo_id','label' => false, 'class' => 'form-control', 'required']); ?>
-                        <?php echo $this->Form->control('processo_id', ['id' => 'processo_id', 'class' => 'form-control',  'label' => false, 'options' => $processos, 'required']); ?>
+                        <?php echo $this->Form->control('processo_id', ['id' => 'processo_id', 'class' => 'form-control', 'empty'=>' ',  'label' => false, 'options' => $processos, 'required']); ?>
                         <?php
                             if (!empty($errors1)) {
                                 echo "<div class='error-message' style='color:red; font-weight: bold;'> Processo inexistente.</div>";
@@ -79,25 +79,27 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="pedidostype_id">Tipo de Pedidos</label>
-                            <?php echo $this->Form->control('pedidostype_id', ['class' => 'form-control', 'options' => $pedidostypes, 'label' => false]); ?>
+                            <?php echo $this->Form->control('pedidostype_id', ['class' => 'form-control','empty'=>' ', 'options' => $pedidostypes, 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="designacao">Designação</label>
-                            <?php echo $this->Form->control('designacao', ['id' => 'designacao', 'class' => 'form-control','empty'=>' ' , 'options' => '', 'label' => false, 'required']); ?>
+                            <?php
+                             $listaDesignacao = array('1' => 'teste', '2' => 'outros');
+                            echo $this->Form->control('designacao', ['id' => 'designacao', 'class' => 'form-control','empty'=>' ' , 'options' => $listaDesignacao, 'label' => false, 'required']); ?>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="descricao">Descrição</label>
-                            <?php echo $this->Form->control('descricao', ['id' => 'descricao', 'class' => 'form-control', 'label' => false, 'required']); ?>
+                            <?php echo $this->Form->control('descricao', ['id' => 'descricao', 'class' => 'form-control', 'label' => false, 'required','disabled' => true]); ?>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="team_id">Equipa / Centro Educativo</label>
-                            <?php echo $this->Form->control('team_id', ['id' => 'team_id', 'class' => 'form-control', 'empty' => 'Escolha uma equipa...', 'default' => [''], 'disabled' => [''], 'label' => false, 'options' => $teams, 'required']); ?>
+                            <?php echo $this->Form->control('team_id', ['id' => 'team_id', 'class' => 'form-control', 'empty' => ' ', 'default' => [''], 'disabled' => [''], 'label' => false, 'options' => $teams, 'required']); ?>
                         </div>
                     </div>
                 </div>
@@ -105,7 +107,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="state_id">Estado</label>
-                            <?php echo $this->Form->control('state_id', ['class' => 'form-control', 'options' => $states, 'label' => false]); ?>
+                            <?php echo $this->Form->control('state_id', ['class' => 'form-control', 'empty'=>' ', 'options' => $states, 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -159,7 +161,7 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="pedidosmotive_id">Motivos dos pedidos</label>
-                            <?php echo $this->Form->control('pedidosmotive_id', ['class' => 'form-control', 'options' => $pedidosmotives, 'label' => false]); ?>
+                            <?php echo $this->Form->control('pedidosmotive_id', ['class' => 'form-control','empty'=>' ',  'options' => $pedidosmotives, 'label' => false]); ?>
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -177,7 +179,7 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="codigos_postai_id">Freguesia</label>
-                            <?php //echo $this->Form->control('codigos_postai_id', ['id' => 'codigos_postai_id', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $codpostal, 'class' => 'form-control']); ?>
+                            <?php //echo $this->Form->control('codigos_postai_id', ['label' => false,'empty'=>' ', 'type' => 'select', 'multiple' => false, 'options' => $codpostal,'class' => 'form-control', 'required']); ?>
                         </div>
                     </div>
                 </div>
@@ -247,6 +249,8 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
     integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
 var selData = 0;
@@ -256,6 +260,16 @@ $("#concelho_1").change(function(event) {
     var data = $(this).val();
     selData = data;
 })
+
+/* $('#codigos_postai_id').select2({
+    ajax: {
+        url: function(params) {
+            return '/Pedidos/freguesiasByConselhos';
+        },
+        dataType: 'json',
+        delay: 250,
+    }
+}); */
 
 $(function() {
     $("#pessoa_id").autocomplete({
@@ -291,7 +305,20 @@ $(function() {
         }
     });
 });
+
+
 $('document').ready(function() {
+
+    $('#designacao').change(function() {
+        if ($('#designacao').val() == 2) {
+            $('#descricao').removeAttr('disabled');
+        } else {
+            $('#descricao').attr('disabled', true);
+            $('#descricao').attr("required", true);
+            $('#descricao').val("");
+        }
+    });
+
     $('#team_id').change(function() {
         var searchkey = $('#team_id').val();
         searchTags(searchkey);
@@ -312,6 +339,7 @@ $('document').ready(function() {
             }
         });
     };
+    
     $('#pais_id').change(function() {
         if ($('#pais_id').val() != 193) {
             $('#concelho_id').hide("slow");
