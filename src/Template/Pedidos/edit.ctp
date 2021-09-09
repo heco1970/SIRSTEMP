@@ -149,13 +149,13 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="concelho_id">Concelho</label>
-                        <?php echo $this->Form->text('concelho_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->text('concelho', ['id' => 'concelho','label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="codigos_postai_id">Freguesia</label>
-                        <?php echo $this->Form->control('codigos_postai_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $codpostal, 'class' => 'form-control', 'required']); ?>
+                        <?php echo $this->Form->control('codigos_postai_id', ['id' => 'freguesia','label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
             </div>
@@ -225,8 +225,27 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
     integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+var selData = 0;
+
+$('#freguesia').select2({
+    ajax: {
+        url: function(params) {
+            return '/Pedidos/freguesiasByConselhos/' + selData;
+        },
+        dataType: 'json',
+        delay: 250,
+    }
+});
+
+$("#concelho").change(function(event) {
+    var data = $(this).val();
+    selData = data;
+})
+
 $(function() {
     $("#pessoa_id").autocomplete({
         minLength: 1,
@@ -262,7 +281,7 @@ $(function() {
     });
 });
 $('document').ready(function() {
-
+    
     $('#designacao').change(function() {
         if ($('#designacao').val() == 2) {
             $('#descricao').removeAttr('disabled');

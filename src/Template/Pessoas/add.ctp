@@ -119,7 +119,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
-                        <?php echo $this->Form->control('freguesia', ['id'=> 'freguesia_1','style'=>'height: 37px;','type'=>'select','label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('freguesia', ['id'=> 'freguesia_1','type'=>'select','label' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@
 $('#cc').change(function() {
     if ($('#cc').val().length < 9) {
         $("#ccError").html("O cartão de cidadão tem que ter 9 dígitos.").addClass("error-msg");
-    }else{
+    } else {
         $("#ccError").html("").removeClass("error-msg");
     }
 });

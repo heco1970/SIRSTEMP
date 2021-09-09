@@ -173,13 +173,13 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="concelho_id">Concelho</label>
-                            <?php echo $this->Form->control('concelho', ['id' => 'concelho_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
+                            <?php echo $this->Form->control('concelho', ['id' => 'concelho', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="codigos_postai_id">Freguesia</label>
-                            <?php //echo $this->Form->control('codigos_postai_id', ['label' => false,'empty'=>' ', 'type' => 'select', 'multiple' => false, 'options' => $codpostal,'class' => 'form-control', 'required']); ?>
+                            <?php echo $this->Form->control('codigos_postai_id', ['id' => 'freguesia', 'label' => false,'empty'=>' ', 'type' => 'select', 'multiple' => false,'class' => 'form-control', 'required']); ?>
                         </div>
                     </div>
                 </div>
@@ -253,10 +253,20 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+
 var selData = 0;
 
+$('#freguesia').select2({
+    ajax: {
+        url: function(params) {
+            return '/Pedidos/freguesiasByConselhos/' + selData;
+        },
+        dataType: 'json',
+        delay: 250,
+    }
+});
 
-$("#concelho_1").change(function(event) {
+$("#concelho").change(function(event) {
     var data = $(this).val();
     selData = data;
 })
@@ -339,7 +349,7 @@ $('document').ready(function() {
             }
         });
     };
-    
+
     $('#pais_id').change(function() {
         if ($('#pais_id').val() != 193) {
             $('#concelho_id').hide("slow");

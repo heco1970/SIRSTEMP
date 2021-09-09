@@ -415,8 +415,7 @@ class PessoasController extends AppController
     }
 
     public function xls()
-    {
-        
+    {        
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
 
