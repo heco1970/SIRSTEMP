@@ -136,7 +136,7 @@ class PessoasTable extends Table
 
         $validator
             ->scalar('cc')
-            ->maxLength('cc', 10)
+            ->maxLength('cc', 9)
             ->requirePresence('cc', 'create')
             ->notEmpty('cc');
 
