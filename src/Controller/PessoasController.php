@@ -125,11 +125,16 @@ class PessoasController extends AppController
         $search = h($this->request->getQuery('term'));
         $concelhoSelecionadoID = $concID;       
 
+        $this->log('1');
+
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
         ->find()
         ->where(['id like'=> $concelhoSelecionadoID .'%']);
 
-        $freguesia;
+        $this->log('2');
+        $this->log($concelhos);
+
+        $freguesia = null;
 
         $data = [];
         $data2 = [];
@@ -153,33 +158,15 @@ class PessoasController extends AppController
         ->where(['NomeLocalidade like'=>$search.'%'])
         ->limit(20);*/
         
-        foreach($freguesia as $freg){
-            $data[] = ['id' => $freg->id, 'text' => $freg->NomeLocalidade];
+        if (is_array($freguesia) || is_object($freguesia))
+        {
+            foreach($freguesia as $freg){
+                $data[] = ['id' => $freg->id, 'text' => $freg->NomeLocalidade];
+            }
         }
 
         $data = ['results'=>$data];
         echo json_encode($data);
-    }
-
-    public function validateNIF($nif)
-    {
-        $nif = trim($nif);
-        $nif_split = str_split($nif);
-        $nif_primeiros_digito = array(1, 2, 3, 5, 6, 7, 8, 9);
-        if (is_numeric($nif) && strlen($nif) == 9 && in_array($nif_split[0], $nif_primeiros_digito)) {
-            $check_digit = 0;
-            for ($i = 0; $i < 8; $i++) {
-                $check_digit += $nif_split[$i] * (10 - $i - 1);
-            }
-            $check_digit = 11 - ($check_digit % 11);
-            $check_digit = $check_digit >= 10 ? 0 : $check_digit;
-            if ($check_digit == $nif_split[8]) {
-                $this->log("yay");
-                return true;                
-            }
-        }
-        $this->log("no");
-        return false;        
     }
 
     public function concelhosByDistritos(){
@@ -207,8 +194,6 @@ class PessoasController extends AppController
         }
 
         //$data = ['results'=>$data];
-
-        //$this->log($data);
         echo json_encode($data);
     }
     

@@ -139,14 +139,14 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="cc">Cartão de Cidadão</label>
-                        <?php echo $this->Form->control('cc', ['id' => "cc",'label' => false, 'class' => 'form-control', 'maxLength' => '9']); ?>
+                        <?php echo $this->Form->control('cc', ['id' => "cc",'label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9']); ?>
                         <div id='ccError'></div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="nif">Número de Contribuinte</label>
-                        <?php echo $this->Form->control('nif', ['id' => "nif",'label' => false, 'class' => 'form-control', 'type' => 'text']); ?>
+                        <?php echo $this->Form->control('nif', ['id' => "nif",'label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9']); ?>
                         <div id='nifError'></div>
                     </div>
                 </div>
@@ -199,9 +199,6 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
@@ -279,17 +276,6 @@ function submitBday() {
     theBday.setAttribute('value', idade);
 }
 
-/*$('#nmrContr').keyup(function() {
-    var dataNif = $(this).val();
-    $.ajax({
-        url: function (params) {
-        return '/Pessoas/validateNIF/' + dataNif;
-        },
-        dataType: 'json',
-        delay: 250,    
-    });   
-});*/
-
 $('document').ready(function() {
 
     $("#distrito_1").change(function(event) {
@@ -318,12 +304,6 @@ $('document').ready(function() {
     })
 
     $('#codigo_postal1').keyup(function() {
-
-        var searchkey = $('#codigo_postal').val();
-        var searchkey1 = $('#codigo_postal1').val();
-        searchTags(searchkey, searchkey1);
-    });
-    $('#codigo_postal').keyup(function() {
 
         var searchkey = $('#codigo_postal').val();
         var searchkey1 = $('#codigo_postal1').val();
