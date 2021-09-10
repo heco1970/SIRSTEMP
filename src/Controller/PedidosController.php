@@ -273,7 +273,7 @@ class PedidosController extends AppController
 
             $this->log($pedido);
 
-            /*$processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');
+             /*$processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');
             if ($processo_id->isEmpty()) {
                 $errors1 = 1;
             } 
@@ -318,8 +318,9 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
+        $codigosPostais = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->limit(1);
 
-        $this->set(compact('entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
+        $this->set(compact('codigosPostais','entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 
 
@@ -395,14 +396,9 @@ class PedidosController extends AppController
         $search = h($this->request->getQuery('term'));
         $concelhoSelecionadoID = $concID;       
 
-        $this->log('1');
-
-        $concelhos = $this->Pedidos->CodigosPostais->Concelhos
+         $concelhos = $this->Pedidos->CodigosPostais->Concelhos
         ->find()
         ->where(['id like'=> $concelhoSelecionadoID .'%']);
-
-        $this->log('2');
-        $this->log($concelhos);
 
         $freguesia = null;
 

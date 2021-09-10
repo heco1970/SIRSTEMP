@@ -173,7 +173,7 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="concelho_id">Concelho</label>
-                            <?php echo $this->Form->control('concelho', ['id' => 'concelho', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
+                            <?php echo $this->Form->control('concelho_id', ['id' => 'concelho', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                         </div>
                     </div>
                     <div class="col-sm-3">

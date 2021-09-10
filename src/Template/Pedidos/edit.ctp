@@ -149,13 +149,13 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="concelho_id">Concelho</label>
-                        <?php echo $this->Form->text('concelho', ['id' => 'concelho','label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->text('concelho_id', ['id' => 'concelho','label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="codigos_postai_id">Freguesia</label>
-                        <?php echo $this->Form->control('codigos_postai_id', ['id' => 'freguesia','label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control', 'required']); ?>
+                        <?php echo $this->Form->control('codigos_postai_id', ['id' => 'freguesia','label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control', 'required']); ?>               
                     </div>
                 </div>
             </div>
@@ -281,7 +281,7 @@ $(function() {
     });
 });
 $('document').ready(function() {
-    
+
     $('#designacao').change(function() {
         if ($('#designacao').val() == 2) {
             $('#descricao').removeAttr('disabled');

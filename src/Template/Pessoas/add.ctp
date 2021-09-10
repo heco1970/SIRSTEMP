@@ -139,14 +139,14 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="cc">Cartão de Cidadão</label>
-                        <?php echo $this->Form->control('cc', ['id' => "cc",'label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9']); ?>
+                        <?php echo $this->Form->control('cc', ['id' => "cc",'label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9', 'required']); ?>
                         <div id='ccError'></div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="nif">Número de Contribuinte</label>
-                        <?php echo $this->Form->control('nif', ['id' => "nif",'label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9']); ?>
+                        <?php echo $this->Form->control('nif', ['id' => "nif",'label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9', 'required']); ?>
                         <div id='nifError'></div>
                     </div>
                 </div>
@@ -202,20 +202,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+var error;
 $('#cc').change(function() {
     if ($('#cc').val().length < 9) {
-        $("#ccError").html("O cartão de cidadão tem que ter 9 dígitos.").addClass("error-msg");
+        $('#ccError').html("O cartão de cidadão tem que ter 9 dígitos.").addClass("error-msg");
     } else {
-        $("#ccError").html("").removeClass("error-msg");
+        $('#ccError').html("").removeClass("error-msg");
     }
 });
 
 $('#nif').change(function() {
 
     if (validateNIF($('#nif').val())) {
-        $("#nifError").html("").removeClass("error-msg");
+        $('#nifError').html("").removeClass("error-msg");
     } else {
-        $("#nifError").html("Número de Contribuinte inválido.").addClass("error-msg");
+        $('#nifError').html("Número de Contribuinte inválido.").addClass("error-msg");
     }
 });
 

@@ -251,6 +251,15 @@ class PessoasController extends AppController
             $codigo_postal1 = $this->request->getData('codigo_postal1');
             $codigoid = $this->Pessoas->CodigosPostais->find()->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1])->first();
 
+            $cc = $this->request->getData('cc');
+            $nif = $this->request->getData('nif');
+            if (is_numeric($cc)) {
+                $errors = 1;
+            }
+            if (is_numeric($nif)) {
+                $errors = 1;
+            }
+
             if(isset($codigoid->id)){
                 $pessoa->codigos_postai_id = $codigoid->id;
             }
@@ -350,6 +359,15 @@ class PessoasController extends AppController
             $codigo_postal = $this->request->getData('codigo_postal');
             $codigo_postal1 = $this->request->getData('codigo_postal1');
             $codigoid = $this->Pessoas->CodigosPostais->find()->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1])->first();
+
+            $cc = $this->request->getData('cc');
+            $nif = $this->request->getData('nif');
+            if (is_numeric($cc)) {
+                $errors = 1;
+            }
+            if (is_numeric($nif)) {
+                $errors = 1;
+            }
 
             if(isset($codigoid->id)){
                 $pessoa->codigos_postai_id = $codigoid->id;
