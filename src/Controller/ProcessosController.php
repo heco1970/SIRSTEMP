@@ -129,6 +129,20 @@ class ProcessosController extends AppController
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
+        $data = [];
+        $lista = $this->Processos
+        ->find()
+        ->select(['id'])                
+        ->order(['id' => 'DESC']);
+
+        foreach($lista as $processo){
+            $data[] = ['id' => $processo->id];
+        }
+
+        $idUltimoRegisto = array_sum($data[0]);
+        $idProximoRegisto = $idUltimoRegisto + 1;
+        $this->set('nextUser', $idProximoRegisto);
+
         $this->set('units', $this->Processos->Units->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('states', $this->Processos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('entidades', $this->Processos->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));

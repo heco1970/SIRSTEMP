@@ -144,15 +144,15 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="cc">Cartão de Cidadão</label>
-                        <?php echo $this->Form->control('cc', ['label' => false, 'class' => 'form-control']); ?>
-
+                        <?php echo $this->Form->control('cc', ['label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9']); ?>
+                        <div id='ccError'></div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="nif">Número de Contribuinte</label>
-                        <?php echo $this->Form->control('nif', ['label' => false, 'class' => 'form-control', 'type' => 'text']); ?>
-
+                        <?php echo $this->Form->control('nif', ['label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9']); ?>
+                        <div id='nifError'></div>
                     </div>
                 </div>
                 <div class="col">
@@ -207,6 +207,37 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+$('#cc').change(function() {
+    if ($('#cc').val().length < 9) {
+        $("#ccError").html("O cartão de cidadão tem que ter 9 dígitos.").addClass("error-msg");
+    } else {
+        $("#ccError").html("").removeClass("error-msg");
+    }
+});
+
+$('#nif').change(function() {
+
+    if (validateNIF($('#nif').val())) {
+        $("#nifError").html("").removeClass("error-msg");
+    } else {
+        $("#nifError").html("Número de Contribuinte inválido.").addClass("error-msg");
+    }
+});
+
+function validateNIF(nif) {
+    if (!['1', '2', '3', '5', '6', '8'].includes(nif.substr(0, 1)) &&
+        !['45', '70', '71', '72', '77', '79', '90', '91', '98', '99'].includes(nif.substr(0, 2)))
+        return false;
+
+    let total = nif[0] * 9 + nif[1] * 8 + nif[2] * 7 + nif[3] * 6 + nif[4] * 5 + nif[5] * 4 + nif[6] * 3 + nif[7] * 2;
+
+    let modulo11 = total - parseInt(total / 11) * 11;
+    let comparador = modulo11 == 1 || modulo11 == 0 ? 0 : 11 - modulo11;
+
+    return nif[8] == comparador
+
+}
+
 function submitBday() {
 
     var Bdate = document.getElementById('dataNasc').value;
@@ -233,13 +264,7 @@ $('document').ready(function() {
         var searchkey1 = $('#codigo_postal1').val();
         searchTags(searchkey, searchkey1);
     });
-    $('#codigo_postal').keyup(function() {
-
-        var searchkey = $('#codigo_postal').val();
-        var searchkey1 = $('#codigo_postal1').val();
-        searchTags(searchkey, searchkey1);
-    });
-
+ 
     function searchTags(keyword, keyword1) {
         var data = keyword;
         var data1 = keyword1;

@@ -15,7 +15,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="processo_id">ID Processo</label>
-                        <?php echo $this->Form->control('processo_id', ['type'=>'text','label' => false, 'class' => 'form-control','required']); ?>
+                        <?php echo $this->Form->control('processo_id', ['value' => $nextUser,'label' => false, 'class' => 'form-control', 'disabled' => true, 'type'=>'text']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">

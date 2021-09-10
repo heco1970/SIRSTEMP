@@ -40,3 +40,4 @@ nbproject/*
 .sass-cache/
 
 webroot/files/*
+composer.lock
