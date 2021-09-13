@@ -14,7 +14,7 @@
     -webkit-appearance: none;
 }
 </style>
-
+<?php echo $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'); ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Registo de Pessoa') ?></h6>
@@ -109,19 +109,19 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-                        <?php echo $this->Form->control('distrito', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $estadocivils, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('distritos', ['id' => 'distrito_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-                        <?php echo $this->Form->control('concelho', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $generos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('concelhos', ['id' => 'concelho_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
-                        <?php echo $this->Form->control('freguesia', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('codigos_postai_id', ['id'=> 'freguesia_1','type'=>'select','label' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
@@ -206,7 +206,26 @@
     <?= $this->Form->end() ?>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css"
+    integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script>
+$.fn.select2.defaults.set("theme", "bootstrap");
+
+var selData = 0;
+
+$('#freguesia_1').select2({
+    ajax: {
+        url: function(params) {
+            return '/Pessoas/FregAutoComplete/' + selData;
+        },
+        dataType: 'json',
+        delay: 250,
+    }
+});
+
 $('#cc').change(function() {
     if ($('#cc').val().length < 9) {
         $("#ccError").html("O cartão de cidadão tem que ter 9 dígitos.").addClass("error-msg");
@@ -249,6 +268,31 @@ function submitBday() {
 
 $('document').ready(function() {
 
+    $("#distrito_1").change(function(event) {
+        var data = $(this).val();
+        $.ajax({
+            //method: 'ajax',
+            url: '/Pessoas/concelhosByDistritos',
+            dataType: 'json',
+            data: {
+                keyword: data,
+            },
+            success: function(response) {
+                $('#concelho_1').html("");
+                //response = JSON.parse(response);
+                //console.log(response);
+                $('#concelho_1').append($("<option>").attr('value', "1").text(" "));
+                response.forEach(element => $('#concelho_1').append($("<option>").attr(
+                    'value', element.id).text(element.Designacao)));
+            }
+        });
+    })
+
+    $("#concelho_1").change(function(event) {
+        var data = $(this).val();
+        selData = data;
+    })
+
     $(function() {
         var Bdate = document.getElementById('dataNasc').value;
         var Bday = +new Date(Bdate);
@@ -264,7 +308,7 @@ $('document').ready(function() {
         var searchkey1 = $('#codigo_postal1').val();
         searchTags(searchkey, searchkey1);
     });
- 
+
     function searchTags(keyword, keyword1) {
         var data = keyword;
         var data1 = keyword1;

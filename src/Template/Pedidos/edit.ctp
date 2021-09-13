@@ -199,7 +199,7 @@
     <div class="card-footer card-footer-fixed">
         <?= $this->Form->button(__('Gravar'), ['class' => 'btn btn-success float-right']) ?>
         <?php if (!isset($_GET['pessoa'])) { ?>
-            <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php } else { ?>
             <a href="/pessoas/view/<?= $_GET['pessoa'] ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php } ?>
@@ -217,114 +217,118 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
 
-
 <?php $this->start('scriptBottom') ?>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css"
+    integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-    var selData = 0;
+var selData = 0;
 
-    $.fn.select2.defaults.set( "theme", "bootstrap" );
+$.fn.select2.defaults.set("theme", "bootstrap");
 
-    $('#freguesia').select2({
-        ajax: {
-            url: function(params) {
-                return '/Pedidos/freguesiasByConselhos/' + selData;
-            },
-            dataType: 'json',
-            delay: 250,
-        }
-    });
+$('#freguesia').select2({
+    ajax: {
+        url: function(params) {
+            return '/Pedidos/freguesiasByConselhos/' + selData;
+        },
+        dataType: 'json',
+        delay: 250,
+    }
+});
 
-    $("#concelho").change(function(event) {
-        var data = $(this).val();
-        selData = data;
-    })
+$("#concelho").change(function(event) {
+    var data = $(this).val();
+    selData = data;
+})
 
-    $(function() {
-        $("#pessoa_id").autocomplete({
-            minLength: 1,
-            source: function(request, response) {
-                $.ajax({
-                    url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'Search']); ?>" +
-                        '?term=' +
-                        request.term,
-                    dataType: "json",
-                    success: function(data) {
-                        response(data);
-                        console.log(data);
-                    }
-                });
-            }
-        });
-    });
-    $(function() {
-        $("#processo_id").autocomplete({
-            minLength: 1,
-            source: function(request, response) {
-                $.ajax({
-                    url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'SearchPedido']); ?>" +
-                        '?term=' +
-                        request.term,
-                    dataType: "json",
-                    success: function(data) {
-                        response(data);
-                        console.log(data);
-                    }
-                });
-            }
-        });
-    });
-    $('document').ready(function() {
-
-        $('#designacao').change(function() {
-            if ($('#designacao').val() == 2) {
-                $('#descricao').removeAttr('disabled');
-            } else {
-                $('#descricao').attr('disabled', true);
-                $('#descricao').attr("required", true);
-                $('#descricao').val("");
-            }
-        });
-
-        $('#team_id').click(function() {
-            var searchkey = $('#team_id').val();
-            searchTags(searchkey);
-        });
-
-        $('#team_id').trigger("click");
-
-        function searchTags(keyword) {
-            var data = keyword;
-
+$(function() {
+    $("#pessoa_id").autocomplete({
+        minLength: 1,
+        source: function(request, response) {
             $.ajax({
-                method: 'get',
-                url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'Gestor']); ?>",
-                data: {
-                    keyword: data,
-                },
-
-                success: function(response) {
-                    $('#gestor').html(response);
-                    $('#gestor').prop("disabled", false);
+                url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'Search']); ?>" +
+                    '?term=' +
+                    request.term,
+                dataType: "json",
+                success: function(data) {
+                    response(data);
+                    console.log(data);
                 }
             });
-        };
-    });
-
-    $('#pais_id').change(function() {
-        if ($('#pais_id').val() != 193) {
-            $('#concelho_id').hide("slow");
-        } else {
-            $('#concelho_id').show("slow");
         }
     });
-    $('#pais_id').trigger("change");
+});
+$(function() {
+    $("#processo_id").autocomplete({
+        minLength: 1,
+        source: function(request, response) {
+            $.ajax({
+                url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'SearchPedido']); ?>" +
+                    '?term=' +
+                    request.term,
+                dataType: "json",
+                success: function(data) {
+                    response(data);
+                    console.log(data);
+                }
+            });
+        }
+    });
+});
+$('document').ready(function() {
+
+    $('#designacao').change(function() {
+        if ($('#designacao').val() == 2) {
+            $('#descricao').removeAttr('disabled');
+        } else {
+            $('#descricao').attr('disabled', true);
+            $('#descricao').attr("required", true);
+            $('#descricao').val("");
+        }
+    });
+
+    $('#team_id').click(function() {
+        var searchkey = $('#team_id').val();
+        searchTags(searchkey);
+    });
+
+    $('#team_id').trigger("click");
+
+    function searchTags(keyword) {
+        var data = keyword;
+
+        $.ajax({
+            method: 'get',
+            url: "<?php echo $this->Url->build(['controller' => 'Pedidos', 'action' => 'Gestor']); ?>",
+            data: {
+                keyword: data,
+            },
+
+            success: function(response) {
+                $('#gestor').html(response);
+                $('#gestor').prop("disabled", false);
+            }
+        });
+    };
+});
+
+$('#pais_id').change(function() {
+    if ($('#pais_id').val() != 193) {
+        $('#concelho_id').hide("slow");
+    } else {
+        $('#concelho_id').show("slow");
+    }
+});
+$('#pais_id').trigger("change");
 </script>
 <?php $this->end(); ?>

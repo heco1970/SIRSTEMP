@@ -423,4 +423,21 @@ class PedidosController extends AppController
         $data = ['results'=>$data];
         echo json_encode($data);
     }
+
+    public function freguesiaLoad(){
+        $this->request->allowMethod('ajax');
+        $this->autoRender = false;                
+
+        $idConselo = $this->request->getData('concelho_id');
+
+        $freguesia = $this->Pedidos->CodigosPostais
+            ->find()
+            ->select(['id', 'NomeLocalidade'])
+            ->where(['id like'=> $idConselo])
+            ->group('NomeLocalidade')
+            ->order(['NomeLocalidade' => 'ASC']);
+
+            
+        echo json_encode($freguesia);
+    }
 }

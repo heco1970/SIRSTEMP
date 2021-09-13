@@ -107,13 +107,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-                        <?php echo $this->Form->control('distrito', ['id' => 'distrito_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('distritos', ['id' => 'distrito_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-                        <?php echo $this->Form->control('concelho', ['id' => 'concelho_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('concelhos', ['id' => 'concelho_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
@@ -201,7 +201,14 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css"
+    integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script>
+    
+$.fn.select2.defaults.set("theme", "bootstrap");
+
 var error;
 $('#cc').change(function() {
     if ($('#cc').val().length < 9) {
@@ -259,18 +266,13 @@ $(function() {
     });
 });
 
-function randomIDGen() {
-    var x = Math.floor(Math.random() * 90000) + 10000;;
-    var generatedNum = document.getElementById('nmrPessoaID');
-    generatedNum.setAttribute('value', x);
-}
-
-window.onload = randomIDGen;
-
 // Código usado em: http://www.java2s.com/Tutorials/Javascript/Javascript_Form_How_to/Date_Input/Get_the_age_from_input_type_date_.htm
 function submitBday() {
 
     var Bdate = document.getElementById('dataNasc').value;
+    if (typeof Bdate !== 'undefined' && Bdate !== null) {
+        Bdate.innerHTML = value;
+    }
     var Bday = +new Date(Bdate);
     var idade = ~~((Date.now() - Bday) / (31557600000));
     var theBday = document.getElementById('idade');
