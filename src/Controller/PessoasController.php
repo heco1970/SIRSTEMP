@@ -353,6 +353,8 @@ class PessoasController extends AppController
             'contain' => ['Pais', 'Estadocivils', 'CentroEducs', 'EstbPris', 'Generos', 'Unidadeoperas', 'CodigosPostais']
         ]);
 
+        $this->log($pessoa);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
             $pessoa->estado = 1; 
@@ -394,7 +396,16 @@ class PessoasController extends AppController
         $this->set('generos', $this->Pessoas->Generos->find('list', ['keyField' => 'id', 'valueField' => 'genero']));
         $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
 
+/*         $conselhos = $this->Pessoas->CodigosPostais->Conelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
+        $this->set('codigos_postai_id', $codigosPostais);
+        $this->log($conselhos); */
+
+        $freguesias = $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['id' => $pessoa['codigos_postai']['id']])->first();
+        //$this->set('codigos_postai_id', $codigosPostais);
+        $this->log($codigosPostais); 
+
         $codpostal = $this->Pessoas->CodigosPostais->find()->where(['CodigosPostais.id' => $pessoa->codigos_postai->id])->contain(['Distritos','Concelhos'])->first();
+        $this->log($codpostal); 
 
         $this->set(compact('pessoa', 'codpostal'));
     }

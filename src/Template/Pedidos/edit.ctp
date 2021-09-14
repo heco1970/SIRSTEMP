@@ -201,7 +201,8 @@
         <?php if (!isset($_GET['pessoa'])) { ?>
         <a href="/pedidos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php } else { ?>
-            <a href="/pessoas/view/<?= $_GET['pessoa'] ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <a href="/pessoas/view/<?= $_GET['pessoa'] ?>"
+            class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php } ?>
     </div>
     <?= $this->Form->end() ?>
@@ -235,21 +236,6 @@
 var selData = 0;
 
 $.fn.select2.defaults.set("theme", "bootstrap");
-
-$('#freguesia').select2({
-    ajax: {
-        url: function(params) {
-            return '/Pedidos/freguesiasByConselhos/' + selData;
-        },
-        dataType: 'json',
-        delay: 250,
-    }
-});
-
-$("#concelho").change(function(event) {
-    var data = $(this).val();
-    selData = data;
-})
 
 $(function() {
     $("#pessoa_id").autocomplete({
@@ -286,6 +272,21 @@ $(function() {
     });
 });
 $('document').ready(function() {
+
+    $('#freguesia').select2({
+        ajax: {
+            url: function(params) {
+                return '/Pedidos/freguesiasByConselhos/' + selData;
+            },
+            dataType: 'json',
+            delay: 250,
+        }
+    });
+
+    $("#concelho").change(function(event) {
+        var data = $(this).val();
+        selData = data;
+    })
 
     $('#designacao').change(function() {
         if ($('#designacao').val() == 2) {
