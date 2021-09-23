@@ -353,7 +353,9 @@ class PessoasController extends AppController
             'contain' => ['Pais', 'Estadocivils', 'CentroEducs', 'EstbPris', 'Generos', 'Unidadeoperas', 'CodigosPostais']
         ]);
 
-        $this->log($pessoa);
+        /*$this->log($pessoa['codigos_postai']['CodigoDistrito']);
+        $this->log($pessoa['codigos_postai']['CodigoConcelho']);
+        $this->log($pessoa['codigos_postai']['id']);*/
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
@@ -374,7 +376,7 @@ class PessoasController extends AppController
             if(isset($codigoid->id)){
                 $pessoa->codigos_postai_id = $codigoid->id;
             }
-
+ 
             if (!empty($pessoa->codigos_postai_id)) {
                 if ($this->Pessoas->save($pessoa)) {
                     $this->Flash->success(__('O registo foi gravado.'));
@@ -396,16 +398,15 @@ class PessoasController extends AppController
         $this->set('generos', $this->Pessoas->Generos->find('list', ['keyField' => 'id', 'valueField' => 'genero']));
         $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
 
-/*         $conselhos = $this->Pessoas->CodigosPostais->Conelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
-        $this->set('codigos_postai_id', $codigosPostais);
-        $this->log($conselhos); */
+        $codpostal = $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['id' => $pessoa['codigos_postai']['id']]);
+        $cod_postal_1 = $this->request->getQuery('codigo_postal');
+        $cod_postal_2 = $this->request->getQuery('codigo_postal1');
+        $distrito_id = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['NumCodigoPostal' => $cod_postal_1, 'ExtCodigoPostal' => $cod_postal_2]);
+        $concelhos_id = $this->Pessoas->CodigosPostais->find()->select('CodigoConcelho')->where(['NumCodigoPostal' => $cod_postal_1, 'ExtCodigoPostal' => $cod_postal_2]);
 
-        $freguesias = $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['id' => $pessoa['codigos_postai']['id']])->first();
-        //$this->set('codigos_postai_id', $codigosPostais);
-        $this->log($codigosPostais); 
-
-        $codpostal = $this->Pessoas->CodigosPostais->find()->where(['CodigosPostais.id' => $pessoa->codigos_postai->id])->contain(['Distritos','Concelhos'])->first();
-        $this->log($codpostal); 
+        //$distrito = $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['id' => $pessoa['codigos_postai']['CodigoDistrito']]);
+        //$concelho = $this->Pessoas->CodigosPostais->Conselhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['id' => $pessoa['codigos_postai']['CodigoConcelho']]);
+        //$freguesia = $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['id' => $pessoa['codigos_postai']['id']]);
 
         $this->set(compact('pessoa', 'codpostal'));
     }
@@ -449,12 +450,14 @@ class PessoasController extends AppController
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
 
-        $id = 'id LIKE "%' . $out[0] . '%"';
-        $nome = 'nome LIKE "%' . $out[1] . '%"';
-        $cc = 'cc LIKE "%' . $out[2] . '%"';
-        $nif = 'nif LIKE "%' . $out[3] . '%"';
-        $datanascimento = 'data_nascimento LIKE "%' . $out[4] . '%"';
-
+        if (!empty($out)) {
+            $id = 'id LIKE "%' . $out[0] . '%"';
+            $nome = 'nome LIKE "%' . $out[1] . '%"';
+            $cc = 'cc LIKE "%' . $out[2] . '%"';
+            $nif = 'nif LIKE "%' . $out[3] . '%"';
+            $datanascimento = 'data_nascimento LIKE "%' . $out[4] . '%"';    
+        }
+        
         if ($out[0] != null) {
             array_push($arr, $id);
         }
@@ -509,5 +512,25 @@ class PessoasController extends AppController
 
         $this->response->withType("application/vnd.ms-excel");
         return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pessoas.xlsx'));
+    }
+
+    public function loadCodigos(){
+        $codigos_postai_id = $this->request->getData('codigos_postai_id');
+
+        $cod_postal_1 = $this->request->getQuery('keyword');
+        $cod_postal_2 = $this->request->getQuery('keyword1');
+
+        $distrito_id = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['NumCodigoPostal' => $cod_postal_1, 'ExtCodigoPostal' => $cod_postal_2]);
+        $concelhos_id = $this->Pessoas->CodigosPostais->find()->select('CodigoConcelho')->where(['NumCodigoPostal' => $cod_postal_1, 'ExtCodigoPostal' => $cod_postal_2]);
+
+        $distrito = $this->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito' => $distrito_id]);
+        $concelhos = $this->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoConcelho' => $concelhos_id, 'CodigoDistrito' => $distrito_id]);
+        $freguesia = $this->Pessoas->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['id' => $codigos_postai_id]);
+
+        $this->set('distritos', $distrito);
+        $this->set('concelhos', $concelhos);
+        $this->set('freguesias', $freguesia);
+
+        $this->set('_serialize', ['distrito']);
     }
 }

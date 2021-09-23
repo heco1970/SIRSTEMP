@@ -70,17 +70,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="id_genero">Género</label>
-
                         <?php echo $this->Form->control('genero_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $generos, 'class' => 'form-control']); ?>
-
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="pais_id">Nacionalidade</label>
-
                         <?php echo $this->Form->control('pais_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
-
                     </div>
                 </div>
             </div>
@@ -125,9 +121,7 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-row">
-
                 <div class="col">
                     <div class="form-group">
                         <label for="hea">Data de Nascimento</label>
@@ -139,7 +133,6 @@
                         <label for="age">Idade</label>
                         <?php echo $this->Form->control('age', ['id' => "idade",'label' => false, 'class' => 'form-control', 'style' => 'width: 50%;', 'disabled' => true]); ?>
                     </div>
-
                 </div>
                 <div class="col">
                     <div class="form-group">
@@ -159,7 +152,6 @@
                     <div class="form-group">
                         <label for="outroidentifica">Outra Identificação</label>
                         <?php echo $this->Form->control('outroidentifica', ['label' => false, 'class' => 'form-control']); ?>
-
                     </div>
                 </div>
             </div>

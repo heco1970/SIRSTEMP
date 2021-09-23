@@ -107,13 +107,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-                        <?php echo $this->Form->control('distritos', ['id' => 'distrito_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('distritos', ['id' => 'distrito_1', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-                        <?php echo $this->Form->control('concelhos', ['id' => 'concelho_1', 'empty'=>' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('concelhos', ['id' => 'concelho_1', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col">

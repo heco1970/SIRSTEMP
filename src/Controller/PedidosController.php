@@ -10,7 +10,6 @@ use Cake\ORM\Table;
 
 ob_start();
 
-
 /**
  * Pedidos Controller
  *
@@ -99,7 +98,6 @@ class PedidosController extends AppController
         $this->set('pedido', $pedido);
         $this->set(compact('value'));
     }
-
   
     /**
      * Add method
@@ -318,19 +316,8 @@ class PedidosController extends AppController
         $teams = $this->Pedidos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $pais = $this->Pedidos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']);
         $concelhos = $this->Pedidos->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']);
-
         $codigosPostais = $this->Pedidos->CodigosPostais->find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['id' => $pedido['codigos_postai']['id']]);
-        $this->log($codigosPostais);
         
-/*         $this->set('codigos_postai_id', $codigosPostais);
-         */
-
-        /*$idCod = $this->Pedidos->CodigosPostais->find()->select(['id'])->where(['id' => $pedido['codigos_postai']['id']])->first();
-        $codigosPostaisssss = $this->Pedidos->CodigosPostais->find()->select('NomeLocalidade')->where(['id' => $idCod]);
-        $this->set('codigos_postai_id', $this->Pedidos->CodigosPostais>find('list', ['keyField' => 'id', 'valueField' => 'NomeLocalidade'])->where(['CodigoDistrito' => $idConselo]));
-
-        $this->log($codigosPostaisssss);*/
-
         $this->set(compact('codigosPostais','entradas','pedido', 'processos', 'errors','errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
 
