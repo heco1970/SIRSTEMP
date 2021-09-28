@@ -33,23 +33,24 @@ class PedidosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['id', 'pessoa', 'processo', 'equiparesponsavel', 'state', 'datarecepcao', 'datatermoprevisto', 'dataefectivatermo'];
+            $validOps = ['id', 'pessoa', 'processo', 'equiparesponsavel', 'state', 'pedidostype','datarecepcao', 'datatermoprevisto', 'dataefectivatermo'];
             $convArray = [
                 'id' => $model . '.id',
                 'pessoa' => 'Pessoas.nome',
                 'processo' => 'Processos.processo_id',
-                'equiparesponsavel' => 'Teams.nome',
+                'equiparesponsavel' => 'Teams.id',
+                'pedidostype' => 'Pedidostypes.id',
                 'state' => $model . '.state_id',
                 'datarecepcao' => $model . '.datarecepcao',
                 'datatermoprevisto' => $model . '.datatermoprevisto',
                 'dataefectivatermo' => $model . '.dataefectivatermo'
             ];
-            $strings = ['pessoa', 'processo', 'equiparesponsavel', 'datarecepcao', 'datarecepcao', 'datatermoprevisto', 'dataefectivatermo'];
+            $strings = ['pessoa', 'processo', 'pedidostype', 'equiparesponsavel', 'datarecepcao', 'datarecepcao', 'datatermoprevisto', 'dataefectivatermo'];
             $date_start = []; //data inicial
             $date_end = [];  //data final
 
 
-            $contain = ['Processos', 'Pessoas', 'States', 'PedidosTypes', 'PedidosMotives', 'Pais', 'Teams'];
+            $contain = ['Processos', 'Pessoas', 'States', 'PedidosMotives', 'Pais', 'Teams','Pedidostypes'];
             $conditions = [];
 
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
@@ -346,15 +347,34 @@ class PedidosController extends AppController
     {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $nome = 'Pessoas.nome LIKE "%' . $out[0] . '%"';
+
+        if (!empty($out)) {
+            $id = 'Pedidos.id LIKE "%' . $out[0] . '%"';
+            $processo = 'processo_id LIKE "%' . $out[1] . '%"';
+            $nome = 'Pessoas.nome LIKE "%' . $out[2] . '%"';
+            $equipa = 'Teams.id LIKE "%' . $out[3] . '%"';
+            $tipo = 'Pedidostypes.id LIKE "%' . $out[4] . '%"';
+        }
 
         if ($out[0] != null) {
+            array_push($arr, $id);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $processo);
+        }
+        if ($out[2] != null) {
             array_push($arr, $nome);
         }
+        if ($out[3] != null) {
+            array_push($arr, $equipa);
+        }
+        if ($out[4] != null) {
+            array_push($arr, $tipo);
+        }
         if ($arr == null) {
-            $pedidos = $this->Pedidos->find('all')->contain(['Pessoas']);
+            $pedidos = $this->Pedidos->find('all')->contain(['Pessoas','Pedidostypes','Teams','States']);
         } else {
-            $pedidos = $this->Pedidos->find('all', array('conditions' => $arr))->contain(['Pessoas']);
+            $pedidos = $this->Pedidos->find('all', array('conditions' => $arr))->contain(['Pessoas','Pedidostypes','Teams','States']);
         }
 
         $this->autoRender = false;
@@ -363,21 +383,33 @@ class PedidosController extends AppController
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        $sheet->setCellValue('A1', 'Pessoa');
-        $sheet->setCellValue('B1', 'Data de criação');
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Processo');
+        $sheet->setCellValue('C1', 'Nome');
+        $sheet->setCellValue('D1', 'Data de Receção');
+        $sheet->setCellValue('E1', 'Equipa Responsável');
+        $sheet->setCellValue('F1', 'Estado');
+        $sheet->setCellValue('G1', 'Data termo previsto');
+        $sheet->setCellValue('H1', 'Data termo efetivo');
 
         $linha = 2;
         foreach ($pedidos as $row) {
-            $sheet->setCellValue('A' . $linha, $row->pessoa->nome);
-            $sheet->setCellValue('B' . $linha, $row->created);
+            $sheet->setCellValue('A' . $linha, $row->id);
+            $sheet->setCellValue('B' . $linha, $row->processo_id);
+            $sheet->setCellValue('C' . $linha, $row->pessoa->nome);
+            $sheet->setCellValue('D' . $linha, $row->datarecepcao);
+            $sheet->setCellValue('E' . $linha, $row->team->nome);
+            $sheet->setCellValue('F' . $linha, $row->state->designacao);
+            $sheet->setCellValue('G' . $linha, $row->datatermoprevisto);
+            $sheet->setCellValue('H' . $linha, $row->datainicioefectivo);
             $linha++;
         }
 
-        foreach (range('A', 'B') as $columnID) {
+        foreach (range('A', 'H') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        $spreadsheet->getActiveSheet()->getStyle('A1:H1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);

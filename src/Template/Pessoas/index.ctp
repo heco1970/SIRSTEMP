@@ -10,7 +10,7 @@ $pessoaNome = "";
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+            ['id' =>'xlsbutton','escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
         )
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
@@ -52,8 +52,6 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
     </div>
 </div>
 
-
-
 <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
 <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -61,9 +59,21 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
 
 <?php $this->start('scriptBottom') ?>
 <script>
-
+    
 var e = jQuery.Event("keypress");
 e.which = 13; // Enter
+
+$('#xlsbutton').click(function() {
+    createCookie(
+        "Filtro",
+        document.getElementById("id").value,
+        document.getElementById("nome").value,
+        document.getElementById("cc").value,
+        document.getElementById("nif").value,
+        document.getElementById("datanascimento").value,
+        "1"
+    );
+});
 
 $('#dynatable-filter').click(function() {
     $('#dynatable-filter').trigger(e);
@@ -80,7 +90,6 @@ function emptyCookie() {
         document.getElementById("datanascimento").value = '',
         "1"
     );
-
 }
 
 $(document).ready(function() {
@@ -97,6 +106,7 @@ $(document).ready(function() {
             return '<div class="btn-group btn-group-sm" role="group">' + view + edit + dele + '</div>';
         }
     }
+
     createDynatable("#dynatable", "/pessoas/", {
         created: -1
     }, writers);
@@ -126,69 +136,9 @@ $(document).ready(function() {
     };
 
     deleteCookie("Filtro");
-    createCookie("Filtro", "", "", "", "", "", "1");
+    createCookie("Filtro",'', '', '', '', '', "1");
 
 });
-
-document.getElementById("id").onkeyup = function() {
-    createCookie(
-        "Filtro",
-        document.getElementById("id").value,
-        document.getElementById("nome").value,
-        document.getElementById("cc").value,
-        document.getElementById("nif").value,
-        document.getElementById("datanascimento").value,
-        "1"
-    );
-};
-
-document.getElementById("nome").onkeyup = function() {
-    createCookie(
-        "Filtro",
-        document.getElementById("id").value,
-        document.getElementById("nome").value,
-        document.getElementById("cc").value,
-        document.getElementById("nif").value,
-        document.getElementById("datanascimento").value,
-        "1"
-    );
-};
-
-document.getElementById("cc").onkeyup = function() {
-    createCookie(
-        "Filtro",
-        document.getElementById("id").value,
-        document.getElementById("nome").value,
-        document.getElementById("cc").value,
-        document.getElementById("nif").value,
-        document.getElementById("datanascimento").value,
-        "1"
-    );
-};
-
-document.getElementById("nif").onkeyup = function() {
-    createCookie(
-        "Filtro",
-        document.getElementById("id").value,
-        document.getElementById("nome").value,
-        document.getElementById("cc").value,
-        document.getElementById("nif").value,
-        document.getElementById("datanascimento").value,
-        "1"
-    );
-};
-
-document.getElementById("datanascimento").onchange = function() {
-    createCookie(
-        "Filtro",
-        document.getElementById("id").value,
-        document.getElementById("nome").value,
-        document.getElementById("cc").value,
-        document.getElementById("nif").value,
-        document.getElementById("datanascimento").value,
-        "1"
-    );
-};
 
 function deleteCookie(name) {
     document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';

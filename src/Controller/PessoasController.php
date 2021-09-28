@@ -88,7 +88,6 @@ class PessoasController extends AppController
         $this->loadModel('Pedidos');
         $this->loadModel('Concelhos');
         
-
         $contactos = $this->Contactos->find()->where(['pessoa_id' => $id]);
 
         $subquery = $this->PessoasProcessos
@@ -301,8 +300,6 @@ class PessoasController extends AppController
   
         $this->set(compact('pessoa'));
     }
-
-
 
     public function concelhosDistrit()
     {
