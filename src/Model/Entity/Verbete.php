@@ -45,8 +45,5 @@ class Verbete extends Entity
         'data_fim_execucao' => true,
         'data' => true,
         'tecnico' => true,
-        'pessoa' => true,
-        'estado' => true,
-        'pedido' => true
     ];
 }

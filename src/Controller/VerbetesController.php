@@ -2,6 +2,11 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Cake\ORM\TableRegistry;
+use Cake\ORM\Table;
 
 /**
  * Verbetes Controller
@@ -20,11 +25,7 @@ class VerbetesController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Pessoas', 'Estados', 'Pedidos']
-        ];
         $verbetes = $this->paginate($this->Verbetes);
-
         $this->set(compact('verbetes'));
     }
 
@@ -37,10 +38,6 @@ class VerbetesController extends AppController
      */
     public function view($id = null)
     {
-        $verbete = $this->Verbetes->get($id, [
-            'contain' => ['Pessoas', 'Estados', 'Pedidos']
-        ]);
-
         $this->set('verbete', $verbete);
     }
 
@@ -61,10 +58,7 @@ class VerbetesController extends AppController
             }
             $this->Flash->error(__('The verbete could not be saved. Please, try again.'));
         }
-        $pessoas = $this->Verbetes->Pessoas->find('list', ['limit' => 200]);
-        $estados = $this->Verbetes->Estados->find('list', ['limit' => 200]);
-        $pedidos = $this->Verbetes->Pedidos->find('list', ['limit' => 200]);
-        $this->set(compact('verbete', 'pessoas', 'estados', 'pedidos'));
+        $this->set(compact('verbete'));
     }
 
     /**
@@ -88,10 +82,7 @@ class VerbetesController extends AppController
             }
             $this->Flash->error(__('The verbete could not be saved. Please, try again.'));
         }
-        $pessoas = $this->Verbetes->Pessoas->find('list', ['limit' => 200]);
-        $estados = $this->Verbetes->Estados->find('list', ['limit' => 200]);
-        $pedidos = $this->Verbetes->Pedidos->find('list', ['limit' => 200]);
-        $this->set(compact('verbete', 'pessoas', 'estados', 'pedidos'));
+        $this->set(compact('verbete'));
     }
 
     /**
