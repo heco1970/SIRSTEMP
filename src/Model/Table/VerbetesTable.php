@@ -9,10 +9,6 @@ use Cake\Validation\Validator;
 /**
  * Verbetes Model
  *
- * @property \App\Model\Table\PessoasTable|\Cake\ORM\Association\BelongsTo $Pessoas
- * @property \App\Model\Table\EstadosTable|\Cake\ORM\Association\BelongsTo $Estados
- * @property \App\Model\Table\PedidosTable|\Cake\ORM\Association\BelongsTo $Pedidos
- *
  * @method \App\Model\Entity\Verbete get($primaryKey, $options = [])
  * @method \App\Model\Entity\Verbete newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Verbete[] newEntities(array $data, array $options = [])
@@ -21,8 +17,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Verbete patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Verbete[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Verbete findOrCreate($search, callable $callback = null, $options = [])
- *
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class VerbetesTable extends Table
 {
@@ -40,21 +34,6 @@ class VerbetesTable extends Table
         $this->setTable('verbetes');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-
-        $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Pessoas', [
-            'foreignKey' => 'pessoa_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Estados', [
-            'foreignKey' => 'estado_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Pedidos', [
-            'foreignKey' => 'pedido_id',
-            'joinType' => 'INNER'
-        ]);
     }
 
     /**
@@ -66,84 +45,65 @@ class VerbetesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->integer('id_verbetes')
+            ->allowEmpty('id_verbetes', 'create');
 
         $validator
-            ->scalar('nip')
-            ->maxLength('nip', 20)
-            ->requirePresence('nip', 'create')
-            ->notEmpty('nip');
+            ->scalar('equipa')
+            ->maxLength('equipa', 50)
+            ->requirePresence('equipa', 'create')
+            ->notEmpty('equipa');
 
         $validator
-            ->date('datacriacao')
-            ->requirePresence('datacriacao', 'create')
-            ->notEmpty('datacriacao');
+            ->scalar('dr_ds')
+            ->maxLength('dr_ds', 50)
+            ->requirePresence('dr_ds', 'create')
+            ->notEmpty('dr_ds');
 
         $validator
-            ->date('datadistribuicao')
-            ->requirePresence('datadistribuicao', 'create')
-            ->notEmpty('datadistribuicao');
+            ->scalar('nome')
+            ->maxLength('nome', 60)
+            ->requirePresence('nome', 'create')
+            ->notEmpty('nome');
 
         $validator
-            ->date('datainicioefectiva')
-            ->requirePresence('datainicioefectiva', 'create')
-            ->notEmpty('datainicioefectiva');
+            ->scalar('designacao')
+            ->maxLength('designacao', 200)
+            ->requirePresence('designacao', 'create')
+            ->notEmpty('designacao');
 
         $validator
-            ->date('dataefectivatermino')
-            ->requirePresence('dataefectivatermino', 'create')
-            ->notEmpty('dataefectivatermino');
+            ->dateTime('hora_aplicada')
+            ->requirePresence('hora_aplicada', 'create')
+            ->notEmpty('hora_aplicada');
 
         $validator
-            ->date('datainiciop')
-            ->requirePresence('datainiciop', 'create')
-            ->notEmpty('datainiciop');
+            ->dateTime('hora_prevista')
+            ->requirePresence('hora_prevista', 'create')
+            ->notEmpty('hora_prevista');
 
         $validator
-            ->date('dataprevistat')
-            ->requirePresence('dataprevistat', 'create')
-            ->notEmpty('dataprevistat');
+            ->scalar('actividade')
+            ->maxLength('actividade', 100)
+            ->requirePresence('actividade', 'create')
+            ->notEmpty('actividade');
 
         $validator
-            ->scalar('ep')
-            ->maxLength('ep', 255)
-            ->requirePresence('ep', 'create')
-            ->notEmpty('ep');
+            ->dateTime('data_fim_execucao')
+            ->requirePresence('data_fim_execucao', 'create')
+            ->notEmpty('data_fim_execucao');
 
         $validator
-            ->scalar('observacoes')
-            ->maxLength('observacoes', 255)
-            ->requirePresence('observacoes', 'create')
-            ->notEmpty('observacoes');
+            ->dateTime('data')
+            ->requirePresence('data', 'create')
+            ->notEmpty('data');
 
         $validator
-            ->scalar('motivo')
-            ->maxLength('motivo', 255)
-            ->requirePresence('motivo', 'create')
-            ->notEmpty('motivo');
-
-        $validator
-            ->scalar('concluidof')
-            ->requirePresence('concluidof', 'create')
-            ->notEmpty('concluidof');
+            ->scalar('tecnico')
+            ->maxLength('tecnico', 60)
+            ->requirePresence('tecnico', 'create')
+            ->notEmpty('tecnico');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['estado_id'], 'Estados'));
-        $rules->add($rules->existsIn(['pedido_id'], 'Pedidos'));
-
-        return $rules;
     }
 }

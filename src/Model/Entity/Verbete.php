@@ -6,23 +6,17 @@ use Cake\ORM\Entity;
 /**
  * Verbete Entity
  *
- * @property int $id
- * @property int $pessoa_id
- * @property string $nip
- * @property \Cake\I18n\FrozenDate $datacriacao
- * @property \Cake\I18n\FrozenDate $datadistribuicao
- * @property \Cake\I18n\FrozenDate $datainicioefectiva
- * @property \Cake\I18n\FrozenDate $dataefectivatermino
- * @property \Cake\I18n\FrozenDate $datainiciop
- * @property \Cake\I18n\FrozenDate $dataprevistat
- * @property string $ep
- * @property string $observacoes
- * @property int $estado_id
- * @property string $motivo
- * @property string $concluidof
- * @property int $pedido_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
+ * @property int $id_verbetes
+ * @property string $equipa
+ * @property string $dr_ds
+ * @property string $nome
+ * @property string $designacao
+ * @property \Cake\I18n\FrozenTime $hora_aplicada
+ * @property \Cake\I18n\FrozenTime $hora_prevista
+ * @property string $actividade
+ * @property \Cake\I18n\FrozenTime $data_fim_execucao
+ * @property \Cake\I18n\FrozenTime $data
+ * @property string $tecnico
  *
  * @property \App\Model\Entity\Pessoa $pessoa
  * @property \App\Model\Entity\Estado $estado
@@ -41,22 +35,16 @@ class Verbete extends Entity
      * @var array
      */
     protected $_accessible = [
-        'pessoa_id' => true,
-        'nip' => true,
-        'datacriacao' => true,
-        'datadistribuicao' => true,
-        'datainicioefectiva' => true,
-        'dataefectivatermino' => true,
-        'datainiciop' => true,
-        'dataprevistat' => true,
-        'ep' => true,
-        'observacoes' => true,
-        'estado_id' => true,
-        'motivo' => true,
-        'concluidof' => true,
-        'pedido_id' => true,
-        'created' => true,
-        'modified' => true,
+        'equipa' => true,
+        'dr_ds' => true,
+        'nome' => true,
+        'designacao' => true,
+        'hora_aplicada' => true,
+        'hora_prevista' => true,
+        'actividade' => true,
+        'data_fim_execucao' => true,
+        'data' => true,
+        'tecnico' => true,
         'pessoa' => true,
         'estado' => true,
         'pedido' => true

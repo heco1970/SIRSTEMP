@@ -2,8 +2,6 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Verbetes Controller
@@ -22,41 +20,12 @@ class VerbetesController extends AppController
      */
     public function index()
     {
-        if ($this->request->is('ajax')) {
-            $model = 'Verbetes';
-            $this->loadComponent('Dynatables');
+        $this->paginate = [
+            'contain' => ['Pessoas', 'Estados', 'Pedidos']
+        ];
+        $verbetes = $this->paginate($this->Verbetes);
 
-            $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
-
-            $validOps = ['id', 'pessoa', 'createdfirst', 'createdlast'];
-            $convArray = [
-                'id' => $model.'.id',
-                'pessoa' => $model.'.pessoa_id',
-                'createdfirst' => $model.'.created',
-                'createdlast' => $model.'.created'
-            ];
-            $strings = ['pessoa'];
-            $date_start = ['createdfirst']; //data inicial
-            $date_end = ['createdlast'];  //data final
-
-            $contain = ['Pessoas'];
-            $conditions = [];
-      
-            $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-
-            $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, $date_start, $date_end);
-
-            $conditions = array_merge($conditions,$parsedQueries);
-            $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-
-            $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
-            $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-            
-            $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
-        } else {
-            //$types = $this->Users->Types->find('list', ['limit' => 200]);
-            //$this->set(compact('types'));
-        }
+        $this->set(compact('verbetes'));
     }
 
     /**
@@ -86,15 +55,14 @@ class VerbetesController extends AppController
         if ($this->request->is('post')) {
             $verbete = $this->Verbetes->patchEntity($verbete, $this->request->getData());
             if ($this->Verbetes->save($verbete)) {
-                $this->Flash->success(__('O registo foi gravado.'));
+                $this->Flash->success(__('The verbete has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('The verbete could not be saved. Please, try again.'));
         }
-
-        $pessoas = $this->Verbetes->Pessoas->find('list', ['keyField' => 'id', 'valueField' => 'nome'])->toArray();
-        $estados = $this->Verbetes->Estados->find('list', ['keyField' => 'id', 'valueField' => 'designacao'])->toArray();
+        $pessoas = $this->Verbetes->Pessoas->find('list', ['limit' => 200]);
+        $estados = $this->Verbetes->Estados->find('list', ['limit' => 200]);
         $pedidos = $this->Verbetes->Pedidos->find('list', ['limit' => 200]);
         $this->set(compact('verbete', 'pessoas', 'estados', 'pedidos'));
     }
@@ -114,11 +82,11 @@ class VerbetesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $verbete = $this->Verbetes->patchEntity($verbete, $this->request->getData());
             if ($this->Verbetes->save($verbete)) {
-                $this->Flash->success(__('O registo foi gravado.'));
+                $this->Flash->success(__('The verbete has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            $this->Flash->error(__('The verbete could not be saved. Please, try again.'));
         }
         $pessoas = $this->Verbetes->Pessoas->find('list', ['limit' => 200]);
         $estados = $this->Verbetes->Estados->find('list', ['limit' => 200]);
@@ -138,72 +106,11 @@ class VerbetesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $verbete = $this->Verbetes->get($id);
         if ($this->Verbetes->delete($verbete)) {
-            $this->Flash->success(__('O registo foi apagado.'));
+            $this->Flash->success(__('The verbete has been deleted.'));
         } else {
-            $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
+            $this->Flash->error(__('The verbete could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
-    }
-
-    public function xls() {
-        $out = explode(',', $_COOKIE["Filtro"]);
-        $arr = array();
-        
-        $nome = 'Pessoas.nome LIKE "%'.$out[0].'%"';
-        $datacriacao = 'Verbetes.datacriacao LIKE "%'.$out[1].'%"';
-        $datadistribuicao = 'Verbetes.datadistribuicao LIKE "%'.$out[2].'%"';
-        $datainicioefectiva = 'Verbetes.datainicioefectiva LIKE "%'.$out[3].'%"';
-
-        if($out[0] != null){
-            array_push($arr, $nome);
-        }
-        if($out[1] != null){
-            array_push($arr, $datacriacao);
-        }
-        if($out[2] != null){
-            array_push($arr, $datadistribuicao);
-        }
-        if($out[3] != null){
-            array_push($arr, $datainicioefectiva);
-        }
-        if($arr == null){
-            $verbetes = $this->Verbetes->find('all')->contain(['Pessoas']);
-        }
-        else{
-            $verbetes = $this->Verbetes->find('all', array('conditions'=>$arr))->contain(['Pessoas']);
-        }
-
-        $this->autoRender = false;
-        $path = TMP . "verbetes.xlsx";
-        
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $sheet->setCellValue('A1', 'Pessoa');
-        $sheet->setCellValue('B1', 'Data de criação');
-        $sheet->setCellValue('C1', 'Data Distribuição');
-        $sheet->setCellValue('D1', 'Data Inicio Efectivo');
-        
-        $linha = 2;
-        foreach ($verbetes as $row) {
-            $sheet->setCellValue('A' . $linha, $row->pessoa->nome);
-            $sheet->setCellValue('B' . $linha, $row->datacriacao);
-            $sheet->setCellValue('C' . $linha, $row->datadistribuicao);
-            $sheet->setCellValue('D' . $linha, $row->datainicioefectiva);
-            $linha++;
-        }
-
-        foreach(range('A','C') as $columnID) {
-            $sheet->getColumnDimension($columnID)->setAutoSize(true);
-        }
-
-        $spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
-        
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($path);
-
-        $this->response->withType("application/vnd.ms-excel");
-        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Verbetes.xlsx'));
     }
 }

@@ -13,8 +13,6 @@
         <li><?= $this->Html->link(__('New Verbete'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Pessoas'), ['controller' => 'Pessoas', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Pessoa'), ['controller' => 'Pessoas', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Estados'), ['controller' => 'Estados', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Estado'), ['controller' => 'Estados', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?> </li>
     </ul>
@@ -23,72 +21,48 @@
     <h3><?= h($verbete->id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Pessoa') ?></th>
-            <td><?= $verbete->has('pessoa') ? $this->Html->link($verbete->pessoa->id, ['controller' => 'Pessoas', 'action' => 'view', $verbete->pessoa->id]) : '' ?></td>
+            <th scope="row"><?= __('Equipa') ?></th>
+            <td><?= h($verbete->equipa) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Nip') ?></th>
-            <td><?= h($verbete->nip) ?></td>
+            <th scope="row"><?= __('Dr Ds') ?></th>
+            <td><?= h($verbete->dr_ds) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Ep') ?></th>
-            <td><?= h($verbete->ep) ?></td>
+            <th scope="row"><?= __('Nome') ?></th>
+            <td><?= h($verbete->nome) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Observacoes') ?></th>
-            <td><?= h($verbete->observacoes) ?></td>
+            <th scope="row"><?= __('Designacao') ?></th>
+            <td><?= h($verbete->designacao) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Estado') ?></th>
-            <td><?= $verbete->has('estado') ? $this->Html->link($verbete->estado->id, ['controller' => 'Estados', 'action' => 'view', $verbete->estado->id]) : '' ?></td>
+            <th scope="row"><?= __('Actividade') ?></th>
+            <td><?= h($verbete->actividade) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Motivo') ?></th>
-            <td><?= h($verbete->motivo) ?></td>
+            <th scope="row"><?= __('Tecnico') ?></th>
+            <td><?= h($verbete->tecnico) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Pedido') ?></th>
-            <td><?= $verbete->has('pedido') ? $this->Html->link($verbete->pedido->id, ['controller' => 'Pedidos', 'action' => 'view', $verbete->pedido->id]) : '' ?></td>
+            <th scope="row"><?= __('Id Verbetes') ?></th>
+            <td><?= $this->Number->format($verbete->id_verbetes) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($verbete->id) ?></td>
+            <th scope="row"><?= __('Hora Aplicada') ?></th>
+            <td><?= h($verbete->hora_aplicada) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Datacriacao') ?></th>
-            <td><?= h($verbete->datacriacao) ?></td>
+            <th scope="row"><?= __('Hora Prevista') ?></th>
+            <td><?= h($verbete->hora_prevista) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Datadistribuicao') ?></th>
-            <td><?= h($verbete->datadistribuicao) ?></td>
+            <th scope="row"><?= __('Data Fim Execucao') ?></th>
+            <td><?= h($verbete->data_fim_execucao) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Datainicioefectiva') ?></th>
-            <td><?= h($verbete->datainicioefectiva) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Dataefectivatermino') ?></th>
-            <td><?= h($verbete->dataefectivatermino) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Datainiciop') ?></th>
-            <td><?= h($verbete->datainiciop) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Dataprevistat') ?></th>
-            <td><?= h($verbete->dataprevistat) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($verbete->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($verbete->modified) ?></td>
+            <th scope="row"><?= __('Data') ?></th>
+            <td><?= h($verbete->data) ?></td>
         </tr>
     </table>
-    <div class="row">
-        <h4><?= __('Concluidof') ?></h4>
-        <?= $this->Text->autoParagraph(h($verbete->concluidof)); ?>
-    </div>
 </div>

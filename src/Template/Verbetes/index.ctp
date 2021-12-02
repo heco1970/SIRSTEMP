@@ -1,109 +1,69 @@
-<?=$this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]);?>
-
-<h1 class="h3 mb-2 text-gray-800"><?=__('Registo de Verbetes')?></h1>
-
-<div class="card shadow mb-2">
-    <div class="card-header py-3">
-        <a class="btn btn-success btn-circle btn-lg" href="/verbetes/add"><i class="fas fa-plus"></i></a>
-        <?= $this->Html->link(
-            '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
-            ['action' => 'xls'],
-            ['escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']) 
-        ?>
-        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Verbete[]|\Cake\Collection\CollectionInterface $verbetes
+ */
+?>
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('New Verbete'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Pessoas'), ['controller' => 'Pessoas', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Pessoa'), ['controller' => 'Pessoas', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?></li>
+    </ul>
+</nav>
+<div class="verbetes index large-9 medium-8 columns content">
+    <h3><?= __('Verbetes') ?></h3>
+    <table cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th scope="col"><?= $this->Paginator->sort('id_verbetes') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('equipa') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('dr_ds') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('designacao') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('hora_aplicada') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('hora_prevista') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('actividade') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('data_fim_execucao') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('data') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('tecnico') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($verbetes as $verbete): ?>
+            <tr>
+                <td><?= $this->Number->format($verbete->id_verbetes) ?></td>
+                <td><?= h($verbete->equipa) ?></td>
+                <td><?= h($verbete->dr_ds) ?></td>
+                <td><?= h($verbete->nome) ?></td>
+                <td><?= h($verbete->designacao) ?></td>
+                <td><?= h($verbete->hora_aplicada) ?></td>
+                <td><?= h($verbete->hora_prevista) ?></td>
+                <td><?= h($verbete->actividade) ?></td>
+                <td><?= h($verbete->data_fim_execucao) ?></td>
+                <td><?= h($verbete->data) ?></td>
+                <td><?= h($verbete->tecnico) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $verbete->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $verbete->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $verbete->id], ['confirm' => __('Are you sure you want to delete # {0}?', $verbete->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
+            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
+        </ul>
+        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
 </div>
-
-<?php
-$dynElems =
-    [
-        'pessoa' => ['label' => __('Pessoa')],
-        'criacao' => ['label' => __('Data Criação')],
-        'distribuicao' => ['label' => __('Data Distribuição')],
-        'efectivo' => ['label' => __('Data Inicio Efectivo')],
-        'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
-        'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
-    ];
-?>
-<?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
-<?php
-$dynElems = ['pessoa' => ['label' => __('Pessoa')]] +
-            ['criacao' => ['label' => __('Data Criação')]] +
-            ['distribuicao' => ['label' => __('Data Distribuição')]] +
-            ['efectivo' => ['label' => __('Data Inicio Efectivo')]] +
-            ['created' => ['label' => __('Data de Criação (original)')]];
-?>
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?=__('Listagem de Verbetes')?></h6>
-    </div>
-    <div class="card-body">
-        <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
-    </div>
-</div>
-
-<?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text' ]); ?>
-
-<?=$this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]);?>
-<?=$this->Html->script('/js/dynatable-helper.js', ['block' => true]);?>
-
-<?php $this->start('scriptBottom') ?>
-<script>
-    $(document).ready(function() {
-        var writers = {
-            ação: function(row) {
-                var view = '<a class="btn btn-info" href="/verbetes/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
-
-                return '<div class="btn-group btn-group-sm" role="group">' + view +  '</div>';
-            }
-        }
-        createDynatable("#dynatable","/verbetes/",{created: -1}, writers);
-
-        document.getElementById('createdfirst').type = 'date';
-        document.getElementById('createdfirst').max = new Date().toISOString().split("T")[0];
-        document.getElementById('createdlast').type = 'date';
-        document.getElementById('createdlast').min = new Date().toISOString().split("T")[0];
-
-        deleteCookie("Filtro");
-        createCookie("Filtro", "", "", "", "","1");
-        // function removeElement(url)
-    });
-
-    document.getElementById("pessoa").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");          
-    };
-
-    document.getElementById("criacao").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");         
-    };
-
-    document.getElementById("distribuicao").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");         
-    };
-
-    document.getElementById("efectivo").onkeyup = function() {
-        createCookie("Filtro", document.getElementById("id").value, document.getElementById("pessoa").value, document.getElementById("criacao").value, document.getElementById("distribuicao").value, document.getElementById("efectivo").value, "1");        
-    };
-
-    function deleteCookie(name) {
-        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
-    }
-    
-    function createCookie(name, valuePessoa, valueCria, valueDis, valueEfe , days) { 
-        var expires; 
-        
-        if (days) { 
-            var date = new Date(); 
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); 
-            expires = "; expires=" + date.toGMTString(); 
-        } 
-        else { 
-            expires = ""; 
-        } 
-        
-        document.cookie = escape(name) + "=" +
-            valuePessoa + "," + valueCria + "," + valueDis + "," + valueEfe
-            + expires + "; path=/"; 
-    } 
-</script>
-<?php $this->end(); ?>
