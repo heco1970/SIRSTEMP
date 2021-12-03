@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\VerbetesTable;
+use App\Model\Table\FormulariosTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\VerbetesTable Test Case
+ * App\Model\Table\FormulariosTable Test Case
  */
-class VerbetesTableTest extends TestCase
+class FormulariosTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\VerbetesTable
+     * @var \App\Model\Table\FormulariosTable
      */
-    public $Verbetes;
+    public $Formularios;
 
     /**
      * Fixtures
@@ -24,10 +24,7 @@ class VerbetesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.verbetes',
-        'app.pessoas',
-        'app.estados',
-        'app.pedidos'
+        'app.formularios'
     ];
 
     /**
@@ -38,8 +35,8 @@ class VerbetesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Verbetes') ? [] : ['className' => VerbetesTable::class];
-        $this->Verbetes = TableRegistry::getTableLocator()->get('Verbetes', $config);
+        $config = TableRegistry::getTableLocator()->exists('Formularios') ? [] : ['className' => FormulariosTable::class];
+        $this->Formularios = TableRegistry::getTableLocator()->get('Formularios', $config);
     }
 
     /**
@@ -49,7 +46,7 @@ class VerbetesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Verbetes);
+        unset($this->Formularios);
 
         parent::tearDown();
     }

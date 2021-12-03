@@ -28,7 +28,7 @@ $active = $show = '';
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-user-friends"></i> <span>' . __('Pessoas') . '</span>', '/pessoas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-balance-scale-left"></i> <span>' . __('Processos') . '</span>', '/processos', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book"></i> <span>' . __('Pedidos') . '</span>', '/pedidos/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
-    <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw"></i> <span>' . __('Verbetes') . '</span>', '/verbetes/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
+    <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw"></i> <span>' . __('Formularios') . '</span>', '/formularios/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     </a>
 
     <hr class="sidebar-divider">
