@@ -2,14 +2,14 @@
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Formulário') ?></h6>
     </div>
-    <?= $this->Form->create($processo) ?>
+    <?= $this->Form->create($formulario) ?>
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
             <div class="form-row">
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label for="nip">Id Verbete</label>
-                        <?php echo $this->Form->control('id_pedido', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => '', 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('id_pedido', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pedidos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="processo_id">Equipa/CE</label>
-                        <?php echo $this->Form->control('id_equipa', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => '', 'class' => 'form-control']); ?>                    </div>
+                        <?php echo $this->Form->control('id_equipa', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $teams, 'class' => 'form-control']); ?>                    </div>
                 </div>
             </div>
             <div class="form-row">

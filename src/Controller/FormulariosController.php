@@ -84,12 +84,15 @@ class FormulariosController extends AppController
         if ($this->request->is('post')) {
             $formulario = $this->Formularios->patchEntity($formulario, $this->request->getData());
             if ($this->Formularios->save($formulario)) {
-                $this->Flash->success(__('The formulario has been saved.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The formulario could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
+        
+        $this->set('teams', $this->Formularios->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']));
+        $this->set('pedidos', $this->Formularios->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'id']));
         $this->set(compact('formulario'));
     }
 
@@ -108,12 +111,14 @@ class FormulariosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $formulario = $this->Formularios->patchEntity($formulario, $this->request->getData());
             if ($this->Formularios->save($formulario)) {
-                $this->Flash->success(__('The formulario has been saved.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The formulario could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
+        $this->set('teams', $this->Formularios->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']));
+        $this->set('pedidos', $this->Formularios->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'id']));
         $this->set(compact('formulario'));
     }
 
@@ -126,14 +131,18 @@ class FormulariosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $formulario = $this->Formularios->get($id);
         if ($this->Formularios->delete($formulario)) {
-            $this->Flash->success(__('The formulario has been deleted.'));
+            $this->Flash->success(__('O registo foi apagado.'));
         } else {
-            $this->Flash->error(__('The formulario could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
         }
+        return $this->redirect(['action' => 'index']);      
+    }
 
-        return $this->redirect(['action' => 'index']);
+    public function xls()
+    {
+
     }
 }

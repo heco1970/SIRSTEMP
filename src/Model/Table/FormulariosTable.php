@@ -34,6 +34,17 @@ class FormulariosTable extends Table
         $this->setTable('formularios');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Pedidos', [
+            'foreignKey' => 'id_pedido',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Teams', [
+            'foreignKey' => 'id_equipa',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
