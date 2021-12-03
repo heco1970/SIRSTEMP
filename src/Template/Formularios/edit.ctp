@@ -2,7 +2,7 @@
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Alterar Registo de Formulário') ?></h6>
     </div>
-    <?= $this->Form->create($processo) ?>
+    <?= $this->Form->create($formulario) ?>
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
             <div class="form-row">
