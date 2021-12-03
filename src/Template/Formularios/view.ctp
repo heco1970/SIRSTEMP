@@ -1,68 +1,80 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Formulario $formulario
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Formulario'), ['action' => 'edit', $formulario->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Formulario'), ['action' => 'delete', $formulario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $formulario->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Formularios'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Formulario'), ['action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="formularios view large-9 medium-8 columns content">
-    <h3><?= h($formulario->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Dr Ds') ?></th>
-            <td><?= h($formulario->dr_ds) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Nome Prestador Trabalho') ?></th>
-            <td><?= h($formulario->nome_prestador_trabalho) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Designacao Entidade') ?></th>
-            <td><?= h($formulario->designacao_entidade) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Actividade Exercida') ?></th>
-            <td><?= h($formulario->actividade_exercida) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Tecnico') ?></th>
-            <td><?= h($formulario->tecnico) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($formulario->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id Equipa') ?></th>
-            <td><?= $this->Number->format($formulario->id_equipa) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id Pedido') ?></th>
-            <td><?= $this->Number->format($formulario->id_pedido) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Hora Aplicadas') ?></th>
-            <td><?= $this->Number->format($formulario->hora_aplicadas) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Hora Prestadas') ?></th>
-            <td><?= $this->Number->format($formulario->hora_prestadas) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Data Fim Execucao') ?></th>
-            <td><?= h($formulario->data_fim_execucao) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Data') ?></th>
-            <td><?= h($formulario->data) ?></td>
-        </tr>
-    </table>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe do Formulário') ?></h6>
+    </div>
+    <div class="ml-3 mr-3 mb-3 mt-3">
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row">
+                    <div class="col-2">
+                        <h6 class="text-primary"><?= __('Id Verbete') ?></h6>
+                        <p><?= $this->Number->format($formulario->id_pedido) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('DR/DS') ?></h6>
+                        <p><?= h($formulario->dr_ds) ?></p>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Equipa/CE') ?></h6>
+                        <p><?= $this->Number->format($formulario->id_equipa) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <h6 class="text-primary"><?= __('Nome do Prestador de Trabalho/Tarefa') ?></h6>
+                        <p><?= h($formulario->nome_prestador_trabalho) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <h6 class="text-primary"><?= __('Designação da Entidade Beneficiária de Trabalho/Tarefa') ?></h6>
+                        <p><?= h($formulario->designacao_entidade) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Número de horas aplicadas') ?></h6>
+                        <p><?= $this->Number->format($formulario->hora_aplicadas) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="text-primary"><?= __('Número de horas efectivamente prestadas') ?></h6>
+                        <p><?= $this->Number->format($formulario->hora_prestadas) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <h6 class="text-primary"><?= __('Actividade exercida') ?></h6>
+                        <p><?= h($formulario->actividade_exercida) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <h6 class="text-primary"><?= __('Data do fim execução pena/media(d/m/a)') ?></h6>
+                        <p><?= h($formulario->data_fim_execucao) ?></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-5">
+                        <h6 class="text-primary"><?= __('Data(d/m/a)') ?></h6>
+                        <p><?= h($formulario->data) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <h6 class="text-primary"><?= __('O/A Técnico(a)') ?></h6>
+                        <p><?= h($formulario->tecnico) ?></p>
+                    </div>
+                </div>
+                <?php $this->end(); ?>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer card-footer-fixed">
+        <a href="/formularios/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+    </div>
 </div>
