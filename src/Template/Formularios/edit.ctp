@@ -70,7 +70,7 @@
                 <div class="col-sm-5">
                     <div class="form-group">
                         <label for="nip">Data do fim execução pena/media(d/m/a)</label>
-                        <?php echo $this->Form->text('data_fim_execucao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data_fim_execucao', ['label' => false, 'value' => h($formulario->data_fim_execucao->i18nFormat('yyyy-MM-dd')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 <div class="col-sm-5">
                     <div class="form-group">
                         <label for="nip">Data(d/m/a)</label>
-                        <?php echo $this->Form->text('data', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data', ['label' => false, 'value' => h($formulario->data->i18nFormat('yyyy-MM-dd')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
             </div>
