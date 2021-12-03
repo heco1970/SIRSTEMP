@@ -41,3 +41,4 @@ nbproject/*
 
 webroot/files/*
 composer.lock
+adminer.php
