@@ -12,10 +12,9 @@
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('ID')],
-        'dr_ds' => ['label' => __('DR/DS')],
-        'nome_prestador_trabalho' => ['label' => __('Prestador')],
-        'actividade_exercida' => ['label' => __('Atividade')],
+        'pedido' => ['label' => __('ID Verbete'),'options' => $pedido, 'empty' => ' '],
+        'equipa' => ['label' => __('Equipa'),'options' => $equipa, 'empty' => ' '],
+        'nome_prestador_trabalho' => ['label' => __('Prestador de Trabalho')],
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>

@@ -29,17 +29,17 @@ class FormulariosController extends AppController
       
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
           
-            $validOps = ['id', 'dr_ds', 'nome_prestador_trabalho', 'actividade_exercida'];
+            $validOps = ['pedido', 'equipa', 'nome_prestador_trabalho'];
             $convArray = [
-              'id' => $model.'.id',
-              'dr_ds' => $model.'.dr_ds',
-              'nome_prestador_trabalho' => $model.'.nome_prestador_trabalho',
-              'actividade_exercida' => $model.'.actividade_exercida'
+              'pedido' => $model.'.id_pedido',
+              'equipa' => $model.'.id_equipa',
+              'nome_prestador_trabalho' => $model.'.nome_prestador_trabalho'
             ];
 
-            $strings = [ 'dr_ds', 'nome_prestador_trabalho', 'actividade_exercida'];
-      
-            $conditions = $contain = [];
+            $strings = [ 'nome_prestador_trabalho',];
+            
+            $contain = ['Pedidos', 'Teams'];
+            $conditions = [];
           
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
             
@@ -50,11 +50,19 @@ class FormulariosController extends AppController
       
             $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-      
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
-          }
+        } else {
+            $pedido = $this->Formularios->Pedidos->find('list', array(
+                'keyField' => 'id',
+                'valueField' => 'id'
+            ))->toArray();
 
-        
+            $equipa = $this->Formularios->Teams->find('list', array(
+                'keyField' => 'id',
+                'valueField' => 'nome'
+            ))->toArray();
+            $this->set(compact('pedido', 'equipa'));
+        }
     }
 
     /**

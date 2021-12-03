@@ -1,11 +1,11 @@
 <?php
 $data = [];
+$records = $records->toArray();
 foreach ($records as $record) {
   $data[] = [
     'nome_prestador_trabalho' => $record->nome_prestador_trabalho,
-    'actividade_exercida' => $record->actividade_exercida,
-    'dr_ds' => $record->dr_ds,
-    'id' => $record->id,
+    'pedido' => $record['pedido']['id'],
+    'equipa' => $record['team']['nome'],
   ];
 }
 
