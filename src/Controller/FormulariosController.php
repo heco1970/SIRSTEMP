@@ -20,9 +20,41 @@ class FormulariosController extends AppController
      */
     public function index()
     {
-        $formularios = $this->paginate($this->Formularios);
+        // $formularios = $this->paginate($this->Formularios);
+        // $this->set(compact('formularios'));
 
-        $this->set(compact('formularios'));
+        if ($this->request->is('ajax')) {
+            $model = 'Formularios';
+            $this->loadComponent('Dynatables');
+      
+            $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
+          
+            $validOps = ['id', 'dr_ds', 'nome_prestador_trabalho', 'actividade_exercida'];
+            $convArray = [
+              'id' => $model.'.id',
+              'dr_ds' => $model.'.dr_ds',
+              'nome_prestador_trabalho' => $model.'.nome_prestador_trabalho',
+              'actividade_exercida' => $model.'.actividade_exercida'
+            ];
+
+            $strings = [ 'dr_ds', 'nome_prestador_trabalho', 'actividade_exercida'];
+      
+            $conditions = $contain = [];
+          
+            $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+            
+            $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, '', '');
+      
+            $conditions = array_merge($conditions,$parsedQueries);
+            $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
+      
+            $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+            $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
+      
+            $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
+          }
+
+        
     }
 
     /**
