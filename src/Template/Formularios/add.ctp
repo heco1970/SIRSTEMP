@@ -1,6 +1,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Formulário') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de PTFC') ?></h6>
     </div>
     <?= $this->Form->create($formulario) ?>
     <div class='ml-4 mt-4 mr-4'>
@@ -23,7 +23,8 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="processo_id">Equipa/CE</label>
-                        <?php echo $this->Form->control('id_equipa', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $teams, 'class' => 'form-control']); ?>                    </div>
+                        <?php echo $this->Form->control('id_equipa', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $teams, 'class' => 'form-control']); ?>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
@@ -49,8 +50,6 @@
                         <?php echo $this->Form->control('hora_aplicadas', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
-            </div>
-            <div class="form-row">
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="nip">Número de horas efectivamente prestadas</label>
@@ -73,9 +72,6 @@
                         <?php echo $this->Form->text('data_fim_execucao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <div class="form-row">
                 <div class="col-sm-5">
                     <div class="form-group">
                         <label for="nip">Data(d/m/a)</label>
@@ -83,6 +79,7 @@
                     </div>
                 </div>
             </div>
+            <hr>
             <div class="form-row">
                 <div class="col-sm-10">
                     <div class="form-group">

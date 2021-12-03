@@ -1,6 +1,6 @@
 <?=$this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]);?>
 
-<h1 class="h3 mb-2 text-gray-800"><?=__('Registo de Formulários')?></h1>
+<h1 class="h3 mb-2 text-gray-800"><?=__('Registo de PTFC')?></h1>
 
 <div class="card shadow mb-2">
     <div class="card-header py-3">
