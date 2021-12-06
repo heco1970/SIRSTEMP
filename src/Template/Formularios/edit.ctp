@@ -69,13 +69,13 @@
                 <div class="col-sm-5">
                     <div class="form-group">
                         <label for="nip">Data do fim execução pena/media(d/m/a)</label>
-                        <?php echo $this->Form->text('data_fim_execucao', ['label' => false, 'value' => h($formulario->data_fim_execucao->i18nFormat('yyyy-MM-dd')), 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data_fim_execucao', ['label' => false, 'value' => h($formulario->data_fim_execucao->format('Y-m-d')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
                 <div class="col-sm-5">
                     <div class="form-group">
                         <label for="nip">Data(d/m/a)</label>
-                        <?php echo $this->Form->text('data', ['label' => false, 'value' => h($formulario->data->i18nFormat('yyyy-MM-dd')), 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data', ['label' => false, 'value' => h($formulario->data->format('Y-m-d')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,6 @@
     // Select your input element.
     var number1 = document.getElementById('horasAplicadas');
     var number2 = document.getElementById('horasPrestadas');
-
 
     // Listen for input event on numInput.
     number1.onkeyup = function(e) {
