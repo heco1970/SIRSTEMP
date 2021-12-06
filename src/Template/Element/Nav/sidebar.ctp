@@ -34,11 +34,11 @@ $active = $show = '';
             <span><?= __('Formulários') ?></span>
         </a>
         <div id="collapseFormularios" class="collapse hide" aria-labelledby="adminMenu" data-parent="#accordionSidebar">
-            <?= $this->Html->link(__('PTFC') . '</span>', '/formularios/index', ['class' => ['nav-link'], 'escape' => false]) ?>
+            <div class="bg-white py-2 collapse-inner rounded">
+                <?= $this->Html->link(__('PTFC'), '/formularios/index', ['class' => ['collapse-item '], 'escape' => false]);?>
+            </div>
         </div>
     </li>
-
-
     </a>
     <hr class="sidebar-divider">
 
