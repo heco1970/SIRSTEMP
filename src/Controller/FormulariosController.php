@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -28,29 +29,30 @@ class FormulariosController extends AppController
         if ($this->request->is('ajax')) {
             $model = 'Formularios';
             $this->loadComponent('Dynatables');
-      
+
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
-          
-            $validOps = ['pedido', 'equipa', 'nome_prestador_trabalho'];
+
+            $validOps = ['pedido', 'equipa', 'nome_prestador_trabalho', 'designacao_entidade'];
             $convArray = [
-              'pedido' => $model.'.id_pedido',
-              'equipa' => $model.'.id_equipa',
-              'nome_prestador_trabalho' => $model.'.nome_prestador_trabalho'
+                'pedido' => $model . '.id_pedido',
+                'equipa' => $model . '.id_equipa',
+                'nome_prestador_trabalho' => $model . '.nome_prestador_trabalho',
+                'designacao_entidade' => $model . '.designacao_entidade',
             ];
 
-            $strings = [ 'nome_prestador_trabalho',];
-            
+            $strings = ['nome_prestador_trabalho', 'designacao_entidade'];
+
             $contain = ['Pedidos', 'Teams'];
             $conditions = [];
-          
+
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-            
+
             $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, '', '');
-      
-            $conditions = array_merge($conditions,$parsedQueries);
+
+            $conditions = array_merge($conditions, $parsedQueries);
             $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-      
-            $sorts = $this->Dynatables->parseSorts($query,$validOps,$convArray);
+
+            $sorts = $this->Dynatables->parseSorts($query, $validOps, $convArray);
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
@@ -100,7 +102,7 @@ class FormulariosController extends AppController
             }
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
-        
+
         $this->set('teams', $this->Formularios->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']));
         $this->set('pedidos', $this->Formularios->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'id']));
         $this->set(compact('formulario'));
@@ -148,11 +150,10 @@ class FormulariosController extends AppController
         } else {
             $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
         }
-        return $this->redirect(['action' => 'index']);      
+        return $this->redirect(['action' => 'index']);
     }
 
     public function xls()
     {
-
     }
 }

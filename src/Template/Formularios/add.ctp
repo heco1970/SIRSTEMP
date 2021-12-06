@@ -8,7 +8,7 @@
             <div class="form-row">
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label for="nip">Id Verbete</label>
+                        <label for="nip">Id Pedido</label>
                         <?php echo $this->Form->control('id_pedido', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pedidos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
@@ -65,6 +65,14 @@
                     </div>
                 </div>
             </div>
+
+            <!-- <div class="input-group mb-3">
+                <input type="date" class="form-control" style="border-right: none;" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append" style="background-color: #fff;">
+                    <span class="input-group-text" id="basic-addon2"><i class="far fa-calendar"></i></span>
+                </div>
+            </div> -->
+
             <div class="form-row">
                 <div class="col-sm-5">
                     <div class="form-group">
