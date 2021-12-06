@@ -7,7 +7,7 @@
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="row">
                     <div class="col-2">
-                        <h6 class="text-primary"><?= __('Id Verbete') ?></h6>
+                        <h6 class="text-primary"><?= __('Id Pedido') ?></h6>
                         <p><?= $this->Number->format($formulario->id_pedido) ?></p>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Equipa/CE') ?></h6>
-                        <p><?= $this->Number->format($formulario->id_equipa) ?></p>
+                        <p><?= h($formulario->team->nome) ?></p>
                     </div>
                 </div>
                 <div class="row">
@@ -53,11 +53,11 @@
                 <div class="row">
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Data do fim execução pena/media(d/m/a)') ?></h6>
-                        <p><?= h($formulario->data_fim_execucao) ?></p>
+                        <p><?= h($formulario->data_fim_execucao->i18nFormat('dd-MM-yyyy')) ?></p>
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Data(d/m/a)') ?></h6>
-                        <p><?= h($formulario->data) ?></p>
+                        <p><?= h($formulario->data->i18nFormat('dd-MM-yyyy')) ?></p>
                     </div>
                 </div>
                 <hr>
