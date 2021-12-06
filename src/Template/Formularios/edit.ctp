@@ -44,16 +44,16 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="form-group">
                         <label for="nip">Número de horas aplicadas</label>
-                        <?php echo $this->Form->control('hora_aplicadas', ['label' => false, 'class' => 'form-control', 'required']); ?>
+                        <?php echo $this->Form->control('hora_aplicadas', ['id' => 'horasAplicadas', 'label' => false, 'class' => 'form-control', 'required', 'min' => '0']); ?>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="form-group">
                         <label for="nip">Número de horas efectivamente prestadas</label>
-                        <?php echo $this->Form->control('hora_prestadas', ['label' => false, 'class' => 'form-control', 'required']); ?>
+                        <?php echo $this->Form->control('hora_prestadas', ['id' => 'horasPrestadas', 'label' => false, 'class' => 'form-control', 'required', 'min' => '0']); ?>
                     </div>
                 </div>
             </div>
@@ -96,3 +96,22 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
+<script>
+    // Select your input element.
+    var number1 = document.getElementById('horasAplicadas');
+    var number2 = document.getElementById('horasPrestadas');
+
+
+    // Listen for input event on numInput.
+    number1.onkeyup = function(e) {
+        if (this.value < 0) {
+            this.value = this.value * (-1);
+        }
+    }
+
+    number2.onkeyup = function(e) {
+        if (this.value < 0) {
+            this.value = this.value * (-1);
+        }
+    }
+</script>
