@@ -12,11 +12,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('DR/DS') ?></h6>
                         <p><?= h($formulario->dr_ds) ?></p>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Equipa/CE') ?></h6>
                         <p><?= $this->Number->format($formulario->id_equipa) ?></p>
                     </div>
@@ -29,18 +29,17 @@
                 </div>
                 <div class="row">
                     <div class="col-10">
-                        <h6 class="text-primary"><?= __('Designação da Entidade Beneficiária de Trabalho/Tarefa') ?></h6>
+                        <h6 class="text-primary"><?= __('Designação da Entidade Beneficiária de Trabalho/Tarefa') ?>
+                        </h6>
                         <p><?= h($formulario->designacao_entidade) ?></p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Número de horas aplicadas') ?></h6>
                         <p><?= $this->Number->format($formulario->hora_aplicadas) ?></p>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Número de horas efectivamente prestadas') ?></h6>
                         <p><?= $this->Number->format($formulario->hora_prestadas) ?></p>
                     </div>
@@ -52,18 +51,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Data do fim execução pena/media(d/m/a)') ?></h6>
                         <p><?= h($formulario->data_fim_execucao) ?></p>
                     </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-5">
+                    <div class="col-4">
                         <h6 class="text-primary"><?= __('Data(d/m/a)') ?></h6>
                         <p><?= h($formulario->data) ?></p>
                     </div>
                 </div>
+                <hr>
                 <div class="row">
                     <div class="col-10">
                         <h6 class="text-primary"><?= __('O/A Técnico(a)') ?></h6>
