@@ -42,6 +42,7 @@ class Formulario extends Entity
         'actividade_exercida' => true,
         'data_fim_execucao' => true,
         'data' => true,
-        'tecnico' => true
+        'tecnico' => true,
+        'team' => true,
     ];
 }

@@ -77,7 +77,7 @@ class FormulariosController extends AppController
     public function view($id = null)
     {
         $formulario = $this->Formularios->get($id, [
-            'contain' => []
+            'contain' => ['Teams', 'Pedidos']
         ]);
 
         $this->set('formulario', $formulario);
