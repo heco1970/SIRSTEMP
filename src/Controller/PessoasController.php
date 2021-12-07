@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -19,7 +20,7 @@ ob_start();
  */
 class PessoasController extends AppController
 {
-   
+
 
     /**
      * Index method
@@ -87,7 +88,7 @@ class PessoasController extends AppController
         $this->loadModel('Tipocrimes');
         $this->loadModel('Pedidos');
         $this->loadModel('Concelhos');
-        
+
         $contactos = $this->Contactos->find()->where(['pessoa_id' => $id]);
 
         $subquery = $this->PessoasProcessos
@@ -96,14 +97,14 @@ class PessoasController extends AppController
             ->where(['PessoasProcessos.pessoa_id' => $id]);
 
         $processos = $this->Processos
-        ->find()
-        ->where([
-            'Processos.id IN' => $subquery
-        ])->contain(['Naturezas','Entidadejudiciais']);
+            ->find()
+            ->where([
+                'Processos.id IN' => $subquery
+            ])->contain(['Naturezas', 'Entidadejudiciais']);
 
-        $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos','Teams','States']);
-        $crimes = $this->Crimes->find()->where(['pessoa_id' => $id])->contain(['Tipocrimes','Processos']);
-        
+        $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos', 'Teams', 'States']);
+        $crimes = $this->Crimes->find()->where(['pessoa_id' => $id])->contain(['Tipocrimes', 'Processos']);
+
         $distrito = $this->Pessoas->CodigosPostais->find()->where(['CodigosPostais.id' => $pessoa->codigos_postai->id])->contain(['Distritos'])->first();
         $concelho = $this->Concelhos->find()->where(['Concelhos.CodigoConcelho' => $pessoa->codigos_postai->CodigoConcelho, 'Concelhos.CodigoDistrito' => $pessoa->codigos_postai->CodigoDistrito])->first();
 
@@ -111,24 +112,26 @@ class PessoasController extends AppController
         $this->set(compact('contactos', 'crimes', 'processos', 'pedidos', 'distrito', 'concelho'));
     }
 
-    public function saveConcelhoID(){
+    public function saveConcelhoID()
+    {
         $this->autoRender = false;
-        $this->globalConcID = $this->request->getQuery('keyword');        
+        $this->globalConcID = $this->request->getQuery('keyword');
     }
 
-    public function fregAutoComplete($concID = 0){
-        $this->autoRender = false;                
+    public function fregAutoComplete($concID = 0)
+    {
+        $this->autoRender = false;
 
         $this->log($concID);
 
         $search = h($this->request->getQuery('term'));
-        $concelhoSelecionadoID = $concID;       
+        $concelhoSelecionadoID = $concID;
 
         $this->log('1');
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
-        ->find()
-        ->where(['id like'=> $concelhoSelecionadoID .'%']);
+            ->find()
+            ->where(['id like' => $concelhoSelecionadoID . '%']);
 
         $this->log('2');
         $this->log($concelhos);
@@ -138,13 +141,13 @@ class PessoasController extends AppController
         $data = [];
         $data2 = [];
 
-        foreach($concelhos as $conc){
+        foreach ($concelhos as $conc) {
             $freguesia = $this->Pessoas->CodigosPostais
-            ->find()
-            ->select(['id', 'NomeLocalidade'])
-            ->where(['CodigoConcelho like'=> $conc->CodigoConcelho.'%', 'NomeLocalidade like'=>$search.'%'])
-            ->group('NomeLocalidade')
-            ->order(['NomeLocalidade' => 'ASC']);
+                ->find()
+                ->select(['id', 'NomeLocalidade'])
+                ->where(['CodigoConcelho like' => $conc->CodigoConcelho . '%', 'NomeLocalidade like' => $search . '%'])
+                ->group('NomeLocalidade')
+                ->order(['NomeLocalidade' => 'ASC']);
             //$data2[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
         }
 
@@ -156,71 +159,80 @@ class PessoasController extends AppController
         ->find()
         ->where(['NomeLocalidade like'=>$search.'%'])
         ->limit(20);*/
-        
-        if (is_array($freguesia) || is_object($freguesia))
-        {
-            foreach($freguesia as $freg){
+
+        if (is_array($freguesia) || is_object($freguesia)) {
+            foreach ($freguesia as $freg) {
                 $data[] = ['id' => $freg->id, 'text' => $freg->NomeLocalidade];
             }
         }
 
-        $data = ['results'=>$data];
+        $data = ['results' => $data];
         echo json_encode($data);
     }
 
-    public function concelhosByDistritos(){
+    public function concelhosByDistritos()
+    {
         $this->autoRender = false;
 
         $distritoSelecionadoID = h($this->request->getQuery('keyword'));
 
         $distritos = $this->Pessoas->CodigosPostais->Distritos
-        ->find()
-        ->where(['id like'=> $distritoSelecionadoID.'%']);
+            ->find()
+            ->where(['id like' => $distritoSelecionadoID . '%']);
 
+<<<<<<< HEAD
         $concelhos = null;
         
+=======
+>>>>>>> 8e3982bd3ae59113a3327f19619cf4203433115c
         $data = [];
         $data2 = [];
 
-        foreach($distritos as $distrit){
+        foreach ($distritos as $distrit) {
             $concelhos = $this->Pessoas->CodigosPostais->Concelhos
-            ->find()
-            ->where(['CodigoDistrito like'=> $distrit->CodigoDistrito.'%']);
+                ->find()
+                ->where(['CodigoDistrito like' => $distrit->CodigoDistrito . '%']);
         }
 
-        foreach($concelhos as $conc){
+        foreach ($concelhos as $conc) {
             $data[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
         }
 
         //$data = ['results'=>$data];
         echo json_encode($data);
     }
-    
-    public function fregByConc(){
+
+    public function fregByConc()
+    {
         $this->autoRender = false;
 
         $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
+<<<<<<< HEAD
         ->find()
         ->where(['id like'=> $concelhoSelecionadoID.'%']);
 
         $freguesia = null;
+=======
+            ->find()
+            ->where(['id like' => $concelhoSelecionadoID . '%']);
+>>>>>>> 8e3982bd3ae59113a3327f19619cf4203433115c
 
         $data = [];
         $data2 = [];
 
-        foreach($concelhos as $conc){
+        foreach ($concelhos as $conc) {
             $freguesia = $this->Pessoas->CodigosPostais
-            ->find()
-            ->select(['id', 'NomeLocalidade'])
-            ->where(['CodigoConcelho like'=> $conc->CodigoConcelho.'%'])
-            ->group('NomeLocalidade')
-            ->order(['NomeLocalidade' => 'ASC']);
+                ->find()
+                ->select(['id', 'NomeLocalidade'])
+                ->where(['CodigoConcelho like' => $conc->CodigoConcelho . '%'])
+                ->group('NomeLocalidade')
+                ->order(['NomeLocalidade' => 'ASC']);
             //$data2[] = ['id' => $conc->id, 'Designacao' => $conc->Designacao];
         }
 
-        foreach($freguesia as $freg){
+        foreach ($freguesia as $freg) {
             $data[] = ['id' => $freg->id, 'NomeLocalidade' => $freg->NomeLocalidade];
         }
 
@@ -230,11 +242,12 @@ class PessoasController extends AppController
         echo json_encode($data);
     }
 
-    public function nextId() {
+    public function nextId()
+    {
         $result = $this->Pessoas->query("SELECT Auto_increment FROM information_schema.tables AS NextId  WHERE table_name='pessoas' AND table_schema='cac3l'");
         return $result[0]['NextId']['Auto_increment'];
     }
-    
+
     /**
      * Add method
      *
@@ -245,7 +258,7 @@ class PessoasController extends AppController
         $pessoa = $this->Pessoas->newEntity();
         if ($this->request->is(array('post', 'put'))) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
-            $pessoa->estado = 1; 
+            $pessoa->estado = 1;
             $codigo_postal = $this->request->getData('codigo_postal');
             $codigo_postal1 = $this->request->getData('codigo_postal1');
             $codigoid = $this->Pessoas->CodigosPostais->find()->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1])->first();
@@ -259,7 +272,7 @@ class PessoasController extends AppController
                 $errors = 1;
             }
 
-            if(isset($codigoid->id)){
+            if (isset($codigoid->id)) {
                 $pessoa->codigos_postai_id = $codigoid->id;
             }
 
@@ -278,11 +291,11 @@ class PessoasController extends AppController
 
         $data = [];
         $lista = $this->Pessoas
-        ->find()
-        ->select(['id'])                
-        ->order(['id' => 'DESC']);
+            ->find()
+            ->select(['id'])
+            ->order(['id' => 'DESC']);
 
-        foreach($lista as $pessoa){
+        foreach ($lista as $pessoa) {
             $data[] = ['id' => $pessoa->id];
         }
 
@@ -297,7 +310,7 @@ class PessoasController extends AppController
         $this->set('estadocivils', $this->Pessoas->Estadocivils->find('list', ['keyField' => 'id', 'valueField' => 'estado']));
         $this->set('generos', $this->Pessoas->Generos->find('list', ['keyField' => 'id', 'valueField' => 'genero']));
         $this->set('unidadeoperas', $this->Pessoas->Unidadeoperas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
-  
+
         $this->set(compact('pessoa'));
     }
 
@@ -307,11 +320,11 @@ class PessoasController extends AppController
         $this->loadModel('Concelhos');
         $this->request->allowMethod('ajax');
 
-        $keyword = $this->request->getQuery('keyword');       
+        $keyword = $this->request->getQuery('keyword');
 
         $this->set('concelhos', $this->Pessoas->CodigosPostais->Concelhos
-        ->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])
-        ->where(['CodigoDistrito like'=> $keyword.'%']));
+            ->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])
+            ->where(['CodigoDistrito like' => $keyword . '%']));
 
         $this->set('_serialize', ['concelhos']);
     }
@@ -356,7 +369,7 @@ class PessoasController extends AppController
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
-            $pessoa->estado = 1; 
+            $pessoa->estado = 1;
             $codigo_postal = $this->request->getData('codigo_postal');
             $codigo_postal1 = $this->request->getData('codigo_postal1');
             $codigoid = $this->Pessoas->CodigosPostais->find()->where(['NumCodigoPostal' => $codigo_postal, 'ExtCodigoPostal' => $codigo_postal1])->first();
@@ -370,10 +383,10 @@ class PessoasController extends AppController
                 $errors = 1;
             }
 
-            if(isset($codigoid->id)){
+            if (isset($codigoid->id)) {
                 $pessoa->codigos_postai_id = $codigoid->id;
             }
- 
+
             if (!empty($pessoa->codigos_postai_id)) {
                 if ($this->Pessoas->save($pessoa)) {
                     $this->Flash->success(__('O registo foi gravado.'));
@@ -417,25 +430,25 @@ class PessoasController extends AppController
      */
     public function delete($id = null)
     {
-        
+
         $this->loadModel('Crimes');
         $this->loadModel('PessoasProcessos');
         $this->loadModel('Pedidos');
         $this->loadModel('Contactos');
-        
+
         $crimes = $this->Crimes->find('all')->where(['pessoa_id' => $id])->count();
         $processos = $this->PessoasProcessos->find('all')->where(['pessoa_id' => $id])->count();
         $pedidos = $this->Pedidos->find('all')->where(['pessoa_id' => $id])->count();
         $contactos = $this->Contactos->find('all')->where(['pessoa_id' => $id])->count();
-        
-        if ($crimes<1 &&  $processos<1 &&  $pedidos<1 &&  $contactos<1) {
+
+        if ($crimes < 1 &&  $processos < 1 &&  $pedidos < 1 &&  $contactos < 1) {
             $pessoa = $this->Pessoas->get($id);
             if ($this->Pessoas->delete($pessoa)) {
                 $this->Flash->success(__('O registo foi apagado.'));
             } else {
                 $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
             }
-        }else{
+        } else {
             $this->Flash->error(__('Não é possível apagar o registo, pois este está associado a outras tabelas.'));
         }
 
@@ -443,7 +456,7 @@ class PessoasController extends AppController
     }
 
     public function xls()
-    {        
+    {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
 
@@ -452,9 +465,9 @@ class PessoasController extends AppController
             $nome = 'nome LIKE "%' . $out[1] . '%"';
             $cc = 'cc LIKE "%' . $out[2] . '%"';
             $nif = 'nif LIKE "%' . $out[3] . '%"';
-            $datanascimento = 'data_nascimento LIKE "%' . $out[4] . '%"';    
+            $datanascimento = 'data_nascimento LIKE "%' . $out[4] . '%"';
         }
-        
+
         if ($out[0] != null) {
             array_push($arr, $id);
         }
@@ -475,7 +488,7 @@ class PessoasController extends AppController
         } else {
             $pessoas = $this->Pessoas->find('all', array('conditions' => $arr));
         }
-        
+
         $this->autoRender = false;
         $path = TMP . "pessoas.xlsx";
 
@@ -511,7 +524,8 @@ class PessoasController extends AppController
         return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pessoas.xlsx'));
     }
 
-    public function loadCodigos(){
+    public function loadCodigos()
+    {
         $codigos_postai_id = $this->request->getData('codigos_postai_id');
 
         $cod_postal_1 = $this->request->getQuery('keyword');

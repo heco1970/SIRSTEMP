@@ -12,7 +12,7 @@
 <?php
 $dynElems =
     [
-        'pedido' => ['label' => __('ID Pedido'), 'options' => $pedido, 'empty' => ' '],
+        'pedido' => ['label' => __('ID Pedido')],
         'equipa' => ['label' => __('Equipa'), 'options' => $equipa, 'empty' => ' '],
         'nome_prestador_trabalho' => ['label' => __('Prestador de trabalho')],
         'designacao_entidade' => ['label' => __('Entidade beneficiária')],
@@ -31,13 +31,41 @@ $dynElems =
 
 <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
 <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
+<?= $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', ['block' => true]); ?>
+<?= $this->Html->css('https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css', ['block' => true]); ?>
+<?= $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['block' => true]); ?>
 
-<?php $this->start('scriptBottom') ?>
 <script>
     $(document).ready(function() {
+
+        $('#pedido').select2({
+            theme: "bootstrap4",
+            ajax: {
+                url: '/formularios/idPedidoAutoComplete',
+                dataType: 'json',
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        type: 'public'
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                },
+                processResults: function(data) {
+                    console.log(data['results'])
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.results
+                    };
+                }
+            },
+            minimumInputLength: 1
+        });
+
         var writers = {
             ação: function(row) {
-                var view = '<a class="btn btn-info mr-1" href="/formularios/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
+                var view = '<a class="btn btn-info mr-1" href="/formularios/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Detalhes') ?>"><i class="far fa-eye fa-fw"></i></a>'
                 var edit = '<a class="btn btn-warning mr-1" href="/formularios/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
                 var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Deseja mesmo apagar?'" + ')" href="/formularios/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
 
@@ -50,4 +78,3 @@ $dynElems =
         }, writers);
     });
 </script>
-<?php $this->end(); ?>
