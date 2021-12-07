@@ -180,11 +180,8 @@ class PessoasController extends AppController
             ->find()
             ->where(['id like' => $distritoSelecionadoID . '%']);
 
-<<<<<<< HEAD
         $concelhos = null;
         
-=======
->>>>>>> 8e3982bd3ae59113a3327f19619cf4203433115c
         $data = [];
         $data2 = [];
 
@@ -209,15 +206,10 @@ class PessoasController extends AppController
         $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
-<<<<<<< HEAD
         ->find()
         ->where(['id like'=> $concelhoSelecionadoID.'%']);
 
         $freguesia = null;
-=======
-            ->find()
-            ->where(['id like' => $concelhoSelecionadoID . '%']);
->>>>>>> 8e3982bd3ae59113a3327f19619cf4203433115c
 
         $data = [];
         $data2 = [];
