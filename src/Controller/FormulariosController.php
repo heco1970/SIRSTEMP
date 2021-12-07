@@ -156,4 +156,32 @@ class FormulariosController extends AppController
     public function xls()
     {
     }
+
+    public function idPedidoAutoComplete()
+    {
+        $this->autoRender = false;
+        $this->loadModel('Pedidos');
+        $query = $this->request->getQueryParams();
+
+        if (!empty($query['search'])) {
+
+            $pedidos = $this->Pedidos
+                ->find()
+                ->select(['id'])
+                ->where(['id like' => $query['search']])
+                ->order(['id' => 'ASC'])->toArray();
+
+            $pedidostosend = [];
+
+            foreach ($pedidos as $pedido) {
+                array_push($pedidostosend, [
+                    "id" => $pedido['id'],
+                    "text" => $pedido['id']
+                ]);
+            }
+        }
+
+        $this->log($pedidostosend);
+        echo json_encode(['results' => $pedidostosend], JSON_UNESCAPED_UNICODE);
+    }
 }
