@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Formularios Controller
@@ -165,11 +166,9 @@ class FormulariosController extends AppController
 
         if (!empty($query['search'])) {
 
-            $pedidos = $this->Pedidos
-                ->find()
-                ->select(['id'])
-                ->where(['id like' => $query['search']])
-                ->order(['id' => 'ASC'])->toArray();
+            $connection = ConnectionManager::get('default');
+
+            $pedidos = $connection->execute("SELECT id FROM pedidos WHERE id LIKE '%".h($query['search'])."%'")->fetchAll('assoc');
 
             $pedidostosend = [];
 
@@ -181,7 +180,6 @@ class FormulariosController extends AppController
             }
         }
 
-        $this->log($pedidostosend);
         echo json_encode(['results' => $pedidostosend], JSON_UNESCAPED_UNICODE);
     }
 }
