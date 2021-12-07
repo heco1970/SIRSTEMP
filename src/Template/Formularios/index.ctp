@@ -12,7 +12,7 @@
 <?php
 $dynElems =
     [
-        'pedido' => ['label' => __('ID Pedido')],
+        'pedido' => ['label' => __('ID Pedido'), 'options' => $pedido, 'empty' => ' '],
         'equipa' => ['label' => __('Equipa'), 'options' => $equipa, 'empty' => ' '],
         'nome_prestador_trabalho' => ['label' => __('Prestador de trabalho')],
         'designacao_entidade' => ['label' => __('Entidade beneficiária')],
@@ -62,6 +62,10 @@ $dynElems =
             },
             minimumInputLength: 1
         });
+
+        $('#pedido').on('change', function() {
+            console.log($(this).val());
+        })
 
         var writers = {
             ação: function(row) {

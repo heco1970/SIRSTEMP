@@ -48,7 +48,7 @@ class FormulariosController extends AppController
 
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
-            $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, '', '');
+            $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, [], []);
 
             $conditions = array_merge($conditions, $parsedQueries);
             $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
@@ -168,7 +168,7 @@ class FormulariosController extends AppController
 
             $connection = ConnectionManager::get('default');
 
-            $pedidos = $connection->execute("SELECT id FROM pedidos WHERE id LIKE '%".h($query['search'])."%'")->fetchAll('assoc');
+            $pedidos = $connection->execute("SELECT id FROM pedidos WHERE id LIKE '%" . h($query['search']) . "%'")->fetchAll('assoc');
 
             $pedidostosend = [];
 
