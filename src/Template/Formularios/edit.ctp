@@ -8,21 +8,21 @@
             <div class="form-row">
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label for="nip">Id Verbete</label>
-                        <?php echo $this->Form->control('id_pedido', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pedidos, 'class' => 'form-control']); ?>
+                        <label for="id_pedido">Id Verbete</label>
+                        <?php echo $this->Form->control('id_pedido', ['id' => 'id_pedido','label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pedidos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="nip">DR/DS</label>
+                        <label for="dr_ds">DR/DS</label>
                         <?php echo $this->Form->control('dr_ds', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="processo_id">Equipa/CE</label>
+                        <label for="id_equipa">Equipa/CE</label>
                         <?php echo $this->Form->control('id_equipa', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $teams, 'class' => 'form-control']); ?>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
             <div class="form-row">
                 <div class="col-sm-10">
                     <div class="form-group">
-                        <label for="nip">Nome do Prestador de Trabalho/Tarefa</label>
+                        <label for="nome_prestador_trabalho">Nome do Prestador de Trabalho/Tarefa</label>
                         <?php echo $this->Form->control('nome_prestador_trabalho', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
             <div class="form-row">
                 <div class="col-sm-10">
                     <div class="form-group">
-                        <label for="nip">Designação da Entidade Beneficiária de Trabalho/Tarefa</label>
+                        <label for="designacao_entidade">Designação da Entidade Beneficiária de Trabalho/Tarefa</label>
                         <?php echo $this->Form->control('designacao_entidade', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
@@ -46,13 +46,13 @@
             <div class="form-row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="nip">Número de horas aplicadas</label>
+                        <label for="hora_aplicadas">Número de horas aplicadas</label>
                         <?php echo $this->Form->control('hora_aplicadas', ['id' => 'horasAplicadas', 'label' => false, 'class' => 'form-control', 'required', 'min' => '0']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="nip">Número de horas efectivamente prestadas</label>
+                        <label for="hora_prestadas">Número de horas efectivamente prestadas</label>
                         <?php echo $this->Form->control('hora_prestadas', ['id' => 'horasPrestadas', 'label' => false, 'class' => 'form-control', 'required', 'min' => '0']); ?>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
             <div class="form-row">
                 <div class="col-sm-10">
                     <div class="form-group">
-                        <label for="nip">Actividade exercida</label>
+                        <label for="actividade_exercida">Actividade exercida</label>
                         <?php echo $this->Form->control('actividade_exercida', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
@@ -68,13 +68,13 @@
             <div class="form-row">
                 <div class="col-sm-5">
                     <div class="form-group">
-                        <label for="nip">Data do fim execução pena/media(d/m/a)</label>
+                        <label for="data_fim_execucao">Data do fim execução pena/media(d/m/a)</label>
                         <?php echo $this->Form->text('data_fim_execucao', ['label' => false, 'value' => h($formulario->data_fim_execucao->format('Y-m-d')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
                 <div class="col-sm-5">
                     <div class="form-group">
-                        <label for="nip">Data(d/m/a)</label>
+                        <label for="data">Data(d/m/a)</label>
                         <?php echo $this->Form->text('data', ['label' => false, 'value' => h($formulario->data->format('Y-m-d')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
             <div class="form-row">
                 <div class="col-sm-10">
                     <div class="form-group">
-                        <label for="nip">O/A Técnico(a)</label>
+                        <label for="tecnico">O/A Técnico(a)</label>
                         <?php echo $this->Form->control('tecnico', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
@@ -96,7 +96,38 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
+        $('#id_pedido').select2({
+        ajax: {
+            url: '/formularios/idPedidoAutoComplete',
+            dataType: 'json',
+            data: function(params) {
+                var query = {
+                    search: params.term,
+                    type: 'public'
+                }
+
+                // Query parameters will be ?search=[term]&type=public
+                return query;
+            },
+            processResults: function(data) {
+                console.log(data['results'])
+                // Transforms the top-level key of the response object from 'items' to 'results'
+                return {
+                    results: data.results
+                };
+            }
+        },
+        minimumInputLength: 1
+    });
+
+    $('document').ready(function() {
+
+    });
+
     // Select your input element.
     var number1 = document.getElementById('horasAplicadas');
     var number2 = document.getElementById('horasPrestadas');

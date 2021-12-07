@@ -177,7 +177,7 @@ class PessoasController extends AppController
         ->find()
         ->where(['id like'=> $distritoSelecionadoID.'%']);
 
-        $concelhos;
+        $concelhos = null;
         
         $data = [];
         $data2 = [];
@@ -205,7 +205,7 @@ class PessoasController extends AppController
         ->find()
         ->where(['id like'=> $concelhoSelecionadoID.'%']);
 
-        $freguesia;
+        $freguesia = null;
 
         $data = [];
         $data2 = [];

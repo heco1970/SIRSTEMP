@@ -9,7 +9,7 @@
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label for="id_pedido">Id Pedido</label>
-                        <?php echo $this->Form->control('id_pedido', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pedidos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('id_pedido', ['id' => 'id_pedido', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pedidos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
@@ -98,8 +98,38 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+    $('#id_pedido').select2({
+        ajax: {
+            url: '/formularios/idPedidoAutoComplete',
+            dataType: 'json',
+            data: function(params) {
+                var query = {
+                    search: params.term,
+                    type: 'public'
+                }
+
+                // Query parameters will be ?search=[term]&type=public
+                return query;
+            },
+            processResults: function(data) {
+                console.log(data['results'])
+                // Transforms the top-level key of the response object from 'items' to 'results'
+                return {
+                    results: data.results
+                };
+            }
+        },
+        minimumInputLength: 1
+    });
+
+    $('document').ready(function() {
+
+    });
+
     // Select your input element.
     var number1 = document.getElementById('horasAplicadas');
     var number2 = document.getElementById('horasPrestadas');
