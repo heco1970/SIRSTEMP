@@ -34,6 +34,7 @@ $dynElems =
 <?= $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', ['block' => true]); ?>
 <?= $this->Html->css('https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css', ['block' => true]); ?>
 <?= $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['block' => true]); ?>
+<?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/pt.min.js', ['block' => true]); ?>
 
 <script>
     $(document).ready(function() {
@@ -60,7 +61,8 @@ $dynElems =
                     };
                 }
             },
-            minimumInputLength: 1
+            minimumInputLength: 1,
+            language: 'pt'
         });
 
         $('#pedido').on('change', function() {
