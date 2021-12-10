@@ -15,7 +15,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="processo_id">ID Processo</label>
-                        <?php echo $this->Form->control('processo_id', ['type'=>'text','label' => false, 'class' => 'form-control','required', 'value' => $processo_id , 'disabled']); ?>
+                        <?php echo $this->Form->control('processo_id', ['type' => 'text', 'label' => false, 'class' => 'form-control', 'required', 'value' => $processo_id, 'disabled']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -29,7 +29,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="entidadejudiciai_id">Comarca Judicial</label>
-                        <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']);?>
+                        <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -41,7 +41,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="natureza">Natureza</label>
-                        <?php echo $this->Form->control('natureza_id', ['label' => false, 'class' => 'form-control', 'options' => $naturezas,'required','empty' => ['' => '']]); ?>
+                        <?php echo $this->Form->control('natureza_id', ['label' => false, 'class' => 'form-control', 'options' => $naturezas, 'required', 'empty' => ['' => '']]); ?>
                     </div>
                 </div>
             </div>

@@ -118,13 +118,14 @@ class ProcessosController extends AppController
      */
     public function add()
     {
-        $nextProcesso = $this->Processos->find()->select(['id'])->order(['id' => 'DESC'])->first();
-        $this->set('processo_id', $nextProcesso->id + 1);
+        $nextProcesso = $this->Processos->find()->select(['processo_id'])->order(['processo_id' => 'DESC'])->first();
+        $this->set('processo_id', $nextProcesso->processo_id + 1);
 
         $processo = $this->Processos->newEntity();
         if ($this->request->is('post')) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
-            $processo['processo_id'] = $nextProcesso->id + 1;
+            $processo['processo_id'] = $nextProcesso->processo_id + 1;
+            $processo['state_id'] = 1;
             $this->log($this->request->getData());
             if ($this->Processos->save($processo)) {
                 $this->Flash->success(__('O registo foi gravado.'));
