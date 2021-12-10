@@ -118,10 +118,14 @@ class ProcessosController extends AppController
      */
     public function add()
     {
+        $nextProcesso = $this->Processos->find()->select(['id'])->order(['id' => 'DESC'])->first();
+        $this->set('processo_id', $nextProcesso->id + 1);
+
         $processo = $this->Processos->newEntity();
         if ($this->request->is('post')) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
-            $this->log($processo);
+            $processo['processo_id'] = $nextProcesso->id + 1;
+            $this->log($this->request->getData());
             if ($this->Processos->save($processo)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
@@ -130,25 +134,10 @@ class ProcessosController extends AppController
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
-        $data = [];
-        $lista = $this->Processos
-        ->find()
-        ->select(['id'])                
-        ->order(['id' => 'DESC']);
-
-        foreach($lista as $processo){
-            $data[] = ['id' => $processo->id];
-        }
-
-        $idUltimoRegisto = array_sum($data[0]);
-        $idProximoRegisto = $idUltimoRegisto + 1;
-        $this->set('nextUser', $idProximoRegisto);
-
         $this->set('units', $this->Processos->Units->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('states', $this->Processos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
-        $this->set('entidades', $this->Processos->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
         $this->set('naturezas', $this->Processos->Naturezas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
-
+        $this->set('entidades', $this->Processos->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
         $this->set(compact('processo'));
     }
 
