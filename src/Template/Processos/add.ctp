@@ -15,7 +15,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="processo_id">ID Processo</label>
-                        <?php echo $this->Form->control('processo_id', ['value' => $nextUser,'label' => false, 'class' => 'form-control', 'disabled' => true, 'type'=>'text']); ?>
+                        <?php echo $this->Form->control('processo_id', ['type'=>'text','label' => false, 'class' => 'form-control','required', 'value' => $processo_id , 'disabled']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success"]) ?>
+        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success float-right"]) ?>
         <a href="#" onclick="history.go(-1);" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
