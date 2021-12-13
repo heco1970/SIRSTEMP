@@ -98,10 +98,10 @@
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
                             <div class="col-2">
-                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min' => 1111, 'label' => false, 'placeholder' => '2312', 'class' => 'form-control', 'required']); ?>
+                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min' => 1111, 'label' => false, 'placeholder' => 'XXXX', 'class' => 'form-control', 'required']); ?>
                             </div>
                             <div class="col-1">
-                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min' => 111, 'label' => false, 'placeholder' => '115', 'class' => 'form-control', 'required']); ?>
+                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min' => 111, 'label' => false, 'placeholder' => 'XXX', 'class' => 'form-control', 'required']); ?>
                             </div>
                         </div>
                     </div>
@@ -130,33 +130,33 @@
             </div>
 
             <div class="form-row">
-                <div class="col">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="hea">Data de Nascimento</label>
                         <?php echo $this->Form->text('data_nascimento', ['id' => 'dataNasc', 'label' => false, 'class' => 'form-control', 'type' => 'date', 'onChange' => 'submitBday()']); ?>
                     </div>
                 </div>
-                <div class="col">
-                    <div id="container" style="padding-left: 30%;">
+                <div class="col-1">
+                    <div id="container">
                         <label for="age">Idade</label>
-                        <?php echo $this->Form->control('age', ['id' => "idade", 'label' => false, 'class' => 'form-control', 'style' => 'width: 50%;', 'disabled' => true]); ?>
+                        <?php echo $this->Form->control('age', ['id' => "idade", 'label' => false, 'class' => 'form-control', 'type' => 'number', 'disabled' => true]); ?>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-2">
                     <div class="form-group">
                         <label for="cc">Cartão de Cidadão</label>
                         <?php echo $this->Form->control('cc', ['id' => "cc", 'label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9', 'required']); ?>
                         <div id='ccError'></div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="nif">Número de Contribuinte</label>
-                        <?php echo $this->Form->control('nif', ['id' => "nif", 'label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9', 'required']); ?>
+                        <?php echo $this->Form->control('nif', ['id' => "nif", 'label' => false, 'class' => 'form-control', 'type' => 'number', 'maxLength' => '9', 'required']); ?>
                         <div id='nifError'></div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="outroidentifica">Outra Identificação</label>
                         <?php echo $this->Form->control('outroidentifica', ['label' => false, 'class' => 'form-control']); ?>
@@ -164,7 +164,9 @@
                 </div>
             </div>
 
-            <h5 style="color: #0000009c;">Contacto</h5>
+            <hr>
+
+            <h5>Contacto</h5>
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">
                 <label for="nomeContact" style="margin-right: 30px; padding-top: 8px;">Nome</label>
                 <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control', 'style' => 'width: 500px;']); ?>
