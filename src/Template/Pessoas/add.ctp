@@ -108,26 +108,27 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            <div class="form-row" id="distrito">
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-                        <?php echo $this->Form->control('distritos', ['id' => 'distrito_1', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
+                        <select class='form-control' id="distritos" disabled></select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-                        <?php echo $this->Form->control('concelhos', ['id' => 'concelho_1', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
+                        <select class='form-control' id="concelhos" disabled></select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
-                        <?php echo $this->Form->control('freguesia', ['id' => 'freguesia_1', 'type' => 'select', 'label' => false, 'class' => 'form-control']); ?>
+                        <select class='form-control' id="freguesias" disabled></select>
                     </div>
                 </div>
             </div>
+
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
@@ -204,12 +205,14 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- jquery -->
+<!-- select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script>
-    $.fn.select2.defaults.set("theme", "bootstrap");
+    $.fn.select2.defaults.set("theme", "bootstrap"); //define the theme for select2
 
+    //Cc validation
     var error;
     $('#cc').change(function() {
         if ($('#cc').val().length < 9) {
@@ -219,6 +222,7 @@
         }
     });
 
+    //Nif validations
     $('#nif').change(function() {
 
         if (validateNIF($('#nif').val())) {
@@ -239,75 +243,28 @@
         let comparador = modulo11 == 1 || modulo11 == 0 ? 0 : 11 - modulo11;
 
         return nif[8] == comparador
-
     }
 
-    var selData = 0;
-
-    $('#freguesia_1').select2({
-        ajax: {
-            url: function(params) {
-                return '/Pessoas/FregAutoComplete/' + selData;
-            },
-            dataType: 'json',
-            delay: 250,
-        }
-    });
-
-    $(function() {
-        $('#valnifteste').bind('click', function(event) {
-            /* Act on the event */
-            var nif = $("#nmrContr").val();
-
-            if (validateNIF(nif) == false) {
-                alert('Número de contribuinte inválido!');
-            } else {
-                alert('Número de contribuinte válido!');
-            }
-        });
-    });
-
-    // Código usado em: http://www.java2s.com/Tutorials/Javascript/Javascript_Form_How_to/Date_Input/Get_the_age_from_input_type_date_.htm
     function submitBday() {
-
-        var Bdate = document.getElementById('dataNasc').value;
-        if (typeof Bdate !== 'undefined' && Bdate !== null) {
-            Bdate.innerHTML = value;
+        var today = new Date();
+        var birthDate = new Date($("#dataNasc").val());
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
         }
-        var Bday = +new Date(Bdate);
-        var idade = ~~((Date.now() - Bday) / (31557600000));
-        var theBday = document.getElementById('idade');
-        theBday.setAttribute('value', idade);
+        $("#idade").val(age);
     }
 
     $('document').ready(function() {
 
-        $("#distrito_1").change(function(event) {
-            var data = $(this).val();
-            $.ajax({
-                //method: 'ajax',
-                url: '/Pessoas/concelhosByDistritos',
-                dataType: 'json',
-                data: {
-                    keyword: data,
-                },
-                success: function(response) {
-                    $('#concelho_1').html("");
-                    //response = JSON.parse(response);
-                    //console.log(response);
-                    $('#concelho_1').append($("<option>").attr('value', "1").text(" "));
-                    response.forEach(element => $('#concelho_1').append($("<option>").attr(
-                        'value', element.id).text(element.Designacao)));
-                }
-            });
-        })
-
-        $("#concelho_1").change(function(event) {
-            var data = $(this).val();
-            selData = data;
-        })
-
         $('#codigo_postal1').keyup(function() {
+
+            var searchkey = $('#codigo_postal').val();
+            var searchkey1 = $('#codigo_postal1').val();
+            searchTags(searchkey, searchkey1);
+        });
+        $('#codigo_postal').keyup(function() {
 
             var searchkey = $('#codigo_postal').val();
             var searchkey1 = $('#codigo_postal1').val();
@@ -330,6 +287,7 @@
             });
         };
 
+        //phone number validation
         $('#telefone1').keypress(function(e) {
             var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
             e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];

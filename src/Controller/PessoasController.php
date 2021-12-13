@@ -181,7 +181,7 @@ class PessoasController extends AppController
             ->where(['id like' => $distritoSelecionadoID . '%']);
 
         $concelhos = null;
-        
+
         $data = [];
         $data2 = [];
 
@@ -206,8 +206,8 @@ class PessoasController extends AppController
         $concelhoSelecionadoID = h($this->request->getQuery('keyword'));
 
         $concelhos = $this->Pessoas->CodigosPostais->Concelhos
-        ->find()
-        ->where(['id like'=> $concelhoSelecionadoID.'%']);
+            ->find()
+            ->where(['id like' => $concelhoSelecionadoID . '%']);
 
         $freguesia = null;
 
@@ -333,6 +333,7 @@ class PessoasController extends AppController
         $codigo = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['ExtCodigoPostal' => $keyword1, 'NumCodigoPostal' => $keyword]);
         $coddistrito = $this->Pessoas->CodigosPostais->find()->select('CodigoDistrito')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]);
         $codconcelho = $this->Pessoas->CodigosPostais->find()->select('CodigoConcelho')->where(['NumCodigoPostal' => $keyword, 'ExtCodigoPostal' => $keyword1]);
+
 
         $this->set('distritos', $this->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoDistrito' => $codigo]));
         $this->set('concelhos', $this->Concelhos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao'])->where(['CodigoConcelho' => $codconcelho, 'CodigoDistrito' => $coddistrito]));
