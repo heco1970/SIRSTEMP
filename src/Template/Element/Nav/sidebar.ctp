@@ -74,7 +74,6 @@ $active = $show = '';
                     <?= $this->Html->link(__('Motivos de Pedidos'), '/pedidosmotives/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Motivos Verbete'), '/verbetes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Naturezas'), '/naturezas/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                   
                     <?= $this->Html->link(__('Perfil de Utilizador'), '/user-perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                     <?= $this->Html->link(__('Perfis'), '/perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                     <?= $this->Html->link(__('Tipos de Crimes'), '/tipocrimes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
@@ -152,7 +151,7 @@ $active = $show = '';
         });
 
         $(".close-menu").click(function() {
-            if (localStorage.getItem("coll_collapseAdminMenu2") || localStorage.getItem("coll_collapseAdminMenu")) || localStorage.getItem("coll_collapseFormularios")) localStorage.clear();
+            if (localStorage.getItem("coll_collapseAdminMenu2") || localStorage.getItem("coll_collapseAdminMenu") || localStorage.getItem("coll_collapseFormularios")) localStorage.clear();
         });        
     });
 </script>
