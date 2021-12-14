@@ -287,6 +287,8 @@
                 }
             });
         };
+        $('#codigo_postal1').trigger("keyup");
+
 
         //phone number validation
         $('#telefone1').keypress(function(e) {
