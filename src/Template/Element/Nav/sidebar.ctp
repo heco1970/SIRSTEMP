@@ -66,7 +66,6 @@ $active = $show = '';
             </a>
             <div id="collapseAdminMenu2" class="collapse hide" aria-labelledby="adminMenu" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <?= $this->Html->link(__('Caracteristicas Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Entidades Judiciais'), '/entidadejudiciais/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Equipas'), '/teams/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
                     <?= $this->Html->link(__('Estados'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
