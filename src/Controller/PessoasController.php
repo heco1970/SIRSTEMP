@@ -35,8 +35,9 @@ class PessoasController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['nome', 'cc', 'nif', 'datanascimento', 'createdfirst', 'createdlast'];
+            $validOps = ['id', 'nome', 'cc', 'nif', 'datanascimento', 'createdfirst', 'createdlast'];
             $convArray = [
+                'id' => $model . '.id',
                 'nome' => $model . '.nome',
                 'cc' => $model . '.cc',
                 'nif' => $model . '.nif',

@@ -84,24 +84,21 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col">
+                <div class="col-8">
                     <div class="form-group">
                         <label for="pai_id">Morada</label>
                         <?php echo $this->Form->control('morada', ['label' => false, 'class' => 'form-control', 'maxLength' => 80]); ?>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-row">
                 <div class="col">
                     <div class="form-group">
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
-                            <div class="col-3">
-                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min' => 0000, 'label' => false, 'placeholder' => 'XXXX', 'class' => 'form-control', 'required']); ?>
+                            <div class="col">
+                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min' => 0000, 'maxlength' => 4, 'minlength' => 4, 'label' => false, 'placeholder' => 'XXXX', 'class' => 'form-control', 'required']); ?>
                             </div>
-                            <div class="col-2">
-                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min' => 000, 'label' => false, 'placeholder' => 'XXX', 'class' => 'form-control', 'required']); ?>
+                            <div class="col">
+                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min' => 000, 'maxlength' => 3, 'minlength' => 3, 'label' => false, 'placeholder' => 'XXX', 'class' => 'form-control', 'required']); ?>
                             </div>
                         </div>
                     </div>

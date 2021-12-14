@@ -10,7 +10,7 @@ $pessoaNome = "";
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['id' =>'xlsbutton','escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
         )
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
@@ -20,7 +20,7 @@ $pessoaNome = "";
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('ID Pessoa')],
+        'id' => ['label' => __('ID Pessoa'), 'type' => 'number'],
         'nome' => ['label' => __('Nome')],
         'cc' => ['label' => __('CC/BI')],
         'nif' => ['label' => __('NIF')],
@@ -38,6 +38,7 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Listagem de Pessoas') ?></h6>
     </div>
     <div class="card-body">
         <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
@@ -54,110 +55,113 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
 
 <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
 <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js', ['block' => true]); ?>
+<?= $this->Html->script('https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', ['block' => true]); ?>
+<!-- <?= $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', ['block' => true]); ?>
+<?= $this->Html->css('https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css', ['block' => true]); ?>
+<?= $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['block' => true]); ?>
+<?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/pt.min.js', ['block' => true]); ?> -->
 
 <?php $this->start('scriptBottom') ?>
 <script>
-    
-var e = jQuery.Event("keypress");
-e.which = 13; // Enter
+    var e = jQuery.Event("keypress");
+    e.which = 13; // Enter
 
-$('#xlsbutton').click(function() {
-    createCookie(
-        "Filtro",
-        document.getElementById("id").value,
-        document.getElementById("nome").value,
-        document.getElementById("cc").value,
-        document.getElementById("nif").value,
-        document.getElementById("datanascimento").value,
-        "1"
-    );
-});
+    $('#xlsbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("id").value,
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1"
+        );
+    });
 
-$('#dynatable-filter').click(function() {
-    $('#dynatable-filter').trigger(e);
-    emptyCookie();
-});
+    $('#dynatable-filter').click(function() {
+        $('#dynatable-filter').trigger(e);
+        emptyCookie();
+    });
 
-function emptyCookie() {
-    createCookie(
-        "Filtro",
-        document.getElementById("id").value = '',
-        document.getElementById("nome").value = '',
-        document.getElementById("cc").value = '',
-        document.getElementById("nif").value = '',
-        document.getElementById("datanascimento").value = '',
-        "1"
-    );
-}
-
-$(document).ready(function() {
-    var writers = {
-        ação: function(row) {
-            var view = '<a class="btn btn-info mr-1" href="/pessoas/view/' + row.id +
-                '" data-toggle="tooltip" data-placement="top" title="<?=__('Detalhes')?>"><i class="far fa-eye fa-fw"></i></a>'
-            var edit = '<a class="btn btn-warning mr-1" href="/pessoas/edit/' + row.id +
-                '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
-            var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" +
-                ')" href="/pessoas/delete/' + row.id +
-                '" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
-
-            return '<div class="btn-group btn-group-sm" role="group">' + view + edit + dele + '</div>';
-        }
+    function emptyCookie() {
+        createCookie(
+            "Filtro",
+            document.getElementById("id").value = '',
+            document.getElementById("nome").value = '',
+            document.getElementById("cc").value = '',
+            document.getElementById("nif").value = '',
+            document.getElementById("datanascimento").value = '',
+            "1"
+        );
     }
 
-    createDynatable("#dynatable", "/pessoas/", {
-        created: -1
-    }, writers);
+    $(document).ready(function() {
+        var writers = {
+            ação: function(row) {
+                var view = '<a class="btn btn-info mr-1" href="/pessoas/view/' + row.id +
+                    '" data-toggle="tooltip" data-placement="top" title="<?= __('Detalhes') ?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a class="btn btn-warning mr-1" href="/pessoas/edit/' + row.id +
+                    '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" +
+                    ')" href="/pessoas/delete/' + row.id +
+                    '" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
 
-    document.getElementById('datanascimento').type = 'date';
-    document.getElementById('createdfirst').type = 'date';
-    document.getElementById('createdlast').type = 'date';
-
-    document.getElementById("createdfirst").onchange = function() {
-        if (document.getElementById('createdfirst').value != "") {
-            datefirst = new Date(document.getElementById('createdfirst').value);
-            datefirst.setDate(datefirst.getDate() + 1)
-            document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
-        } else {
-            document.getElementById('createdlast').min = null;
+                return '<div class="btn-group btn-group-sm" role="group">' + view + edit + dele + '</div>';
+            }
         }
-    };
 
-    document.getElementById("createdlast").onchange = function() {
-        if (document.getElementById('createdlast').value != "") {
-            datelast = new Date(document.getElementById('createdlast').value);
-            datelast.setDate(datelast.getDate() - 1)
-            document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
-        } else {
-            document.getElementById('createdfirst').max = null;
-        }
-    };
+        createDynatable("#dynatable", "/pessoas/", {
+            created: -1
+        }, writers);
 
-    deleteCookie("Filtro");
-    createCookie("Filtro",'', '', '', '', '', "1");
+        document.getElementById('datanascimento').type = 'date';
+        document.getElementById('createdfirst').type = 'date';
+        document.getElementById('createdlast').type = 'date';
 
-});
+        document.getElementById("createdfirst").onchange = function() {
+            if (document.getElementById('createdfirst').value != "") {
+                datefirst = new Date(document.getElementById('createdfirst').value);
+                datefirst.setDate(datefirst.getDate() + 1)
+                document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
+            } else {
+                document.getElementById('createdlast').min = null;
+            }
+        };
 
-function deleteCookie(name) {
-    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
-}
+        document.getElementById("createdlast").onchange = function() {
+            if (document.getElementById('createdlast').value != "") {
+                datelast = new Date(document.getElementById('createdlast').value);
+                datelast.setDate(datelast.getDate() - 1)
+                document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
+            } else {
+                document.getElementById('createdfirst').max = null;
+            }
+        };
 
-function createCookie(name,valuePessoa, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
-    var expires;
+        deleteCookie("Filtro");
+        createCookie("Filtro", '', '', '', '', '', "1");
 
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    } else {
-        expires = "";
+    });
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
 
-    document.cookie = escape(name) + "=" +
-        valuePessoa + "," + valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
-        expires + "; path=/";
-}
+    function createCookie(name, valuePessoa, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
+        var expires;
+
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        } else {
+            expires = "";
+        }
+
+        document.cookie = escape(name) + "=" +
+            valuePessoa + "," + valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
+            expires + "; path=/";
+    }
 </script>
 <?php $this->end(); ?>
