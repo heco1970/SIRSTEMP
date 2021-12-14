@@ -10,24 +10,17 @@
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Perfil de Utilizador') ?></h6>
     </div>
     <?= $this->Form->create($userPerfi) ?>
-
     <div class='ml-4 mt-4'>
         <div class="form-row">
-            <div class="col-6">
+            <div class="col-5">
                 <div class="form-group">
-                    <label for="user">
-                        <h4><?= __('Utilizador') ?></h4>
-                    </label>
+                    <label for="user_id">Utilizador</label>
                     <?= $this->Form->control('user_id', ['options' => $users, 'class' => 'form-control', 'label' => false, 'required']); ?>
                 </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-6">
+            <div class="col-5">
                 <div class="form-group">
-                    <label for="perfil">
-                        <h4><?= __('Perfil') ?></h4>
-                    </label>
+                    <label for="perfi_id">Perfil</label>
                     <?= $this->Form->control('perfi_id', ['options' => $perfis, 'class' => 'form-control', 'label' => false, 'required']); ?>
                 </div>
             </div>

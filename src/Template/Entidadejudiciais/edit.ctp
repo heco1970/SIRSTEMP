@@ -7,9 +7,7 @@
         <div class="form-row">
             <div class="col">
                 <div class="form-group">
-                    <label for="team">
-                        <h4><?= __('Designação') ?></h4>
-                    </label>
+                    <label for="descricao">Designação</label>
                     <?= $this->Form->control('descricao', ['class' => 'form-control', 'descricao' => 'descricao', 'label' => false, 'required']); ?>
                 </div>
             </div>
