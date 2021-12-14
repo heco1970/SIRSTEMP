@@ -35,7 +35,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="nome">Nome da Pessoa</label>
-                        <?php echo $this->Form->control('nome', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('nome', ['label' => false, 'class' => 'form-control', 'maxLength' => 80]); ?>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="nome_alt">Nome Alternativo</label>
-                        <?php echo $this->Form->control('nome_alt', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('nome_alt', ['label' => false, 'class' => 'form-control', 'maxLength' => 80]); ?>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="nomepai">Nome do Pai</label>
-                        <?php echo $this->Form->control('nomepai', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('nomepai', ['label' => false, 'class' => 'form-control', 'maxLength' => 80]); ?>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="nomemaae">Nome da Mãe</label>
-                        <?php echo $this->Form->control('nomemae', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('nomemae', ['label' => false, 'class' => 'form-control', 'maxLength' => 80]); ?>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="pai_id">Morada</label>
-                        <?php echo $this->Form->control('morada', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('morada', ['label' => false, 'class' => 'form-control', 'maxLength' => 80]); ?>
                     </div>
                 </div>
             </div>
@@ -97,11 +97,11 @@
                     <div class="form-group">
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
-                            <div class="col-2">
-                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min' => 1111, 'label' => false, 'placeholder' => 'XXXX', 'class' => 'form-control', 'required']); ?>
+                            <div class="col-3">
+                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'type' => 'number', 'max' => 9999, 'min' => 0000, 'label' => false, 'placeholder' => 'XXXX', 'class' => 'form-control', 'required']); ?>
                             </div>
-                            <div class="col-1">
-                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min' => 111, 'label' => false, 'placeholder' => 'XXX', 'class' => 'form-control', 'required']); ?>
+                            <div class="col-2">
+                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'type' => 'number', 'max' => 999, 'min' => 000, 'label' => false, 'placeholder' => 'XXX', 'class' => 'form-control', 'required']); ?>
                             </div>
                         </div>
                     </div>
@@ -164,9 +164,8 @@
                 </div>
             </div>
 
-            <hr>
-
-            <h5>Contacto</h5>
+            <!--<hr>
+             <h5>Contacto</h5>
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">
                 <label for="nomeContact" style="margin-right: 30px; padding-top: 8px;">Nome</label>
                 <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control', 'style' => 'width: 500px;']); ?>
@@ -189,7 +188,7 @@
 
                 <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
                 <?php echo $this->Form->control('tel3', ['id' => 'telefone3', 'name' => 'telefone3', 'label' => false, 'class' => 'form-control', 'style' => 'width: 85%;', 'type' => 'text', 'value' => '+351']); ?>
-            </div>
+            </div> -->
 
             <div class="form-row">
                 <div class="col">
