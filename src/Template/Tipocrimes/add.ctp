@@ -12,12 +12,12 @@
                         <?php echo $this->Form->control('descricao', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success"]) ?>
-        <a href="/tipocrimes/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
+        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success float-right"]) ?>
+        <a href="/tipocrimes/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
     <?= $this->Form->end() ?>
 </div>

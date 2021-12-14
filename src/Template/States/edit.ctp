@@ -1,30 +1,31 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\State $state
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $state->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $state->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List States'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="states form large-9 medium-8 columns content">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Equipa') ?></h6>
+    </div>
     <?= $this->Form->create($state) ?>
-    <fieldset>
-        <legend><?= __('Edit State') ?></legend>
-        <?php
-            echo $this->Form->control('designacao');
-            echo $this->Form->control('ativo');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <div class='ml-4 mt-4 mr-4'>
+        <div id='my-form-body'>
+            <div class="form-row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="designacao">Designação</label>
+                        <?php echo $this->Form->control('designacao', ['label' => false, 'class' => 'form-control', 'required' => true]); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="ativo"></label>
+                        <?php echo $this->Form->control('ativo', ['required' => true]); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer card-footer-fixed">
+        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success float-right"]) ?>
+        <a href="/teams/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+    </div>
     <?= $this->Form->end() ?>
 </div>

@@ -8,16 +8,11 @@
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Perfil') ?></h6>
     </div>
     <?= $this->Form->create($perfi) ?>
-
-
-
     <div class='ml-4 mt-4 mr-4'>
         <div class="form-row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class="form-group">
-                    <label for="username">
-                        <h4><?= __('Designação') ?></h4>
-                    </label>
+                    <label for="perfil">Designação</label>
                     <?= $this->Form->control('perfil', ['class' => 'form-control', 'perfil' => 'perfil', 'label' => false, 'required']); ?>
                 </div>
             </div>
@@ -25,10 +20,7 @@
         <div class="form-row">
             <div class="col-5">
                 <div class="form-group">
-                    <label for="multiselect">
-                        <h4><?= __('Utilizadores por seleccionar: ') ?></h4>
-                    </label>
-
+                    <label for="multiselect">Utilizadores por seleccionar:</label>
                     <?= $this->Form->control('multiselect', array('label' => false, 'size' => 8, 'class' => "form-control", 'type' => 'select', 'multiple' => true, 'options' => $users)); ?>
                 </div>
             </div>
@@ -42,12 +34,8 @@
             </div>
             <div class="col-5">
                 <div class="form-group">
-                    <label for="multiselect_to">
-                        <h4><?= __('Utilizadores seleccionados: ') ?></h4>
-                    </label>
-
+                    <label for="user_id">Utilizadores seleccionados:</label>
                     <?= $this->Form->control('multiselect_to', array('id' => "multiselect_to", 'label' => false, 'size' => 8, 'class' => "form-control", 'type' => 'select', 'multiple' => true)); ?>
-
                 </div>
             </div>
         </div>
