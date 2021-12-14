@@ -95,65 +95,72 @@
                     <div class="form-group">
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
-                            <div class="col-2">
-                                <?php echo $this->Form->control('codigo_postal', ['id' => 'codigo_postal', 'value' => h($pessoa->codigos_postai->NumCodigoPostal), 'type' => 'number', 'max' => 9999, 'min' => 1111, 'label' => false, 'placeholder' => '2312', 'class' => 'form-control', 'required']); ?>
+                            <div class="col-3">
+                                <?php echo $this->Form->number('codigo_postal', ['id' => 'codigo_postal', 'value' => h($pessoa->codigos_postai->NumCodigoPostal), 'max' => 9999, 'min' => 0000, 'label' => false, 'class' => 'form-control', 'required']); ?>
                             </div>
-                            <div class="col-1">
-                                <?php echo $this->Form->control('codigo_postal1', ['id' => 'codigo_postal1', 'value' => h($pessoa->codigos_postai->ExtCodigoPostal), 'type' => 'number', 'max' => 999, 'min' => 111, 'label' => false, 'placeholder' => '115', 'class' => 'form-control', 'required']); ?>
+                            <div class="col-2">
+                                <?php echo $this->Form->number('codigo_postal1', ['id' => 'codigo_postal1', 'value' => h($pessoa->codigos_postai->ExtCodigoPostal), 'max' => 999, 'min' => 000, 'label' => false, 'class' => 'form-control', 'required']); ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="form-row">
+            <div class="form-row" id="distrito">
                 <div class="col">
                     <div class="form-group">
                         <label for="distrito">Distrito</label>
-                        <?php echo $this->Form->control('distritos', ['id' => 'distrito_1', 'empty' => ' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $distritos, 'class' => 'form-control']); ?>
+                        <select class='form-control' id="distritos" disabled>
+                            <option></option>
+                        </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
-                        <?php echo $this->Form->control('concelhos', ['id' => 'concelho_1', 'empty' => ' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control']); ?>
+                        <select class='form-control' id="concelhos" disabled>
+                            <option></option>
+                        </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
-                        <?php echo $this->Form->control('codigos_postai_id', ['id' => 'freguesia_1', 'type' => 'select', 'label' => false, 'class' => 'form-control']); ?>
+                        <select class='form-control' id="freguesias" disabled>
+                            <option><?= h($pessoa->codigos_postai->NomeLocalidade) ?></option>
+                        </select>
                     </div>
                 </div>
             </div>
+
             <div class="form-row">
-                <div class="col">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="hea">Data de Nascimento</label>
                         <?php echo $this->Form->text('data_nascimento', ['id' => "dataNasc", 'label' => false, 'value' => h($pessoa->data_nascimento->i18nFormat('yyyy-MM-dd')), 'class' => 'form-control', 'type' => 'date', 'onChange' => 'submitBday()']); ?>
                     </div>
                 </div>
-                <div class="col">
-                    <div id="container" style="padding-left: 30%;">
+                <div class="col-1">
+                    <div id="container">
                         <label for="age">Idade</label>
-                        <?php echo $this->Form->control('age', ['id' => "idade", 'label' => false, 'class' => 'form-control', 'style' => 'width: 50%;', 'disabled' => true]); ?>
+                        <?php echo $this->Form->control('age', ['id' => "idade", 'label' => false, 'class' => 'form-control', 'type' => 'number', 'disabled' => true]); ?>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-2">
                     <div class="form-group">
                         <label for="cc">Cartão de Cidadão</label>
-                        <?php echo $this->Form->control('cc', ['label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9']); ?>
+                        <?php echo $this->Form->control('cc', ['label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9', 'required']); ?>
                         <div id='ccError'></div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="nif">Número de Contribuinte</label>
-                        <?php echo $this->Form->control('nif', ['label' => false, 'class' => 'form-control', 'type' => 'text', 'maxLength' => '9']); ?>
+                        <?php echo $this->Form->control('nif', ['label' => false, 'class' => 'form-control', 'type' => 'number', 'maxLength' => '9', 'required']); ?>
                         <div id='nifError'></div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="outroidentifica">Outra Identificação</label>
                         <?php echo $this->Form->control('outroidentifica', ['label' => false, 'class' => 'form-control']); ?>
@@ -161,7 +168,7 @@
                 </div>
             </div>
 
-            <h5 style="color: #0000009c;">Contacto</h5>
+            <!-- <h5 style="color: #0000009c;">Contacto</h5>
             <div class="form-row" style="margin-left: 1px; margin-bottom: 10px;">
                 <label for="nomeContact" style="margin-right: 30px; padding-top: 8px;">Nome</label>
                 <?php echo $this->Form->control('nomeContact', ['label' => false, 'class' => 'form-control', 'style' => 'width: 450px;']); ?>
@@ -184,7 +191,7 @@
 
                 <label for="tel3" style="margin-right: 30px; padding-top: 8px; margin-left: 3%;">Telefone</label>
                 <?php echo $this->Form->control('tel3', ['id' => 'telefone3', 'name' => 'telefone3', 'label' => false, 'class' => 'form-control', 'style' => 'width: 80%;', 'type' => 'text']); ?>
-            </div>
+            </div> -->
 
             <div class="form-row">
                 <div class="col">
@@ -208,18 +215,7 @@
 <script>
     $.fn.select2.defaults.set("theme", "bootstrap");
 
-    var selData = 0;
-
-    $('#freguesia_1').select2({
-        ajax: {
-            url: function(params) {
-                return '/Pessoas/FregAutoComplete/' + selData;
-            },
-            dataType: 'json',
-            delay: 250,
-        }
-    });
-
+    //Cc validation
     $('#cc').change(function() {
         if ($('#cc').val().length < 9) {
             $("#ccError").html("O cartão de cidadão tem que ter 9 dígitos.").addClass("error-msg");
@@ -228,6 +224,7 @@
         }
     });
 
+    //Nif validations
     $('#nif').change(function() {
 
         if (validateNIF($('#nif').val())) {
@@ -252,51 +249,25 @@
     }
 
     function submitBday() {
-
-        var Bdate = document.getElementById('dataNasc').value;
-        var Bday = +new Date(Bdate);
-        var idade = ~~((Date.now() - Bday) / (31557600000));
-        var theBday = document.getElementById('idade');
-        theBday.setAttribute('value', idade);
+        var today = new Date();
+        var birthDate = new Date($("#dataNasc").val());
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        $("#idade").val(age);
     }
 
     $('document').ready(function() {
 
-        $("#distrito_1").change(function(event) {
-            var data = $(this).val();
-            $.ajax({
-                //method: 'ajax',
-                url: '/Pessoas/concelhosByDistritos',
-                dataType: 'json',
-                data: {
-                    keyword: data,
-                },
-                success: function(response) {
-                    $('#concelho_1').html("");
-                    //response = JSON.parse(response);
-                    //console.log(response);
-                    $('#concelho_1').append($("<option>").attr('value', "1").text(" "));
-                    response.forEach(element => $('#concelho_1').append($("<option>").attr(
-                        'value', element.id).text(element.Designacao)));
-                }
-            });
-        })
-
-        $("#concelho_1").change(function(event) {
-            var data = $(this).val();
-            selData = data;
-        })
-
-        $(function() {
-            var Bdate = document.getElementById('dataNasc').value;
-            var Bday = +new Date(Bdate);
-            var idade = ~~((Date.now() - Bday) / (31557600000));
-            var theBday = document.getElementById('idade');
-            theBday.setAttribute('value', idade);
-        });
-
-
         $('#codigo_postal1').keyup(function() {
+
+            var searchkey = $('#codigo_postal').val();
+            var searchkey1 = $('#codigo_postal1').val();
+            searchTags(searchkey, searchkey1);
+        });
+        $('#codigo_postal').keyup(function() {
 
             var searchkey = $('#codigo_postal').val();
             var searchkey1 = $('#codigo_postal1').val();
@@ -312,17 +283,16 @@
                 data: {
                     keyword: data,
                     keyword1: data1,
-
                 },
-
                 success: function(response) {
                     $('#distrito').html(response);
                 }
             });
         };
-
         $('#codigo_postal1').trigger("keyup");
+        $('#dataNasc').trigger("onchange");
 
+        //phone number validation
         $('#telefone1').keypress(function(e) {
             var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
             e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
