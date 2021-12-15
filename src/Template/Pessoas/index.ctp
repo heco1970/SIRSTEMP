@@ -20,11 +20,11 @@ $pessoaNome = "";
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('ID Pessoa'), 'type' => 'number'],
+        'id' => ['label' => __('ID Pessoa')],
         'nome' => ['label' => __('Nome')],
         'cc' => ['label' => __('CC/BI')],
         'nif' => ['label' => __('NIF')],
-        'datanascimento' => ['label' => __('Data de nascimento'), 'type' => 'text'],
+        'datanascimento' => ['label' => __('Data de nascimento')],
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
@@ -38,7 +38,6 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Listagem de Pessoas') ?></h6>
     </div>
     <div class="card-body">
         <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
@@ -55,12 +54,8 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
 
 <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
 <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
-<?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js', ['block' => true]); ?>
-<?= $this->Html->script('https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', ['block' => true]); ?>
-<!-- <?= $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', ['block' => true]); ?>
-<?= $this->Html->css('https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css', ['block' => true]); ?>
-<?= $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['block' => true]); ?>
-<?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/pt.min.js', ['block' => true]); ?> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 <?php $this->start('scriptBottom') ?>
 <script>

@@ -20,8 +20,8 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="ultimaalteracao">Tribunal</label>
-                        <?php echo $this->Form->control('ultimaalteracao', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
+                        <label for="ultimaalteracao">Ultima Alteração</label>
+                        <?php echo $this->Form->control('ultimaalteracao', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
             </div>
@@ -29,13 +29,13 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="entidadejudiciai_id">Comarca Judicial</label>
-                        <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
+                        <?php echo $this->Form->control('unit_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $units, 'required']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="unit_id">Entidade Solicitante</label>
-                        <?php echo $this->Form->control('unit_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $units, 'required']); ?>
+                        <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'empty' => ['' => ''], 'options' => $entidades, 'required']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
