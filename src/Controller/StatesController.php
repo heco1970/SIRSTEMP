@@ -118,8 +118,8 @@ class StatesController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
+    {        
+        //$this->request->allowMethod(['post', 'delete']);
         $state = $this->States->get($id);
         if ($this->States->delete($state)) {
             $this->Flash->success(__('O registo foi apagado.'));
@@ -127,6 +127,6 @@ class StatesController extends AppController
             $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index']);        
     }
 }

@@ -11,14 +11,17 @@
 
 <?php
 $dynElems =
-    [
-        'descricao' => ['label' => __('Descrição')],
-    ];
+[
+    'descricao' => ['label' => __('Designação')],
+    'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
+    'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
+];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['descricao' => ['label' => __('Descrição')]] +
-            ['created' => ['label' => __('Data de Criação')]];
+$dynElems = ['descricao' => ['label' => __('Designação')]] +
+            ['created' => ['label' => __('Data de Criação')]] +
+            ['modified' => ['label' => __('Data de Modificação')]];
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -39,11 +42,11 @@ $dynElems = ['descricao' => ['label' => __('Descrição')]] +
     $(document).ready(function() {
         var writers = {
             ação: function(row) {
-                //var view = '<a class="btn btn-info mr-1" href="/tipocrimes/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
-                var edit = '<a  class="btn btn-warning mr-1" href="/tipocrimes/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
-                var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Tem a certeza que quer apagar?'"+')" href="/tipocrimes/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
+                var view = '<a class="btn btn-info mr-1" href="/tipocrimes/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('View')?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a class="btn btn-warning mr-1" href="/tipocrimes/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?=__('Edit')?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm('+"'Deseja mesmo apagar?'"+')" href="/tipocrimes/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?=__('Delete')?>"><i class="fa fa-trash fa-fw"></i></a>'
 
-                return '<div class="btn-group btn-group-sm" role="group">' + edit + dele +'</div>';
+                return '<div class="btn-group btn-group-sm" role="group">'+ view + edit + dele + '</div>';
             }
         }
         createDynatable("#dynatable","/tipocrimes/",{created: -1}, writers);
