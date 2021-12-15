@@ -12,6 +12,7 @@ foreach ($records as $record) {
     'origem' => $record->origem,
     //'Pedidostypes' => $record->Pedidostypes->descricao,
     'equiparesponsavel' => $record->team->nome,
+    'pedidostype' => $record->pedidostype->descricao,
     'state' => $record->state->designacao,
     'termino' => $record->termino->i18nFormat('dd/MM/yyyy'),
     'numeropedido' => $record->numeropedido,
@@ -36,4 +37,3 @@ echo json_encode([
   'queryRecordCount' => $queryRecordsCount,
   'totalRecordCount' => $totalRecordsCount
 ]);
-
