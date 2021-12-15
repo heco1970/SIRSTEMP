@@ -12,6 +12,18 @@
                         <td><?= h($tipocrime->descricao) ?></td>
                     </div>
                 </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Criado') ?></h6>
+                        <p><?= h($tipocrime->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Modificado') ?></h6>
+                        <p><?= h($tipocrime->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+                    </div>
+                </div>
                 <a href="/tipocrimes/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
                 <?php $this->end(); ?>
             </div>

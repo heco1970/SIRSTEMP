@@ -12,6 +12,18 @@
                         <td><?= h($unit->designacao) ?></td>
                     </div>
                 </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Criado') ?></h6>
+                        <p><?= h($unit->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Modificado') ?></h6>
+                        <p><?= h($unit->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+                    </div>
+                </div>
                 <a href="/units/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
                 <?php $this->end(); ?>
             </div>
