@@ -67,17 +67,15 @@ class PedidosController extends AppController
                 'keyField' => 'id',
                 'valueField' => 'designacao'
             ))->toArray();
-            $this->set(compact('estados'));
             $teams = $this->Pedidos->teams->find('list', array(
                 'keyField' => 'id',
                 'valueField' => 'nome'
             ))->toArray();
-            $this->set(compact('teams'));
             $PedidosTypes = $this->Pedidos->PedidosTypes->find('list', array(
                 'keyField' => 'id',
                 'valueField' => 'descricao'
             ))->toArray();
-            $this->set(compact('PedidosTypes'));
+            $this->set(compact('PedidosTypes', 'teams', 'estados'));
         }
     }
 
@@ -321,7 +319,6 @@ class PedidosController extends AppController
 
         $this->set(compact('codigosPostais', 'entradas', 'pedido', 'processos', 'errors', 'errors1', 'pessoas', 'pedidostypes', 'pedidosmotives', 'pais', 'teams', 'states', 'concelhos'));
     }
-
 
     /**
      * Delete method
