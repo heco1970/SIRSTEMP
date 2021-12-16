@@ -5,7 +5,13 @@
 <div class="card shadow mb-2">
     <div class="card-header py-3">
         <a class="btn btn-success btn-circle btn-lg" href="/formularios/add"><i class="fas fa-plus"></i></a>
-        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right"><i class="fas fa-filter"></i></button>
+        <?= $this->Html->link(
+            '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
+            ['action' => 'xls'],
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+        )
+        ?>
+        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
     </div>
 </div>
 
@@ -35,10 +41,38 @@ $dynElems =
 <?= $this->Html->css('https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css', ['block' => true]); ?>
 <?= $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['block' => true]); ?>
 <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/pt.min.js', ['block' => true]); ?>
-
 <script>
-    $(document).ready(function() {
+    var e = jQuery.Event("keypress");
+    e.which = 13; // Enter
 
+    $('#xlsbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("pedido").value,
+            document.getElementById("equipa").value,
+            document.getElementById("nome_prestador_trabalho").value,
+            document.getElementById("designacao_entidade").value,
+            "1"
+        );
+    });
+
+    $('#dynatable-filter').click(function() {
+        $('#dynatable-filter').trigger(e);
+        emptyCookie();
+    });
+
+    function emptyCookie() {
+        createCookie(
+            "Filtro",
+            document.getElementById("pedido").value = '',
+            document.getElementById("equipa").value = '',
+            document.getElementById("nome_prestador_trabalho").value = '',
+            document.getElementById("designacao_entidade").value = '',
+            "1"
+        );
+    }
+
+    $(document).ready(function() {
         $('#pedido').select2({
             theme: "bootstrap4",
             ajax: {
@@ -82,5 +116,50 @@ $dynElems =
         createDynatable("#dynatable", "/formularios/", {
             created: -1
         }, writers);
+
+        document.getElementById("createdfirst").onchange = function() {
+            if (document.getElementById('createdfirst').value != "") {
+                datefirst = new Date(document.getElementById('createdfirst').value);
+                datefirst.setDate(datefirst.getDate() + 1)
+                document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
+            } else {
+                document.getElementById('createdlast').min = null;
+            }
+        };
+
+        document.getElementById("createdlast").onchange = function() {
+            if (document.getElementById('createdlast').value != "") {
+                datelast = new Date(document.getElementById('createdlast').value);
+                datelast.setDate(datelast.getDate() - 1)
+                document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
+            } else {
+                document.getElementById('createdfirst').max = null;
+            }
+        };
+
+        deleteCookie("Filtro");
+        createCookie("Filtro", "", "", "", "", "1");
     });
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+    }
+
+    function createCookie(name, valuePedido, valueEquipa, valueNomePrestador,valueEntidade, days) {
+        var expires;
+
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        } else {
+            expires = "";
+        }
+
+        document.cookie = escape(name) + "=" +
+            valuePedido + "," + valueEquipa + "," + valueNomePrestador + "," + valueEntidade +
+            expires + "; path=/";
+    }
+
 </script>
+<?php $this->end(); ?>
