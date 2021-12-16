@@ -9,12 +9,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="nome_pessoa">Nome da pessoa</label>
-                        <?= $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pedido->pessoa->nome), 'required']); ?>
-                        <?php
-                        if (!empty($errors)) {
-                            echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa que tinha selecionado não existe.</div>";
-                        }
-                        ?>
+                        <?php echo $this->Form->control('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'empty' => ' ',  'label' => false, 'options' => $pessoas, 'required']); ?>
                     </div>
                 </div>
             </div>
@@ -64,13 +59,16 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="designacao">Designação</label>
-                        <?= $this->Form->control('designacao', ['id' => 'processo_id', 'class' => 'form-control', 'empty' => ' ', 'options' => '', 'label' => false, 'required']); ?>
+                        <?php
+                            $listaDesignacao = array('1' => 'teste', '2' => 'outros');
+                            echo $this->Form->control('designacao', ['id' => 'designacao', 'class' => 'form-control', 'empty' => ' ', 'options' => $listaDesignacao, 'label' => false, 'required']); 
+                        ?>
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label for="descricao">Descrição</label>
-                        <?= $this->Form->control('descricao', ['id' => 'processo_id', 'class' => 'form-control', 'label' => false, 'required']); ?>
+                        <?= $this->Form->control('descricao', ['id' => 'descricao', 'class' => 'form-control', 'label' => false, 'required']); ?>
                     </div>
                 </div>
                 <div class="col-sm-3">

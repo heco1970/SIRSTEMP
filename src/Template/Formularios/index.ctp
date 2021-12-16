@@ -50,8 +50,8 @@ $dynElems =
             "Filtro",
             document.getElementById("pedido").value,
             document.getElementById("equipa").value,
-            document.getElementById("nome_prestador_trabalho").value,
-            document.getElementById("designacao_entidade").value,
+            document.getElementById("nome-prestador-trabalho").value,
+            document.getElementById("designacao-entidade").value,
             "1"
         );
     });
@@ -116,26 +116,6 @@ $dynElems =
         createDynatable("#dynatable", "/formularios/", {
             created: -1
         }, writers);
-
-        document.getElementById("createdfirst").onchange = function() {
-            if (document.getElementById('createdfirst').value != "") {
-                datefirst = new Date(document.getElementById('createdfirst').value);
-                datefirst.setDate(datefirst.getDate() + 1)
-                document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
-            } else {
-                document.getElementById('createdlast').min = null;
-            }
-        };
-
-        document.getElementById("createdlast").onchange = function() {
-            if (document.getElementById('createdlast').value != "") {
-                datelast = new Date(document.getElementById('createdlast').value);
-                datelast.setDate(datelast.getDate() - 1)
-                document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
-            } else {
-                document.getElementById('createdfirst').max = null;
-            }
-        };
 
         deleteCookie("Filtro");
         createCookie("Filtro", "", "", "", "", "1");

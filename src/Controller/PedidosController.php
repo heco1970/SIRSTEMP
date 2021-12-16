@@ -113,17 +113,9 @@ class PedidosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
 
-            $pessoa_nome = $this->request->getData('pessoa_id');
             $processo_nome = $this->request->getData('processo_id');
 
-            $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome])->first();
-            if (empty($pessoa_id)) {
-                $errors = 1;
-            }
-
-            $pedido->pessoa_id = $pessoa_id['id'];
-
-            /*$processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id')->first();
+             /*$processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id')->first();
             if (empty($processo_id)) {
                 $errors1 = 1;
             } 
@@ -258,18 +250,7 @@ class PedidosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->getData());
 
-            $pessoa_nome = $this->request->getData('pessoa_id');
             $processo_nome = $this->request->getData('processo_id');
-
-            $pessoa_id = $this->Pedidos->Pessoas->find()->select(['id'])->where(['nome' => $pessoa_nome]);
-            if ($pessoa_id->isEmpty()) {
-                $errors = 1;
-            }
-
-            $pedido->pessoa_id = $pessoa_id;
-
-            $this->log($pedido);
-
             /*$processo_id = $this->Pedidos->Processos->find()->where(['processo_id' => $processo_nome])->select('id');
             if ($processo_id->isEmpty()) {
                 $errors1 = 1;

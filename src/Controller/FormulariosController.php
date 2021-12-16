@@ -162,7 +162,7 @@ class FormulariosController extends AppController
         $this->log($out);
 
         if (!empty($out)) {
-            $pedido = 'Pedidos.id LIKE "%' . $out[0] . '%"';
+            $pedido = 'Pedidos.id LIKE "' . $out[0] . '"';
             $equipa = 'Teams.id LIKE "%' . $out[1] . '%"';
             $nome_prestador_trabalho = 'nome_prestador_trabalho LIKE "%' . $out[2] . '%"';
             $designacao_entidade = 'designacao_entidade LIKE "%' . $out[3] . '%"';
@@ -216,7 +216,7 @@ class FormulariosController extends AppController
         $writer->save($path);
 
         $this->response->withType("application/vnd.ms-excel");
-        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pedidos.xlsx'));
+        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Formularios.xlsx'));
     }
 
     public function idPedidoAutoComplete()

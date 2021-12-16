@@ -27,16 +27,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="pessoa_id">Nome da pessoa</label>
-                            <?php
-                            if ($pessoa != null) {
-                                echo $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'value' => h($pessoa->nome), 'readonly']);
-                            } else {
-                                echo $this->Form->text('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'label' => false, 'required']);
-                            }
-                            if (!empty($errors)) {
-                                echo "<div class='error-message' style='color:red; font-weight: bold;'> Pessoa inexistente.</div>";
-                            }
-                            ?>
+                            <?php echo $this->Form->control('pessoa_id', ['id' => 'pessoa_id', 'class' => 'form-control', 'empty' => ' ',  'label' => false, 'options' => $pessoas, 'required']); ?>
                         </div>
                     </div>
                 </div>
