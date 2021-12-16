@@ -33,8 +33,9 @@ class FormulariosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['pedido', 'equipa', 'nome_prestador_trabalho', 'designacao_entidade'];
+            $validOps = ['id', 'pedido', 'equipa', 'nome_prestador_trabalho', 'designacao_entidade'];
             $convArray = [
+                'id' => $model . '.id',
                 'pedido' => $model . '.id_pedido',
                 'equipa' => $model . '.id_equipa',
                 'nome_prestador_trabalho' => $model . '.nome_prestador_trabalho',
