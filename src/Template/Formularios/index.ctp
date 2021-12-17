@@ -1,6 +1,6 @@
 <?= $this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]); ?>
 
-<h1 class="h3 mb-2 text-gray-800"><?= __('Registo de PTFC') ?></h1>
+<h1 class="h3 mb-2 text-gray-800"><?= __('Registo Seguro Penal') ?></h1>
 
 <div class="card shadow mb-2">
     <div class="card-header py-3">
@@ -27,7 +27,7 @@ $dynElems =
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Listagem de PTFC') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Listagem Seguro Penal') ?></h6>
     </div>
     <div class="card-body">
         <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>

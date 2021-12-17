@@ -1,6 +1,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de PTFC') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo Seguro Penal') ?></h6>
     </div>
     <?= $this->Form->create($formulario) ?>
     <div class='ml-4 mt-4 mr-4'>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="id_equipa">Equipa/CE</label>
+                        <label for="id_equipa">Equipa</label>
                         <?php echo $this->Form->control('id_equipa', ['label' => false, 'type' => 'select', 'multiple' => false, 'options' => $teams, 'class' => 'form-control']); ?>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
             <div class="form-row">
                 <div class="col-sm-10">
                     <div class="form-group">
-                        <label for="nome_prestador_trabalho">Nome do Prestador de Trabalho/Tarefa</label>
+                        <label for="nome_prestador_trabalho">Nome do Prestador de Trabalho</label>
                         <?php echo $this->Form->control('nome_prestador_trabalho', ['label' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
             <div class="form-row">
                 <div class="col-sm-5">
                     <div class="form-group">
-                        <label for="data_fim_execucao">Data do fim execução pena/media(d/m/a)</label>
+                        <label for="data_fim_execucao">Data do fim execução pena/medida(d/m/a)</label>
                         <?php echo $this->Form->text('data_fim_execucao', ['id' => 'dataFim', 'label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
