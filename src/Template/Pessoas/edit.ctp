@@ -15,7 +15,7 @@
         -webkit-appearance: none;
     }
 
-    .hide{
+    .hide {
         display: none;
     }
 </style>
@@ -81,7 +81,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="pais_id">Nacionalidade</label>
-                        <?php echo $this->Form->control('pai_id', ['id' => 'pais_id','label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('pai_id', ['id' => 'pais_id', 'label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
@@ -96,10 +96,10 @@
                     <div class="form-group">
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
-                            <div class="col-3">
+                            <div class="col">
                                 <?php echo $this->Form->number('codigo_postal', ['id' => 'codigo_postal', 'value' => h($pessoa->codigos_postai->NumCodigoPostal), 'max' => 9999, 'min' => 0000, 'label' => false, 'class' => 'form-control', 'required']); ?>
                             </div>
-                            <div class="col-2">
+                            <div class="col">
                                 <?php echo $this->Form->number('codigo_postal1', ['id' => 'codigo_postal1', 'value' => h($pessoa->codigos_postai->ExtCodigoPostal), 'max' => 999, 'min' => 000, 'label' => false, 'class' => 'form-control', 'required']); ?>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
             <div class="form-row" id="distrito">
                 <div class="col" id="id_dis">
                     <div class="form-group">
-                        <label for="distrito">Distrito</label>
+                        <label for="distritos">Distrito</label>
                         <select class='form-control' id="distritos" disabled>
                             <option></option>
                         </select>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="col" id="id_con">
                     <div class="form-group">
-                        <label for="concelho">Concelho</label>
+                        <label for="concelhos">Concelho</label>
                         <select class='form-control' id="concelhos" disabled>
                             <option></option>
                         </select>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="col" id="id_freg">
                     <div class="form-group">
-                        <label for="freguesia">Freguesia</label>
+                        <label for="freguesias">Freguesia</label>
                         <select class='form-control' id="freguesias" disabled>
                             <option><?= h($pessoa->codigos_postai->NomeLocalidade) ?></option>
                         </select>
@@ -266,29 +266,20 @@
                 $('#codigo_postal').removeAttr('disabled');
                 $('#codigo_postal1').removeAttr('disabled');
 
-                $('#distritos').removeAttr('disabled');
-                $('#concelhos').removeAttr('disabled');
-                $('#freguesias').removeAttr('disabled');
-
-                $('#id_cod').removeClass('hide');
                 $('#distrito').removeClass('hide');
+                $('#id_cod').removeClass('hide');
             } else {
                 $('#codigo_postal').attr('disabled', true);
-                $('#codigo_postal').val("");
                 $('#codigo_postal1').attr('disabled', true);
+                $('#codigo_postal').val("");
                 $('#codigo_postal1').val("");
 
-                $('#distritos').attr('disabled', true);
                 $('#distritos').val("");
-
-                $('#concelhos').attr('disabled', true);
                 $('#concelhos').val("");
-
-                $('#freguesias').attr('disabled', true);
                 $('#freguesias').val("");
 
-                $('#id_cod').addClass('hide');
                 $('#distrito').addClass('hide');
+                $('#id_cod').addClass('hide');
             }
         });
 

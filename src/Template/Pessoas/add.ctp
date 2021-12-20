@@ -15,7 +15,7 @@
         -webkit-appearance: none;
     }
 
-    .hide{
+    .hide {
         display: none;
     }
 </style>
@@ -112,19 +112,19 @@
             <div class="form-row" id="distrito">
                 <div class="col">
                     <div class="form-group">
-                        <label for="distrito">Distrito</label>
+                        <label for="distritos">Distrito</label>
                         <select class='form-control' id="distritos" disabled></select>
                     </div>
                 </div>
-                <div class="col" id="id_con">
+                <div class="col">
                     <div class="form-group">
-                        <label for="concelho">Concelho</label>
+                        <label for="concelhos">Concelho</label>
                         <select class='form-control' id="concelhos" disabled></select>
                     </div>
                 </div>
-                <div class="col" id="id_freg">
+                <div class="col">
                     <div class="form-group">
-                        <label for="freguesia">Freguesia</label>
+                        <label for="freguesias">Freguesia</label>
                         <select class='form-control' id="freguesias" disabled></select>
                     </div>
                 </div>
@@ -265,34 +265,20 @@
                 $('#codigo_postal').removeAttr('disabled');
                 $('#codigo_postal1').removeAttr('disabled');
 
-                $('#distritos').removeAttr('disabled');
-                $('#concelhos').removeAttr('disabled');
-                $('#freguesias').removeAttr('disabled');
-
-                $('#id_cod').addClass('hide');
-                $('#distrito').addClass('hide');
-                $('#id_con').addClass('hide');
-                $('#id_freg').addClass('hide');
+                $('#distrito').removeClass('hide');
+                $('#id_cod').removeClass('hide');
             } else {
                 $('#codigo_postal').attr('disabled', true);
-                $('#codigo_postal').val("");
                 $('#codigo_postal1').attr('disabled', true);
+                $('#codigo_postal').val("");
                 $('#codigo_postal1').val("");
 
-                $('#distritos').attr('disabled', true);
                 $('#distritos').val("");
-
-                $('#concelhos').attr('disabled', true);
                 $('#concelhos').val("");
-
-                $('#freguesias').attr('disabled', true);
                 $('#freguesias').val("");
 
-
-                $('#id_cod').addClass('hide');
                 $('#distrito').addClass('hide');
-                $('#id_con').addClass('hide');
-                $('#id_freg').addClass('hide');
+                $('#id_cod').addClass('hide');
             }
         });
 
