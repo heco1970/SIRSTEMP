@@ -14,6 +14,10 @@
         /* for Chrome */
         -webkit-appearance: none;
     }
+
+    .hide{
+        display: none;
+    }
 </style>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -162,13 +166,13 @@
                             <?php echo $this->Form->control('pais_id', ['id' => 'pais_id', 'label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="id_con">
                         <div class="form-group">
                             <label for="concelho_id">Concelho</label>
                             <?php echo $this->Form->control('concelho_id', ['id' => 'concelho', 'empty' => ' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="id_freg">
                         <div class="form-group">
                             <label for="codigos_postai_id">Freguesia</label>
                             <?php echo $this->Form->control('codigos_postai_id', ['id' => 'freguesia', 'label' => false, 'empty' => ' ', 'type' => 'select', 'multiple' => false, 'class' => 'form-control', 'required']); ?>
@@ -318,6 +322,24 @@
                 $('#descricao').attr('disabled', true);
                 $('#descricao').attr("required", true);
                 $('#descricao').val("");
+            }
+        });
+
+        $('#pais_id').change(function() {
+            if ($('#pais_id').val() == 193) {
+                $('#concelho').removeAttr('disabled');
+                $('#freguesia').removeAttr('disabled');
+                $('#id_con').removeClass('hide');
+                $('#id_freg').removeClass('hide');
+            } else {
+                $('#concelho').attr('disabled', true);
+                $('#concelho').val("");
+
+                $('#freguesia').attr('disabled', true);
+                $('#freguesia').val("");
+
+                $('#id_con').addClass('hide');
+                $('#id_freg').addClass('hide');
             }
         });
 

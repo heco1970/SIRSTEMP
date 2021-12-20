@@ -14,6 +14,10 @@
         /* for Chrome */
         -webkit-appearance: none;
     }
+
+    .hide{
+        display: none;
+    }
 </style>
 <?php echo $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'); ?>
 <div class="card shadow mb-4">
@@ -79,7 +83,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="pai_id">Nacionalidade</label>
-                        <?php echo $this->Form->control('pai_id', ['label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('pai_id', ['id' => 'pais_id', 'label' => false, 'type' => 'select', 'multiple' => false, 'default' => 193, 'options' => $pais, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
@@ -90,7 +94,7 @@
                         <?php echo $this->Form->control('morada', ['label' => false, 'class' => 'form-control', 'maxLength' => 80]); ?>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col" id="id_cod">
                     <div class="form-group">
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
@@ -112,13 +116,13 @@
                         <select class='form-control' id="distritos" disabled></select>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col" id="id_con">
                     <div class="form-group">
                         <label for="concelho">Concelho</label>
                         <select class='form-control' id="concelhos" disabled></select>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col" id="id_freg">
                     <div class="form-group">
                         <label for="freguesia">Freguesia</label>
                         <select class='form-control' id="freguesias" disabled></select>
@@ -255,6 +259,42 @@
     }
 
     $('document').ready(function() {
+
+        $('#pais_id').change(function() {
+            if ($('#pais_id').val() == 193) {
+                $('#codigo_postal').removeAttr('disabled');
+                $('#codigo_postal1').removeAttr('disabled');
+
+                $('#distritos').removeAttr('disabled');
+                $('#concelhos').removeAttr('disabled');
+                $('#freguesias').removeAttr('disabled');
+
+                $('#id_cod').addClass('hide');
+                $('#distrito').addClass('hide');
+                $('#id_con').addClass('hide');
+                $('#id_freg').addClass('hide');
+            } else {
+                $('#codigo_postal').attr('disabled', true);
+                $('#codigo_postal').val("");
+                $('#codigo_postal1').attr('disabled', true);
+                $('#codigo_postal1').val("");
+
+                $('#distritos').attr('disabled', true);
+                $('#distritos').val("");
+
+                $('#concelhos').attr('disabled', true);
+                $('#concelhos').val("");
+
+                $('#freguesias').attr('disabled', true);
+                $('#freguesias').val("");
+
+
+                $('#id_cod').addClass('hide');
+                $('#distrito').addClass('hide');
+                $('#id_con').addClass('hide');
+                $('#id_freg').addClass('hide');
+            }
+        });
 
         $('#codigo_postal1').keyup(function() {
 
