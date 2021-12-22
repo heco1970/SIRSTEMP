@@ -154,7 +154,7 @@ $active = $show = '';
         });
 
         $(".close-menu").click(function() {
-            if (localStorage.getItem("coll_collapseAdminMenu2") || localStorage.getItem("coll_collapseAdminMenu") || localStorage.getItem("coll_collapseFormularios")) localStorage.clear();
+            if (localStorage.getItem("coll_collapseAdminMenu2") || localStorage.getItem("coll_collapseAdminMenu") || localStorage.getItem("coll_collapseAplicacoes") || localStorage.getItem("coll_collapseSeguros") ) localStorage.clear();
         });
     });
 </script>
