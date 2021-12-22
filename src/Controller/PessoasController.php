@@ -105,10 +105,15 @@ class PessoasController extends AppController
 
         $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos', 'Teams', 'States']);
         $crimes = $this->Crimes->find()->where(['pessoa_id' => $id])->contain(['Tipocrimes', 'Processos']);
-
-        $distrito = $this->Pessoas->CodigosPostais->find()->where(['CodigosPostais.id' => $pessoa->codigos_postai->id])->contain(['Distritos'])->first();
-        $concelho = $this->Concelhos->find()->where(['Concelhos.CodigoConcelho' => $pessoa->codigos_postai->CodigoConcelho, 'Concelhos.CodigoDistrito' => $pessoa->codigos_postai->CodigoDistrito])->first();
-
+        $this->log($pessoa);
+        if(!empty($pessoa->codigos_postai_id)){
+            $distrito = $this->Pessoas->CodigosPostais->find()->where(['CodigosPostais.id' => $pessoa->codigos_postai->id])->contain(['Distritos'])->first();
+            $concelho = $this->Concelhos->find()->where(['Concelhos.CodigoConcelho' => $pessoa->codigos_postai->CodigoConcelho, 'Concelhos.CodigoDistrito' => $pessoa->codigos_postai->CodigoDistrito])->first();
+        }else{
+            $distrito = '';
+            $concelho = '';
+        }
+        $this->log($pessoa);
         $this->set('pessoa', $pessoa);
         $this->set(compact('contactos', 'crimes', 'processos', 'pedidos', 'distrito', 'concelho'));
     }
@@ -269,10 +274,7 @@ class PessoasController extends AppController
                 $pessoa->codigos_postai_id = $codigoid->id;
             }
 
-            if (!empty($pessoa->codigos_postai_id)) {
-                $pessoa->codigos_postai_id = ' ';
-            }
-
+            $this->log($pessoa);
             if ($this->Pessoas->save($pessoa)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
@@ -380,10 +382,7 @@ class PessoasController extends AppController
                 $pessoa->codigos_postai_id = $codigoid->id;
             }
 
-            if (!empty($pessoa->codigos_postai_id)) {
-                $pessoa->codigos_postai_id = '';
-            }
-
+            $this->log($pessoa);
             if ($this->Pessoas->save($pessoa)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
