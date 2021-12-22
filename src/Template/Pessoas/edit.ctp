@@ -97,10 +97,10 @@
                         <label for="codigo_postal">Código Postal</label>
                         <div class="form-row">
                             <div class="col">
-                                <?php echo $this->Form->number('codigo_postal', ['id' => 'codigo_postal', 'value' => h($pessoa->codigos_postai->NumCodigoPostal), 'max' => 9999, 'min' => 0000, 'label' => false, 'class' => 'form-control', 'required']); ?>
+                                <?php echo $this->Form->number('codigo_postal', ['id' => 'codigo_postal', 'value' => h($pessoa->codigos_postai->NumCodigoPostal), 'max' => 9999, 'min' => 0000, 'label' => false, 'class' => 'form-control']); ?>
                             </div>
                             <div class="col">
-                                <?php echo $this->Form->number('codigo_postal1', ['id' => 'codigo_postal1', 'value' => h($pessoa->codigos_postai->ExtCodigoPostal), 'max' => 999, 'min' => 000, 'label' => false, 'class' => 'form-control', 'required']); ?>
+                                <?php echo $this->Form->number('codigo_postal1', ['id' => 'codigo_postal1', 'value' => h($pessoa->codigos_postai->ExtCodigoPostal), 'max' => 999, 'min' => 000, 'label' => false, 'class' => 'form-control']); ?>
                             </div>
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                     <div class="form-group">
                         <label for="freguesias">Freguesia</label>
                         <select class='form-control' id="freguesias" disabled>
-                            <option><?= h($pessoa->codigos_postai->NomeLocalidade) ?></option>
+                            <option></option>
                         </select>
                     </div>
                 </div>
@@ -262,25 +262,11 @@
     $('document').ready(function() {
 
         $('#pais_id').change(function() {
-            if ($('#pais_id').val() == 193) {
-                $('#codigo_postal').removeAttr('disabled');
-                $('#codigo_postal1').removeAttr('disabled');
+            hideShow();
+        });
 
-                $('#distrito').removeClass('hide');
-                $('#id_cod').removeClass('hide');
-            } else {
-                $('#codigo_postal').attr('disabled', true);
-                $('#codigo_postal1').attr('disabled', true);
-                $('#codigo_postal').val("");
-                $('#codigo_postal1').val("");
-
-                $('#distritos').val("");
-                $('#concelhos').val("");
-                $('#freguesias').val("");
-
-                $('#distrito').addClass('hide');
-                $('#id_cod').addClass('hide');
-            }
+        $('#pais_id').ready(function() {
+            hideShow();
         });
 
         $('#codigo_postal1').keyup(function() {
@@ -329,6 +315,33 @@
             var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
             e.target.value = '+351' + ' ' + x[2] + ' ' + x[3] + ' ' + x[4];
         });
+
+        function hideShow() {
+            if ($('#pais_id').val() == 193) {
+                $('#codigo_postal').removeAttr('disabled');
+                $('#codigo_postal1').removeAttr('disabled');
+                $('#codigo_postal').attr('required', true);
+                $('#codigo_postal1').attr('required', true);
+
+                $('#distrito').removeClass('hide');
+                $('#id_cod').removeClass('hide');
+            } else {
+                $('#codigo_postal').removeAttr('required', true);
+                $('#codigo_postal1').removeAttr('required', true);
+
+                $('#codigo_postal').attr('disabled', true);
+                $('#codigo_postal1').attr('disabled', true);
+                $('#codigo_postal').val("");
+                $('#codigo_postal1').val("");
+
+                $('#distritos').val("");
+                $('#concelhos').val("");
+                $('#freguesias').val("");
+
+                $('#distrito').addClass('hide');
+                $('#id_cod').addClass('hide');
+            }
+        }
 
     });
 </script>

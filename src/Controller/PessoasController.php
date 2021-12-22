@@ -270,16 +270,15 @@ class PessoasController extends AppController
             }
 
             if (!empty($pessoa->codigos_postai_id)) {
-                if ($this->Pessoas->save($pessoa)) {
-                    $this->Flash->success(__('O registo foi gravado.'));
-
-                    return $this->redirect(['action' => 'index']);
-                }
-                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
-            } else {
-                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
-                $this->Flash->error(__('O código postal inserido não está correto.'));
+                $pessoa->codigos_postai_id = ' ';
             }
+
+            if ($this->Pessoas->save($pessoa)) {
+                $this->Flash->success(__('O registo foi gravado.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
         $data = [];
@@ -382,16 +381,15 @@ class PessoasController extends AppController
             }
 
             if (!empty($pessoa->codigos_postai_id)) {
-                if ($this->Pessoas->save($pessoa)) {
-                    $this->Flash->success(__('O registo foi gravado.'));
-
-                    return $this->redirect(['action' => 'index']);
-                }
-                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
-            } else {
-                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
-                $this->Flash->error(__('O código postal inserido não está correto.'));
+                $pessoa->codigos_postai_id = '';
             }
+
+            if ($this->Pessoas->save($pessoa)) {
+                $this->Flash->success(__('O registo foi gravado.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
         $this->set('distritos', $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));

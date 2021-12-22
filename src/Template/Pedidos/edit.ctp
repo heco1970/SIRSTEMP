@@ -153,13 +153,13 @@
                 <div class="col-sm-3" id="id_con">
                     <div class="form-group">
                         <label for="concelho_id">Concelho</label>
-                        <?php echo $this->Form->text('concelho_id', ['id' => 'concelho', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->text('concelho_id', ['id' => 'concelho', 'empty' => ' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $concelhos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col-sm-3" id="id_freg">
                     <div class="form-group">
                         <label for="codigos_postai_id">Freguesia</label>
-                        <?php echo $this->Form->control('codigos_postai_id', ['id' => 'freguesia', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control', 'required']); ?>
+                        <?php echo $this->Form->control('codigos_postai_id', ['id' => 'freguesia', 'empty' => ' ', 'label' => false, 'type' => 'select', 'multiple' => false, 'class' => 'form-control', 'required']); ?>
                     </div>
                 </div>
             </div>
@@ -296,6 +296,21 @@
         });
 
         $('#pais_id').change(function() {
+            hideShow();
+        });
+
+        $('#pais_id').ready(function() {
+            hideShow();
+        });
+
+        $('#team_id').click(function() {
+            var searchkey = $('#team_id').val();
+            searchTags(searchkey);
+        });
+
+        $('#team_id').trigger("click");
+
+        function hideShow(){
             if ($('#pais_id').val() == 193) {
                 $('#concelho').removeAttr('disabled');
                 $('#freguesia').removeAttr('disabled');
@@ -311,14 +326,7 @@
                 $('#id_con').addClass('hide');
                 $('#id_freg').addClass('hide');
             }
-        });
-
-        $('#team_id').click(function() {
-            var searchkey = $('#team_id').val();
-            searchTags(searchkey);
-        });
-
-        $('#team_id').trigger("click");
+        }
 
         function searchTags(keyword) {
             var data = keyword;
@@ -337,14 +345,5 @@
             });
         };
     });
-
-    $('#pais_id').change(function() {
-        if ($('#pais_id').val() != 193) {
-            $('#concelho_id').hide("slow");
-        } else {
-            $('#concelho_id').show("slow");
-        }
-    });
-    $('#pais_id').trigger("change");
 </script>
 <?php $this->end(); ?>
