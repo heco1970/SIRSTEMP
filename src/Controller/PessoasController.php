@@ -105,15 +105,10 @@ class PessoasController extends AppController
 
         $pedidos = $this->Pedidos->find()->where(['pessoa_id' => $id])->contain(['Processos', 'Teams', 'States']);
         $crimes = $this->Crimes->find()->where(['pessoa_id' => $id])->contain(['Tipocrimes', 'Processos']);
-        $this->log($pessoa);
-        if(!empty($pessoa->codigos_postai_id)){
-            $distrito = $this->Pessoas->CodigosPostais->find()->where(['CodigosPostais.id' => $pessoa->codigos_postai->id])->contain(['Distritos'])->first();
-            $concelho = $this->Concelhos->find()->where(['Concelhos.CodigoConcelho' => $pessoa->codigos_postai->CodigoConcelho, 'Concelhos.CodigoDistrito' => $pessoa->codigos_postai->CodigoDistrito])->first();
-        }else{
-            $distrito = '';
-            $concelho = '';
-        }
-        $this->log($pessoa);
+
+        $distrito = $this->Pessoas->CodigosPostais->find()->where(['CodigosPostais.id' => $pessoa->codigos_postai->id])->contain(['Distritos'])->first();
+        $concelho = $this->Concelhos->find()->where(['Concelhos.CodigoConcelho' => $pessoa->codigos_postai->CodigoConcelho, 'Concelhos.CodigoDistrito' => $pessoa->codigos_postai->CodigoDistrito])->first();
+
         $this->set('pessoa', $pessoa);
         $this->set(compact('contactos', 'crimes', 'processos', 'pedidos', 'distrito', 'concelho'));
     }
@@ -274,13 +269,17 @@ class PessoasController extends AppController
                 $pessoa->codigos_postai_id = $codigoid->id;
             }
 
-            $this->log($pessoa);
-            if ($this->Pessoas->save($pessoa)) {
-                $this->Flash->success(__('O registo foi gravado.'));
+            if (!empty($pessoa->codigos_postai_id)) {
+                if ($this->Pessoas->save($pessoa)) {
+                    $this->Flash->success(__('O registo foi gravado.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            } else {
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+                $this->Flash->error(__('O código postal inserido não está correto.'));
             }
-            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
         $data = [];
@@ -382,13 +381,17 @@ class PessoasController extends AppController
                 $pessoa->codigos_postai_id = $codigoid->id;
             }
 
-            $this->log($pessoa);
-            if ($this->Pessoas->save($pessoa)) {
-                $this->Flash->success(__('O registo foi gravado.'));
+            if (!empty($pessoa->codigos_postai_id)) {
+                if ($this->Pessoas->save($pessoa)) {
+                    $this->Flash->success(__('O registo foi gravado.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+            } else {
+                $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
+                $this->Flash->error(__('O código postal inserido não está correto.'));
             }
-            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
 
         $this->set('distritos', $this->Pessoas->CodigosPostais->Distritos->find('list', ['keyField' => 'id', 'valueField' => 'Designacao']));
