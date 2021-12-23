@@ -49,6 +49,7 @@ class FormulariosController extends AppController
 
             $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
 
+
             $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, [], []);
 
             $conditions = array_merge($conditions, $parsedQueries);
