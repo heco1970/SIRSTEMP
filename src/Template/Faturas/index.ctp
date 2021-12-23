@@ -21,13 +21,12 @@
                 <th scope="col"><?= $this->Paginator->sort('id_entidade') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('id_unidade') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('data_emissao') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('estado') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('valor') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('data_pagamento') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ref_pagamento') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ultima_alteracao') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('id_utilizador') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('estado_pagamento') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('utilizador') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('id_pagamento') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('observacoes') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('referencia') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('data') ?></th>
@@ -43,13 +42,12 @@
                 <td><?= $this->Number->format($fatura->id_entidade) ?></td>
                 <td><?= $this->Number->format($fatura->id_unidade) ?></td>
                 <td><?= h($fatura->data_emissao) ?></td>
-                <td><?= h($fatura->estado) ?></td>
                 <td><?= h($fatura->valor) ?></td>
                 <td><?= h($fatura->data_pagamento) ?></td>
                 <td><?= h($fatura->ref_pagamento) ?></td>
                 <td><?= h($fatura->ultima_alteracao) ?></td>
-                <td><?= $this->Number->format($fatura->id_utilizador) ?></td>
-                <td><?= h($fatura->estado_pagamento) ?></td>
+                <td><?= h($fatura->utilizador) ?></td>
+                <td><?= $this->Number->format($fatura->id_pagamento) ?></td>
                 <td><?= h($fatura->observacoes) ?></td>
                 <td><?= h($fatura->referencia) ?></td>
                 <td><?= h($fatura->data) ?></td>

@@ -20,13 +20,12 @@
             echo $this->Form->control('id_entidade');
             echo $this->Form->control('id_unidade');
             echo $this->Form->control('data_emissao');
-            echo $this->Form->control('estado');
             echo $this->Form->control('valor');
             echo $this->Form->control('data_pagamento');
             echo $this->Form->control('ref_pagamento');
             echo $this->Form->control('ultima_alteracao');
-            echo $this->Form->control('id_utilizador');
-            echo $this->Form->control('estado_pagamento');
+            echo $this->Form->control('utilizador');
+            echo $this->Form->control('id_pagamento');
             echo $this->Form->control('observacoes');
             echo $this->Form->control('referencia');
             echo $this->Form->control('data');

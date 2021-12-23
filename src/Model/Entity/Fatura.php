@@ -12,13 +12,12 @@ use Cake\ORM\Entity;
  * @property int $id_entidade
  * @property int $id_unidade
  * @property \Cake\I18n\FrozenDate $data_emissao
- * @property bool|null $estado
  * @property string $valor
  * @property \Cake\I18n\FrozenDate $data_pagamento
  * @property string $ref_pagamento
  * @property string $ultima_alteracao
- * @property int $id_utilizador
- * @property string $estado_pagamento
+ * @property string $utilizador
+ * @property int $id_pagamento
  * @property string|null $observacoes
  * @property string $referencia
  * @property \Cake\I18n\FrozenDate $data
@@ -41,13 +40,12 @@ class Fatura extends Entity
         'id_entidade' => true,
         'id_unidade' => true,
         'data_emissao' => true,
-        'estado' => true,
         'valor' => true,
         'data_pagamento' => true,
         'ref_pagamento' => true,
         'ultima_alteracao' => true,
-        'id_utilizador' => true,
-        'estado_pagamento' => true,
+        'utilizador' => true,
+        'id_pagamento' => true,
         'observacoes' => true,
         'referencia' => true,
         'data' => true

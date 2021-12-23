@@ -76,10 +76,6 @@ class FaturasTable extends Table
             ->notEmpty('data_emissao');
 
         $validator
-            ->boolean('estado')
-            ->allowEmpty('estado');
-
-        $validator
             ->scalar('valor')
             ->maxLength('valor', 50)
             ->requirePresence('valor', 'create')
@@ -103,15 +99,15 @@ class FaturasTable extends Table
             ->notEmpty('ultima_alteracao');
 
         $validator
-            ->integer('id_utilizador')
-            ->requirePresence('id_utilizador', 'create')
-            ->notEmpty('id_utilizador');
+            ->scalar('utilizador')
+            ->maxLength('utilizador', 50)
+            ->requirePresence('utilizador', 'create')
+            ->notEmpty('utilizador');
 
         $validator
-            ->scalar('estado_pagamento')
-            ->maxLength('estado_pagamento', 50)
-            ->requirePresence('estado_pagamento', 'create')
-            ->notEmpty('estado_pagamento');
+            ->integer('id_pagamento')
+            ->requirePresence('id_pagamento', 'create')
+            ->notEmpty('id_pagamento');
 
         $validator
             ->scalar('observacoes')
