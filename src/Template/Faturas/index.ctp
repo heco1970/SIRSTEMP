@@ -1,73 +1,113 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Fatura[]|\Cake\Collection\CollectionInterface $faturas
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Fatura'), ['action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="faturas index large-9 medium-8 columns content">
-    <h3><?= __('Faturas') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('num_fatura') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nip') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('id_entidade') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('id_unidade') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('data_emissao') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('valor') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('data_pagamento') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('ref_pagamento') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('ultima_alteracao') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('utilizador') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('id_pagamento') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('observacoes') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('referencia') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('data') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($faturas as $fatura): ?>
-            <tr>
-                <td><?= $this->Number->format($fatura->id) ?></td>
-                <td><?= h($fatura->num_fatura) ?></td>
-                <td><?= $this->Number->format($fatura->nip) ?></td>
-                <td><?= $this->Number->format($fatura->id_entidade) ?></td>
-                <td><?= $this->Number->format($fatura->id_unidade) ?></td>
-                <td><?= h($fatura->data_emissao) ?></td>
-                <td><?= h($fatura->valor) ?></td>
-                <td><?= h($fatura->data_pagamento) ?></td>
-                <td><?= h($fatura->ref_pagamento) ?></td>
-                <td><?= h($fatura->ultima_alteracao) ?></td>
-                <td><?= h($fatura->utilizador) ?></td>
-                <td><?= $this->Number->format($fatura->id_pagamento) ?></td>
-                <td><?= h($fatura->observacoes) ?></td>
-                <td><?= h($fatura->referencia) ?></td>
-                <td><?= h($fatura->data) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $fatura->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $fatura->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $fatura->id], ['confirm' => __('Are you sure you want to delete # {0}?', $fatura->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<?= $this->Html->css('/vendor/dynatables/jquery.dynatable.min.css', ['block' => true]); ?>
+
+<h1 class="h3 mb-2 text-gray-800"><?= __('Registo Faturas') ?></h1>
+
+<div class="card shadow mb-2">
+    <div class="card-header py-3">
+        <a class="btn btn-success btn-circle btn-lg" href="/faturas/add"><i class="fas fa-plus"></i></a>
+        <?= $this->Html->link(
+            '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
+            ['action' => 'xls'],
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+        )
+        ?>
+        <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
     </div>
 </div>
+<?php
+$dynElems =
+    [
+        'entidadejudicial' => ['label' => __('Entidade Judicial'), 'options' => $entidadejudicial, 'empty' => ' '],
+        'unidade' => ['label' => __('Unidade Organica'), 'options' => $unidade, 'empty' => ' '],
+        'pagamento' => ['label' => __('Estado Pagamento'), 'options' => $pagamento, 'empty' => ' '],
+        'nip' => ['label' => __('NIP')],
+    ];
+?>
+<?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Listagem Faturas') ?></h6>
+    </div>
+    <div class="card-body">
+        <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
+    </div>
+</div>
+<?= $this->element('Modal/generic', ['eId' => 'disable', 'title' => '', 'text']); ?>
+
+<?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
+<?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
+<!-- <?= $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', ['block' => true]); ?> -->
+<!-- <?= $this->Html->css('https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css', ['block' => true]); ?> -->
+<!-- <?= $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['block' => true]); ?> -->
+<!-- <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/pt.min.js', ['block' => true]); ?> -->
+<script>
+    var e = jQuery.Event("keypress");
+    e.which = 13; // Enter
+
+    /* $('#xlsbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("pedido").value,
+            document.getElementById("equipa").value,
+            document.getElementById("nome-prestador-trabalho").value,
+            document.getElementById("designacao-entidade").value,
+            "1"
+        );
+    }); */
+
+    $('#dynatable-filter').click(function() {
+        $('#dynatable-filter').trigger(e);
+        // emptyCookie();
+    });
+
+    $(document).ready(function() {
+        var writers = {
+            ação: function(row) {
+                var view = '<a class="btn btn-info mr-1" href="/faturas/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Detalhes') ?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a class="btn btn-warning mr-1" href="/faturas/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Deseja mesmo apagar?'" + ')" href="/formularios/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
+
+                return '<div class="btn-group btn-group-sm" role="group">' + view + edit + dele + '</div>';
+            }
+        }
+
+        createDynatable("#dynatable", "/faturas/", {
+            created: -1
+        }, writers);
+
+        /* deleteCookie("Filtro");
+        createCookie("Filtro", "", "", "", "", "1"); */
+    });
+
+    /* function emptyCookie() {
+        createCookie(
+            "Filtro",
+            document.getElementById("pedido").value = '',
+            document.getElementById("equipa").value = '',
+            document.getElementById("nome_prestador_trabalho").value = '',
+            document.getElementById("designacao_entidade").value = '',
+            "1"
+        );
+    }
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+    }
+
+    function createCookie(name, valuePedido, valueEquipa, valueNomePrestador, valueEntidade, days) {
+        var expires;
+
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        } else {
+            expires = "";
+        }
+
+        document.cookie = escape(name) + "=" +
+            valuePedido + "," + valueEquipa + "," + valueNomePrestador + "," + valueEntidade +
+            expires + "; path=/";
+    } */
+</script>
+<?php $this->end(); ?>

@@ -34,6 +34,21 @@ class FaturasTable extends Table
         $this->setTable('faturas');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Entidadejudiciais', [
+            'foreignKey' => 'id_entidade',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Units', [
+            'foreignKey' => 'id_unidade',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Pagamentos', [
+            'foreignKey' => 'id_pagamento',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
