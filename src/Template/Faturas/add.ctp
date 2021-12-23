@@ -23,13 +23,13 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="id_entidade">Entidade Judicial</label>
-                        <?php echo $this->Form->control('id_entidade', ['id' => 'id_pedido', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => '', 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('id_entidade', ['id' => 'id_pedido', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $entidades, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="id_unidade">Unidade Orgânica</label>
-                        <?php echo $this->Form->control('id_unidade', ['id' => 'id_pedido', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => '', 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('id_unidade', ['id' => 'id_pedido', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $unidades, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="id_pagamento">Estado</label>
-                        <?php echo $this->Form->control('id_pagamento', ['id' => 'id_pedido', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => '', 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->control('id_pagamento', ['id' => 'id_pedido', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pagamentos, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -69,7 +69,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="ultima_alteracao">Ultima Alteração</label>
-                        <?php echo $this->Form->control('ultima_alteracao', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->text('ultima_alteracao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
             </div>

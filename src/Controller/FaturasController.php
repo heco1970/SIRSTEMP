@@ -189,6 +189,10 @@ class FaturasController extends AppController
             }
             $this->Flash->error(__('The fatura could not be saved. Please, try again.'));
         }
+
+        $this->set('unidades', $this->Faturas->Units->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
+        $this->set('entidades', $this->Faturas->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
+        $this->set('pagamentos', $this->Faturas->Pagamentos->find('list', ['keyField' => 'id', 'valueField' => 'estado']));
         $this->set(compact('fatura'));
     }
 
