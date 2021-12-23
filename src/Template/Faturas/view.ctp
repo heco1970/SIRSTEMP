@@ -33,8 +33,8 @@
             <td><?= h($fatura->ultima_alteracao) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Utilizador') ?></th>
-            <td><?= h($fatura->utilizador) ?></td>
+            <th scope="row"><?= __('Estado Pagamento') ?></th>
+            <td><?= h($fatura->estado_pagamento) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Observacoes') ?></th>
@@ -61,8 +61,8 @@
             <td><?= $this->Number->format($fatura->id_unidade) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Id Pagamento') ?></th>
-            <td><?= $this->Number->format($fatura->id_pagamento) ?></td>
+            <th scope="row"><?= __('Id Utilizador') ?></th>
+            <td><?= $this->Number->format($fatura->id_utilizador) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Data Emissao') ?></th>
@@ -75,6 +75,10 @@
         <tr>
             <th scope="row"><?= __('Data') ?></th>
             <td><?= h($fatura->data) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Estado') ?></th>
+            <td><?= $fatura->estado ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
 </div>
