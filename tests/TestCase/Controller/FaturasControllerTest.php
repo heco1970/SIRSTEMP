@@ -16,7 +16,10 @@ class FaturasControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.faturas'
+        'app.faturas',
+        'app.entidadejudiciais',
+        'app.units',
+        'app.pagamentos'
     ];
 
     /**

@@ -51,7 +51,7 @@ class PagamentosTable extends Table
 
         $validator
             ->scalar('estado')
-            ->maxLength('estado', 50)
+            ->maxLength('estado', 45)
             ->requirePresence('estado', 'create')
             ->notEmpty('estado')
             ->add('estado', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);

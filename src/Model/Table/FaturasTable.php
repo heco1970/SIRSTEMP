@@ -65,17 +65,6 @@ class FaturasTable extends Table
             ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('num_fatura')
-            ->maxLength('num_fatura', 50)
-            ->requirePresence('num_fatura', 'create')
-            ->notEmpty('num_fatura');
-
-        $validator
-            ->integer('nip')
-            ->requirePresence('nip', 'create')
-            ->notEmpty('nip');
-
-        $validator
             ->integer('id_entidade')
             ->requirePresence('id_entidade', 'create')
             ->notEmpty('id_entidade');
@@ -86,13 +75,27 @@ class FaturasTable extends Table
             ->notEmpty('id_unidade');
 
         $validator
+            ->integer('id_pagamento')
+            ->requirePresence('id_pagamento', 'create')
+            ->notEmpty('id_pagamento');
+
+        $validator
+            ->integer('num_fatura')
+            ->requirePresence('num_fatura', 'create')
+            ->notEmpty('num_fatura');
+
+        $validator
+            ->integer('nip')
+            ->requirePresence('nip', 'create')
+            ->notEmpty('nip');
+
+        $validator
             ->date('data_emissao')
             ->requirePresence('data_emissao', 'create')
             ->notEmpty('data_emissao');
 
         $validator
-            ->scalar('valor')
-            ->maxLength('valor', 50)
+            ->numeric('valor')
             ->requirePresence('valor', 'create')
             ->notEmpty('valor');
 
@@ -108,8 +111,7 @@ class FaturasTable extends Table
             ->notEmpty('ref_pagamento');
 
         $validator
-            ->scalar('ultima_alteracao')
-            ->maxLength('ultima_alteracao', 50)
+            ->dateTime('ultima_alteracao')
             ->requirePresence('ultima_alteracao', 'create')
             ->notEmpty('ultima_alteracao');
 
@@ -118,11 +120,6 @@ class FaturasTable extends Table
             ->maxLength('utilizador', 50)
             ->requirePresence('utilizador', 'create')
             ->notEmpty('utilizador');
-
-        $validator
-            ->integer('id_pagamento')
-            ->requirePresence('id_pagamento', 'create')
-            ->notEmpty('id_pagamento');
 
         $validator
             ->scalar('observacoes')

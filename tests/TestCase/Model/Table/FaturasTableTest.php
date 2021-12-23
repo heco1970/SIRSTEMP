@@ -24,7 +24,10 @@ class FaturasTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.faturas'
+        'app.faturas',
+        'app.entidadejudiciais',
+        'app.units',
+        'app.pagamentos'
     ];
 
     /**

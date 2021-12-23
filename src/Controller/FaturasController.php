@@ -1,11 +1,7 @@
 <?php
-
 namespace App\Controller;
 
 use App\Controller\AppController;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Cake\Datasource\ConnectionManager;
 
 /**
  * Faturas Controller
@@ -24,67 +20,12 @@ class FaturasController extends AppController
      */
     public function index()
     {
-        /* $faturas = $this->paginate($this->Faturas);
-        $this->set(compact('faturas')); */
+        $this->paginate = [
+            'contain' => ['Entidadejudiciais', 'Units', 'Pagamentos']
+        ];
+        $faturas = $this->paginate($this->Faturas);
 
-        if ($this->request->is('ajax')) {
-            $model = 'Faturas';
-            $this->loadComponent('Dynatables');
-
-            $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
-
-            $validOps = ['id', 'entidadejudicial', 'unidade', 'pagamento', 'num_fatura', 'nip', 'data_emissao', 'valor', 'data_pagamento', 'ref_pagamento', 'ultima_alteracao', 'utilizador', 'observacoes', 'referencia', 'data'];
-            $convArray = [
-                'id' => $model . '.id',
-                'entidadejudicial' => $model . '.id_entidade',
-                'unidade' => $model . '.id_unidade',
-                'pagamento' => $model . '.id_pagamento',
-                'nip' => $model . '.nip',
-                'num_fatura' => $model . '.num_fatura',
-                // 'data_emissao' => $model . '.data_emissao',
-                'valor' => $model . '.valor',
-                // 'data_pagamento' => $model . '.data_pagamento',
-                'ref_pagamento' => $model . '.ref_pagamento',
-                // 'ultima_alteracao' => $model . '.ultima_alteracao',
-                // 'utilizador' => $model . '.utilizador',
-                // 'observacoes' => $model . '.observacoes',
-                // 'referencia' => $model . '.referencia',
-                // 'data' => $model . '.data',
-            ];
-
-            $strings = ['nip', 'num_fatura', 'valor', 'ref_pagamento'];
-
-            $contain = ['Entidadejudiciais', 'Units', 'Pagamentos'];
-            $conditions = [];
-
-            $totalRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-
-            $parsedQueries = $this->Dynatables->parseQueries($query, $validOps, $convArray, $strings, [], []);
-
-            $conditions = array_merge($conditions, $parsedQueries);
-            $queryRecordsCount = $this->$model->find('all')->where($conditions)->contain($contain)->count();
-
-            $sorts = $this->Dynatables->parseSorts($query, $validOps, $convArray);
-            $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-            $this->log($records->toArray());
-            $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
-        } else {
-            $entidadejudicial = $this->Faturas->Entidadejudiciais->find('list', array(
-                'keyField' => 'id',
-                'valueField' => 'descricao'
-            ))->toArray();
-
-            $unidade = $this->Faturas->Units->find('list', array(
-                'keyField' => 'id',
-                'valueField' => 'designacao'
-            ))->toArray();
-
-            $pagamento = $this->Faturas->Pagamentos->find('list', array(
-                'keyField' => 'id',
-                'valueField' => 'estado'
-            ))->toArray();
-            $this->set(compact('entidadejudicial', 'unidade', 'pagamento'));
-        }
+        $this->set(compact('faturas'));
     }
 
     /**
@@ -97,7 +38,7 @@ class FaturasController extends AppController
     public function view($id = null)
     {
         $fatura = $this->Faturas->get($id, [
-            'contain' => []
+            'contain' => ['Entidadejudiciais', 'Units', 'Pagamentos']
         ]);
 
         $this->set('fatura', $fatura);
@@ -120,7 +61,10 @@ class FaturasController extends AppController
             }
             $this->Flash->error(__('The fatura could not be saved. Please, try again.'));
         }
-        $this->set(compact('fatura'));
+        $entidadejudiciais = $this->Faturas->Entidadejudiciais->find('list', ['limit' => 200]);
+        $units = $this->Faturas->Units->find('list', ['limit' => 200]);
+        $pagamentos = $this->Faturas->Pagamentos->find('list', ['limit' => 200]);
+        $this->set(compact('fatura', 'entidadejudiciais', 'units', 'pagamentos'));
     }
 
     /**
@@ -144,7 +88,10 @@ class FaturasController extends AppController
             }
             $this->Flash->error(__('The fatura could not be saved. Please, try again.'));
         }
-        $this->set(compact('fatura'));
+        $entidadejudiciais = $this->Faturas->Entidadejudiciais->find('list', ['limit' => 200]);
+        $units = $this->Faturas->Units->find('list', ['limit' => 200]);
+        $pagamentos = $this->Faturas->Pagamentos->find('list', ['limit' => 200]);
+        $this->set(compact('fatura', 'entidadejudiciais', 'units', 'pagamentos'));
     }
 
     /**
