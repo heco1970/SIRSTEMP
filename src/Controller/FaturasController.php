@@ -66,7 +66,6 @@ class FaturasController extends AppController
 
             $sorts = $this->Dynatables->parseSorts($query, $validOps, $convArray);
             $records = $this->$model->find('all')->where($conditions)->contain($contain)->order($sorts)->limit($query['perPage'])->offset($query['offset'])->page($query['page']);
-            $this->log($records->toArray());
             $this->set(compact('totalRecordsCount', 'queryRecordsCount', 'records'));
         } else {
             $entidadejudicial = $this->Faturas->Entidadejudiciais->find('list', array(
