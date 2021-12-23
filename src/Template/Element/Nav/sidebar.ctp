@@ -28,6 +28,7 @@ $active = $show = '';
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-user-friends"></i> <span>' . __('Pessoas') . '</span>', '/pessoas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-balance-scale-left"></i> <span>' . __('Processos') . '</span>', '/processos', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book"></i> <span>' . __('Pedidos') . '</span>', '/pedidos/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
+    <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-file-invoice"></i> <span>' . __('Faturas') . '</span>', '/faturas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item close-menu">
         <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseAplicacoes" aria-expanded="true">
             <i class="far fa-fw fa-file-alt"></i>
@@ -154,7 +155,7 @@ $active = $show = '';
         });
 
         $(".close-menu").click(function() {
-            if (localStorage.getItem("coll_collapseAdminMenu2") || localStorage.getItem("coll_collapseAdminMenu") || localStorage.getItem("coll_collapseAplicacoes") || localStorage.getItem("coll_collapseSeguros") ) localStorage.clear();
+            if (localStorage.getItem("coll_collapseAdminMenu2") || localStorage.getItem("coll_collapseAdminMenu") || localStorage.getItem("coll_collapseAplicacoes") || localStorage.getItem("coll_collapseSeguros")) localStorage.clear();
         });
     });
 </script>

@@ -18,9 +18,9 @@
 $dynElems =
     [
         'num_fatura' => ['label' => __('Numero da fatura')],
+        'valor' => ['label' => __('Valor')],
         'entidadejudicial' => ['label' => __('Entidade Judicial'), 'options' => $entidadejudicial, 'empty' => ' '],
         'pagamento' => ['label' => __('Estado Pagamento'), 'options' => $pagamento, 'empty' => ' '],
-        'valor' => ['label' => __('Valor')],
         'data' => ['label' => __('data')],
     ];
 ?>
@@ -79,6 +79,7 @@ $dynElems =
 
         document.getElementById('data').type = 'date';
         document.getElementById('valor').type = 'number';
+        document.getElementById('num-fatura').type = 'number';
 
         deleteCookie("Filtro");
         createCookie("Filtro", "", "", "", "", "", "1");

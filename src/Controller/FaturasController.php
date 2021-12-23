@@ -52,7 +52,7 @@ class FaturasController extends AppController
                 'data' => $model . '.data',
             ];
 
-            $strings = ['nip', 'num_fatura', 'valor', 'ref_pagamento', 'ultima_alteracao', 'utilizador', 'observacoes', 'referencia'];
+            $strings = ['ref_pagamento', 'utilizador', 'observacoes', 'referencia'];
 
             $contain = ['Entidadejudiciais', 'Units', 'Pagamentos'];
             $conditions = [];
@@ -87,7 +87,7 @@ class FaturasController extends AppController
         }
     }
 
-    public function xls()
+    /* public function xls()
     {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
@@ -154,7 +154,7 @@ class FaturasController extends AppController
 
         $this->response->withType("application/vnd.ms-excel");
         return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pessoas.xlsx'));
-    }
+    } */
 
     /**
      * View method
@@ -166,9 +166,9 @@ class FaturasController extends AppController
     public function view($id = null)
     {
         $fatura = $this->Faturas->get($id, [
-            'contain' => []
+            'contain' => ['Entidadejudiciais', 'Units', 'Pagamentos']
         ]);
-
+        $this->log($fatura);
         $this->set('fatura', $fatura);
     }
 
