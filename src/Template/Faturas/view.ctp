@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Nº Fatura') ?></h6>
-                        <p><?= $this->Number->format($fatura->num_fatura) ?></p>
+                        <p><?= h($fatura->num_fatura) ?></p>
                     </div>
                 </div>
                 <hr>
