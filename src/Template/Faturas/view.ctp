@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-3">
                         <h6 class="text-primary"><?= __('Nº Fatura') ?></h6>
-                        <p><?= h($fatura->num_fatura) ?></p>
+                        <p><?= $this->Number->format($fatura->num_fatura) ?></p>
                     </div>
                 </div>
                 <hr>
@@ -19,11 +19,11 @@
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Entidade Judicial') ?></h6>
-                        <p><?= $this->Number->format($fatura->id_entidade) ?></p>
+                        <p><?= h($fatura->entidadejudiciai->descricao) ?></p>
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Unidade Orgânica') ?></h6>
-                        <p><?= $this->Number->format($fatura->id_unidade) ?></p>
+                        <p><?= h($fatura->unit->designacao) ?></p>
                     </div>
                 </div>
                 <div class="row">
@@ -33,11 +33,12 @@
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Estado') ?></h6>
-                        <p><?= $this->Number->format(h($fatura->id_pagamento)) ?></p>
+                        <p><?= h($fatura->pagamento->estado) ?></p>
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Valor') ?></h6>
-                        <p><?= h($fatura->valor) ?></p>
+                        <p><?= $this->Number->format($fatura->valor) ?></p>
+
                     </div>
                 </div>
                 <div class="row">
@@ -51,7 +52,7 @@
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Ultima Alteração') ?></h6>
-                        <p><?= h($fatura->ultima_alteracao) ?></p>
+                        <p><?= h($fatura->ultima_alteracao->i18nFormat('dd-MM-yyyy')) ?></p>
                     </div>
                 </div>
                 <div class="row">
@@ -80,6 +81,7 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
+        <a href="/faturas/edit/<?= h($fatura->id) ?>" class="btn btn-warning float-right space-right"><?= __('Editar') ?></a>
         <a href="/faturas/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
 </div>

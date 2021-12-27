@@ -37,7 +37,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="data_emissao">Data Emissão</label>
-                        <?php echo $this->Form->text('data_emissao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data_emissao', ['label' => false, 'value' => h($fatura->data_emissao->format('Y-m-d')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -57,7 +57,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="data_pagamento">Data Pagamento</label>
-                        <?php echo $this->Form->text('data_pagamento', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data_pagamento', ['label' => false, 'value' => h($fatura->data_pagamento->format('Y-m-d')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -69,7 +69,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="ultima_alteracao">Ultima Alteração</label>
-                        <?php echo $this->Form->text('ultima_alteracao', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('ultima_alteracao', ['label' => false, 'value' => h($fatura->ultima_alteracao->format('Y-m-d')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="data">Data</label>
-                        <?php echo $this->Form->text('data', ['label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
+                        <?php echo $this->Form->text('data', ['label' => false, 'value' => h($fatura->data->format('Y-m-d')), 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">

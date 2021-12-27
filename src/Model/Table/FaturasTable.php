@@ -112,7 +112,7 @@ class FaturasTable extends Table
             ->notEmpty('ref_pagamento');
 
         $validator
-            ->dateTime('ultima_alteracao')
+            ->date('ultima_alteracao')
             ->requirePresence('ultima_alteracao', 'create')
             ->notEmpty('ultima_alteracao');
 

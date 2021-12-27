@@ -84,7 +84,6 @@ class FormulariosController extends AppController
         $formulario = $this->Formularios->get($id, [
             'contain' => ['Teams', 'Pedidos']
         ]);
-
         $this->set('formulario', $formulario);
     }
 
@@ -160,7 +159,7 @@ class FormulariosController extends AppController
     {
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
-        $this->log($out);
+        // $this->log($out);
 
         if (!empty($out)) {
             $pedido = 'Pedidos.id LIKE "' . $out[0] . '"';
