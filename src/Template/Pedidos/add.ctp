@@ -180,12 +180,12 @@
                     </div>
                 </div>
                 <div class="row ">
-                    <!-- <div class="col-sm-4">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="gestor">TRS Responsável / Gestor</label>
                             <?php echo $this->Form->control('gestor', ['class' => 'form-control', 'options' => '', 'label' => false, 'type' => 'select']); ?>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="periocidaderelatorios">Periocidade de Relatorios</label>
