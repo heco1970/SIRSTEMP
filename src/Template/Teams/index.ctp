@@ -20,7 +20,8 @@ $dynElems =
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
 $dynElems = ['nome' => ['label' => __('Designação')]] +
-            ['created' => ['label' => __('Data de Criação')]];
+            ['created' => ['label' => __('Data de Criação')]] +
+            ['modified' => ['label' => __('Data de Modificação')]];
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">

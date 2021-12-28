@@ -136,12 +136,15 @@ class PessoasTable extends Table
 
         $validator
             ->scalar('cc')
-            ->maxLength('cc', 10)
+            ->minLength('cc', 9)
+            ->maxLength('cc', 9)
             ->requirePresence('cc', 'create')
             ->notEmpty('cc');
 
         $validator
             ->integer('nif')
+            ->minLength('nif', 9)
+            ->maxLength('nif', 9)
             ->requirePresence('nif', 'create')
             ->notEmpty('nif');
 
@@ -159,6 +162,11 @@ class PessoasTable extends Table
             ->scalar('observacoes')
             ->maxLength('observacoes', 255)
             ->allowEmpty('observacoes');
+
+        $validator
+            ->scalar('morada')
+            ->maxLength('morada', 200)
+            ->allowEmpty('morada');
 
         return $validator;
     }

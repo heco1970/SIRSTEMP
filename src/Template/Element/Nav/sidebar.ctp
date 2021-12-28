@@ -24,16 +24,30 @@ $active = $show = '';
     <!-- Divider -->
     <hr class="sidebar-divider">
     <li class="nav-item">
-        <a class="nav-link" href="/">
-    <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-user-friends"></i> <span>' . __('Pessoas') . '</span>', '/pessoas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
-    <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-balance-scale-left"></i> <span>' . __('Processos') . '</span>', '/processos', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
-    <li class="nav-item <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book"></i> <span>' . __('Pedidos') . '</span>', '/pedidos/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
-
-    </a>
+        <a class="nav-link" href="/"></a>
+    <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-user-friends"></i> <span>' . __('Pessoas') . '</span>', '/pessoas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
+    <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-balance-scale-left"></i> <span>' . __('Processos') . '</span>', '/processos', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
+    <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book"></i> <span>' . __('Pedidos') . '</span>', '/pedidos/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
+    <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-file-invoice"></i> <span>' . __('Faturas') . '</span>', '/faturas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
+    <li class="nav-item close-menu">
+        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseAplicacoes" aria-expanded="true">
+            <i class="far fa-fw fa-file-alt"></i>
+            <span><?= __('Aplicações') ?></span>
+        </a>
+        <div id="collapseAplicacoes" class="collapse hide" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" data-toggle="collapse" data-target="#collapseSeguros" aria-expanded="true">
+                    <span><?= __('Seguros') ?></span>
+                </a>
+                <div id="collapseSeguros" class="collapse hide">
+                    <?= $this->Html->link(__('Penal'), '/formularios/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Tutelar educativo'), '', ['class' => ['collapse-item'], 'escape' => false]); ?>
+                </div>
+            </div>
+        </div>
+    </li>
 
     <hr class="sidebar-divider">
-
-
 
     <?php
     if ($this->Acl->hasAccess('/accesses/admin') || $this->Acl->hasAccess('/attempts/admin') || $this->Acl->hasAccess('/AclManager')) :
@@ -59,21 +73,18 @@ $active = $show = '';
             </a>
             <div id="collapseAdminMenu2" class="collapse hide" aria-labelledby="adminMenu" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <?= $this->Html->link(__('Caracteristicas Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Entidades'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Entidades Judiciais'), '/entidadejudiciais/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Equipas'), '/teams/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Estados'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Motivos de Pedidos'), '/pedidosmotives/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Motivos Verbete'), '/verbetes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Naturezas'), '/naturezas/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                   
+                    <!-- <?= $this->Html->link(__('Caracteristicas Operativas'), '', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?> -->
+                    <?= $this->Html->link(__('Entidades Judiciais'), '/entidadejudiciais/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Equipas'), '/teams/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Estados'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Motivos de Pedidos'), '/pedidosmotives/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Naturezas'), '/naturezas/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                     <?= $this->Html->link(__('Perfil de Utilizador'), '/user-perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                     <?= $this->Html->link(__('Perfis'), '/perfis/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
-                    <?= $this->Html->link(__('Tipos de Crimes'), '/tipocrimes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Tipos de Pedidos'), '/pedidostypes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Unidades Operativas'), '/states/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
-                    <?= $this->Html->link(__('Unidades Orgânicas'), '/units/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]);?>
+                    <?= $this->Html->link(__('Tipos de Crimes'), '/tipocrimes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Tipos de Pedidos'), '/pedidostypes/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
+                    <!-- <?= $this->Html->link(__('Unidades Operativas'), '', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?> -->
+                    <?= $this->Html->link(__('Unidades Orgânicas'), '/units/index', ['class' => ['collapse-item ' . $aAccesses], 'escape' => false]); ?>
                 </div>
             </div>
         </li>
@@ -123,3 +134,28 @@ $active = $show = '';
     </div>
 
 </ul>
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".collapse").on("shown.bs.collapse", function() {
+            localStorage.setItem("coll_" + this.id, true);
+        });
+
+        $(".collapse").on("hidden.bs.collapse", function() {
+            localStorage.removeItem("coll_" + this.id);
+        });
+
+        $(".collapse").each(function() {
+            if (localStorage.getItem("coll_" + this.id) === "true") {
+                $(this).collapse("show");
+            } else {
+                $(this).collapse("hide");
+            }
+        });
+
+        $(".close-menu").click(function() {
+            if (localStorage.getItem("coll_collapseAdminMenu2") || localStorage.getItem("coll_collapseAdminMenu") || localStorage.getItem("coll_collapseAplicacoes") || localStorage.getItem("coll_collapseSeguros")) localStorage.clear();
+        });
+    });
+</script>

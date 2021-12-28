@@ -10,7 +10,7 @@ $pessoaNome = "";
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
         )
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
@@ -20,17 +20,17 @@ $pessoaNome = "";
 <?php
 $dynElems =
     [
+        'id' => ['label' => __('ID Pessoa')],
         'nome' => ['label' => __('Nome')],
         'cc' => ['label' => __('CC/BI')],
         'nif' => ['label' => __('NIF')],
-        'datanascimento' => ['label' => __('Data de nascimento'), 'type' => 'text'],
-        'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
-        'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
+        'datanascimento' => ['label' => __('Data de nascimento')],
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
 <?php
-$dynElems = ['nome' => ['label' => __('Nome')]] +
+$dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
+    ['nome' => ['label' => __('Nome')]] +
     ['cc' => ['label' => __('CC/BI')]] +
     ['nif' => ['label' => __('NIF')]] +
     ['datanascimento' => ['label' => __('Data de nascimento')]] +
@@ -38,7 +38,6 @@ $dynElems = ['nome' => ['label' => __('Nome')]] +
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Listagem de Pessoas') ?></h6>
     </div>
     <div class="card-body">
         <?= $this->element('Dynatables/table', ['dId' => 'dynatable', 'elements' => $dynElems, 'actions' => true]); ?>
@@ -53,8 +52,6 @@ $dynElems = ['nome' => ['label' => __('Nome')]] +
     </div>
 </div>
 
-
-
 <?= $this->Html->script('/vendor/dynatables/jquery.dynatable.min.js', ['block' => true]); ?>
 <?= $this->Html->script('/js/dynatable-helper.js', ['block' => true]); ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -62,16 +59,53 @@ $dynElems = ['nome' => ['label' => __('Nome')]] +
 
 <?php $this->start('scriptBottom') ?>
 <script>
+    var e = jQuery.Event("keypress");
+    e.which = 13; // Enter
+
+    $('#xlsbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("id").value,
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1"
+        );
+    });
+
+    $('#dynatable-filter').click(function() {
+        $('#dynatable-filter').trigger(e);
+        emptyCookie();
+    });
+
+    function emptyCookie() {
+        createCookie(
+            "Filtro",
+            document.getElementById("id").value = '',
+            document.getElementById("nome").value = '',
+            document.getElementById("cc").value = '',
+            document.getElementById("nif").value = '',
+            document.getElementById("datanascimento").value = '',
+            "1"
+        );
+    }
+
     $(document).ready(function() {
         var writers = {
             ação: function(row) {
-                var view = '<a data-backdrop="static" data-keyboard="false" data-target="#theModal" data-toggle="modal" class="btn btn-info mr-1 openmodal" href="/pessoas/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
-                var edit = '<a class="btn btn-warning mr-1" href="/pessoas/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
-                var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" + ')" href="/pessoas/delete/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
+                var view = '<a class="btn btn-info mr-1" href="/pessoas/view/' + row.id +
+                    '" data-toggle="tooltip" data-placement="top" title="<?= __('Detalhes') ?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a class="btn btn-warning mr-1" href="/pessoas/edit/' + row.id +
+                    '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" +
+                    ')" href="/pessoas/delete/' + row.id +
+                    '" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
 
                 return '<div class="btn-group btn-group-sm" role="group">' + view + edit + dele + '</div>';
             }
         }
+
         createDynatable("#dynatable", "/pessoas/", {
             created: -1
         }, writers);
@@ -101,71 +135,15 @@ $dynElems = ['nome' => ['label' => __('Nome')]] +
         };
 
         deleteCookie("Filtro");
-        createCookie("Filtro", "", "", "", "","1");
-
+        createCookie("Filtro", '', '', '', '', '', "1");
 
     });
-
-    document.getElementById("id").onkeyup = function() {
-        createCookie(
-            "Filtro",
-            document.getElementById("nome").value,
-            document.getElementById("cc").value,
-            document.getElementById("nif").value,
-            document.getElementById("datanascimento").value,
-            "1"
-        );
-    };
-
-    document.getElementById("nome").onkeyup = function() {
-        createCookie(
-            "Filtro",
-            document.getElementById("nome").value,
-            document.getElementById("cc").value,
-            document.getElementById("nif").value,
-            document.getElementById("datanascimento").value,
-            "1"
-        );
-    };
-
-    document.getElementById("cc").onkeyup = function() {
-        createCookie(
-            "Filtro",
-            document.getElementById("nome").value,
-            document.getElementById("cc").value,
-            document.getElementById("nif").value,
-            document.getElementById("datanascimento").value,
-            "1"
-        );
-    };
-
-    document.getElementById("nif").onkeyup = function() {
-        createCookie(
-            "Filtro",
-            document.getElementById("nome").value,
-            document.getElementById("cc").value,
-            document.getElementById("nif").value,
-            document.getElementById("datanascimento").value,
-            "1"
-        );
-    };
-
-    document.getElementById("datanascimento").onchange = function() {
-        createCookie(
-            "Filtro",
-            document.getElementById("nome").value,
-            document.getElementById("cc").value,
-            document.getElementById("nif").value,
-            document.getElementById("datanascimento").value,
-            "1"
-        );
-    };
 
     function deleteCookie(name) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
 
-    function createCookie(name, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
+    function createCookie(name, valuePessoa, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
         var expires;
 
         if (days) {
@@ -177,7 +155,7 @@ $dynElems = ['nome' => ['label' => __('Nome')]] +
         }
 
         document.cookie = escape(name) + "=" +
-            valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
+            valuePessoa + "," + valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
             expires + "; path=/";
     }
 </script>

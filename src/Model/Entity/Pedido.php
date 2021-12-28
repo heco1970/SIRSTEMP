@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $referencia
  * @property string $canalentrada
  * @property \Cake\I18n\FrozenDate $datarecepcao
- * @property string $origem
+ * @property string|null $origem
  * @property int $pedidostype_id
  * @property int $team_id
  * @property int $state_id
@@ -26,12 +26,18 @@ use Cake\ORM\Entity;
  * @property int $pedidosmotive_id
  * @property int $pais_id
  * @property int|null $concelho_id
- * @property string $transferencias
+ * @property string|null $transferencias
  * @property string $gestor
- * @property string $seguro
+ * @property string|null $seguro
  * @property string $periocidaderelatorios
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property string|null $fatura
+ * @property string|null $establecimentopricional
+ * @property string|null $centroeducativo
+ * @property int|null $codigos_postai_id
+ * @property int|null $designacao
+ * @property string|null $descricao
  *
  * @property \App\Model\Entity\Processo $processo
  * @property \App\Model\Entity\Pessoa $pessoa
@@ -41,6 +47,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Pedidosmotive $pedidosmotive
  * @property \App\Model\Entity\Pai $pai
  * @property \App\Model\Entity\Concelho $concelho
+ * @property \App\Model\Entity\CodigosPostai $codigos_postai
  * @property \App\Model\Entity\Verbete[] $verbetes
  */
 class Pedido extends Entity
@@ -81,6 +88,12 @@ class Pedido extends Entity
         'periocidaderelatorios' => true,
         'created' => true,
         'modified' => true,
+        'fatura' => true,
+        'establecimentopricional' => true,
+        'centroeducativo' => true,
+        'codigos_postai_id' => true,
+        'designacao' => true,
+        'descricao' => true,
         'processo' => true,
         'pessoa' => true,
         'pedidostype' => true,
@@ -89,6 +102,7 @@ class Pedido extends Entity
         'pedidosmotive' => true,
         'pai' => true,
         'concelho' => true,
+        'codigos_postai' => true,
         'verbetes' => true
     ];
 }

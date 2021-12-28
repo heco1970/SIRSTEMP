@@ -5,11 +5,9 @@
     <?= $this->Form->create($unit, ['id' => 'myForm']) ?>
     <div class='ml-4 mr-4 mt-4'>
         <div class="form-row">
-            <div class="col">
+            <div class="col-12">
                 <div class="form-group">
-                    <label for="unit">
-                        <h4><?= __('Designação') ?></h4>
-                    </label>
+                    <label for="designacao">Designação</label>
                     <?= $this->Form->control('designacao', ['class' => 'form-control', 'designacao' => 'designacao', 'label' => false, 'required']); ?>
                 </div>
             </div>

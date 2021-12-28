@@ -6,7 +6,7 @@
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
             <div class="form-row">
-                <div class="col-8">
+                <div class="col-12">
                     <div class="form-group">
                         <label for="designacao">Designação</label>
                         <?php echo $this->Form->control('designacao', ['label' => false, 'class' => 'form-control', 'required' => true]); ?>
@@ -16,8 +16,9 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success"]) ?>
-        <a href="/units/index" class="btn btn-secondary"><?= __('Voltar') ?></a>
+        <?= $this->Form->button(__('Gravar'), ['class' => "btn btn-success float-right"]) ?>
+        <a href="#" onclick="history.go(-1);" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
+
     <?= $this->Form->end() ?>
 </div>

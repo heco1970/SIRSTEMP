@@ -5,29 +5,7 @@
     <?= $this->Form->create($processo) ?>
     <fieldset>
         <div class='ml-4 mt-4 mr-4'>
-            <div class="row ">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="entidadejudiciai_id">Entidade Judicial</label>
-                        <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'options' => $entidadejudiciais]); ?>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group ui-widget">
-                        <div class="form-group">
-                            <label for="unit_id">Unidade Orgânica</label>
-                            <?php echo $this->Form->control('unit_id', ['label' => false, 'class' => 'form-control', 'options' => $units]); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="natureza_id">Natureza</label>
-                        <?php echo $this->Form->control('natureza_id', ['label' => false, 'class' => 'form-control', 'options' => $naturezas]); ?>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
+            <div class="form-row">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="nip">NIP</label>
@@ -36,14 +14,34 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="dataconclusao">Data de Conclusão</label>
-                        <?php echo $this->Form->text('dataconclusao', ['label' => false,'type' => 'date', 'value' => !empty($processo->dataconclusao)?h($processo->dataconclusao->i18nFormat('yyyy-MM-dd')):'', 'class' => 'form-control']); ?>
+                        <label for="nip">ID Processo</label>
+                        <?php echo $this->Form->control('processo_id', ['type' => 'text', 'label' => false, 'disabled' => true, 'class' => 'form-control']); ?>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="state_id">Estado</label>
-                        <?php echo $this->Form->control('state_id', ['class' => 'form-control', 'options' => $states, 'label' => false]); ?>
+                        <label for="ultimaalteracao">Ultima Alteração</label>
+                        <?php echo $this->Form->control('ultimaalteracao', ['label' => false, 'class' => 'form-control']); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="entidadejudiciai_id"> Comarca Judicial</label>
+                        <?php echo $this->Form->control('unit_id', ['label' => false, 'class' => 'form-control', 'options' => $units, 'required']); ?>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="unit_id">Entidade Solicitante</label>
+                        <?php echo $this->Form->control('entidadejudiciai_id', ['label' => false, 'class' => 'form-control', 'options' => $entidades, 'required']); ?>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="natureza_id">Natureza</label>
+                        <?php echo $this->Form->control('natureza_id', ['label' => false, 'class' => 'form-control', 'options' => $naturezas]); ?>
                     </div>
                 </div>
             </div>

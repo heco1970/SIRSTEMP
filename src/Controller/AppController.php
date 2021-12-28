@@ -27,11 +27,6 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
-
-
-
-
     public $components = [
         'Acl' => [
             'className' => 'Acl.Acl'
@@ -80,7 +75,7 @@ class AppController extends Controller
                 'action' => 'login',
                 'prefix' => false
             ],
-            'authError' => 'Não está autorizado a acessar este local.',
+            'authError' => 'Não está autorizado a acessar a esta função.',
             'flash' => [
                 'element' => 'error'
             ]

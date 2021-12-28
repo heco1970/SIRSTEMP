@@ -29,10 +29,11 @@ class ProcessosController extends AppController
 
             $query = $this->Dynatables->setDefaultDynatableRequestValues($this->request->getQueryParams());
 
-            $validOps = ['processo', 'nip', 'natureza', 'entjudicial', 'createdfirst', 'createdlast'];
+            $validOps = ['processo', 'nip', 'natureza', 'ultima','entjudicial', 'createdfirst', 'createdlast'];
             $convArray = [
                 'processo' => $model . '.processo_id',
                 'nip' => $model . '.nip',
+                'ultima' => $model . '.ultimaalteracao',
                 'natureza' => $model . '.natureza_id',
                 'entjudicial' => $model . '.entidadejudiciai_id',
                 'createdfirst' => $model . '.created',
@@ -117,9 +118,15 @@ class ProcessosController extends AppController
      */
     public function add()
     {
+        $nextProcesso = $this->Processos->find()->select(['processo_id'])->order(['processo_id' => 'DESC'])->first();
+        $this->set('processo_id', $nextProcesso->processo_id + 1);
+
         $processo = $this->Processos->newEntity();
         if ($this->request->is('post')) {
             $processo = $this->Processos->patchEntity($processo, $this->request->getData());
+            $processo['processo_id'] = $nextProcesso->processo_id + 1;
+            $processo['state_id'] = 1;
+            $this->log($this->request->getData());
             if ($this->Processos->save($processo)) {
                 $this->Flash->success(__('O registo foi gravado.'));
 
@@ -130,9 +137,8 @@ class ProcessosController extends AppController
 
         $this->set('units', $this->Processos->Units->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
         $this->set('states', $this->Processos->States->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
-        $this->set('entidades', $this->Processos->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
         $this->set('naturezas', $this->Processos->Naturezas->find('list', ['keyField' => 'id', 'valueField' => 'designacao']));
-
+        $this->set('entidades', $this->Processos->Entidadejudiciais->find('list', ['keyField' => 'id', 'valueField' => 'descricao']));
         $this->set(compact('processo'));
     }
 
@@ -201,16 +207,26 @@ class ProcessosController extends AppController
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
 
-        $natureza = 'natureza LIKE "%' . $out[0] . '%"';
-        $nip =  'nip LIKE "%' . $out[1] . '%"';
+        if (!empty($out)) {
+            $processo = 'processo_id LIKE "%' . $out[0] . '%"';
+            $natureza =  'natureza_id LIKE "%' . $out[1] . '%"';
+            $nip = 'nip LIKE "%' . $out[2] . '%"';
+            $ultima =  'ultimaalteracao LIKE "%' . $out[3] . '%"';
+        }
 
         if ($out[0] != null) {
-            array_push($arr, $natureza);
+            array_push($arr, $processo);
         }
         if ($out[1] != null) {
+            array_push($arr, $natureza);
+        }
+        if ($out[2] != null) {
             array_push($arr, $nip);
         }
-        if ($out[2] != null && $out[3] == null) {
+        if ($out[3] != null) {
+            array_push($arr, $ultima);
+        }
+        /*if ($out[2] != null && $out[3] == null) {
             $createdfirst = 'Processos.created LIKE "%' . $out[2] . '%"';
             array_push($arr, $createdfirst);
         }
@@ -223,11 +239,11 @@ class ProcessosController extends AppController
             $createdlast = 'Processos.created <= "' . $out[3] . ' 23:59"';
             array_push($arr, $createdfirst);
             array_push($arr, $createdlast);
-        }
+        } */
         if ($arr == null) {
-            $processos = $this->Processos->find('all')->contain(['Entidadejudiciais']);
+            $processos = $this->Processos->find('all')->contain(['Entidadejudiciais','Naturezas']);
         } else {
-            $processos = $this->Processos->find('all', array('conditions' => $arr))->contain(['Entidadejudiciais']);
+            $processos = $this->Processos->find('all', array('conditions' => $arr))->contain(['Entidadejudiciais','Naturezas']);
         }
 
         $this->autoRender = false;
@@ -236,25 +252,28 @@ class ProcessosController extends AppController
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        $sheet->setCellValue('A1', 'Entidade Judicial');
-        $sheet->setCellValue('B1', 'Natureza');
-        $sheet->setCellValue('C1', 'NIP');
-        $sheet->setCellValue('D1', 'Data de criação');
+        $sheet->setCellValue('A1', 'Id');
+        $sheet->setCellValue('B1', 'Entidade Judicial');
+        $sheet->setCellValue('C1', 'Natureza');
+        $sheet->setCellValue('D1', 'NIP');
+        $sheet->setCellValue('E1', 'Data de criação');
+
 
         $linha = 2;
         foreach ($processos as $row) {
-            $sheet->setCellValue('A' . $linha, $row->entidadejudiciai->descricao);
-            $sheet->setCellValue('B' . $linha, $row->natureza);
-            $sheet->setCellValue('C' . $linha, $row->nip);
-            $sheet->setCellValue('D' . $linha, $row->created);
+            $sheet->setCellValue('A' . $linha, $row->id);
+            $sheet->setCellValue('B' . $linha, $row->entidadejudiciai->descricao);
+            $sheet->setCellValue('C' . $linha, $row->natureza->designacao);
+            $sheet->setCellValue('D' . $linha, $row->nip);
+            $sheet->setCellValue('E' . $linha, $row->created);
             $linha++;
         }
 
-        foreach (range('A', 'D') as $columnID) {
+        foreach (range('A', 'E') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
 
-        $spreadsheet->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save($path);

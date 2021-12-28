@@ -1,40 +1,36 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\State $state
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit State'), ['action' => 'edit', $state->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete State'), ['action' => 'delete', $state->id], ['confirm' => __('Are you sure you want to delete # {0}?', $state->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List States'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New State'), ['action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="states view large-9 medium-8 columns content">
-    <h3><?= h($state->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Designacao') ?></th>
-            <td><?= h($state->designacao) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($state->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($state->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($state->modified) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Ativo') ?></th>
-            <td><?= $state->ativo ? __('Yes') : __('No'); ?></td>
-        </tr>
-    </table>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe de Estado') ?></h6>
+    </div>
+    <div class="ml-3 mr-3 mb-3 mt-3">
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row">
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Designacao') ?></h6>
+                        <td><?= h($state->designacao) ?></td>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Ativo') ?></h6>
+                        <td><?= $state->ativo ? __('Yes') : __('No'); ?></td>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Criado') ?></h6>
+                        <p><?= h($state->created->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-primary"><?= __('Modificado') ?></h6>
+                        <p><?= h($state->modified->i18nFormat('dd/MM/yyyy HH:mm:ss')) ?></p>
+                    </div>
+                </div>
+                <a href="/states/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+                <?php $this->end(); ?>
+            </div>
+        </div>
+    </div>
 </div>

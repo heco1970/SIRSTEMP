@@ -8,26 +8,21 @@
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
         )
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
     </div>
 </div>
 
-
 <?php
 $dynElems =
     [
-        'id' => ['label' => __('ID')],
+        'id' => ['label' => __('ID Pedido')],
         'processo' => ['label' => __('Processo')],
-        'pessoa' => ['label' => __('Pessoa')],
-        'datarecepcao' => ['label' => __('Data de Receção')],
-        'equiparesponsavel' => ['label' => __('Equipa Responsável')],
-        'state' => ['label' => __('Estado'), 'options' => $estados, 'empty' => ' '],
-        'datatermoprevisto' => ['label' => __('Data termo previsto')],
-        'dataefectivatermo' => ['label' => __('Data termo efetivo')],
-
+        'pessoa' => ['label' => __('Nome Pessoa')],
+        'equiparesponsavel' => ['label' => __('Equipa Responsável'), 'options' => $teams, 'empty' => ' '],
+        'pedidostype' => ['label' => __('Tipo de Pedido de código'), 'options' => $PedidosTypes, 'empty' => ' '],
     ];
 ?>
 <?= $this->element('Dynatables/filter', ['dId' => 'dynatable', 'elements' => $dynElems]); ?>
@@ -38,6 +33,7 @@ $dynElems =
     ['pessoa' => ['label' => __('Pessoa')]] +
     ['datarecepcao' => ['label' => __('Data de Receção')]] +
     ['equiparesponsavel' => ['label' => __('Equipa Responsável')]] +
+    ['pedidostype' => ['label' => __('Tipo de Pedido')]] +
     ['state' => ['label' => __('Estado')]] +
     ['datatermoprevisto' => ['label' => __('Data termo previsto')]] +
     ['dataefectivatermo' => ['label' => __('Data termo efetivo')]]
@@ -59,12 +55,48 @@ $dynElems =
 
 <?php $this->start('scriptBottom') ?>
 <script>
+    var e = jQuery.Event("keypress");
+    e.which = 13; // Enter
+
+    $('#xlsbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("id").value,
+            document.getElementById("processo").value,
+            document.getElementById("pessoa").value,
+            document.getElementById("equiparesponsavel").value,
+            document.getElementById("pedidostype").value,
+            "1"
+        );
+    });
+
+    $('#dynatable-filter').click(function() {
+        $('#dynatable-filter').trigger(e);
+        emptyCookie();
+    });
+
+    function emptyCookie() {
+        createCookie(
+            "Filtro",
+            document.getElementById("id").value = '',
+            document.getElementById("processo").value = '',
+            document.getElementById("pessoa").value = '',
+            document.getElementById("equiparesponsavel").value = '',
+            document.getElementById("pedidostype").value = '',
+            "1"
+        );
+    }
+
     $(document).ready(function() {
         var writers = {
             ação: function(row) {
-                var view = '<a class="btn btn-info mr-1" href="/pedidos/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
-                var edit = '<a class="btn btn-warning mr-1" href="/pedidos/edit/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
-                var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" + ')" href="/pedidos/delete/' + row.id + 'data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
+                var view = '<a class="btn btn-info mr-1" href="/pedidos/view/' + row.id +
+                    '" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>'
+                var edit = '<a class="btn btn-warning mr-1" href="/pedidos/edit/' + row.id +
+                    '" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>'
+                var dele = '<a class="btn btn-danger" onclick="return confirm(' + "'Quer mesmo apagar?'" +
+                    ')" href="/pedidos/delete/' + row.id +
+                    'data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>'
 
                 return '<div class="btn-group btn-group-sm" role="group">' + view + edit + dele + '</div>';
             }
@@ -76,6 +108,49 @@ $dynElems =
         document.getElementById('datarecepcao').type = 'date';
         document.getElementById('datatermoprevisto').type = 'date';
         document.getElementById('dataefectivatermo').type = 'date';
+
+        document.getElementById("createdfirst").onchange = function() {
+            if (document.getElementById('createdfirst').value != "") {
+                datefirst = new Date(document.getElementById('createdfirst').value);
+                datefirst.setDate(datefirst.getDate() + 1)
+                document.getElementById('createdlast').min = datefirst.toISOString().split("T")[0];
+            } else {
+                document.getElementById('createdlast').min = null;
+            }
+        };
+
+        document.getElementById("createdlast").onchange = function() {
+            if (document.getElementById('createdlast').value != "") {
+                datelast = new Date(document.getElementById('createdlast').value);
+                datelast.setDate(datelast.getDate() - 1)
+                document.getElementById('createdfirst').max = datelast.toISOString().split("T")[0];
+            } else {
+                document.getElementById('createdfirst').max = null;
+            }
+        };
+
+        deleteCookie("Filtro");
+        createCookie("Filtro", "", "", "", "", "", "1");
     });
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+    }
+
+    function createCookie(name, valuePessoa, valueNome, valueCC, valueNIF, valueDatanascimento, days) {
+        var expires;
+
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        } else {
+            expires = "";
+        }
+
+        document.cookie = escape(name) + "=" +
+            valuePessoa + "," + valueNome + "," + valueCC + "," + valueNIF + "," + valueDatanascimento +
+            expires + "; path=/";
+    }
 </script>
 <?php $this->end(); ?>

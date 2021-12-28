@@ -12,7 +12,6 @@
 <?php
 $dynElems =
     [
-        
         'perfil' => ['label' => __('Designação')],
         'createdfirst' => ['label' => __('Criado (Início)'), 'type' => 'text'],
         'createdlast' => ['label' => __('Criado (Fim)'), 'type' => 'text']
@@ -22,7 +21,8 @@ $dynElems =
 <?php
 $dynElems = 
             ['perfil' => ['label' => __('Designação')]] +
-            ['created' => ['label' => __('Data de Criação')]];
+            ['created' => ['label' => __('Data de Criação')]] +
+            ['modified' => ['label' => __('Data de Modificação')]];
 ?>
 <div class="card shadow mb-4">
     <div class="card-header py-3">

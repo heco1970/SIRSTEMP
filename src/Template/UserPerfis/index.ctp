@@ -22,7 +22,8 @@ $dynElems =
 <?php
   $dynElems = ['username' => ['label' => __('Username')]] +
               ['perfil' => ['label' => __('Perfil')]] +  
-              ['created' => ['label' => __('Data de Criação')]];
+              ['created' => ['label' => __('Data de Criação')]] +
+              ['modified' => ['label' => __('Data de Modificação')]];
 ?>
 <div class="card shadow mb-4">
   <div class="card-header py-3">
