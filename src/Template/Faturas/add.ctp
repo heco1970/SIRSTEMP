@@ -113,8 +113,8 @@
 <script>
     $(function() {
         $("#campoValor").maskMoney({
-            thousands: ' ',
-            decimal: ',',
+            thousands: '',
+            decimal: '.',
             allowZero: true,
             suffix: ' €'
         });

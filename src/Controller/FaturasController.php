@@ -180,8 +180,8 @@ class FaturasController extends AppController
         $fatura = $this->Faturas->newEntity();
         if ($this->request->is('post')) {
             $fatura = $this->Faturas->patchEntity($fatura, $this->request->getData());
-            $valor = substr($this->request->getData('valor'), 0, -2);  // returns the value without ' €'
-            $fatura->valor = $valor;
+            $fatura->valor = substr($this->request->getData('valor'), 0, -2);
+
             if ($this->Faturas->save($fatura)) {
                 $this->Flash->success(__('The fatura has been saved.'));
 
@@ -210,8 +210,8 @@ class FaturasController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $fatura = $this->Faturas->patchEntity($fatura, $this->request->getData());
-            $valor = substr($this->request->getData('valor'), 0, -2);  // returns the value without ' €'
-            $fatura->valor = $valor;
+            $fatura->valor = substr($this->request->getData('valor'), 0, -2);
+
             if ($this->Faturas->save($fatura)) {
                 $this->Flash->success(__('The fatura has been saved.'));
 
