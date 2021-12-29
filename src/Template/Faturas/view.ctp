@@ -37,8 +37,7 @@
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Valor') ?></h6>
-                        <p><?= $this->Number->format($fatura->valor) ?></p>
-
+                        <p><?= $this->Number->currency($fatura->valor, 'EUR', ['locale' => 'pt_PT']) ?></p>
                     </div>
                 </div>
                 <div class="row">

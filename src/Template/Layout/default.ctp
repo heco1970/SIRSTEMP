@@ -92,6 +92,7 @@
         <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="/js/sb-admin-2.min.js"></script>
+        <script src="/js/jquery.maskMoney.min.js"></script>
         <?= $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', ['block' => true]); ?>
         <?= $this->Html->css('https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css', ['block' => true]); ?>
         <?= $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['block' => true]); ?>
