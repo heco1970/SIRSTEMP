@@ -35,7 +35,7 @@ $active = $show = '';
         </a>
         <div id="collapseAplicacoes" class="collapse hide" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <?= $this->Html->link(__('Faturas'), '/faturas/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
+                <?= $this->Html->link(__('Faturas/Custas'), '/faturas/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
 
                 <a class="collapse-item" data-toggle="collapse" data-target="#collapseSeguros" aria-expanded="true">
                     <span><?= __('Seguros') ?></span>

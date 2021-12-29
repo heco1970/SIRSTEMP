@@ -1,6 +1,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo Fatura') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo de Fatura/Custa') ?></h6>
     </div>
     <?= $this->Form->create($fatura) ?>
     <div class='ml-4 mt-4 mr-4'>
@@ -8,7 +8,7 @@
             <div class="form-row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="num_fatura">Nº Fatura</label>
+                        <label for="num_fatura">Nº Fatura/Custa</label>
                         <?php echo $this->Form->control('num_fatura', ['label' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
