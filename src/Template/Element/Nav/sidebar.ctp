@@ -42,7 +42,7 @@ $active = $show = '';
                 </a>
                 <div id="collapseSeguros" class="collapse hide">
                     <?= $this->Html->link(__('Penal'), '/formularios/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
-                    <?= $this->Html->link(__('Tutelar educativo'), '', ['class' => ['collapse-item'], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Tutelar educativo'), '/tutelareducativos/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
                 </div>
             </div>
         </div>
