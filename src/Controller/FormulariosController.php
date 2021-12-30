@@ -24,9 +24,6 @@ class FormulariosController extends AppController
      */
     public function index()
     {
-        // $formularios = $this->paginate($this->Formularios);
-        // $this->set(compact('formularios'));
-
         if ($this->request->is('ajax')) {
             $model = 'Formularios';
             $this->loadComponent('Dynatables');
@@ -99,7 +96,6 @@ class FormulariosController extends AppController
             $formulario = $this->Formularios->patchEntity($formulario, $this->request->getData());
             if ($this->Formularios->save($formulario)) {
                 $this->Flash->success(__('O registo foi gravado.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
@@ -145,7 +141,6 @@ class FormulariosController extends AppController
      */
     public function delete($id = null)
     {
-        //$this->request->allowMethod(['post', 'delete']);
         $formulario = $this->Formularios->get($id);
         if ($this->Formularios->delete($formulario)) {
             $this->Flash->success(__('O registo foi apagado.'));

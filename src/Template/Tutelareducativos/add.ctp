@@ -1,3 +1,9 @@
+<style>
+    .error-msg {
+        color: red;
+    }
+</style>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Novo Registo Seguro Tutelar Educativo') ?></h6>
@@ -6,7 +12,7 @@
     <div class='ml-4 mt-4 mr-4'>
         <div id='my-form-body'>
             <div class="form-row">
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="id_pedido">Id Pedido</label>
                         <?php echo $this->Form->control('id_pedido', ['id' => 'campoIdPedido', 'label' => false, 'type' => 'select', 'multiple' => false, 'options' => $pedidos, 'class' => 'form-control']); ?>
@@ -22,7 +28,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-sm-10">
+                <div class="col-sm-12">
                     <div class="form-group">
                         <label for="nome_prestador_trabalho">Nome do Jovem</label>
                         <?php echo $this->Form->control('nome_jovem', ['id' => 'campoNomeJovem', 'label' => false, 'class' => 'form-control', 'required']); ?>
@@ -31,25 +37,23 @@
             </div>
 
             <div class="form-row">
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label for="data_fim_execucao">Data de Nascimento</label>
                         <?php echo $this->Form->text('data_nascimento', ['id' => 'campoDataNascimento', 'label' => false, 'class' => 'form-control', 'type' => 'date']); ?>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-row">
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label for="hora_aplicadas">NIF</label>
                         <?php echo $this->Form->control('nif', ['id' => 'campoNif', 'label' => false, 'class' => 'form-control', 'required', 'min' => 0]); ?>
+                        <div id='nifError'></div>
                     </div>
                 </div>
             </div>
 
             <div class="form-row">
-                <div class="col-sm-10">
+                <div class="col-sm-12">
                     <div class="form-group">
                         <label for="designacao_entidade">Designação da Entidade Beneficiária da Tarefa</label>
                         <?php echo $this->Form->control('designacao_entidade', ['id' => 'campoEntidadeBeneficiaria', 'label' => false, 'class' => 'form-control', 'required']); ?>
@@ -107,55 +111,28 @@
         language: 'pt'
     });
 
-    $('document').ready(function() {
-
+    //Nif validations
+    $('#campoNif').change(function() {
+        if (validateNIF($('#campoNif').val())) {
+            $('#nifError').html("").removeClass("error-msg");
+        } else {
+            $('#nifError').html("Número de Contribuinte inválido.").addClass("error-msg");
+        }
     });
+
+    function validateNIF(nif) {
+        if (!['1', '2', '3', '5', '6', '8'].includes(nif.substr(0, 1)) &&
+            !['45', '70', '71', '72', '77', '79', '90', '91', '98', '99'].includes(nif.substr(0, 2)))
+            return false;
+
+        let total = nif[0] * 9 + nif[1] * 8 + nif[2] * 7 + nif[3] * 6 + nif[4] * 5 + nif[5] * 4 + nif[6] * 3 + nif[7] * 2;
+
+        let modulo11 = total - parseInt(total / 11) * 11;
+        let comparador = modulo11 == 1 || modulo11 == 0 ? 0 : 11 - modulo11;
+
+        return nif[8] == comparador
+    }
+
+
+    $('document').ready(function() {});
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <?php
-        /**
-         * @var \App\View\AppView $this
-         * @var \App\Model\Entity\Tutelareducativo $tutelareducativo
-         */
-        ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Tutelareducativos'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="tutelareducativos form large-9 medium-8 columns content">
-    <?= $this->Form->create($tutelareducativo) ?>
-    <fieldset>
-        <legend><?= __('Add Tutelareducativo') ?></legend>
-        <?php
-        echo $this->Form->control('id_pedido');
-        echo $this->Form->control('id_equipa');
-        echo $this->Form->control('nome_jovem');
-        echo $this->Form->control('nif');
-        echo $this->Form->control('data_nascimento');
-        echo $this->Form->control('designacao_entidade');
-        echo $this->Form->control('data_inicio');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div> -->

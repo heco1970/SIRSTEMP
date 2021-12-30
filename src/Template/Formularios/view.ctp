@@ -72,6 +72,7 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
+        <a href="/formularios/edit/<?= h($formulario->id) ?>" class="btn btn-warning float-right space-right"><?= __('Editar') ?></a>
         <a href="/formularios/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
     </div>
 </div>

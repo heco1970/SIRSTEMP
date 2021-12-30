@@ -1,52 +1,58 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Tutelareducativo $tutelareducativo
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Tutelareducativo'), ['action' => 'edit', $tutelareducativo->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Tutelareducativo'), ['action' => 'delete', $tutelareducativo->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tutelareducativo->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Tutelareducativos'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Tutelareducativo'), ['action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="tutelareducativos view large-9 medium-8 columns content">
-    <h3><?= h($tutelareducativo->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Nome Jovem') ?></th>
-            <td><?= h($tutelareducativo->nome_jovem) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Designacao Entidade') ?></th>
-            <td><?= h($tutelareducativo->designacao_entidade) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($tutelareducativo->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id Pedido') ?></th>
-            <td><?= $this->Number->format($tutelareducativo->id_pedido) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id Equipa') ?></th>
-            <td><?= $this->Number->format($tutelareducativo->id_equipa) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Nif') ?></th>
-            <td><?= $this->Number->format($tutelareducativo->nif) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Data Nascimento') ?></th>
-            <td><?= h($tutelareducativo->data_nascimento) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Data Inicio') ?></th>
-            <td><?= h($tutelareducativo->data_inicio) ?></td>
-        </tr>
-    </table>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe Seguro Tutelar Educativo') ?></h6>
+    </div>
+    <div class="ml-3 mr-3 mb-3 mt-3">
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row">
+                    <div class="col-2">
+                        <h6 class="text-primary"><?= __('Id Pedido') ?></h6>
+                        <p><?= $this->Number->format($tutelareducativo->id_pedido) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="text-primary"><?= __('Equipa') ?></h6>
+                        <p><?= h($tutelareducativo->team->nome) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <h6 class="text-primary"><?= __('Nome do Jovem') ?></h6>
+                        <p><?= h($tutelareducativo->nome_jovem) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="text-primary"><?= __('Data de Nascimento') ?></h6>
+                        <p><?= h($tutelareducativo->data_nascimento->i18nFormat('dd-MM-yyyy')) ?></p>
+                    </div>
+                    <div class="col-4">
+                        <h6 class="text-primary"><?= __('NIF') ?></h6>
+                        <p><?= h($tutelareducativo->nif) ?></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-10">
+                        <h6 class="text-primary"><?= __('Designação da Entidade Beneficiária da Tarefa') ?>
+                        </h6>
+                        <p><?= h($tutelareducativo->designacao_entidade) ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <h6 class="text-primary"><?= __('Data Inicio') ?></h6>
+                        <p><?= h($tutelareducativo->data_inicio->i18nFormat('dd-MM-yyyy')) ?></p>
+                    </div>
+                </div>
+                <?php $this->end(); ?>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer card-footer-fixed">
+        <a href="/tutelareducativos/edit/<?= h($tutelareducativo->id) ?>" class="btn btn-warning float-right space-right"><?= __('Editar') ?></a>
+        <a href="/tutelareducativos/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+    </div>
 </div>

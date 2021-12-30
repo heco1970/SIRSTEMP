@@ -1,7 +1,6 @@
 <?php
 $data = [];
 $records = $records->toArray();
-$this->log($records);
 foreach ($records as $record) {
     $data[] = [
         'nome_jovem' => $record->nome_jovem,

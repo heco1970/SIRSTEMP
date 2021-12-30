@@ -24,9 +24,6 @@ class TutelareducativosController extends AppController
      */
     public function index()
     {
-        /* $tutelareducativos = $this->paginate($this->Tutelareducativos);
-        $this->set(compact('tutelareducativos')); */
-
         if ($this->request->is('ajax')) {
             $model = 'Tutelareducativos';
             $this->loadComponent('Dynatables');
@@ -82,9 +79,8 @@ class TutelareducativosController extends AppController
     public function view($id = null)
     {
         $tutelareducativo = $this->Tutelareducativos->get($id, [
-            'contain' => []
+            'contain' => ['Teams', 'Pedidos']
         ]);
-
         $this->set('tutelareducativo', $tutelareducativo);
     }
 
@@ -99,11 +95,10 @@ class TutelareducativosController extends AppController
         if ($this->request->is('post')) {
             $tutelareducativo = $this->Tutelareducativos->patchEntity($tutelareducativo, $this->request->getData());
             if ($this->Tutelareducativos->save($tutelareducativo)) {
-                $this->Flash->success(__('O registo tutelar educativo foi gravado.'));
-
+                $this->Flash->success(__('O registo foi gravado.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('o registo tutelar educativo não foi gravado. por favor, tente novamente.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
         $this->set('teams', $this->Tutelareducativos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']));
         $this->set('pedidos', $this->Tutelareducativos->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'id']));
@@ -125,12 +120,14 @@ class TutelareducativosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tutelareducativo = $this->Tutelareducativos->patchEntity($tutelareducativo, $this->request->getData());
             if ($this->Tutelareducativos->save($tutelareducativo)) {
-                $this->Flash->success(__('The tutelareducativo has been saved.'));
+                $this->Flash->success(__('O registo foi gravado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The tutelareducativo could not be saved. Please, try again.'));
+            $this->Flash->error(__('O registo não foi gravado. Tente novamente.'));
         }
+        $this->set('teams', $this->Tutelareducativos->Teams->find('list', ['keyField' => 'id', 'valueField' => 'nome']));
+        $this->set('pedidos', $this->Tutelareducativos->Pedidos->find('list', ['keyField' => 'id', 'valueField' => 'id']));
         $this->set(compact('tutelareducativo'));
     }
 
@@ -143,14 +140,12 @@ class TutelareducativosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
         $tutelareducativo = $this->Tutelareducativos->get($id);
         if ($this->Tutelareducativos->delete($tutelareducativo)) {
-            $this->Flash->success(__('The tutelareducativo has been deleted.'));
+            $this->Flash->success(__('O registo foi apagado.'));
         } else {
-            $this->Flash->error(__('The tutelareducativo could not be deleted. Please, try again.'));
+            $this->Flash->error(__('O registo não foi apagado. Tente novamente.'));
         }
-
         return $this->redirect(['action' => 'index']);
     }
 
