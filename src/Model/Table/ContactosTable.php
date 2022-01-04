@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -46,10 +47,10 @@ class ContactosTable extends Table
             'foreignKey' => 'pessoa_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Pais', [
+        /* $this->belongsTo('Pais', [
             'foreignKey' => 'pais_id',
             'joinType' => 'INNER'
-        ]);
+        ]); */
     }
 
     /**
@@ -76,11 +77,11 @@ class ContactosTable extends Table
             ->requirePresence('localidade', 'create')
             ->notEmpty('localidade');
 
-        $validator
+        /* $validator
             ->scalar('morada')
             ->maxLength('morada', 255)
             ->requirePresence('morada', 'create')
-            ->notEmpty('morada');
+            ->notEmpty('morada'); */
 
         $validator
             ->integer('telefone')
@@ -122,7 +123,7 @@ class ContactosTable extends Table
     {
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['pais_id'], 'Pais'));
+        // $rules->add($rules->existsIn(['pais_id'], 'Pais'));
 
         return $rules;
     }
