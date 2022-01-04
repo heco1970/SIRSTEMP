@@ -113,4 +113,4 @@ $pdf->Ln(15);
 $pdf->ColoredTable($header, $size, $records);
 
 // close and output PDF document
-$pdf->Output($name . '.pdf', 'D');
+$pdf->Output('Pessoas.pdf', 'D');

@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -543,57 +545,33 @@ class PessoasController extends AppController
     public function pdf()
     {
         // Recolhe dados do json
-        $layout = null;    // Layout do pdf a usar
-        $name = null;    // Nome do ficheiro
-        $mode = null;        // Modo do ficheiro
-        $pageize = null;  // Tamanho do ficheiro
-        $header = null;    // Cabeçalho para a tabela
-        $size = null;        // Tamanho do cabeçalho
-        $records = null;  // Registos para preencher a tabela
+        $name = "Registo de Pessoas";       // Nome do ficheiro
+        $mode = "P";                        // Modo do ficheiro
+        $pageize = "A3";                                                                  // Tamanho do ficheiro
+        $header = array('Nº de pessoa', 'Nome', 'CC/BI', 'NIF', 'Data de nascimento', 'Detalhes');  // Cabeçalho para a tabela
+        $size = array(35, 65, 35, 35, 50, 45);                                            // Tamanho do cabeçalho
+        $recordsPessoas = $this->Pessoas->find('all')->toArray();                    // Registos para preencher a tabela
+        $records = [];
 
-        $this->set(compact('name', 'mode', 'pageize','header', 'size', 'records'));     // Enviar dados do json para o pdf
-        $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1
-        return $this->response->withHeader('Content-Type', 'application/pdf');          // Criação do pdf
-    }
-
-    /**
-     * Função resposável por extrair a lista de registos num ficheiro pdf
-     */
-    public function Pdf_1()
-    {       
-        // Recolha dos parametros aplicados na lista utilizando o component RequestCache
-        $out = $this->RequestCache->get();
-
-        // Recolha dos registos utilizando a fução desenvolvida para esse efeito
-        $data = null;
-
-        // Definição do titulo do documento e titulos e tamanho das colunas
-        $titlePDF = 'Organismos';
-        $headerPDF = array('Organismo', 'NIF', 'Tipo', 'Estado','Data Inativo');
-        $sizePDF = array(170, 25, 11,20, 45); 
-        $dadosPDF = [];
-        
         // Construção de linha para cada registo recebido
-        foreach($data['records'] as $row) 
+        foreach($recordsPessoas as $row) 
         {
-            $dadosPDF[$row->id] = 
+            $records[$row->id] = 
             [
-                substr($row->descricao,0,60),
-                substr($row->nif,0,20), 
-                substr($row->tipo_org,0,3),
-                $row->inactivo == 'N' ? 'Ativo':'Inativo', 
-                (isset($row->data_inactivo) ? $row->data_inactivo->i18nFormat('YYYY-MM-dd HH:mm:ss') : "")
+                $row->id,
+                $row->nome,
+                $row->cc,
+                $row->nif,
+                (isset($row->data_nascimento) ? $row->data_nascimento->i18nFormat('dd/MM/yyyy') : ""),
+                $row->observacoes
             ];
         }
 
-        // Definição do nome do ficheiro
-        $namePDF = 'Organismos.pdf';
-        $this->set(compact('dadosPDF','titlePDF','headerPDF','sizePDF','namePDF'));
 
-        // Definição do tipo de resposta da função
-        $this->response->type('pdf');
+        $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
+        $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1
 
         // Renderização do documento utilizando o template desenvolvido para o efeito
-        $this->render('/PDF/pdf');
+        return $this->response->withHeader('Content-Type', 'application/pdf');
     }
 }
