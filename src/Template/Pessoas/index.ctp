@@ -10,7 +10,13 @@ $pessoaNome = "";
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
+        )
+        ?>
+        <?= $this->Html->link(
+            '<span class="fas fa-file-pdf"></span><span class="sr-only">' . __('pdf') . '</span>',
+            ['action' => 'pdf'],
+            ['id' => 'pdfbutton', 'escape' => false, 'title' => __('pdf'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
         )
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
@@ -58,6 +64,7 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 <?php $this->start('scriptBottom') ?>
+
 <script>
     var e = jQuery.Event("keypress");
     e.which = 13; // Enter

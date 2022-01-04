@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,6 +8,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Table;
+use \Cake\Utility\Security;
+
 
 ob_start();
 
@@ -20,7 +22,6 @@ ob_start();
  */
 class PessoasController extends AppController
 {
-
 
     /**
      * Index method
@@ -537,5 +538,62 @@ class PessoasController extends AppController
         $this->set('freguesias', $freguesia);
 
         $this->set('_serialize', ['distrito']);
+    }
+
+    public function pdf()
+    {
+        // Recolhe dados do json
+        $layout = null;    // Layout do pdf a usar
+        $name = null;    // Nome do ficheiro
+        $mode = null;        // Modo do ficheiro
+        $pageize = null;  // Tamanho do ficheiro
+        $header = null;    // Cabeçalho para a tabela
+        $size = null;        // Tamanho do cabeçalho
+        $records = null;  // Registos para preencher a tabela
+
+        $this->set(compact('name', 'mode', 'pageize','header', 'size', 'records'));     // Enviar dados do json para o pdf
+        $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1
+        return $this->response->withHeader('Content-Type', 'application/pdf');          // Criação do pdf
+    }
+
+    /**
+     * Função resposável por extrair a lista de registos num ficheiro pdf
+     */
+    public function Pdf_1()
+    {       
+        // Recolha dos parametros aplicados na lista utilizando o component RequestCache
+        $out = $this->RequestCache->get();
+
+        // Recolha dos registos utilizando a fução desenvolvida para esse efeito
+        $data = null;
+
+        // Definição do titulo do documento e titulos e tamanho das colunas
+        $titlePDF = 'Organismos';
+        $headerPDF = array('Organismo', 'NIF', 'Tipo', 'Estado','Data Inativo');
+        $sizePDF = array(170, 25, 11,20, 45); 
+        $dadosPDF = [];
+        
+        // Construção de linha para cada registo recebido
+        foreach($data['records'] as $row) 
+        {
+            $dadosPDF[$row->id] = 
+            [
+                substr($row->descricao,0,60),
+                substr($row->nif,0,20), 
+                substr($row->tipo_org,0,3),
+                $row->inactivo == 'N' ? 'Ativo':'Inativo', 
+                (isset($row->data_inactivo) ? $row->data_inactivo->i18nFormat('YYYY-MM-dd HH:mm:ss') : "")
+            ];
+        }
+
+        // Definição do nome do ficheiro
+        $namePDF = 'Organismos.pdf';
+        $this->set(compact('dadosPDF','titlePDF','headerPDF','sizePDF','namePDF'));
+
+        // Definição do tipo de resposta da função
+        $this->response->type('pdf');
+
+        // Renderização do documento utilizando o template desenvolvido para o efeito
+        $this->render('/PDF/pdf');
     }
 }
