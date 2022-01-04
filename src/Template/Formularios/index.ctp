@@ -8,7 +8,13 @@
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
+        )
+        ?>
+        <?= $this->Html->link(
+            '<span class="fas fa-file-pdf"></span><span class="sr-only">' . __('pdf') . '</span>',
+            ['action' => 'pdf'],
+            ['id' => 'pdfbutton', 'escape' => false, 'title' => __('pdf'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
         )
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
@@ -125,7 +131,7 @@ $dynElems =
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
 
-    function createCookie(name, valuePedido, valueEquipa, valueNomePrestador,valueEntidade, days) {
+    function createCookie(name, valuePedido, valueEquipa, valueNomePrestador, valueEntidade, days) {
         var expires;
 
         if (days) {
@@ -140,6 +146,5 @@ $dynElems =
             valuePedido + "," + valueEquipa + "," + valueNomePrestador + "," + valueEntidade +
             expires + "; path=/";
     }
-
 </script>
 <?php $this->end(); ?>

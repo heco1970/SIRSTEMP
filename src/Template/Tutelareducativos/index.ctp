@@ -5,12 +5,18 @@
 <div class="card shadow mb-2">
     <div class="card-header py-3">
         <a class="btn btn-success btn-circle btn-lg" href="/tutelareducativos/add"><i class="fas fa-plus"></i></a>
-        <!-- <?= $this->Html->link(
-                    '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
-                    ['action' => 'xls'],
-                    ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
-                )
-                ?> -->
+        <?= $this->Html->link(
+            '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
+            ['action' => 'xls'],
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
+        )
+        ?>
+        <?= $this->Html->link(
+            '<span class="fas fa-file-pdf"></span><span class="sr-only">' . __('pdf') . '</span>',
+            ['action' => 'pdf'],
+            ['id' => 'pdfbutton', 'escape' => false, 'title' => __('pdf'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
+        )
+        ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
     </div>
 </div>

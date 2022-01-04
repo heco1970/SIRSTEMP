@@ -554,17 +554,16 @@ class PessoasController extends AppController
         $records = [];
 
         // Construção de linha para cada registo recebido
-        foreach($recordsPessoas as $row) 
-        {
-            $records[$row->id] = 
-            [
-                $row->id,
-                $row->nome,
-                $row->cc,
-                $row->nif,
-                (isset($row->data_nascimento) ? $row->data_nascimento->i18nFormat('dd/MM/yyyy') : ""),
-                $row->observacoes
-            ];
+        foreach ($recordsPessoas as $row) {
+            $records[$row->id] =
+                [
+                    $row->id,
+                    $row->nome,
+                    $row->cc,
+                    $row->nif,
+                    (isset($row->data_nascimento) ? $row->data_nascimento->i18nFormat('dd/MM/yyyy') : ""),
+                    $row->observacoes
+                ];
         }
 
 

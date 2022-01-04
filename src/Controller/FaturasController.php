@@ -238,4 +238,35 @@ class FaturasController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function pdf()
+    {
+        // Recolhe dados do json
+        $name = "Registo de Faturas/Custas";       // Nome do ficheiro
+        $mode = "P";                        // Modo do ficheiro
+        $pageize = "A3";                                                                  // Tamanho do ficheiro
+        $header = array('Nº Fatura/Custa', 'Valor', 'Entidade Judicial', 'Estado Pagamento', 'Data');  // Cabeçalho para a tabela
+        $size = array(45, 45, 60, 60, 50);                                            // Tamanho do cabeçalho
+        $recordsFaturas = $this->Faturas->find('all')->toArray();                    // Registos para preencher a tabela
+        $records = [];
+
+        // Construção de linha para cada registo recebido
+        foreach ($recordsFaturas as $row) {
+            $records[$row->id] =
+                [
+                    $row->num_fatura,
+                    $row->valor . '€',
+                    $row->id_entidade,
+                    $row->id_pagamento,
+                    (isset($row->data) ? $row->data->i18nFormat('dd/MM/yyyy') : "")
+                ];
+        }
+
+
+        $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
+        $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1
+
+        // Renderização do documento utilizando o template desenvolvido para o efeito
+        return $this->response->withHeader('Content-Type', 'application/pdf');
+    }
 }

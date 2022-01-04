@@ -238,4 +238,34 @@ class FormulariosController extends AppController
 
         echo json_encode(['results' => $pedidostosend], JSON_UNESCAPED_UNICODE);
     }
+
+    public function pdf()
+    {
+        // Recolhe dados do json
+        $name = "Registo Seguro Penal";       // Nome do ficheiro
+        $mode = "P";                        // Modo do ficheiro
+        $pageize = "A3";                                                                  // Tamanho do ficheiro
+        $header = array('ID Pedido', 'Equipa', 'Prestador de trabalho', 'Entidade beneficiária');  // Cabeçalho para a tabela
+        $size = array(35, 50, 85, 85);                                            // Tamanho do cabeçalho
+        $recordsFormularios = $this->Formularios->find('all')->toArray();                    // Registos para preencher a tabela
+        $records = [];
+
+        // Construção de linha para cada registo recebido
+        foreach ($recordsFormularios as $row) {
+            $records[$row->id] =
+                [
+                    $row->id_pedido,
+                    $row->id_equipa,
+                    $row->nome_prestador_trabalho,
+                    $row->designacao_entidade
+                ];
+        }
+
+
+        $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
+        $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1
+
+        // Renderização do documento utilizando o template desenvolvido para o efeito
+        return $this->response->withHeader('Content-Type', 'application/pdf');
+    }
 }
