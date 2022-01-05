@@ -247,7 +247,7 @@ class FormulariosController extends AppController
         $pageize = "A3";                                                                  // Tamanho do ficheiro
         $header = array('ID Pedido', 'Equipa', 'Prestador de trabalho', 'Entidade beneficiária');  // Cabeçalho para a tabela
         $size = array(35, 50, 85, 85);                                            // Tamanho do cabeçalho
-        $recordsFormularios = $this->Formularios->find('all')->toArray();                    // Registos para preencher a tabela
+        $recordsFormularios = $this->Formularios->find('all')->contain(['Teams'])->toArray();                    // Registos para preencher a tabela
         $records = [];
 
         // Construção de linha para cada registo recebido
@@ -255,12 +255,11 @@ class FormulariosController extends AppController
             $records[$row->id] =
                 [
                     $row->id_pedido,
-                    $row->id_equipa,
+                    $row->team->nome,
                     $row->nome_prestador_trabalho,
                     $row->designacao_entidade
                 ];
         }
-
 
         $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
         $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1

@@ -242,12 +242,12 @@ class FaturasController extends AppController
     public function pdf()
     {
         // Recolhe dados do json
-        $name = "Registo de Faturas/Custas";       // Nome do ficheiro
-        $mode = "P";                        // Modo do ficheiro
-        $pageize = "A3";                                                                  // Tamanho do ficheiro
-        $header = array('Nº Fatura/Custa', 'Valor', 'Entidade Judicial', 'Estado Pagamento', 'Data');  // Cabeçalho para a tabela
-        $size = array(45, 45, 60, 60, 50);                                            // Tamanho do cabeçalho
-        $recordsFaturas = $this->Faturas->find('all')->toArray();                    // Registos para preencher a tabela
+        $name = "Registo de Faturas/Custas";        // Nome do ficheiro
+        $mode = "P";                                // Modo do ficheiro
+        $pageize = "A3";                                                                                          // Tamanho do ficheiro
+        $header = array('Nº Fatura/Custa', 'Valor', 'Entidade Judicial', 'Estado Pagamento', 'Data');             // Cabeçalho para a tabela
+        $size = array(45, 45, 60, 60, 50);                                                                        // Tamanho do cabeçalho
+        $recordsFaturas = $this->Faturas->find('all')->contain(['Pagamentos', 'Entidadejudiciais'])->toArray();   // Registos para preencher a tabela
         $records = [];
 
         // Construção de linha para cada registo recebido
@@ -256,12 +256,12 @@ class FaturasController extends AppController
                 [
                     $row->num_fatura,
                     $row->valor . '€',
-                    $row->id_entidade,
-                    $row->id_pagamento,
+                    $row->entidadejudiciai->descricao,
+                    $row->pagamento->estado,
                     (isset($row->data) ? $row->data->i18nFormat('dd/MM/yyyy') : "")
                 ];
         }
-
+        $this->log($recordsFaturas);
 
         $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
         $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1

@@ -550,7 +550,40 @@ class PessoasController extends AppController
         $pageize = "A3";                                                                  // Tamanho do ficheiro
         $header = array('Nº de pessoa', 'Nome', 'CC/BI', 'NIF', 'Data de nascimento', 'Detalhes');  // Cabeçalho para a tabela
         $size = array(35, 65, 35, 35, 50, 45);                                            // Tamanho do cabeçalho
-        $recordsPessoas = $this->Pessoas->find('all')->toArray();                    // Registos para preencher a tabela
+
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+
+        if (!empty($out)) {
+            $id = 'id LIKE "%' . $out[0] . '%"';
+            $nome = 'nome LIKE "%' . $out[1] . '%"';
+            $cc = 'cc LIKE "%' . $out[2] . '%"';
+            $nif = 'nif LIKE "%' . $out[3] . '%"';
+            $datanascimento = 'data_nascimento LIKE "%' . $out[4] . '%"';
+        }
+
+        if ($out[0] != null) {
+            array_push($arr, $id);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $nome);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $cc);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $nif);
+        }
+        if ($out[4] != null) {
+            array_push($arr, $datanascimento);
+        }
+        if ($arr == null) {
+            $recordsPessoas = $this->Pessoas->find('all')->toArray();
+        } else {
+            $recordsPessoas = $this->Pessoas->find('all', array('conditions' => $arr));
+        }
+
+        //$recordsPessoas = $this->Pessoas->find('all')->toArray();                    // Registos para preencher a tabela
         $records = [];
 
         // Construção de linha para cada registo recebido
@@ -565,7 +598,6 @@ class PessoasController extends AppController
                     $row->observacoes
                 ];
         }
-
 
         $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
         $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1

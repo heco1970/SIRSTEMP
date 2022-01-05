@@ -81,6 +81,18 @@ $dynElems = ['id' => ['label' => __('Nº de pessoa')]] +
         );
     });
 
+    $('#pdfbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("id").value,
+            document.getElementById("nome").value,
+            document.getElementById("cc").value,
+            document.getElementById("nif").value,
+            document.getElementById("datanascimento").value,
+            "1"
+        );
+    });
+
     $('#dynatable-filter').click(function() {
         $('#dynatable-filter').trigger(e);
         emptyCookie();

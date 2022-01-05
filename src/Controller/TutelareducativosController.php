@@ -177,12 +177,12 @@ class TutelareducativosController extends AppController
     public function pdf()
     {
         // Recolhe dados do json
-        $name = "Registo Seguro Tutelar Educativo";       // Nome do ficheiro
-        $mode = "P";                        // Modo do ficheiro
-        $pageize = "A3";                                                                  // Tamanho do ficheiro
-        $header = array('ID Pedido', 'Equipa', 'Nome do Jovem', 'NIF', 'Entidade beneficiária');  // Cabeçalho para a tabela
-        $size = array(35, 55, 70, 35, 70);                                            // Tamanho do cabeçalho
-        $recordsTutelareducativos = $this->Tutelareducativos->find('all')->toArray();                    // Registos para preencher a tabela
+        $name = "Registo Seguro Tutelar Educativo";         // Nome do ficheiro
+        $mode = "P";                                        // Modo do ficheiro
+        $pageize = "A3";                                                                                                                // Tamanho do ficheiro
+        $header = array('ID Pedido', 'Equipa', 'Nome do Jovem', 'NIF', 'Entidade beneficiária');                                        // Cabeçalho para a tabela
+        $size = array(35, 55, 70, 35, 70);                                                                                              // Tamanho do cabeçalho
+        $recordsTutelareducativos = $this->Tutelareducativos->find('all')->contain(['Teams'])->toArray();     // Registos para preencher a tabela
         $records = [];
 
         // Construção de linha para cada registo recebido
@@ -190,7 +190,7 @@ class TutelareducativosController extends AppController
             $records[$row->id] =
                 [
                     $row->id_pedido,
-                    $row->id_equipa,
+                    $row->team->nome,
                     $row->nome_jovem,
                     $row->nif,
                     $row->designacao_entidade
