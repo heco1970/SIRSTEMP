@@ -247,7 +247,39 @@ class FaturasController extends AppController
         $pageize = "A3";                                                                                          // Tamanho do ficheiro
         $header = array('Nº Fatura/Custa', 'Valor', 'Entidade Judicial', 'Estado Pagamento', 'Data');             // Cabeçalho para a tabela
         $size = array(45, 45, 60, 60, 50);                                                                        // Tamanho do cabeçalho
-        $recordsFaturas = $this->Faturas->find('all')->contain(['Pagamentos', 'Entidadejudiciais'])->toArray();   // Registos para preencher a tabela
+
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+
+        if (!empty($out)) {
+            $num_fatura = 'num_fatura LIKE "%' . $out[0] . '%"';
+            $valor = 'valor LIKE "%' . $out[1] . '%"';
+            $entidadejudiciai = 'id_entidade LIKE "%' . $out[2] . '%"';
+            $pagamento = 'id_pagamento LIKE "%' . $out[3] . '%"';
+            $data = 'data LIKE "%' . $out[4] . '%"';
+        }
+
+        if ($out[0] != null) {
+            array_push($arr, $num_fatura);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $valor);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $entidadejudiciai);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $pagamento);
+        }
+        if ($out[4] != null) {
+            array_push($arr, $data);
+        }
+        if ($arr == null) {
+            $recordsFaturas = $this->Faturas->find('all')->contain(['Pagamentos', 'Entidadejudiciais'])->toArray();
+        } else {
+            $recordsFaturas = $this->Faturas->find('all', array('conditions' => $arr))->contain(['Pagamentos', 'Entidadejudiciais'])->toArray();
+        }
+
         $records = [];
 
         // Construção de linha para cada registo recebido
@@ -261,7 +293,6 @@ class FaturasController extends AppController
                     (isset($row->data) ? $row->data->i18nFormat('dd/MM/yyyy') : "")
                 ];
         }
-        $this->log($recordsFaturas);
 
         $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
         $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1

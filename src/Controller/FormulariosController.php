@@ -247,7 +247,38 @@ class FormulariosController extends AppController
         $pageize = "A3";                                                                  // Tamanho do ficheiro
         $header = array('ID Pedido', 'Equipa', 'Prestador de trabalho', 'Entidade beneficiária');  // Cabeçalho para a tabela
         $size = array(35, 50, 85, 85);                                            // Tamanho do cabeçalho
-        $recordsFormularios = $this->Formularios->find('all')->contain(['Teams'])->toArray();                    // Registos para preencher a tabela
+
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+
+        if (!empty($out)) {
+            $id_pedido = 'id_pedido LIKE "%' . $out[0] . '%"';
+            $equipa = 'id_equipa LIKE "%' . $out[1] . '%"';
+            $nome_prestador_trabalho = 'nome_prestador_trabalho LIKE "%' . $out[2] . '%"';
+            $designacao_entidade = 'designacao_entidade LIKE "%' . $out[3] . '%"';
+        }
+
+        $this->log($_COOKIE["Filtro"]);
+ 
+
+        if ($out[0] != null) {
+            array_push($arr, $id_pedido);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $equipa);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $nome_prestador_trabalho);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $designacao_entidade);
+        }
+        if ($arr == null) {
+            $recordsFormularios = $this->Formularios->find('all')->contain(['Teams'])->toArray();
+        } else {
+            $recordsFormularios = $this->Formularios->find('all', array('conditions' => $arr))->contain(['Teams'])->toArray();
+        }
+
         $records = [];
 
         // Construção de linha para cada registo recebido

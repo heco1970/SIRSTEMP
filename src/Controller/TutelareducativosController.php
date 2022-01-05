@@ -182,7 +182,46 @@ class TutelareducativosController extends AppController
         $pageize = "A3";                                                                                                                // Tamanho do ficheiro
         $header = array('ID Pedido', 'Equipa', 'Nome do Jovem', 'NIF', 'Entidade beneficiária');                                        // Cabeçalho para a tabela
         $size = array(35, 55, 70, 35, 70);                                                                                              // Tamanho do cabeçalho
-        $recordsTutelareducativos = $this->Tutelareducativos->find('all')->contain(['Teams'])->toArray();     // Registos para preencher a tabela
+
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+
+        if (!empty($out)) {
+            $id_pedido = 'id_pedido LIKE "%' . $out[0] . '%"';
+            $equipa = 'Temas.id LIKE "%' . $out[1] . '%"';
+            $nome_jovem = 'nome_jovem LIKE "%' . $out[2] . '%"';
+            $nif = 'nif LIKE "%' . $out[3] . '%"';
+            $designacao_entidade = 'designacao_entidade LIKE "%' . $out[4] . '%"';
+        }
+
+        $this->log($out);
+        $this->log($id_pedido);
+        $this->log($equipa);
+        $this->log($nome_jovem);
+        $this->log($nif);
+        $this->log($designacao_entidade);
+
+        if ($out[0] != null) {
+            array_push($arr, $id_pedido);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $equipa);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $nome_jovem);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $nif);
+        }
+        if ($out[4] != null) {
+            array_push($arr, $designacao_entidade);
+        }
+        if ($arr == null) {
+            $recordsTutelareducativos = $this->Tutelareducativos->find('all')->contain(['Teams'])->toArray();
+        } else {
+            $recordsTutelareducativos = $this->Tutelareducativos->find('all', array('conditions' => $arr))->contain(['Teams'])->toArray();
+        }
+
         $records = [];
 
         // Construção de linha para cada registo recebido
@@ -196,7 +235,6 @@ class TutelareducativosController extends AppController
                     $row->designacao_entidade
                 ];
         }
-
 
         $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
         $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1

@@ -5,12 +5,14 @@
 <div class="card shadow mb-2">
     <div class="card-header py-3">
         <a class="btn btn-success btn-circle btn-lg" href="/faturas/add"><i class="fas fa-plus"></i></a>
+        <!--         
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
             ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
         )
-        ?>
+        ?> 
+        -->
         <?= $this->Html->link(
             '<span class="fas fa-file-pdf"></span><span class="sr-only">' . __('pdf') . '</span>',
             ['action' => 'pdf'],
@@ -55,9 +57,21 @@ $dynElems =
         createCookie(
             "Filtro",
             document.getElementById("num-fatura").value,
+            document.getElementById("valor").value,
             document.getElementById("entidadejudicial").value,
             document.getElementById("pagamento").value,
+            document.getElementById("data").value,
+            "1"
+        );
+    });
+
+    $('#pdfbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("num-fatura").value,
             document.getElementById("valor").value,
+            document.getElementById("entidadejudicial").value,
+            document.getElementById("pagamento").value,
             document.getElementById("data").value,
             "1"
         );
@@ -95,9 +109,9 @@ $dynElems =
         createCookie(
             "Filtro",
             document.getElementById("num-fatura").value = '',
+            document.getElementById("valor").value = '',
             document.getElementById("entidadejudicial").value = '',
             document.getElementById("pagamento").value = '',
-            document.getElementById("valor").value = '',
             document.getElementById("data").value = '',
             "1"
         );
@@ -107,7 +121,7 @@ $dynElems =
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
 
-    function createCookie(name, valueNumFatura, valueEntidade, valueEstadoPagamento, valueValor, valueData, days) {
+    function createCookie(name, valueNumFatura, valueValor, valueEntidade, valueEstadoPagamento, valueData, days) {
         var expires;
 
         if (days) {
@@ -119,7 +133,7 @@ $dynElems =
         }
 
         document.cookie = escape(name) + "=" +
-            valueNumFatura + "," + valueEntidade + "," + valueEstadoPagamento + "," + valueValor + "," + valueEstadoPagamento +
+            valueNumFatura + "," + valueValor + "," + valueEntidade + "," + valueEstadoPagamento + "," + valueData +
             expires + "; path=/";
     }
 </script>

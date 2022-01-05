@@ -5,12 +5,14 @@
 <div class="card shadow mb-2">
     <div class="card-header py-3">
         <a class="btn btn-success btn-circle btn-lg" href="/tutelareducativos/add"><i class="fas fa-plus"></i></a>
+        <!--
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
             ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
         )
         ?>
+        -->
         <?= $this->Html->link(
             '<span class="fas fa-file-pdf"></span><span class="sr-only">' . __('pdf') . '</span>',
             ['action' => 'pdf'],
@@ -100,17 +102,30 @@ $dynElems =
             created: -1
         }, writers);
 
-        /* deleteCookie("Filtro");
-        createCookie("Filtro", "", "", "", "", "1"); */
+        deleteCookie("Filtro");
+        createCookie("Filtro", "", "", "", "", "", "1");
     });
 
-    /* $('#xlsbutton').click(function() {
+    $('#xlsbutton').click(function() {
         createCookie(
             "Filtro",
             document.getElementById("pedido").value,
             document.getElementById("equipa").value,
-            document.getElementById("nome-prestador-trabalho").value,
-            document.getElementById("designacao-entidade").value,
+            document.getElementById("nome_jovem").value,
+            document.getElementById("nif").value,
+            document.getElementById("designacao_entidade").value,
+            "1"
+        );
+    });
+
+    $('#pdfbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("pedido").value,
+            document.getElementById("equipa").value,
+            document.getElementById("nome_jovem").value,
+            document.getElementById("nif").value,
+            document.getElementById("designacao_entidade").value,
             "1"
         );
     });
@@ -120,7 +135,8 @@ $dynElems =
             "Filtro",
             document.getElementById("pedido").value = '',
             document.getElementById("equipa").value = '',
-            document.getElementById("nome_prestador_trabalho").value = '',
+            document.getElementById("nome_jovem").value,
+            document.getElementById("nif").value,
             document.getElementById("designacao_entidade").value = '',
             "1"
         );
@@ -130,7 +146,7 @@ $dynElems =
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
 
-    function createCookie(name, valuePedido, valueEquipa, valueNomePrestador, valueEntidade, days) {
+    function createCookie(name, valuePedido, valueEquipa, valueNomeJovem, valueNif, valueEntidade, days) {
         var expires;
 
         if (days) {
@@ -142,8 +158,8 @@ $dynElems =
         }
 
         document.cookie = escape(name) + "=" +
-            valuePedido + "," + valueEquipa + "," + valueNomePrestador + "," + valueEntidade +
+            valuePedido + "," + valueEquipa + "," + valueNomeJovem + "," + valueNif + "," + valueEntidade + ","
             expires + "; path=/";
-    } */
+    }
 </script>
 <?php $this->end(); ?>
