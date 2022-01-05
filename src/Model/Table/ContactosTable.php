@@ -84,16 +84,16 @@ class ContactosTable extends Table
             ->notEmpty('morada'); */
 
         $validator
-            ->integer('telefone')
-            ->allowEmpty('telefone');
+            ->scalar('telefone')
+            ->maxLength('telefone', 50);
 
         $validator
-            ->integer('fax')
-            ->allowEmpty('fax');
+            ->scalar('telemovel')
+            ->maxLength('telemovel', 50);
 
         $validator
-            ->integer('telemovel')
-            ->allowEmpty('telemovel');
+            ->scalar('fax')
+            ->maxLength('fax', 50);
 
         $validator
             ->email('email')
