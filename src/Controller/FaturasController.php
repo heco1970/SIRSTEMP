@@ -254,8 +254,8 @@ class FaturasController extends AppController
         if (!empty($out)) {
             $num_fatura = 'num_fatura LIKE "%' . $out[0] . '%"';
             $valor = 'valor LIKE "%' . $out[1] . '%"';
-            $entidadejudiciai = 'id_entidade LIKE "%' . $out[2] . '%"';
-            $pagamento = 'id_pagamento LIKE "%' . $out[3] . '%"';
+            $id_entidadejudiciai = 'id_entidade LIKE "%' . $out[2] . '%"';
+            $id_pagamento = 'id_pagamento LIKE "%' . $out[3] . '%"';
             $data = 'data LIKE "%' . $out[4] . '%"';
         }
 
@@ -266,10 +266,10 @@ class FaturasController extends AppController
             array_push($arr, $valor);
         }
         if ($out[2] != null) {
-            array_push($arr, $entidadejudiciai);
+            array_push($arr, $id_entidadejudiciai);
         }
         if ($out[3] != null) {
-            array_push($arr, $pagamento);
+            array_push($arr, $id_pagamento);
         }
         if ($out[4] != null) {
             array_push($arr, $data);

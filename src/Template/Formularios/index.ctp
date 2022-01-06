@@ -64,6 +64,17 @@ $dynElems =
         );
     });
 
+    $('#pdfbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("pedido").value,
+            document.getElementById("equipa").value,
+            document.getElementById("nome-prestador-trabalho").value,
+            document.getElementById("designacao-entidade").value,
+            "1"
+        );
+    });
+
     $('#dynatable-filter').click(function() {
         $('#dynatable-filter').trigger(e);
         emptyCookie();
@@ -74,8 +85,8 @@ $dynElems =
             "Filtro",
             document.getElementById("pedido").value = '',
             document.getElementById("equipa").value = '',
-            document.getElementById("nome_prestador_trabalho").value = '',
-            document.getElementById("designacao_entidade").value = '',
+            document.getElementById("nome-prestador-trabalho").value = '',
+            document.getElementById("designacao-entidade").value = '',
             "1"
         );
     }
@@ -106,10 +117,6 @@ $dynElems =
             minimumInputLength: 1,
             language: 'pt'
         });
-
-        $('#pedido').on('change', function() {
-            console.log($(this).val());
-        })
 
         var writers = {
             ação: function(row) {

@@ -188,24 +188,17 @@ class TutelareducativosController extends AppController
 
         if (!empty($out)) {
             $id_pedido = 'id_pedido LIKE "%' . $out[0] . '%"';
-            $equipa = 'Temas.id LIKE "%' . $out[1] . '%"';
+            $id_equipa = 'id_equipa LIKE "%' . $out[1] . '%"';
             $nome_jovem = 'nome_jovem LIKE "%' . $out[2] . '%"';
             $nif = 'nif LIKE "%' . $out[3] . '%"';
             $designacao_entidade = 'designacao_entidade LIKE "%' . $out[4] . '%"';
         }
 
-        $this->log($out);
-        $this->log($id_pedido);
-        $this->log($equipa);
-        $this->log($nome_jovem);
-        $this->log($nif);
-        $this->log($designacao_entidade);
-
         if ($out[0] != null) {
             array_push($arr, $id_pedido);
         }
         if ($out[1] != null) {
-            array_push($arr, $equipa);
+            array_push($arr, $id_equipa);
         }
         if ($out[2] != null) {
             array_push($arr, $nome_jovem);
@@ -217,9 +210,9 @@ class TutelareducativosController extends AppController
             array_push($arr, $designacao_entidade);
         }
         if ($arr == null) {
-            $recordsTutelareducativos = $this->Tutelareducativos->find('all')->contain(['Teams'])->toArray();
+            $recordsTutelareducativos = $this->Tutelareducativos->find('all')->contain(['Teams', 'Pedidos'])->toArray();
         } else {
-            $recordsTutelareducativos = $this->Tutelareducativos->find('all', array('conditions' => $arr))->contain(['Teams'])->toArray();
+            $recordsTutelareducativos = $this->Tutelareducativos->find('all', array('conditions' => $arr))->contain(['Teams', 'Pedidos'])->toArray();
         }
 
         $records = [];
@@ -228,7 +221,7 @@ class TutelareducativosController extends AppController
         foreach ($recordsTutelareducativos as $row) {
             $records[$row->id] =
                 [
-                    $row->id_pedido,
+                    $row->pedido->id,
                     $row->team->nome,
                     $row->nome_jovem,
                     $row->nif,

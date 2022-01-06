@@ -35,6 +35,7 @@ class Tutelareducativo extends Entity
         'data_nascimento' => true,
         'designacao_entidade' => true,
         'data_inicio' => true,
-        'team' => true
+        'team' => true,
+        'pedido' => true
     ];
 }

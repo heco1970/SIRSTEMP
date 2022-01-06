@@ -111,9 +111,9 @@ $dynElems =
             "Filtro",
             document.getElementById("pedido").value,
             document.getElementById("equipa").value,
-            document.getElementById("nome_jovem").value,
+            document.getElementById("nome-jovem").value,
             document.getElementById("nif").value,
-            document.getElementById("designacao_entidade").value,
+            document.getElementById("designacao-entidade").value,
             "1"
         );
     });
@@ -123,9 +123,9 @@ $dynElems =
             "Filtro",
             document.getElementById("pedido").value,
             document.getElementById("equipa").value,
-            document.getElementById("nome_jovem").value,
+            document.getElementById("nome-jovem").value,
             document.getElementById("nif").value,
-            document.getElementById("designacao_entidade").value,
+            document.getElementById("designacao-entidade").value,
             "1"
         );
     });
@@ -135,9 +135,9 @@ $dynElems =
             "Filtro",
             document.getElementById("pedido").value = '',
             document.getElementById("equipa").value = '',
-            document.getElementById("nome_jovem").value,
+            document.getElementById("nome-jovem").value,
             document.getElementById("nif").value,
-            document.getElementById("designacao_entidade").value = '',
+            document.getElementById("designacao-entidade").value = '',
             "1"
         );
     }

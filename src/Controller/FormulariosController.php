@@ -253,19 +253,16 @@ class FormulariosController extends AppController
 
         if (!empty($out)) {
             $id_pedido = 'id_pedido LIKE "%' . $out[0] . '%"';
-            $equipa = 'id_equipa LIKE "%' . $out[1] . '%"';
+            $id_equipa = 'id_equipa LIKE "%' . $out[1] . '%"';
             $nome_prestador_trabalho = 'nome_prestador_trabalho LIKE "%' . $out[2] . '%"';
             $designacao_entidade = 'designacao_entidade LIKE "%' . $out[3] . '%"';
         }
-
-        $this->log($_COOKIE["Filtro"]);
- 
 
         if ($out[0] != null) {
             array_push($arr, $id_pedido);
         }
         if ($out[1] != null) {
-            array_push($arr, $equipa);
+            array_push($arr, $id_equipa);
         }
         if ($out[2] != null) {
             array_push($arr, $nome_prestador_trabalho);
@@ -274,9 +271,9 @@ class FormulariosController extends AppController
             array_push($arr, $designacao_entidade);
         }
         if ($arr == null) {
-            $recordsFormularios = $this->Formularios->find('all')->contain(['Teams'])->toArray();
+            $recordsFormularios = $this->Formularios->find('all')->contain(['Teams', 'Pedidos'])->toArray();
         } else {
-            $recordsFormularios = $this->Formularios->find('all', array('conditions' => $arr))->contain(['Teams'])->toArray();
+            $recordsFormularios = $this->Formularios->find('all', array('conditions' => $arr))->contain(['Teams', 'Pedidos'])->toArray();
         }
 
         $records = [];
@@ -285,7 +282,7 @@ class FormulariosController extends AppController
         foreach ($recordsFormularios as $row) {
             $records[$row->id] =
                 [
-                    $row->id_pedido,
+                    $row->pedido->id,
                     $row->team->nome,
                     $row->nome_prestador_trabalho,
                     $row->designacao_entidade
