@@ -73,26 +73,32 @@ class ContactosTable extends Table
 
         $validator
             ->scalar('localidade')
+            ->allowEmpty('localidade')
             ->maxLength('localidade', 250);
 
         $validator
             ->scalar('telefone')
+            ->allowEmpty('telefone')
             ->maxLength('telefone', 50);
 
         $validator
             ->scalar('telemovel')
+            ->allowEmpty('telemovel')
             ->maxLength('telemovel', 50);
 
         $validator
             ->scalar('fax')
+            ->allowEmpty('fax')
             ->maxLength('fax', 50);
 
         $validator
             ->email('email')
+            ->allowEmpty('email')
             ->maxLength('email', 250);
 
         $validator
             ->scalar('descricao')
+            ->allowEmpty('descricao')
             ->maxLength('descricao', 250);
 
         $validator
@@ -111,7 +117,7 @@ class ContactosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
+        // $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
         // $rules->add($rules->existsIn(['pais_id'], 'Pais'));
 
