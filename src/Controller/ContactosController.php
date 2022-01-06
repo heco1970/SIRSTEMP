@@ -63,6 +63,8 @@ class ContactosController extends AppController
             $contacto->telemovel = $this->request->getData('telemovel_completo');
             $contacto->fax = $this->request->getData('fax_completo');
 
+            $this->log($contacto);
+
             if ($this->Contactos->save($contacto)) {
                 $this->Flash->success(__('O contacto foi guardado com sucesso.'));
 
@@ -117,7 +119,6 @@ class ContactosController extends AppController
      */
     public function delete($id = null)
     {
-        //$this->request->allowMethod(['post', 'delete']);
         $contacto = $this->Contactos->get($id);
         if ($this->Contactos->delete($contacto)) {
             $this->Flash->success(__('O contacto foi apagado com sucesso'));

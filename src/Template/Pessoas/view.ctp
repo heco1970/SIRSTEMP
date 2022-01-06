@@ -159,7 +159,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Id</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Telemóvel</th>
@@ -168,7 +167,6 @@
                         <tbody>
                             <?php foreach ($contactos as $contacto) : ?>
                                 <tr>
-                                    <td><?= h($contacto->id) ?></td>
                                     <td><?= h($contacto->nome) ?></td>
                                     <td><?= h($contacto->email) ?></td>
                                     <td><?= h($contacto->telemovel) ?></td>

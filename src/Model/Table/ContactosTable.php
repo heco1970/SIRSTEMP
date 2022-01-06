@@ -67,21 +67,13 @@ class ContactosTable extends Table
 
         $validator
             ->scalar('nome')
-            ->maxLength('nome', 255)
+            ->maxLength('nome', 250)
             ->requirePresence('nome', 'create')
             ->notEmpty('nome');
 
         $validator
             ->scalar('localidade')
-            ->maxLength('localidade', 250)
-            ->requirePresence('localidade', 'create')
-            ->notEmpty('localidade');
-
-        /* $validator
-            ->scalar('morada')
-            ->maxLength('morada', 255)
-            ->requirePresence('morada', 'create')
-            ->notEmpty('morada'); */
+            ->maxLength('localidade', 250);
 
         $validator
             ->scalar('telefone')
@@ -97,13 +89,11 @@ class ContactosTable extends Table
 
         $validator
             ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmpty('email');
+            ->maxLength('email', 250);
 
         $validator
             ->scalar('descricao')
-            ->maxLength('descricao', 250)
-            ->allowEmpty('descricao');
+            ->maxLength('descricao', 250);
 
         $validator
             ->requirePresence('estado', 'create')
