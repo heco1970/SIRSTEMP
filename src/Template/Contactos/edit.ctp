@@ -5,6 +5,16 @@
  * @var \App\Model\Entity\Contacto $contacto
  */
 ?>
+<style>
+    .hide {
+        display: none;
+    }
+
+    .error {
+        border: solid 1px red;
+        color: red;
+    }
+</style>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><?= __('Editar Contacto de ') ?> <?= h($pessoa->nome) ?></h6>
