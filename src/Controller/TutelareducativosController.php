@@ -7,6 +7,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Cake\Datasource\ConnectionManager;
 
+
 /**
  * Tutelareducativos Controller
  *
@@ -234,5 +235,74 @@ class TutelareducativosController extends AppController
 
         // Renderização do documento utilizando o template desenvolvido para o efeito
         return $this->response->withHeader('Content-Type', 'application/pdf');
+    }
+
+    public function xls()
+    {
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+
+        if (!empty($out)) {
+            $id_pedido = 'id_pedido LIKE "%' . $out[0] . '%"';
+            $id_equipa = 'id_equipa LIKE "%' . $out[1] . '%"';
+            $nome_jovem = 'nome_jovem LIKE "%' . $out[2] . '%"';
+            $nif = 'nif LIKE "%' . $out[3] . '%"';
+            $designacao_entidade = 'designacao_entidade LIKE "%' . $out[4] . '%"';
+        }
+
+        if ($out[0] != null) {
+            array_push($arr, $id_pedido);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $id_equipa);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $nome_jovem);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $nif);
+        }
+        if ($out[4] != null) {
+            array_push($arr, $designacao_entidade);
+        }
+        if ($arr == null) {
+            $recordsTutelareducativos = $this->Tutelareducativos->find('all')->contain(['Teams', 'Pedidos'])->toArray();
+        } else {
+            $recordsTutelareducativos = $this->Tutelareducativos->find('all', array('conditions' => $arr))->contain(['Teams', 'Pedidos'])->toArray();
+        }
+
+        $this->autoRender = false;
+        $path = TMP . "tutelare_educativos.xlsx";
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'ID Pedido');
+        $sheet->setCellValue('B1', 'Equipa');
+        $sheet->setCellValue('C1', 'Nome do Jovem');
+        $sheet->setCellValue('D1', 'ENIF');
+        $sheet->setCellValue('E1', 'Entidade Beneficiária');
+
+        $linha = 2;
+        foreach ($recordsTutelareducativos as $row) {
+            $sheet->setCellValue('A' . $linha, $row->pedido->id);
+            $sheet->setCellValue('B' . $linha, $row->team->nome);
+            $sheet->setCellValue('C' . $linha, $row->nome_jovem);
+            $sheet->setCellValue('D' . $linha, $row->nif);
+            $sheet->setCellValue('E' . $linha, $row->designacao_entidade);
+            $linha++;
+        }
+
+        foreach (range('A', 'H') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $spreadsheet->getActiveSheet()->getStyle('A1:H1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+        $this->response->withType("application/vnd.ms-excel");
+        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_tutelare_educativos.xlsx'));
     }
 }

@@ -150,70 +150,6 @@ class FormulariosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function xls()
-    {
-        $out = explode(',', $_COOKIE["Filtro"]);
-        $arr = array();
-        // $this->log($out);
-
-        if (!empty($out)) {
-            $pedido = 'Pedidos.id LIKE "' . $out[0] . '"';
-            $equipa = 'Teams.id LIKE "%' . $out[1] . '%"';
-            $nome_prestador_trabalho = 'nome_prestador_trabalho LIKE "%' . $out[2] . '%"';
-            $designacao_entidade = 'designacao_entidade LIKE "%' . $out[3] . '%"';
-        }
-
-        if ($out[0] != null) {
-            array_push($arr, $pedido);
-        }
-        if ($out[1] != null) {
-            array_push($arr, $equipa);
-        }
-        if ($out[2] != null) {
-            array_push($arr, $nome_prestador_trabalho);
-        }
-        if ($out[3] != null) {
-            array_push($arr, $designacao_entidade);
-        }
-        if ($arr == null) {
-            $formularios = $this->Formularios->find('all')->contain(['Teams', 'Pedidos']);
-        } else {
-            $formularios = $this->Formularios->find('all', array('conditions' => $arr))->contain(['Teams', 'Pedidos']);
-        }
-
-        $this->autoRender = false;
-        $path = TMP . "pedidos.xlsx";
-
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $sheet->setCellValue('A1', 'Pedido');
-        $sheet->setCellValue('B1', 'Equipa');
-        $sheet->setCellValue('C1', 'Nome do Prestador de Trabalho/Tarefa');
-        $sheet->setCellValue('D1', 'Designação da Entidade Beneficiária de Trabalho/Tarefa ');
-
-        $linha = 2;
-        foreach ($formularios as $row) {
-            $sheet->setCellValue('A' . $linha, $row->pedido->id);
-            $sheet->setCellValue('B' . $linha, $row->team->nome);
-            $sheet->setCellValue('C' . $linha, $row->nome_prestador_trabalho);
-            $sheet->setCellValue('D' . $linha, $row->designacao_entidade);
-            $linha++;
-        }
-
-        foreach (range('A', 'H') as $columnID) {
-            $sheet->getColumnDimension($columnID)->setAutoSize(true);
-        }
-
-        $spreadsheet->getActiveSheet()->getStyle('A1:H1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
-
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($path);
-
-        $this->response->withType("application/vnd.ms-excel");
-        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Formularios.xlsx'));
-    }
-
     public function idPedidoAutoComplete()
     {
         $this->autoRender = false;
@@ -294,5 +230,68 @@ class FormulariosController extends AppController
 
         // Renderização do documento utilizando o template desenvolvido para o efeito
         return $this->response->withHeader('Content-Type', 'application/pdf');
+    }
+
+    public function xls()
+    {
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+
+        if (!empty($out)) {
+            $id_pedido = 'id_pedido LIKE "%' . $out[0] . '%"';
+            $id_equipa = 'id_equipa LIKE "%' . $out[1] . '%"';
+            $nome_prestador_trabalho = 'nome_prestador_trabalho LIKE "%' . $out[2] . '%"';
+            $designacao_entidade = 'designacao_entidade LIKE "%' . $out[3] . '%"';
+        }
+
+        if ($out[0] != null) {
+            array_push($arr, $id_pedido);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $id_equipa);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $nome_prestador_trabalho);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $designacao_entidade);
+        }
+        if ($arr == null) {
+            $recordsFormularios = $this->Formularios->find('all')->contain(['Teams', 'Pedidos'])->toArray();
+        } else {
+            $recordsFormularios = $this->Formularios->find('all', array('conditions' => $arr))->contain(['Teams', 'Pedidos'])->toArray();
+        }
+
+        $this->autoRender = false;
+        $path = TMP . "formularios.xlsx";
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'ID Pedido');
+        $sheet->setCellValue('B1', 'Equipa');
+        $sheet->setCellValue('C1', 'Nome do Prestador de Trabalho');
+        $sheet->setCellValue('D1', 'Entidade Beneficiária');
+
+        $linha = 2;
+        foreach ($recordsFormularios as $row) {
+            $sheet->setCellValue('A' . $linha, $row->pedido->id);
+            $sheet->setCellValue('B' . $linha, $row->team->nome);
+            $sheet->setCellValue('C' . $linha, $row->nome_prestador_trabalho);
+            $sheet->setCellValue('D' . $linha, $row->designacao_entidade);
+            $linha++;
+        }
+
+        foreach (range('A', 'H') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $spreadsheet->getActiveSheet()->getStyle('A1:H1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+        $this->response->withType("application/vnd.ms-excel");
+        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Formularios.xlsx'));
     }
 }
