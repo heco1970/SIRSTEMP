@@ -180,8 +180,8 @@ class FaturasController extends AppController
         $name = "Registo de Faturas/Custas";        // Nome do ficheiro
         $mode = "P";                                // Modo do ficheiro
         $pageize = "A3";                                                                                          // Tamanho do ficheiro
-        $header = array('Nº Fatura/Custa', 'Valor', 'Entidade Judicial', 'Estado Pagamento', 'Data');             // Cabeçalho para a tabela
-        $size = array(45, 45, 60, 60, 50);                                                                        // Tamanho do cabeçalho
+        $header = array('Nº', 'Valor', 'Entidade Judicial', 'Estado Pagamento', 'Data');             // Cabeçalho para a tabela
+        $size = array(20, 45, 60, 60, 60);                                                                        // Tamanho do cabeçalho
 
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
@@ -219,10 +219,12 @@ class FaturasController extends AppController
 
         // Construção de linha para cada registo recebido
         foreach ($recordsFaturas as $row) {
+            $valor = number_format($row->valor, 2, '.', '');
             $records[$row->id] =
                 [
                     $row->num_fatura,
-                    $row->valor . '€',
+                    //$row->valor . '€',
+                    $valor .'€',
                     $row->entidadejudiciai->descricao,
                     $row->pagamento->estado,
                     (isset($row->data) ? $row->data->i18nFormat('dd/MM/yyyy') : "")

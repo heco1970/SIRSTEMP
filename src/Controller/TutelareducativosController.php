@@ -180,9 +180,9 @@ class TutelareducativosController extends AppController
         // Recolhe dados do json
         $name = "Registo Seguro Tutelar Educativo";         // Nome do ficheiro
         $mode = "P";                                        // Modo do ficheiro
-        $pageize = "A3";                                                                                                                // Tamanho do ficheiro
-        $header = array('ID Pedido', 'Equipa', 'Nome do Jovem', 'NIF', 'Entidade beneficiária');                                        // Cabeçalho para a tabela
-        $size = array(35, 55, 70, 35, 70);                                                                                              // Tamanho do cabeçalho
+        $pageize = "A3";                                                                                            // Tamanho do ficheiro
+        $header = array('ID Pedido', 'Equipa', 'Nome do Jovem', 'NIF', 'Entidade beneficiária');                    // Cabeçalho para a tabela
+        $size = array(30, 40, 80, 35, 70);                                                                          // Tamanho do cabeçalho
 
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();

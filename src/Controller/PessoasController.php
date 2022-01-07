@@ -547,9 +547,9 @@ class PessoasController extends AppController
         // Recolhe dados do json
         $name = "Registo de Pessoas";       // Nome do ficheiro
         $mode = "P";                        // Modo do ficheiro
-        $pageize = "A3";                                                                  // Tamanho do ficheiro
-        $header = array('Nº de pessoa', 'Nome', 'CC/BI', 'NIF', 'Data de nascimento', 'Detalhes');  // Cabeçalho para a tabela
-        $size = array(35, 65, 35, 35, 50, 45);                                            // Tamanho do cabeçalho
+        $pageize = "A3";                                                      // Tamanho do ficheiro
+        $header = array('Nº', 'Nome', 'CC/BI', 'NIF', 'Data de nascimento');  // Cabeçalho para a tabela
+        $size = array(10, 100, 40, 40, 50);                                   // Tamanho do cabeçalho
 
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
@@ -594,8 +594,7 @@ class PessoasController extends AppController
                     $row->nome,
                     $row->cc,
                     $row->nif,
-                    (isset($row->data_nascimento) ? $row->data_nascimento->i18nFormat('dd/MM/yyyy') : ""),
-                    $row->observacoes
+                    (isset($row->data_nascimento) ? $row->data_nascimento->i18nFormat('dd/MM/yyyy') : "")
                 ];
         }
 

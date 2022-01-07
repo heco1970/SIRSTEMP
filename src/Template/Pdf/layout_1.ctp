@@ -24,7 +24,7 @@ class MYPDF extends TCPDF
         $this->SetTextColor(255, 255, 255);
         $this->SetDrawColor(19, 32, 65);
         $this->SetLineWidth(0.1);
-        $this->SetFont('helvetica', 'B', 13);
+        $this->SetFont('helvetica', 'B', 12);
         // Header
         $num_headers = count($header);
         for ($i = 0; $i < $num_headers; ++$i) {
@@ -47,7 +47,11 @@ class MYPDF extends TCPDF
         foreach ($records as $row) {
             $this->startTransaction();
             for ($i = 0; $i < count($header); ++$i) {
-                $this->Cell($size[$i], 6, $row[$i], 'LR', 0, 'C', $fill);
+                if(is_numeric($row[$i]) || strpos($row[$i], '€')){
+                    $this->Cell($size[$i], 6, $row[$i], 'LR', 0, 'R', $fill); 
+                }else{
+                    $this->Cell($size[$i], 6, $row[$i], 'LR', 0, 'L', $fill); 
+                }
             }
 
             if ($num_pages < $this->getNumPages()) {
@@ -75,7 +79,7 @@ class MYPDF extends TCPDF
         // Set font
         $this->SetFont('helvetica', '', 8);
         // Page number
-        $this->Cell(0, 10, 'Contactus © ', 0, false, 'L', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, 'Contactus © -'. date('Y-m-d'), 0, false, 'L', 0, '', 0, false, 'T', 'M');
         $this->Cell(15, 10, 'Página ' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
 }

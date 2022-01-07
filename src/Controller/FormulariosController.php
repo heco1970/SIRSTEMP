@@ -182,7 +182,7 @@ class FormulariosController extends AppController
         $mode = "P";                        // Modo do ficheiro
         $pageize = "A3";                                                                  // Tamanho do ficheiro
         $header = array('ID Pedido', 'Equipa', 'Prestador de trabalho', 'Entidade beneficiária');  // Cabeçalho para a tabela
-        $size = array(35, 50, 85, 85);                                            // Tamanho do cabeçalho
+        $size = array(30, 50, 85, 85);                                            // Tamanho do cabeçalho
 
         $out = explode(',', $_COOKIE["Filtro"]);
         $arr = array();
