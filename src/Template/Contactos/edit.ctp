@@ -52,7 +52,7 @@
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
                         <?= $this->Form->control('telefone', ['id' => 'campoTelefone', 'label' => false, 'class' => "form-control"]); ?>
-                        <span id="valid-msg1" class="hide">✓ Valid</span>
+                        <span id="valid-msg1" class="hide">✓ Válido</span>
                         <span id="error-msg1" class="hide"></span>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="form-group">
                         <label for="telemovel">Telemóvel</label>
                         <?= $this->Form->control('telemovel', ['id' => 'campoTelemovel', 'label' => false, 'class' => "form-control"]); ?>
-                        <span id="valid-msg2" class="hide">✓ Valid</span>
+                        <span id="valid-msg2" class="hide">✓ Válido</span>
                         <span id="error-msg2" class="hide"></span>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="form-group">
                         <label for="fax">Fax</label>
                         <?= $this->Form->control('fax', ['id' => 'campoFax', 'label' => false, 'class' => "form-control"]); ?>
-                        <span id="valid-msg3" class="hide">✓ Valid</span>
+                        <span id="valid-msg3" class="hide">✓ Válido</span>
                         <span id="error-msg3" class="hide"></span>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
         validMsg3 = document.querySelector("#valid-msg3");
 
     // here, the index maps to the error code returned from getValidationError - see readme
-    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+    var errorMap = ["Número inválido", "Código do país inválido", "Muito pequeno", "Muito grande", "Número inválido"];
 
     // initialise plugin
     var iti1 = window.intlTelInput(input1, {
