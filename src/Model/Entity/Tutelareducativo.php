@@ -34,6 +34,8 @@ class Tutelareducativo extends Entity
         'nif' => true,
         'data_nascimento' => true,
         'designacao_entidade' => true,
-        'data_inicio' => true
+        'data_inicio' => true,
+        'team' => true,
+        'pedido' => true
     ];
 }
