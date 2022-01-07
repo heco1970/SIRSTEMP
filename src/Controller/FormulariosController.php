@@ -181,7 +181,7 @@ class FormulariosController extends AppController
         $name = "Registo Seguro Penal";       // Nome do ficheiro
         $mode = "P";                        // Modo do ficheiro
         $pageize = "A3";                                                                  // Tamanho do ficheiro
-        $header = array('ID Pedido', 'Equipa', 'Prestador de trabalho', 'Entidade beneficiária');  // Cabeçalho para a tabela
+        $header = array('Nº Pedido', 'Equipa', 'Prestador de trabalho', 'Entidade beneficiária');  // Cabeçalho para a tabela
         $size = array(30, 50, 85, 85);                                            // Tamanho do cabeçalho
 
         $out = explode(',', $_COOKIE["Filtro"]);
