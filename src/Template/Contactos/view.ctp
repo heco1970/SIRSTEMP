@@ -30,17 +30,9 @@
                 <h6 class="text-primary"><?= __('Localidade') ?></h6>
                 <p><?= h($contacto->localidade) ?></p>
             </div>
-            <div class="col-4">
-                <h6 class="text-primary"><?= __('País') ?></h6>
-                <p><?= h($contacto->pai->paisNome) ?></p>
-            </div>
-            <div class="col-4">
-                <h6 class="text-primary"><?= __('Morada') ?></h6>
-                <p><?= h($contacto->morada) ?></p>
-            </div>
         </div>
         <hr>
-       
+
         <div class="row">
             <div class="col-4">
                 <h6 class="text-primary"><?= __('Telefone') ?></h6>
@@ -76,6 +68,7 @@
         </div>
     </div>
     <div class="card-footer card-footer-fixed">
-        <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id], ['class' => 'btn btn-secondary']) ?>
+        <a href="/pessoas/view/<?= h($contacto->pessoa_id) ?>" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
+        <!-- <?= $this->Html->link(__('Voltar'), ['controller' => 'Pessoas', 'action' => 'view', $contacto->pessoa->id], ['class' => 'btn btn-secondary']) ?> -->
     </div>
 </div>

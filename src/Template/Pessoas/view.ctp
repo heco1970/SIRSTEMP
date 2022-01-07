@@ -10,9 +10,9 @@
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="/js/multiselect.js"></script>
 <div class="modal-header py-3 bg-light">
-    <h4 class="m-0 font-weight-bold text-primary"><?= __('Detalhes do registo de ')?> <?= h($pessoa->nome) ?></h4>
+    <h4 class="m-0 font-weight-bold text-primary"><?= __('Detalhes do registo de ') ?> <?= h($pessoa->nome) ?></h4>
 </div>
-<div class="ml-3 mr-3 mb-3 mt-3 modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;" >
+<div class="ml-3 mr-3 mb-3 mt-3 modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
 
     <div class="tab-content" id="pills-tabContent">
         <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
@@ -133,7 +133,7 @@
             </div>
 
             <br>
-            <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
+            <!-- <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">Dados Adicionais</a>
                 </li>
@@ -144,15 +144,52 @@
                         <a class="btn btn-success btn-circle btn-lg" href="/units/add"><i class="fas fa-plus"></i></a>
                     </div>
                 </div>
-            </div>
-            <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+            </div> -->
 
+            <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-contactos-tab" data-toggle="pill" href="#pills-processos" role="tab" aria-controls="pills-contactos" aria-selected="true">Contactos</a>
+                </li>
+            </ul>
+            <div class="tab-pane fade show active" id="pills-contactos" role="tabpanel" aria-labelledby="pills-contactos-tab">
+                <div class="card shadow mb-2">
+                    <div class="card-header py-3">
+                        <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/contactos/add/' . h($pessoa->id) . '" ><i class="fas fa-plus"></i></a>' ?>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Telemóvel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($contactos as $contacto) : ?>
+                                <tr>
+                                    <td><?= h($contacto->nome) ?></td>
+                                    <td><?= h($contacto->email) ?></td>
+                                    <td><?= h($contacto->telemovel) ?></td>
+                                    <td>
+                                        <a class="btn btn-info" href="/contactos/view/<?= h($contacto->id) ?>?pessoa=<?= h($pessoa->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('View') ?>"><i class="far fa-eye fa-fw"></i></a>
+                                        <a class="btn btn-warning" href="/contactos/edit/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Edit') ?>"><i class="far fa-edit fa-fw"></i></a>
+                                        <a class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar?')" href="/contactos/delete/<?= h($contacto->id) ?>" data-toggle="tooltip" data-placement="top" title="<?= __('Delete') ?>"><i class="fa fa-trash fa-fw"></i></a>
+                                    </td>
+                                <?php endforeach; ?>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 <ul class="nav nav-pills flex-column mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Crimes</a>
                     </li>
                 </ul>
                 <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
                     <div class="card shadow mb-2">
                         <div class="card-header py-3">
                             <?php echo '<a class="btn btn-success btn-circle btn-lg" href="/crimes/add/' . h($pessoa->id) . '" ><i class="fas fa-plus"></i></a>' ?>
@@ -267,12 +304,12 @@
             </div>
         </div>
     </div>
-    <div class="card-footer card-footer-fixed">        
+    <div class="card-footer card-footer-fixed">
         <?php if (empty($value)) { ?>
             <a href="/pessoas/edit/<?= h($pessoa->id) ?>" class="btn btn-warning float-right space-right"><?= __('Editar') ?></a>
         <?php } else { ?>
             <a href="/pessoas/edit/<?= h($pessoa->id) ?>" class="btn btn-warning float-right space-right"><?= __('Editar') ?></a>
-        <?php } ?>      
+        <?php } ?>
         <?php if (empty($value)) { ?>
             <a href="/pessoas/index" class="btn btn-secondary float-right space-right"><?= __('Voltar') ?></a>
         <?php } else { ?>

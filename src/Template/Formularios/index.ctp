@@ -4,11 +4,17 @@
 
 <div class="card shadow mb-2">
     <div class="card-header py-3">
-        <a class="btn btn-success btn-circle btn-lg" href="/formularios/add"><i class="fas fa-plus"></i></a>
+        <a class="btn btn-success btn-circle btn-lg" href="/formularios/add"><i class="fas fa-plus"></i></a>         
         <?= $this->Html->link(
             '<span class="fas fa-file-excel"></span><span class="sr-only">' . __('xls') . '</span>',
             ['action' => 'xls'],
-            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right']
+            ['id' => 'xlsbutton', 'escape' => false, 'title' => __('xls'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
+        )
+        ?> 
+        <?= $this->Html->link(
+            '<span class="fas fa-file-pdf"></span><span class="sr-only">' . __('pdf') . '</span>',
+            ['action' => 'pdf'],
+            ['id' => 'pdfbutton', 'escape' => false, 'title' => __('pdf'), 'class' => 'btn btn-primary btn-circle btn-lg float-right mr-2']
         )
         ?>
         <button id="dynatable-filter" class="btn btn-secondary btn-circle btn-lg float-right mr-2"><i class="fas fa-filter"></i></button>
@@ -56,6 +62,17 @@ $dynElems =
         );
     });
 
+    $('#pdfbutton').click(function() {
+        createCookie(
+            "Filtro",
+            document.getElementById("pedido").value,
+            document.getElementById("equipa").value,
+            document.getElementById("nome-prestador-trabalho").value,
+            document.getElementById("designacao-entidade").value,
+            "1"
+        );
+    });
+
     $('#dynatable-filter').click(function() {
         $('#dynatable-filter').trigger(e);
         emptyCookie();
@@ -66,8 +83,8 @@ $dynElems =
             "Filtro",
             document.getElementById("pedido").value = '',
             document.getElementById("equipa").value = '',
-            document.getElementById("nome_prestador_trabalho").value = '',
-            document.getElementById("designacao_entidade").value = '',
+            document.getElementById("nome-prestador-trabalho").value = '',
+            document.getElementById("designacao-entidade").value = '',
             "1"
         );
     }
@@ -99,10 +116,6 @@ $dynElems =
             language: 'pt'
         });
 
-        $('#pedido').on('change', function() {
-            console.log($(this).val());
-        })
-
         var writers = {
             ação: function(row) {
                 var view = '<a class="btn btn-info mr-1" href="/formularios/view/' + row.id + '" data-toggle="tooltip" data-placement="top" title="<?= __('Detalhes') ?>"><i class="far fa-eye fa-fw"></i></a>'
@@ -125,7 +138,7 @@ $dynElems =
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     }
 
-    function createCookie(name, valuePedido, valueEquipa, valueNomePrestador,valueEntidade, days) {
+    function createCookie(name, valuePedido, valueEquipa, valueNomePrestador, valueEntidade, days) {
         var expires;
 
         if (days) {
@@ -140,6 +153,5 @@ $dynElems =
             valuePedido + "," + valueEquipa + "," + valueNomePrestador + "," + valueEntidade +
             expires + "; path=/";
     }
-
 </script>
 <?php $this->end(); ?>

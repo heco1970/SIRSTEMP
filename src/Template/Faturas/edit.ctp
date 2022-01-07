@@ -1,6 +1,6 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Alterar Registo Fatura') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Alterar Registo Fatura/Custa') ?></h6>
     </div>
     <?= $this->Form->create($fatura) ?>
     <div class='ml-4 mt-4 mr-4'>
@@ -8,7 +8,7 @@
             <div class="form-row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="num_fatura">Nº Fatura</label>
+                        <label for="num_fatura">Nº Fatura/Custa</label>
                         <?php echo $this->Form->control('num_fatura', ['label' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="valor">Valor</label>
-                        <?php echo $this->Form->control('valor', ['label' => false, 'class' => 'form-control']); ?>
+                        <?php echo $this->Form->text('valor', ['id' => 'campoValor', 'label' => false, 'class' => 'form-control']); ?>
                     </div>
                 </div>
             </div>
@@ -109,9 +109,14 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/pt.min.js" integrity="sha512-HEvGImfrVPx3/wEaJU4WuHFc1nrdDsSkx+4gRbGIDHXmgvBoJLHBjVMjobvRz1Zox+QO6vqbpqexKAnEZKfhnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<?= $this->Html->css('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', ['block' => true]); ?>
-<?= $this->Html->css('https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css', ['block' => true]); ?>
-<?= $this->Html->script('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['block' => true]); ?>
+
+<script>
+    $(function() {
+        $("#campoValor").maskMoney({
+            thousands: '',
+            decimal: '.',
+            allowZero: true,
+            suffix: ' €'
+        });
+    })
+</script>

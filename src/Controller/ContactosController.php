@@ -39,7 +39,7 @@ class ContactosController extends AppController
     public function view($id = null)
     {
         $contacto = $this->Contactos->get($id, [
-            'contain' => ['Pessoas','Pais']
+            'contain' => ['Pessoas']
         ]);
 
         $this->set('contacto', $contacto);
@@ -55,22 +55,24 @@ class ContactosController extends AppController
         $this->loadModel('Pessoas');
         $pessoa = $this->Pessoas->get($id);
         $contacto = $this->Contactos->newEntity();
-        $id=$id;
 
         if ($this->request->is('post')) {
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
-            $contacto->pessoa_id=$id;
-            if ($save = $this->Contactos->save($contacto)) {
+            $contacto->pessoa_id = $pessoa->id;
+            $contacto->telefone = $this->request->getData('telefone_completo');
+            $contacto->telemovel = $this->request->getData('telemovel_completo');
+            $contacto->fax = $this->request->getData('fax_completo');
 
+            $this->log($contacto);
+
+            if ($this->Contactos->save($contacto)) {
                 $this->Flash->success(__('O contacto foi guardado com sucesso.'));
 
                 return $this->redirect($this->referer());
             }
             $this->Flash->error(__('Não foi possível guardar o contacto. Por favor tente novamente'));
         }
-        $this->set('pais', $this->Contactos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
-        $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('contacto', 'pessoas','pessoa','id'));
+        $this->set(compact('contacto', 'pessoa'));
     }
 
     /**
@@ -82,22 +84,30 @@ class ContactosController extends AppController
      */
     public function edit($id = null)
     {
+        //get contacto object by his ID
         $contacto = $this->Contactos->get($id, [
             'contain' => ['Pessoas']
         ]);
+
+        //get pessoa object from contact.pesssoa_id by its ID
+        $this->loadModel('Pessoas');
+        $pessoa = $this->Pessoas->get($contacto->pessoa_id);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->log($this->request->getData());
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
+            $contacto->telefone = $this->request->getData('telefone_completo');
+            $contacto->telemovel = $this->request->getData('telemovel_completo');
+            $contacto->fax = $this->request->getData('fax_completo');
+
             if ($this->Contactos->save($contacto)) {
-                $this->Flash->success(__('O contacto foi guardado com sucesso.'));
+                $this->Flash->success(__('O contacto foi atualizado com sucesso.'));
 
                 return $this->redirect($this->referer());
             }
             $this->Flash->error(__('Não foi possível guardar o contacto. Por favor tente novamente'));
         }
-        $this->set('pais', $this->Contactos->Pais->find('list', ['keyField' => 'id', 'valueField' => 'paisNome']));
-        
-        $pessoas = $this->Contactos->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('contacto', 'pessoas'));
+        $this->set(compact('contacto', 'pessoa'));
     }
 
     /**
@@ -109,7 +119,6 @@ class ContactosController extends AppController
      */
     public function delete($id = null)
     {
-        //$this->request->allowMethod(['post', 'delete']);
         $contacto = $this->Contactos->get($id);
         if ($this->Contactos->delete($contacto)) {
             $this->Flash->success(__('O contacto foi apagado com sucesso'));

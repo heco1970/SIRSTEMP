@@ -1,13 +1,13 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhe Fatura') ?></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><?= __('Detalhes da Fatura/Custa') ?></h6>
     </div>
     <div class="ml-3 mr-3 mb-3 mt-3">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="row">
                     <div class="col-3">
-                        <h6 class="text-primary"><?= __('Nº Fatura') ?></h6>
+                        <h6 class="text-primary"><?= __('Nº Fatura/Custa') ?></h6>
                         <p><?= h($fatura->num_fatura) ?></p>
                     </div>
                 </div>
@@ -37,8 +37,7 @@
                     </div>
                     <div class="col-4">
                         <h6 class="text-primary"><?= __('Valor') ?></h6>
-                        <p><?= $this->Number->format($fatura->valor) ?></p>
-
+                        <p><?= $this->Number->currency($fatura->valor, 'EUR', ['locale' => 'pt_PT']) ?></p>
                     </div>
                 </div>
                 <div class="row">

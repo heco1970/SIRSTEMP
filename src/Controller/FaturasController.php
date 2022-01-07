@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Controller\AppController;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Cake\Datasource\ConnectionManager;
 
 /**
  * Faturas Controller
@@ -86,75 +85,6 @@ class FaturasController extends AppController
         }
     }
 
-    /* public function xls()
-    {
-        $out = explode(',', $_COOKIE["Filtro"]);
-        $arr = array();
-
-        if (!empty($out)) {
-            $id = 'id LIKE "%' . $out[0] . '%"';
-            $nome = 'nome LIKE "%' . $out[1] . '%"';
-            $cc = 'cc LIKE "%' . $out[2] . '%"';
-            $nif = 'nif LIKE "%' . $out[3] . '%"';
-            $datanascimento = 'data_nascimento LIKE "%' . $out[4] . '%"';
-        }
-
-        if ($out[0] != null) {
-            array_push($arr, $id);
-        }
-        if ($out[1] != null) {
-            array_push($arr, $nome);
-        }
-        if ($out[2] != null) {
-            array_push($arr, $cc);
-        }
-        if ($out[3] != null) {
-            array_push($arr, $nif);
-        }
-        if ($out[4] != null) {
-            array_push($arr, $datanascimento);
-        }
-        if ($arr == null) {
-            $pessoas = $this->Pessoas->find('all')->toArray();
-        } else {
-            $pessoas = $this->Pessoas->find('all', array('conditions' => $arr));
-        }
-
-        $this->autoRender = false;
-        $path = TMP . "pessoas.xlsx";
-
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $sheet->setCellValue('A1', 'Nome');
-        $sheet->setCellValue('B1', 'CC');
-        $sheet->setCellValue('C1', 'NIF');
-        $sheet->setCellValue('D1', 'Data de nascimento');
-        $sheet->setCellValue('E1', 'Data de criação');
-
-        $linha = 2;
-        foreach ($pessoas as $row) {
-            $sheet->setCellValue('A' . $linha, $row->nome);
-            $sheet->setCellValue('B' . $linha, $row->cc);
-            $sheet->setCellValue('C' . $linha, $row->nif);
-            $sheet->setCellValue('D' . $linha, $row->data_nascimento);
-            $sheet->setCellValue('E' . $linha, $row->created);
-            $linha++;
-        }
-
-        foreach (range('A', 'E') as $columnID) {
-            $sheet->getColumnDimension($columnID)->setAutoSize(true);
-        }
-
-        $spreadsheet->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
-
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($path);
-
-        $this->response->withType("application/vnd.ms-excel");
-        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Pessoas.xlsx'));
-    } */
-
     /**
      * View method
      *
@@ -180,6 +110,8 @@ class FaturasController extends AppController
         $fatura = $this->Faturas->newEntity();
         if ($this->request->is('post')) {
             $fatura = $this->Faturas->patchEntity($fatura, $this->request->getData());
+            $fatura->valor = substr($this->request->getData('valor'), 0, -2);
+
             if ($this->Faturas->save($fatura)) {
                 $this->Flash->success(__('The fatura has been saved.'));
 
@@ -208,6 +140,8 @@ class FaturasController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $fatura = $this->Faturas->patchEntity($fatura, $this->request->getData());
+            $fatura->valor = substr($this->request->getData('valor'), 0, -2);
+
             if ($this->Faturas->save($fatura)) {
                 $this->Flash->success(__('The fatura has been saved.'));
 
@@ -238,5 +172,139 @@ class FaturasController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function pdf()
+    {
+        // Recolhe dados do json
+        $name = "Registo de Faturas/Custas";        // Nome do ficheiro
+        $mode = "P";                                // Modo do ficheiro
+        $pageize = "A3";                                                                                          // Tamanho do ficheiro
+        $header = array('Nº', 'Valor', 'Entidade Judicial', 'Estado Pagamento', 'Data');             // Cabeçalho para a tabela
+        $size = array(20, 45, 60, 60, 60);                                                                        // Tamanho do cabeçalho
+
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+
+        if (!empty($out)) {
+            $num_fatura = 'num_fatura LIKE "%' . $out[0] . '%"';
+            $valor = 'valor LIKE "%' . $out[1] . '%"';
+            $id_entidadejudiciai = 'id_entidade LIKE "%' . $out[2] . '%"';
+            $id_pagamento = 'id_pagamento LIKE "%' . $out[3] . '%"';
+            $data = 'data LIKE "%' . $out[4] . '%"';
+        }
+
+        if ($out[0] != null) {
+            array_push($arr, $num_fatura);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $valor);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $id_entidadejudiciai);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $id_pagamento);
+        }
+        if ($out[4] != null) {
+            array_push($arr, $data);
+        }
+        if ($arr == null) {
+            $recordsFaturas = $this->Faturas->find('all')->contain(['Pagamentos', 'Entidadejudiciais'])->toArray();
+        } else {
+            $recordsFaturas = $this->Faturas->find('all', array('conditions' => $arr))->contain(['Pagamentos', 'Entidadejudiciais'])->toArray();
+        }
+
+        $records = [];
+
+        // Construção de linha para cada registo recebido
+        foreach ($recordsFaturas as $row) {
+            $valor = number_format($row->valor, 2, '.', '');
+            $records[$row->id] =
+                [
+                    $row->num_fatura,
+                    //$row->valor . '€',
+                    $valor .'€',
+                    $row->entidadejudiciai->descricao,
+                    $row->pagamento->estado,
+                    (isset($row->data) ? $row->data->i18nFormat('dd/MM/yyyy') : "")
+                ];
+        }
+
+        $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
+        $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1
+
+        // Renderização do documento utilizando o template desenvolvido para o efeito
+        return $this->response->withHeader('Content-Type', 'application/pdf');
+    }
+
+    public function xls()
+    {
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+        // $this->log($out);
+
+        if (!empty($out)) {
+            $num_fatura = 'num_fatura LIKE "%' . $out[0] . '%"';
+            $valor = 'valor LIKE "%' . $out[1] . '%"';
+            $id_entidadejudiciai = 'id_entidade LIKE "%' . $out[2] . '%"';
+            $id_pagamento = 'id_pagamento LIKE "%' . $out[3] . '%"';
+            $data = 'data LIKE "%' . $out[4] . '%"';
+        }
+
+        if ($out[0] != null) {
+            array_push($arr, $num_fatura);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $valor);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $id_entidadejudiciai);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $id_pagamento);
+        }
+        if ($out[4] != null) {
+            array_push($arr, $data);
+        }
+        if ($arr == null) {
+            $recordsFaturas = $this->Faturas->find('all')->contain(['Pagamentos', 'Entidadejudiciais']);
+        } else {
+            $recordsFaturas = $this->Faturas->find('all', array('conditions' => $arr))->contain(['Pagamentos', 'Entidadejudiciais']);
+        }
+
+        $this->autoRender = false;
+        $path = TMP . "faturas.xlsx";
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Nº Fatura/Custa');
+        $sheet->setCellValue('B1', 'Valor');
+        $sheet->setCellValue('C1', 'Entidade Judicial');
+        $sheet->setCellValue('D1', 'Estado Pagamento');
+        $sheet->setCellValue('E1', 'Data');
+
+        $linha = 2;
+        foreach ($recordsFaturas as $row) {
+            $sheet->setCellValue('A' . $linha, $row->num_fatura);
+            $sheet->setCellValue('B' . $linha, $row->valor . '€');
+            $sheet->setCellValue('C' . $linha, $row->entidadejudiciai->descricao);
+            $sheet->setCellValue('D' . $linha, $row->pagamento->estado);
+            $sheet->setCellValue('E' . $linha, (isset($row->data) ? $row->data->i18nFormat('dd/MM/yyyy') : ""));
+            $linha++;
+        }
+
+        foreach (range('A', 'H') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $spreadsheet->getActiveSheet()->getStyle('A1:H1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('74A0F9');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($path);
+
+        $this->response->withType("application/vnd.ms-excel");
+        return $this->response->withFile($path, array('download' => true, 'name' => 'Lista_Faturas.xlsx'));
     }
 }

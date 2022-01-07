@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,6 +10,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Table;
+use \Cake\Utility\Security;
+
 
 ob_start();
 
@@ -20,7 +24,6 @@ ob_start();
  */
 class PessoasController extends AppController
 {
-
 
     /**
      * Index method
@@ -537,5 +540,68 @@ class PessoasController extends AppController
         $this->set('freguesias', $freguesia);
 
         $this->set('_serialize', ['distrito']);
+    }
+
+    public function pdf()
+    {
+        // Recolhe dados do json
+        $name = "Registo de Pessoas";       // Nome do ficheiro
+        $mode = "P";                        // Modo do ficheiro
+        $pageize = "A3";                                                      // Tamanho do ficheiro
+        $header = array('Nº', 'Nome', 'CC/BI', 'NIF', 'Data de nascimento');  // Cabeçalho para a tabela
+        $size = array(10, 100, 40, 40, 50);                                   // Tamanho do cabeçalho
+
+        $out = explode(',', $_COOKIE["Filtro"]);
+        $arr = array();
+
+        if (!empty($out)) {
+            $id = 'id LIKE "%' . $out[0] . '%"';
+            $nome = 'nome LIKE "%' . $out[1] . '%"';
+            $cc = 'cc LIKE "%' . $out[2] . '%"';
+            $nif = 'nif LIKE "%' . $out[3] . '%"';
+            $datanascimento = 'data_nascimento LIKE "%' . $out[4] . '%"';
+        }
+
+        if ($out[0] != null) {
+            array_push($arr, $id);
+        }
+        if ($out[1] != null) {
+            array_push($arr, $nome);
+        }
+        if ($out[2] != null) {
+            array_push($arr, $cc);
+        }
+        if ($out[3] != null) {
+            array_push($arr, $nif);
+        }
+        if ($out[4] != null) {
+            array_push($arr, $datanascimento);
+        }
+        if ($arr == null) {
+            $recordsPessoas = $this->Pessoas->find('all')->toArray();
+        } else {
+            $recordsPessoas = $this->Pessoas->find('all', array('conditions' => $arr));
+        }
+
+        //$recordsPessoas = $this->Pessoas->find('all')->toArray();                    // Registos para preencher a tabela
+        $records = [];
+
+        // Construção de linha para cada registo recebido
+        foreach ($recordsPessoas as $row) {
+            $records[$row->id] =
+                [
+                    $row->id,
+                    $row->nome,
+                    $row->cc,
+                    $row->nif,
+                    (isset($row->data_nascimento) ? $row->data_nascimento->i18nFormat('dd/MM/yyyy') : "")
+                ];
+        }
+
+        $this->set(compact('name', 'mode', 'pageize', 'header', 'size', 'records'));     // Enviar dados do json para o pdf
+        $this->render('/Pdf/layout_1');                                                 // Localizção do layout do pdf 1
+
+        // Renderização do documento utilizando o template desenvolvido para o efeito
+        return $this->response->withHeader('Content-Type', 'application/pdf');
     }
 }

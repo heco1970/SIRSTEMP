@@ -44,5 +44,6 @@ class Formulario extends Entity
         'data' => true,
         'tecnico' => true,
         'team' => true,
+        'pedido' => true
     ];
 }

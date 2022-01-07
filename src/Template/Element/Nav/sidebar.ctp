@@ -28,7 +28,6 @@ $active = $show = '';
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-user-friends"></i> <span>' . __('Pessoas') . '</span>', '/pessoas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-balance-scale-left"></i> <span>' . __('Processos') . '</span>', '/processos', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-book"></i> <span>' . __('Pedidos') . '</span>', '/pedidos/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
-    <li class="nav-item close-menu <?= $active ?>"><?= $this->Html->link('<i class="fas fa-fw fa-file-invoice"></i> <span>' . __('Faturas') . '</span>', '/faturas/index', ['class' => ['nav-link'], 'escape' => false]) ?> </li>
     <li class="nav-item close-menu">
         <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseAplicacoes" aria-expanded="true">
             <i class="far fa-fw fa-file-alt"></i>
@@ -36,12 +35,14 @@ $active = $show = '';
         </a>
         <div id="collapseAplicacoes" class="collapse hide" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+                <?= $this->Html->link(__('Faturas/Custas'), '/faturas/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
+
                 <a class="collapse-item" data-toggle="collapse" data-target="#collapseSeguros" aria-expanded="true">
                     <span><?= __('Seguros') ?></span>
                 </a>
                 <div id="collapseSeguros" class="collapse hide">
                     <?= $this->Html->link(__('Penal'), '/formularios/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
-                    <?= $this->Html->link(__('Tutelar educativo'), '', ['class' => ['collapse-item'], 'escape' => false]); ?>
+                    <?= $this->Html->link(__('Tutelar educativo'), '/tutelareducativos/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
                 </div>
             </div>
         </div>

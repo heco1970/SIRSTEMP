@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -46,10 +47,10 @@ class ContactosTable extends Table
             'foreignKey' => 'pessoa_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Pais', [
+        /* $this->belongsTo('Pais', [
             'foreignKey' => 'pais_id',
             'joinType' => 'INNER'
-        ]);
+        ]); */
     }
 
     /**
@@ -66,43 +67,39 @@ class ContactosTable extends Table
 
         $validator
             ->scalar('nome')
-            ->maxLength('nome', 255)
+            ->maxLength('nome', 250)
             ->requirePresence('nome', 'create')
             ->notEmpty('nome');
 
         $validator
             ->scalar('localidade')
-            ->maxLength('localidade', 250)
-            ->requirePresence('localidade', 'create')
-            ->notEmpty('localidade');
+            ->allowEmpty('localidade')
+            ->maxLength('localidade', 250);
 
         $validator
-            ->scalar('morada')
-            ->maxLength('morada', 255)
-            ->requirePresence('morada', 'create')
-            ->notEmpty('morada');
+            ->scalar('telefone')
+            ->allowEmpty('telefone')
+            ->maxLength('telefone', 50);
 
         $validator
-            ->integer('telefone')
-            ->allowEmpty('telefone');
+            ->scalar('telemovel')
+            ->allowEmpty('telemovel')
+            ->maxLength('telemovel', 50);
 
         $validator
-            ->integer('fax')
-            ->allowEmpty('fax');
-
-        $validator
-            ->integer('telemovel')
-            ->allowEmpty('telemovel');
+            ->scalar('fax')
+            ->allowEmpty('fax')
+            ->maxLength('fax', 50);
 
         $validator
             ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmpty('email');
+            ->allowEmpty('email')
+            ->maxLength('email', 250);
 
         $validator
             ->scalar('descricao')
-            ->maxLength('descricao', 250)
-            ->allowEmpty('descricao');
+            ->allowEmpty('descricao')
+            ->maxLength('descricao', 250);
 
         $validator
             ->requirePresence('estado', 'create')
@@ -120,9 +117,9 @@ class ContactosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
+        // $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['pais_id'], 'Pais'));
+        // $rules->add($rules->existsIn(['pais_id'], 'Pais'));
 
         return $rules;
     }
