@@ -44,14 +44,6 @@ $active = $show = '';
                     <?= $this->Html->link(__('Penal'), '/formularios/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
                     <?= $this->Html->link(__('Tutelar educativo'), '/tutelareducativos/index', ['class' => ['collapse-item'], 'escape' => false]); ?>
                 </div>
-
-                <a class="collapse-item" data-toggle="collapse" data-target="#collapseLscmi" aria-expanded="true">
-                    <span><?= __('LSCMI') ?></span>
-                </a>
-                <div id="collapseLscmi" class="collapse hide">
-                    <?= $this->Html->link(__('Ficha QuickScore'), '', ['class' => ['collapse-item'], 'escape' => false]); ?>
-                    <?= $this->Html->link(__('Ficha HistCriminal'), '', ['class' => ['collapse-item'], 'escape' => false]); ?>
-                </div>
             </div>
         </div>
     </li>
